@@ -1,11 +1,22 @@
 import './style.css'
 
+import {
+  initializeHandTracker,
+  detectHands
+} from './vision/handTracker.js'
+
+
+// ======================================================
+// 1. INTERFAZ PRINCIPAL DE HANDVERSE
+// ======================================================
+
 const app = document.querySelector('#app')
 
 app.innerHTML = `
   <main class="app-shell">
 
     <section class="hero">
+
       <p class="eyebrow">
         ECOTEC · SISTEMAS INTELIGENTES
       </p>
@@ -37,6 +48,7 @@ app.innerHTML = `
         </div>
 
       </div>
+
     </section>
 
 
@@ -82,6 +94,10 @@ app.innerHTML = `
 `
 
 
+// ======================================================
+// 2. ELEMENTOS DE LA INTERFAZ
+// ======================================================
+
 const video =
   document.querySelector('#webcam')
 
@@ -95,7 +111,115 @@ const placeholder =
   document.querySelector('#camera-placeholder')
 
 
+// ======================================================
+// 3. ESTADO DE MEDIAPIPE
+// ======================================================
+
+let handTrackerReady = false
+
+let detectionRunning = false
+
+let lastVideoTime = -1
+
+
+// ======================================================
+// 4. DETECCIÓN CONTINUA DE LA MANO
+// ======================================================
+
+function startHandDetection() {
+
+  if (detectionRunning) {
+    return
+  }
+
+  detectionRunning = true
+
+
+  function detectFrame() {
+
+    if (
+      video.srcObject &&
+      handTrackerReady &&
+      video.readyState >= 2
+    ) {
+
+      try {
+
+        // Solo analizamos cuando existe
+        // un nuevo frame de video
+        if (video.currentTime !== lastVideoTime) {
+
+          lastVideoTime = video.currentTime
+
+
+          const results =
+            detectHands(
+              video,
+              performance.now()
+            )
+
+
+          if (
+            results &&
+            results.landmarks &&
+            results.landmarks.length > 0
+          ) {
+
+            const landmarks =
+              results.landmarks[0]
+
+
+            status.textContent =
+              `🖐️ Mano detectada — ${landmarks.length} puntos`
+
+
+          } else {
+
+            status.textContent =
+              '👁️ Buscando una mano...'
+
+          }
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          'Error durante la detección de la mano:',
+          error
+        )
+
+        status.textContent =
+          '❌ Error durante la detección'
+
+      }
+
+    }
+
+
+    requestAnimationFrame(
+      detectFrame
+    )
+
+  }
+
+
+  requestAnimationFrame(
+    detectFrame
+  )
+
+}
+
+
+// ======================================================
+// 5. ACTIVAR WEBCAM
+// ======================================================
+
 async function startCamera() {
+
+  // ----------------------------------------------------
+  // Comprobar soporte de cámara
+  // ----------------------------------------------------
 
   if (!navigator.mediaDevices?.getUserMedia) {
 
@@ -116,6 +240,10 @@ async function startCamera() {
 
 
   try {
+
+    // --------------------------------------------------
+    // Solicitar acceso a webcam
+    // --------------------------------------------------
 
     const stream =
       await navigator.mediaDevices.getUserMedia({
@@ -139,6 +267,10 @@ async function startCamera() {
       })
 
 
+    // --------------------------------------------------
+    // Mostrar webcam
+    // --------------------------------------------------
+
     video.srcObject = stream
 
     await video.play()
@@ -148,9 +280,37 @@ async function startCamera() {
       'none'
 
 
-    status.textContent =
-      '● Cámara activa ✅'
+    // --------------------------------------------------
+    // Inicializar MediaPipe
+    // --------------------------------------------------
 
+    status.textContent =
+      '🧠 Cargando modelo de visión artificial...'
+
+
+    if (!handTrackerReady) {
+
+      await initializeHandTracker()
+
+      handTrackerReady = true
+
+    }
+
+
+    // --------------------------------------------------
+    // Comenzar detección
+    // --------------------------------------------------
+
+    status.textContent =
+      '👁️ Buscando una mano...'
+
+
+    startHandDetection()
+
+
+    // --------------------------------------------------
+    // Actualizar botón
+    // --------------------------------------------------
 
     button.textContent =
       'CÁMARA ACTIVADA'
@@ -159,15 +319,20 @@ async function startCamera() {
   } catch (error) {
 
     console.error(
-      'Error al acceder a la cámara:',
+      'Error al iniciar HANDVERSE:',
       error
     )
 
+
+    // --------------------------------------------------
+    // Errores de permisos
+    // --------------------------------------------------
 
     if (error.name === 'NotAllowedError') {
 
       status.textContent =
         '❌ Permiso de cámara rechazado'
+
 
     } else if (
       error.name === 'NotFoundError'
@@ -176,10 +341,19 @@ async function startCamera() {
       status.textContent =
         '❌ No se encontró una cámara'
 
+
+    } else if (
+      error.name === 'NotReadableError'
+    ) {
+
+      status.textContent =
+        '❌ La cámara está siendo utilizada por otra aplicación'
+
+
     } else {
 
       status.textContent =
-        '❌ No se pudo iniciar la cámara'
+        '❌ No se pudo iniciar HANDVERSE'
 
     }
 
@@ -193,6 +367,10 @@ async function startCamera() {
 
 }
 
+
+// ======================================================
+// 6. EVENTO DEL BOTÓN
+// ======================================================
 
 button.addEventListener(
   'click',
