@@ -5,12 +5,33 @@ import {
   detectHands
 } from './vision/handTracker.js'
 
+import {
+  addSample,
+  getSampleCount,
+  getDatasetSummary,
+  TARGET_SAMPLES_PER_CLASS,
+  isDatasetReady,
+  clearGestureSamples
+} from './ai/dataset.js'
+
+import {
+  GESTURE_CLASSES
+} from './ai/features.js'
+
 
 // ======================================================
-// 1. INTERFAZ PRINCIPAL
+// HANDVERSE: AI BATTLE
+// Aplicación principal
 // ======================================================
 
-const app = document.querySelector('#app')
+
+// ======================================================
+// 1. INTERFAZ
+// ======================================================
+
+const app =
+  document.querySelector('#app')
+
 
 app.innerHTML = `
   <main class="app-shell">
@@ -23,7 +44,7 @@ app.innerHTML = `
 
       <h1>
         HANDVERSE:
-        <span>AI BATTLE</span>
+        <span>BATALLA DE IA</span>
       </h1>
 
       <p class="subtitle">
@@ -95,12 +116,250 @@ app.innerHTML = `
 
     </section>
 
+
+    <!-- ================================================
+         PANEL DE ENTRENAMIENTO
+    ================================================= -->
+
+    <section class="training-panel">
+
+      <div class="training-header">
+
+        <p class="training-eyebrow">
+          MACHINE LEARNING LAB
+        </p>
+
+        <h2>
+          ENTRENA TU IA
+        </h2>
+
+        <p>
+          Enseña a HANDVERSE tus tres gestos.
+        </p>
+
+      </div>
+
+
+      <div class="training-status-box">
+
+        <span class="training-status-icon">
+          🧠
+        </span>
+
+        <p id="training-status">
+          Activa la cámara para comenzar.
+        </p>
+
+      </div>
+
+
+      <div class="training-grid">
+
+
+        <!-- MANO ABIERTA -->
+
+        <article
+          class="gesture-training-card"
+          data-gesture="open_hand"
+        >
+
+          <div class="gesture-training-icon">
+            🖐️
+          </div>
+
+          <h3>
+            MANO ABIERTA
+          </h3>
+
+          <p class="gesture-action">
+            ESCUDO
+          </p>
+
+
+          <div class="progress-container">
+
+            <div class="progress-info">
+
+              <span>
+                Muestras
+              </span>
+
+              <strong class="sample-count">
+                0 / 30
+              </strong>
+
+            </div>
+
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="train-button"
+            data-gesture="open_hand"
+            disabled
+          >
+            ENTRENAR
+          </button>
+
+        </article>
+
+
+        <!-- PUÑO -->
+
+        <article
+          class="gesture-training-card"
+          data-gesture="fist"
+        >
+
+          <div class="gesture-training-icon">
+            ✊
+          </div>
+
+          <h3>
+            PUÑO CERRADO
+          </h3>
+
+          <p class="gesture-action">
+            ATAQUE
+          </p>
+
+
+          <div class="progress-container">
+
+            <div class="progress-info">
+
+              <span>
+                Muestras
+              </span>
+
+              <strong class="sample-count">
+                0 / 30
+              </strong>
+
+            </div>
+
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="train-button"
+            data-gesture="fist"
+            disabled
+          >
+            ENTRENAR
+          </button>
+
+        </article>
+
+
+        <!-- PULGAR ARRIBA -->
+
+        <article
+          class="gesture-training-card"
+          data-gesture="thumbs_up"
+        >
+
+          <div class="gesture-training-icon">
+            👍
+          </div>
+
+          <h3>
+            PULGAR ARRIBA
+          </h3>
+
+          <p class="gesture-action">
+            PODER
+          </p>
+
+
+          <div class="progress-container">
+
+            <div class="progress-info">
+
+              <span>
+                Muestras
+              </span>
+
+              <strong class="sample-count">
+                0 / 30
+              </strong>
+
+            </div>
+
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="train-button"
+            data-gesture="thumbs_up"
+            disabled
+          >
+            ENTRENAR
+          </button>
+
+        </article>
+
+      </div>
+
+
+      <div
+        id="dataset-ready"
+        class="dataset-ready"
+      >
+
+        <span>
+          🧠
+        </span>
+
+        <div>
+
+          <strong>
+            MODELO AÚN SIN ENTRENAR
+          </strong>
+
+          <p>
+            Completa los tres gestos.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
   </main>
 `
 
 
 // ======================================================
-// 2. ELEMENTOS
+// 2. ELEMENTOS DE LA CÁMARA
 // ======================================================
 
 const video =
@@ -119,11 +378,33 @@ const status =
   document.querySelector('#camera-status')
 
 const placeholder =
-  document.querySelector('#camera-placeholder')
+  document.querySelector(
+    '#camera-placeholder'
+  )
 
 
 // ======================================================
-// 3. ESTADO
+// 3. ELEMENTOS DEL ENTRENAMIENTO
+// ======================================================
+
+const trainingStatus =
+  document.querySelector(
+    '#training-status'
+  )
+
+const datasetReadyBox =
+  document.querySelector(
+    '#dataset-ready'
+  )
+
+const trainButtons =
+  document.querySelectorAll(
+    '.train-button'
+  )
+
+
+// ======================================================
+// 4. ESTADO GENERAL
 // ======================================================
 
 let handTrackerReady = false
@@ -132,9 +413,31 @@ let detectionRunning = false
 
 let lastVideoTime = -1
 
+let currentLandmarks = null
+
+let captureInProgress = false
+
 
 // ======================================================
-// 4. CONEXIONES DE LOS 21 LANDMARKS
+// 5. INFORMACIÓN DE LOS GESTOS
+// ======================================================
+
+const GESTURES = {
+
+  open_hand:
+    GESTURE_CLASSES.OPEN_HAND,
+
+  fist:
+    GESTURE_CLASSES.FIST,
+
+  thumbs_up:
+    GESTURE_CLASSES.THUMBS_UP
+
+}
+
+
+// ======================================================
+// 6. CONEXIONES DE LA MANO
 // ======================================================
 
 const HAND_CONNECTIONS = [
@@ -151,7 +454,7 @@ const HAND_CONNECTIONS = [
   [6, 7],
   [7, 8],
 
-  // Dedo medio
+  // Medio
   [5, 9],
   [9, 10],
   [10, 11],
@@ -169,14 +472,31 @@ const HAND_CONNECTIONS = [
   [18, 19],
   [19, 20],
 
-  // Cierre de palma
+  // Palma
   [0, 17]
 
 ]
 
 
 // ======================================================
-// 5. PREPARAR CANVAS
+// 7. UTILIDAD DE ESPERA
+// ======================================================
+
+function sleep(milliseconds) {
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        milliseconds
+      )
+  )
+
+}
+
+
+// ======================================================
+// 8. PREPARAR CANVAS
 // ======================================================
 
 function resizeOverlay() {
@@ -185,7 +505,9 @@ function resizeOverlay() {
     video.videoWidth === 0 ||
     video.videoHeight === 0
   ) {
+
     return
+
   }
 
 
@@ -199,14 +521,12 @@ function resizeOverlay() {
 
 
 // ======================================================
-// 6. CONVERTIR LANDMARK A POSICIÓN DE CANVAS
+// 9. CONVERTIR LANDMARK AL CANVAS
 // ======================================================
 
-function getCanvasPoint(landmark) {
-
-  // El video está mostrado como espejo.
-  // Por eso invertimos X para que el esqueleto
-  // quede exactamente encima de la mano.
+function getCanvasPoint(
+  landmark
+) {
 
   return {
 
@@ -224,7 +544,7 @@ function getCanvasPoint(landmark) {
 
 
 // ======================================================
-// 7. BORRAR MANO DIGITAL
+// 10. LIMPIAR OVERLAY
 // ======================================================
 
 function clearHandOverlay() {
@@ -240,16 +560,18 @@ function clearHandOverlay() {
 
 
 // ======================================================
-// 8. DIBUJAR MANO FUTURISTA
+// 11. DIBUJAR MANO FUTURISTA
 // ======================================================
 
-function drawHandOverlay(landmarks) {
+function drawHandOverlay(
+  landmarks
+) {
 
   clearHandOverlay()
 
 
   // ----------------------------------------------------
-  // Dibujar conexiones
+  // Líneas
   // ----------------------------------------------------
 
   context.save()
@@ -272,18 +594,25 @@ function drawHandOverlay(landmarks) {
 
 
   for (
-    const [startIndex, endIndex]
+    const [
+      startIndex,
+      endIndex
+    ]
     of HAND_CONNECTIONS
   ) {
 
     const start =
       getCanvasPoint(
-        landmarks[startIndex]
+        landmarks[
+          startIndex
+        ]
       )
 
     const end =
       getCanvasPoint(
-        landmarks[endIndex]
+        landmarks[
+          endIndex
+        ]
       )
 
 
@@ -308,22 +637,21 @@ function drawHandOverlay(landmarks) {
 
 
   // ----------------------------------------------------
-  // Dibujar los 21 puntos
+  // 21 puntos
   // ----------------------------------------------------
 
   for (
-    let index = 0;
-    index < landmarks.length;
-    index++
+    const landmark
+    of landmarks
   ) {
 
     const point =
       getCanvasPoint(
-        landmarks[index]
+        landmark
       )
 
 
-    // Resplandor externo
+    // Glow
 
     context.beginPath()
 
@@ -364,7 +692,7 @@ function drawHandOverlay(landmarks) {
     context.fill()
 
 
-    // Centro tecnológico
+    // Centro
 
     context.beginPath()
 
@@ -390,17 +718,375 @@ function drawHandOverlay(landmarks) {
 
 
 // ======================================================
-// 9. BUCLE DE DETECCIÓN
+// 12. ACTUALIZAR INTERFAZ DEL DATASET
+// ======================================================
+
+function updateTrainingUI() {
+
+  const summary =
+    getDatasetSummary()
+
+
+  for (
+    const gestureKey
+    of Object.keys(
+      GESTURES
+    )
+  ) {
+
+    const card =
+      document.querySelector(
+        `.gesture-training-card[data-gesture="${gestureKey}"]`
+      )
+
+
+    if (!card) {
+      continue
+    }
+
+
+    const count =
+      getSampleCount(
+        gestureKey
+      )
+
+
+    const countElement =
+      card.querySelector(
+        '.sample-count'
+      )
+
+
+    const progressFill =
+      card.querySelector(
+        '.progress-fill'
+      )
+
+
+    const trainButton =
+      card.querySelector(
+        '.train-button'
+      )
+
+
+    const percentage =
+      Math.min(
+        100,
+        (
+          count /
+          TARGET_SAMPLES_PER_CLASS
+        ) * 100
+      )
+
+
+    countElement.textContent =
+      `${count} / ${TARGET_SAMPLES_PER_CLASS}`
+
+
+    progressFill.style.width =
+      `${percentage}%`
+
+
+    if (
+      count >=
+      TARGET_SAMPLES_PER_CLASS
+    ) {
+
+      card.classList.add(
+        'gesture-complete'
+      )
+
+      trainButton.textContent =
+        'RECAPTURAR'
+
+    } else {
+
+      card.classList.remove(
+        'gesture-complete'
+      )
+
+      trainButton.textContent =
+        'ENTRENAR'
+
+    }
+
+  }
+
+
+  // ----------------------------------------------------
+  // Dataset completo
+  // ----------------------------------------------------
+
+  if (
+    isDatasetReady()
+  ) {
+
+    datasetReadyBox.classList.add(
+      'ready'
+    )
+
+
+    datasetReadyBox.innerHTML = `
+
+      <span>
+        ✅
+      </span>
+
+      <div>
+
+        <strong>
+          DATASET COMPLETO
+        </strong>
+
+        <p>
+          ${summary.total} muestras listas para entrenar la IA.
+        </p>
+
+      </div>
+
+    `
+
+  } else {
+
+    datasetReadyBox.classList.remove(
+      'ready'
+    )
+
+  }
+
+}
+
+
+// ======================================================
+// 13. ACTIVAR/DESACTIVAR BOTONES DE ENTRENAMIENTO
+// ======================================================
+
+function setTrainingButtonsDisabled(
+  disabled
+) {
+
+  trainButtons.forEach(
+    trainButton => {
+
+      trainButton.disabled =
+        disabled
+
+    }
+  )
+
+}
+
+
+// ======================================================
+// 14. CAPTURA AUTOMÁTICA DE UN GESTO
+// ======================================================
+
+async function captureGesture(
+  gestureKey
+) {
+
+  if (
+    captureInProgress
+  ) {
+
+    return
+
+  }
+
+
+  if (
+    !handTrackerReady ||
+    !video.srcObject
+  ) {
+
+    trainingStatus.textContent =
+      '⚠️ Primero activa la cámara.'
+
+    return
+
+  }
+
+
+  const gesture =
+    GESTURES[
+      gestureKey
+    ]
+
+
+  if (!gesture) {
+
+    return
+
+  }
+
+
+  // ----------------------------------------------------
+  // Si ya estaba completo, permite recapturarlo
+  // ----------------------------------------------------
+
+  if (
+    getSampleCount(
+      gestureKey
+    ) >=
+    TARGET_SAMPLES_PER_CLASS
+  ) {
+
+    clearGestureSamples(
+      gestureKey
+    )
+
+    updateTrainingUI()
+
+  }
+
+
+  captureInProgress =
+    true
+
+
+  setTrainingButtonsDisabled(
+    true
+  )
+
+
+  // ----------------------------------------------------
+  // Cuenta regresiva
+  // ----------------------------------------------------
+
+  trainingStatus.textContent =
+    `${gesture.emoji} Prepárate para ${gesture.name}`
+
+
+  await sleep(800)
+
+
+  for (
+    let number = 3;
+    number >= 1;
+    number--
+  ) {
+
+    trainingStatus.textContent =
+      `${gesture.emoji} ${number}`
+
+    await sleep(800)
+
+  }
+
+
+  trainingStatus.textContent =
+    `🔴 CAPTURANDO ${gesture.name}... mueve ligeramente la mano`
+
+
+  // ----------------------------------------------------
+  // Capturar 30 muestras
+  // ----------------------------------------------------
+
+  while (
+    getSampleCount(
+      gestureKey
+    ) <
+    TARGET_SAMPLES_PER_CLASS
+  ) {
+
+    // Si MediaPipe no ve una mano,
+    // no guardamos datos.
+
+    if (
+      !currentLandmarks
+    ) {
+
+      trainingStatus.textContent =
+        '⚠️ No veo tu mano. Colócala frente a la cámara.'
+
+      await sleep(150)
+
+      continue
+
+    }
+
+
+    const added =
+      addSample(
+        gestureKey,
+        currentLandmarks
+      )
+
+
+    if (added) {
+
+      const currentCount =
+        getSampleCount(
+          gestureKey
+        )
+
+
+      trainingStatus.textContent =
+        `🔴 ${gesture.emoji} Capturando ${currentCount}/${TARGET_SAMPLES_PER_CLASS}`
+
+
+      updateTrainingUI()
+
+    }
+
+
+    // Dejamos pasar algunos frames para
+    // no capturar exactamente la misma imagen.
+
+    await sleep(120)
+
+  }
+
+
+  // ----------------------------------------------------
+  // Finalizado
+  // ----------------------------------------------------
+
+  trainingStatus.textContent =
+    `✅ ${gesture.emoji} ${gesture.name} aprendido correctamente`
+
+
+  captureInProgress =
+    false
+
+
+  setTrainingButtonsDisabled(
+    false
+  )
+
+
+  updateTrainingUI()
+
+
+  if (
+    isDatasetReady()
+  ) {
+
+    trainingStatus.textContent =
+      '🧠 Dataset completo. HANDVERSE está listo para entrenar el modelo.'
+
+  }
+
+}
+
+
+// ======================================================
+// 15. BUCLE DE VISIÓN ARTIFICIAL
 // ======================================================
 
 function startHandDetection() {
 
-  if (detectionRunning) {
+  if (
+    detectionRunning
+  ) {
+
     return
+
   }
 
 
-  detectionRunning = true
+  detectionRunning =
+    true
 
 
   function detectFrame() {
@@ -412,8 +1098,6 @@ function startHandDetection() {
     ) {
 
       try {
-
-        // Analizamos únicamente frames nuevos
 
         if (
           video.currentTime !==
@@ -437,20 +1121,34 @@ function startHandDetection() {
             results.landmarks.length > 0
           ) {
 
-            const landmarks =
+            // Hacemos una copia para
+            // conservar el frame actual.
+
+            currentLandmarks =
               results.landmarks[0]
+                .map(
+                  point => ({
+                    x: point.x,
+                    y: point.y,
+                    z: point.z
+                  })
+                )
 
 
             status.textContent =
-              `🖐️ Mano detectada — ${landmarks.length} puntos`
+              `🖐️ Mano detectada — ${currentLandmarks.length} puntos`
 
 
             drawHandOverlay(
-              landmarks
+              currentLandmarks
             )
 
 
           } else {
+
+            currentLandmarks =
+              null
+
 
             status.textContent =
               '👁️ Buscando una mano...'
@@ -468,6 +1166,10 @@ function startHandDetection() {
           'Error durante la detección:',
           error
         )
+
+
+        currentLandmarks =
+          null
 
 
         status.textContent =
@@ -496,7 +1198,7 @@ function startHandDetection() {
 
 
 // ======================================================
-// 10. ACTIVAR CÁMARA
+// 16. ACTIVAR WEBCAM
 // ======================================================
 
 async function startCamera() {
@@ -513,7 +1215,9 @@ async function startCamera() {
   }
 
 
-  button.disabled = true
+  button.disabled =
+    true
+
 
   button.textContent =
     'CONECTANDO...'
@@ -526,31 +1230,32 @@ async function startCamera() {
   try {
 
     // --------------------------------------------------
-    // Obtener webcam
+    // Webcam
     // --------------------------------------------------
 
     const stream =
-      await navigator.mediaDevices.getUserMedia({
+      await navigator.mediaDevices
+        .getUserMedia({
 
-        video: {
+          video: {
 
-          width: {
-            ideal: 1280
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 720
+            },
+
+            facingMode:
+              'user'
+
           },
 
-          height: {
-            ideal: 720
-          },
+          audio:
+            false
 
-          facingMode:
-            'user'
-
-        },
-
-        audio:
-          false
-
-      })
+        })
 
 
     video.srcObject =
@@ -560,10 +1265,6 @@ async function startCamera() {
     await video.play()
 
 
-    // --------------------------------------------------
-    // Preparar canvas
-    // --------------------------------------------------
-
     resizeOverlay()
 
 
@@ -572,14 +1273,16 @@ async function startCamera() {
 
 
     // --------------------------------------------------
-    // Inicializar IA de visión
+    // MediaPipe
     // --------------------------------------------------
 
     status.textContent =
       '🧠 Inicializando visión artificial...'
 
 
-    if (!handTrackerReady) {
+    if (
+      !handTrackerReady
+    ) {
 
       await initializeHandTracker()
 
@@ -588,10 +1291,6 @@ async function startCamera() {
 
     }
 
-
-    // --------------------------------------------------
-    // Empezar detección
-    // --------------------------------------------------
 
     status.textContent =
       '👁️ Buscando una mano...'
@@ -602,6 +1301,19 @@ async function startCamera() {
 
     button.textContent =
       'CÁMARA ACTIVADA'
+
+
+    // --------------------------------------------------
+    // Habilitar entrenamiento
+    // --------------------------------------------------
+
+    setTrainingButtonsDisabled(
+      false
+    )
+
+
+    trainingStatus.textContent =
+      'Selecciona un gesto para comenzar el entrenamiento.'
 
 
   } catch (error) {
@@ -660,10 +1372,35 @@ async function startCamera() {
 
 
 // ======================================================
-// 11. EVENTO DEL BOTÓN
+// 17. EVENTOS
 // ======================================================
 
 button.addEventListener(
   'click',
   startCamera
 )
+
+
+trainButtons.forEach(
+  trainButton => {
+
+    trainButton.addEventListener(
+      'click',
+      () => {
+
+        captureGesture(
+          trainButton.dataset.gesture
+        )
+
+      }
+    )
+
+  }
+)
+
+
+// ======================================================
+// 18. ESTADO INICIAL
+// ======================================================
+
+updateTrainingUI()
