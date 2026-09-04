@@ -18,6 +18,13 @@ import {
   GESTURE_CLASSES
 } from './ai/features.js'
 
+import {
+  initializeAI,
+  trainGestureModel,
+  predictGesture,
+  isModelTrained,
+  isTraining
+} from './ai/model.js'
 
 // ======================================================
 // HANDVERSE: AI BATTLE
@@ -1404,3 +1411,34 @@ trainButtons.forEach(
 // ======================================================
 
 updateTrainingUI()
+
+// ======================================================
+// HANDVERSE - INICIALIZACIÓN DEL MOTOR DE IA
+// ======================================================
+
+async function initializeHandverseAI() {
+
+  try {
+
+    console.log(
+      '🧠 Inicializando motor neuronal de HANDVERSE...'
+    )
+
+    await initializeAI()
+
+    console.log(
+      '✅ Motor de Inteligencia Artificial preparado'
+    )
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error inicializando la IA de HANDVERSE:',
+      error
+    )
+
+  }
+
+}
+
+initializeHandverseAI()
