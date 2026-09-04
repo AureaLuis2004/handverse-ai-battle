@@ -7,7 +7,7 @@ import {
 
 
 // ======================================================
-// 1. INTERFAZ PRINCIPAL DE HANDVERSE
+// 1. INTERFAZ PRINCIPAL
 // ======================================================
 
 const app = document.querySelector('#app')
@@ -66,8 +66,13 @@ app.innerHTML = `
         <canvas id="overlay"></canvas>
 
         <div id="camera-placeholder">
+
           <span>📷</span>
-          <p>Cámara preparada</p>
+
+          <p>
+            Cámara preparada
+          </p>
+
         </div>
 
       </div>
@@ -95,11 +100,17 @@ app.innerHTML = `
 
 
 // ======================================================
-// 2. ELEMENTOS DE LA INTERFAZ
+// 2. ELEMENTOS
 // ======================================================
 
 const video =
   document.querySelector('#webcam')
+
+const canvas =
+  document.querySelector('#overlay')
+
+const context =
+  canvas.getContext('2d')
 
 const button =
   document.querySelector('#start-camera')
@@ -112,7 +123,7 @@ const placeholder =
 
 
 // ======================================================
-// 3. ESTADO DE MEDIAPIPE
+// 3. ESTADO
 // ======================================================
 
 let handTrackerReady = false
@@ -123,7 +134,263 @@ let lastVideoTime = -1
 
 
 // ======================================================
-// 4. DETECCIÓN CONTINUA DE LA MANO
+// 4. CONEXIONES DE LOS 21 LANDMARKS
+// ======================================================
+
+const HAND_CONNECTIONS = [
+
+  // Pulgar
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [3, 4],
+
+  // Índice
+  [0, 5],
+  [5, 6],
+  [6, 7],
+  [7, 8],
+
+  // Dedo medio
+  [5, 9],
+  [9, 10],
+  [10, 11],
+  [11, 12],
+
+  // Anular
+  [9, 13],
+  [13, 14],
+  [14, 15],
+  [15, 16],
+
+  // Meñique
+  [13, 17],
+  [17, 18],
+  [18, 19],
+  [19, 20],
+
+  // Cierre de palma
+  [0, 17]
+
+]
+
+
+// ======================================================
+// 5. PREPARAR CANVAS
+// ======================================================
+
+function resizeOverlay() {
+
+  if (
+    video.videoWidth === 0 ||
+    video.videoHeight === 0
+  ) {
+    return
+  }
+
+
+  canvas.width =
+    video.videoWidth
+
+  canvas.height =
+    video.videoHeight
+
+}
+
+
+// ======================================================
+// 6. CONVERTIR LANDMARK A POSICIÓN DE CANVAS
+// ======================================================
+
+function getCanvasPoint(landmark) {
+
+  // El video está mostrado como espejo.
+  // Por eso invertimos X para que el esqueleto
+  // quede exactamente encima de la mano.
+
+  return {
+
+    x:
+      (1 - landmark.x) *
+      canvas.width,
+
+    y:
+      landmark.y *
+      canvas.height
+
+  }
+
+}
+
+
+// ======================================================
+// 7. BORRAR MANO DIGITAL
+// ======================================================
+
+function clearHandOverlay() {
+
+  context.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  )
+
+}
+
+
+// ======================================================
+// 8. DIBUJAR MANO FUTURISTA
+// ======================================================
+
+function drawHandOverlay(landmarks) {
+
+  clearHandOverlay()
+
+
+  // ----------------------------------------------------
+  // Dibujar conexiones
+  // ----------------------------------------------------
+
+  context.save()
+
+  context.lineWidth = 4
+
+  context.lineCap =
+    'round'
+
+  context.lineJoin =
+    'round'
+
+  context.strokeStyle =
+    '#22d3ee'
+
+  context.shadowColor =
+    '#22d3ee'
+
+  context.shadowBlur = 16
+
+
+  for (
+    const [startIndex, endIndex]
+    of HAND_CONNECTIONS
+  ) {
+
+    const start =
+      getCanvasPoint(
+        landmarks[startIndex]
+      )
+
+    const end =
+      getCanvasPoint(
+        landmarks[endIndex]
+      )
+
+
+    context.beginPath()
+
+    context.moveTo(
+      start.x,
+      start.y
+    )
+
+    context.lineTo(
+      end.x,
+      end.y
+    )
+
+    context.stroke()
+
+  }
+
+
+  context.restore()
+
+
+  // ----------------------------------------------------
+  // Dibujar los 21 puntos
+  // ----------------------------------------------------
+
+  for (
+    let index = 0;
+    index < landmarks.length;
+    index++
+  ) {
+
+    const point =
+      getCanvasPoint(
+        landmarks[index]
+      )
+
+
+    // Resplandor externo
+
+    context.beginPath()
+
+    context.arc(
+      point.x,
+      point.y,
+      9,
+      0,
+      Math.PI * 2
+    )
+
+    context.fillStyle =
+      'rgba(34, 211, 238, 0.25)'
+
+    context.fill()
+
+
+    // Punto principal
+
+    context.beginPath()
+
+    context.arc(
+      point.x,
+      point.y,
+      5,
+      0,
+      Math.PI * 2
+    )
+
+    context.fillStyle =
+      '#ffffff'
+
+    context.shadowColor =
+      '#22d3ee'
+
+    context.shadowBlur = 16
+
+    context.fill()
+
+
+    // Centro tecnológico
+
+    context.beginPath()
+
+    context.arc(
+      point.x,
+      point.y,
+      2,
+      0,
+      Math.PI * 2
+    )
+
+    context.fillStyle =
+      '#22d3ee'
+
+    context.fill()
+
+  }
+
+
+  context.shadowBlur = 0
+
+}
+
+
+// ======================================================
+// 9. BUCLE DE DETECCIÓN
 // ======================================================
 
 function startHandDetection() {
@@ -131,6 +398,7 @@ function startHandDetection() {
   if (detectionRunning) {
     return
   }
+
 
   detectionRunning = true
 
@@ -145,11 +413,15 @@ function startHandDetection() {
 
       try {
 
-        // Solo analizamos cuando existe
-        // un nuevo frame de video
-        if (video.currentTime !== lastVideoTime) {
+        // Analizamos únicamente frames nuevos
 
-          lastVideoTime = video.currentTime
+        if (
+          video.currentTime !==
+          lastVideoTime
+        ) {
+
+          lastVideoTime =
+            video.currentTime
 
 
           const results =
@@ -173,10 +445,18 @@ function startHandDetection() {
               `🖐️ Mano detectada — ${landmarks.length} puntos`
 
 
+            drawHandOverlay(
+              landmarks
+            )
+
+
           } else {
 
             status.textContent =
               '👁️ Buscando una mano...'
+
+
+            clearHandOverlay()
 
           }
 
@@ -185,12 +465,16 @@ function startHandDetection() {
       } catch (error) {
 
         console.error(
-          'Error durante la detección de la mano:',
+          'Error durante la detección:',
           error
         )
 
+
         status.textContent =
           '❌ Error durante la detección'
+
+
+        clearHandOverlay()
 
       }
 
@@ -212,21 +496,20 @@ function startHandDetection() {
 
 
 // ======================================================
-// 5. ACTIVAR WEBCAM
+// 10. ACTIVAR CÁMARA
 // ======================================================
 
 async function startCamera() {
 
-  // ----------------------------------------------------
-  // Comprobar soporte de cámara
-  // ----------------------------------------------------
-
-  if (!navigator.mediaDevices?.getUserMedia) {
+  if (
+    !navigator.mediaDevices?.getUserMedia
+  ) {
 
     status.textContent =
       '❌ Este navegador no permite usar la cámara'
 
     return
+
   }
 
 
@@ -235,6 +518,7 @@ async function startCamera() {
   button.textContent =
     'CONECTANDO...'
 
+
   status.textContent =
     '● Solicitando permiso de cámara...'
 
@@ -242,7 +526,7 @@ async function startCamera() {
   try {
 
     // --------------------------------------------------
-    // Solicitar acceso a webcam
+    // Obtener webcam
     // --------------------------------------------------
 
     const stream =
@@ -258,22 +542,29 @@ async function startCamera() {
             ideal: 720
           },
 
-          facingMode: 'user'
+          facingMode:
+            'user'
 
         },
 
-        audio: false
+        audio:
+          false
 
       })
 
 
-    // --------------------------------------------------
-    // Mostrar webcam
-    // --------------------------------------------------
+    video.srcObject =
+      stream
 
-    video.srcObject = stream
 
     await video.play()
+
+
+    // --------------------------------------------------
+    // Preparar canvas
+    // --------------------------------------------------
+
+    resizeOverlay()
 
 
     placeholder.style.display =
@@ -281,24 +572,25 @@ async function startCamera() {
 
 
     // --------------------------------------------------
-    // Inicializar MediaPipe
+    // Inicializar IA de visión
     // --------------------------------------------------
 
     status.textContent =
-      '🧠 Cargando modelo de visión artificial...'
+      '🧠 Inicializando visión artificial...'
 
 
     if (!handTrackerReady) {
 
       await initializeHandTracker()
 
-      handTrackerReady = true
+      handTrackerReady =
+        true
 
     }
 
 
     // --------------------------------------------------
-    // Comenzar detección
+    // Empezar detección
     // --------------------------------------------------
 
     status.textContent =
@@ -307,10 +599,6 @@ async function startCamera() {
 
     startHandDetection()
 
-
-    // --------------------------------------------------
-    // Actualizar botón
-    // --------------------------------------------------
 
     button.textContent =
       'CÁMARA ACTIVADA'
@@ -324,18 +612,18 @@ async function startCamera() {
     )
 
 
-    // --------------------------------------------------
-    // Errores de permisos
-    // --------------------------------------------------
-
-    if (error.name === 'NotAllowedError') {
+    if (
+      error.name ===
+      'NotAllowedError'
+    ) {
 
       status.textContent =
         '❌ Permiso de cámara rechazado'
 
 
     } else if (
-      error.name === 'NotFoundError'
+      error.name ===
+      'NotFoundError'
     ) {
 
       status.textContent =
@@ -343,7 +631,8 @@ async function startCamera() {
 
 
     } else if (
-      error.name === 'NotReadableError'
+      error.name ===
+      'NotReadableError'
     ) {
 
       status.textContent =
@@ -358,7 +647,9 @@ async function startCamera() {
     }
 
 
-    button.disabled = false
+    button.disabled =
+      false
+
 
     button.textContent =
       'INTENTAR DE NUEVO'
@@ -369,7 +660,7 @@ async function startCamera() {
 
 
 // ======================================================
-// 6. EVENTO DEL BOTÓN
+// 11. EVENTO DEL BOTÓN
 // ======================================================
 
 button.addEventListener(
