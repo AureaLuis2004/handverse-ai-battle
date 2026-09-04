@@ -23,8 +23,10 @@ import {
   trainGestureModel,
   predictGesture,
   isModelTrained,
-  isTraining
+  isTraining,
+  resetGestureModel
 } from './ai/model.js'
+
 
 // ======================================================
 // HANDVERSE: AI BATTLE
@@ -119,6 +121,43 @@ app.innerHTML = `
           ACTIVAR CÁMARA
         </button>
 
+      </div>
+      
+      <div
+        id="prediction-panel"
+        class="prediction-panel"
+      >
+        <div class="prediction-icon">
+          🧠
+        </div>
+
+        <div class="prediction-information">
+
+          <span class="prediction-eyebrow">
+            RECONOCIMIENTO IA
+          </span>
+
+          <strong id="prediction-name">
+            ESPERANDO GESTO
+          </strong>
+
+          <span id="prediction-action">
+            Entrena la IA y muestra tu mano
+          </span>
+
+        </div>
+
+        <div class="prediction-confidence">
+
+          <span>
+            CONFIANZA
+          </span>
+
+          <strong id="prediction-confidence">
+            -- %
+          </strong>
+
+        </div>
       </div>
 
     </section>
@@ -389,6 +428,31 @@ const placeholder =
     '#camera-placeholder'
   )
 
+const predictionPanel =
+  document.querySelector(
+    '#prediction-panel'
+  )
+
+const predictionName =
+  document.querySelector(
+    '#prediction-name'
+  )
+
+const predictionAction =
+  document.querySelector(
+    '#prediction-action'
+  )
+
+const predictionConfidence =
+  document.querySelector(
+    '#prediction-confidence'
+  )
+
+const predictionIcon =
+  document.querySelector(
+    '.prediction-icon'
+  )
+
 
 // ======================================================
 // 3. ELEMENTOS DEL ENTRENAMIENTO
@@ -423,6 +487,10 @@ let lastVideoTime = -1
 let currentLandmarks = null
 
 let captureInProgress = false
+
+let lastPredictionLogTime = 0
+
+const PREDICTION_LOG_INTERVAL_MS = 250
 
 
 // ======================================================
@@ -748,7 +816,9 @@ function updateTrainingUI() {
 
 
     if (!card) {
+
       continue
+
     }
 
 
@@ -833,13 +903,16 @@ function updateTrainingUI() {
     )
 
 
-    datasetReadyBox.innerHTML = `
+    const modelAlreadyTrained =
+      isModelTrained()
 
+
+    datasetReadyBox.innerHTML = `
       <span>
         ✅
       </span>
 
-      <div>
+      <div class="dataset-ready-content">
 
         <strong>
           DATASET COMPLETO
@@ -849,8 +922,31 @@ function updateTrainingUI() {
           ${summary.total} muestras listas para entrenar la IA.
         </p>
 
-      </div>
+        <button
+          id="train-model-button"
+          class="train-model-button"
+          type="button"
+          ${modelAlreadyTrained ? 'disabled' : ''}
+        >
+          ${
+            modelAlreadyTrained
+              ? '✅ IA ENTRENADA'
+              : '🧠 ENTRENAR MODELO IA'
+          }
+        </button>
 
+        <p
+          id="model-training-status"
+          class="model-training-status"
+        >
+          ${
+            modelAlreadyTrained
+              ? '✅ IA entrenada correctamente. HANDVERSE está lista.'
+              : 'Esperando entrenamiento...'
+          }
+        </p>
+
+      </div>
     `
 
   } else {
@@ -859,9 +955,180 @@ function updateTrainingUI() {
       'ready'
     )
 
+
+    datasetReadyBox.innerHTML = `
+      <span>
+        🧠
+      </span>
+
+      <div>
+
+        <strong>
+          MODELO AÚN SIN ENTRENAR
+        </strong>
+
+        <p>
+          Completa los tres gestos.
+        </p>
+
+      </div>
+    `
+
   }
 
 }
+
+
+// ============================================================
+//  ENTRENAMIENTO DE LA INTELIGENCIA ARTIFICIAL
+// ============================================================
+
+async function handleTrainModel() {
+
+  const trainButton =
+    document.querySelector(
+      '#train-model-button'
+    )
+
+
+  const modelTrainingStatus =
+    document.querySelector(
+      '#model-training-status'
+    )
+
+
+  if (
+    !trainButton ||
+    !modelTrainingStatus
+  ) {
+
+    return
+
+  }
+
+
+  // Evita dos entrenamientos simultáneos
+
+  if (
+    isTraining()
+  ) {
+
+    modelTrainingStatus.textContent =
+      '⚠️ La IA ya se está entrenando...'
+
+    return
+
+  }
+
+
+  trainButton.disabled =
+    true
+
+
+  trainButton.textContent =
+    '🧠 ENTRENANDO IA...'
+
+
+  modelTrainingStatus.textContent =
+    '⚙️ Preparando red neuronal...'
+
+
+  try {
+
+    console.log(
+      '🧠 Iniciando entrenamiento de HANDVERSE...'
+    )
+
+
+    await trainGestureModel()
+
+
+    if (
+      isModelTrained()
+    ) {
+
+      modelTrainingStatus.textContent =
+        '✅ IA entrenada correctamente. HANDVERSE está lista.'
+
+
+      trainButton.textContent =
+        '✅ IA ENTRENADA'
+
+
+      trainButton.disabled =
+        true
+
+
+      console.log(
+        '✅ Modelo HANDVERSE entrenado correctamente.'
+      )
+
+    } else {
+
+      modelTrainingStatus.textContent =
+        '⚠️ El entrenamiento terminó, pero el modelo no está listo.'
+
+
+      trainButton.textContent =
+        '🧠 ENTRENAR NUEVAMENTE'
+
+
+      trainButton.disabled =
+        false
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error entrenando HANDVERSE:',
+      error
+    )
+
+
+    modelTrainingStatus.textContent =
+      '❌ Error durante el entrenamiento. Revisa la consola.'
+
+
+    trainButton.textContent =
+      '🧠 INTENTAR ENTRENAMIENTO'
+
+
+    trainButton.disabled =
+      false
+
+  }
+
+}
+
+
+// ============================================================
+// EVENTO DEL BOTÓN ENTRENAR MODELO
+// ============================================================
+
+document.addEventListener(
+  'click',
+  async event => {
+
+    const trainButton =
+      event.target.closest(
+        '#train-model-button'
+      )
+
+
+    if (
+      !trainButton
+    ) {
+
+      return
+
+    }
+
+
+    await handleTrainModel()
+
+  }
+)
 
 
 // ======================================================
@@ -920,7 +1187,9 @@ async function captureGesture(
     ]
 
 
-  if (!gesture) {
+  if (
+    !gesture
+  ) {
 
     return
 
@@ -928,7 +1197,25 @@ async function captureGesture(
 
 
   // ----------------------------------------------------
-  // Si ya estaba completo, permite recapturarlo
+  // Si ya existe un modelo entrenado y modificamos
+  // los datos, ese modelo deja de ser válido.
+  // ----------------------------------------------------
+
+  if (
+    isModelTrained()
+  ) {
+
+    resetGestureModel()
+
+
+    trainingStatus.textContent =
+      '🔄 Datos modificados. Será necesario volver a entrenar la IA.'
+
+  }
+
+
+  // ----------------------------------------------------
+  // Si estaba completo permite recapturarlo
   // ----------------------------------------------------
 
   if (
@@ -941,6 +1228,7 @@ async function captureGesture(
     clearGestureSamples(
       gestureKey
     )
+
 
     updateTrainingUI()
 
@@ -964,7 +1252,9 @@ async function captureGesture(
     `${gesture.emoji} Prepárate para ${gesture.name}`
 
 
-  await sleep(800)
+  await sleep(
+    800
+  )
 
 
   for (
@@ -976,7 +1266,10 @@ async function captureGesture(
     trainingStatus.textContent =
       `${gesture.emoji} ${number}`
 
-    await sleep(800)
+
+    await sleep(
+      800
+    )
 
   }
 
@@ -996,7 +1289,7 @@ async function captureGesture(
     TARGET_SAMPLES_PER_CLASS
   ) {
 
-    // Si MediaPipe no ve una mano,
+    // Si MediaPipe no detecta mano
     // no guardamos datos.
 
     if (
@@ -1006,7 +1299,11 @@ async function captureGesture(
       trainingStatus.textContent =
         '⚠️ No veo tu mano. Colócala frente a la cámara.'
 
-      await sleep(150)
+
+      await sleep(
+        150
+      )
+
 
       continue
 
@@ -1020,7 +1317,9 @@ async function captureGesture(
       )
 
 
-    if (added) {
+    if (
+      added
+    ) {
 
       const currentCount =
         getSampleCount(
@@ -1037,10 +1336,12 @@ async function captureGesture(
     }
 
 
-    // Dejamos pasar algunos frames para
-    // no capturar exactamente la misma imagen.
+    // Dejamos pasar frames para evitar
+    // capturar exactamente la misma posición.
 
-    await sleep(120)
+    await sleep(
+      120
+    )
 
   }
 
@@ -1076,6 +1377,93 @@ async function captureGesture(
 
 }
 
+
+function updatePredictionUI(
+  prediction
+) {
+
+  if (!prediction) {
+
+    predictionIcon.textContent =
+      '🧠'
+
+    predictionName.textContent =
+      'ESPERANDO GESTO'
+
+    predictionAction.textContent =
+      'Muestra tu mano frente a la cámara'
+
+    predictionConfidence.textContent =
+      '-- %'
+
+    predictionPanel.className =
+      'prediction-panel'
+
+    return
+  }
+
+
+  const gestureData = {
+
+    open_hand: {
+      icon: '🖐️',
+      name: 'MANO ABIERTA',
+      action: 'ESCUDO',
+      className: 'shield'
+    },
+
+    fist: {
+      icon: '✊',
+      name: 'PUÑO CERRADO',
+      action: 'ATAQUE',
+      className: 'attack'
+    },
+
+    thumbs_up: {
+      icon: '👍',
+      name: 'PULGAR ARRIBA',
+      action: 'PODER',
+      className: 'power'
+    }
+
+  }
+
+
+  const gesture =
+    gestureData[prediction.key]
+
+
+  if (!gesture) {
+    return
+  }
+
+
+  const confidence =
+    Math.round(
+      prediction.confidence * 100
+    )
+
+
+  predictionIcon.textContent =
+    gesture.icon
+
+
+  predictionName.textContent =
+    gesture.name
+
+
+  predictionAction.textContent =
+    gesture.action
+
+
+  predictionConfidence.textContent =
+    `${confidence} %`
+
+
+  predictionPanel.className =
+    `prediction-panel ${gesture.className}`
+
+}
 
 // ======================================================
 // 15. BUCLE DE VISIÓN ARTIFICIAL
@@ -1128,8 +1516,8 @@ function startHandDetection() {
             results.landmarks.length > 0
           ) {
 
-            // Hacemos una copia para
-            // conservar el frame actual.
+            // Guardamos una copia de los
+            // landmarks del frame actual.
 
             currentLandmarks =
               results.landmarks[0]
@@ -1150,6 +1538,54 @@ function startHandDetection() {
               currentLandmarks
             )
 
+
+            // ------------------------------------------------
+            // PREDICCIÓN DE GESTOS
+            // ------------------------------------------------
+
+            if (
+              isModelTrained() &&
+              !captureInProgress
+            ) {
+
+              const prediction =
+                predictGesture(
+                  currentLandmarks
+                )
+
+
+              if (
+                prediction
+              ) {
+
+                const now =
+                  performance.now()
+
+
+                if (
+                  now -
+                  lastPredictionLogTime >=
+                  PREDICTION_LOG_INTERVAL_MS
+                ) {
+
+                  lastPredictionLogTime =
+                    now
+
+
+                  console.log(
+                    '🤖 Predicción HANDVERSE:',
+                    prediction
+                  )
+
+                  updatePredictionUI(
+                    prediction
+                  )
+
+                }
+
+              }
+
+            }
 
           } else {
 
@@ -1216,6 +1652,7 @@ async function startCamera() {
 
     status.textContent =
       '❌ Este navegador no permite usar la cámara'
+
 
     return
 
@@ -1293,6 +1730,7 @@ async function startCamera() {
 
       await initializeHandTracker()
 
+
       handTrackerReady =
         true
 
@@ -1311,7 +1749,7 @@ async function startCamera() {
 
 
     // --------------------------------------------------
-    // Habilitar entrenamiento
+    // Habilitar botones de entrenamiento
     // --------------------------------------------------
 
     setTrainingButtonsDisabled(
@@ -1321,7 +1759,6 @@ async function startCamera() {
 
     trainingStatus.textContent =
       'Selecciona un gesto para comenzar el entrenamiento.'
-
 
   } catch (error) {
 
@@ -1339,7 +1776,6 @@ async function startCamera() {
       status.textContent =
         '❌ Permiso de cámara rechazado'
 
-
     } else if (
       error.name ===
       'NotFoundError'
@@ -1348,7 +1784,6 @@ async function startCamera() {
       status.textContent =
         '❌ No se encontró una cámara'
 
-
     } else if (
       error.name ===
       'NotReadableError'
@@ -1356,7 +1791,6 @@ async function startCamera() {
 
       status.textContent =
         '❌ La cámara está siendo utilizada por otra aplicación'
-
 
     } else {
 
@@ -1376,6 +1810,22 @@ async function startCamera() {
   }
 
 }
+
+
+// ======================================================
+// MANTENER CANVAS SINCRONIZADO
+// ======================================================
+
+video.addEventListener(
+  'loadedmetadata',
+  resizeOverlay
+)
+
+
+window.addEventListener(
+  'resize',
+  resizeOverlay
+)
 
 
 // ======================================================
@@ -1412,8 +1862,9 @@ trainButtons.forEach(
 
 updateTrainingUI()
 
+
 // ======================================================
-// HANDVERSE - INICIALIZACIÓN DEL MOTOR DE IA
+// 19. INICIALIZACIÓN DEL MOTOR DE IA
 // ======================================================
 
 async function initializeHandverseAI() {
@@ -1424,7 +1875,9 @@ async function initializeHandverseAI() {
       '🧠 Inicializando motor neuronal de HANDVERSE...'
     )
 
+
     await initializeAI()
+
 
     console.log(
       '✅ Motor de Inteligencia Artificial preparado'
@@ -1440,5 +1893,6 @@ async function initializeHandverseAI() {
   }
 
 }
+
 
 initializeHandverseAI()

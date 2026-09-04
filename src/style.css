@@ -1399,3 +1399,277 @@ body::before {
   }
 
 }
+
+/* =========================================
+   BOTÓN ENTRENAMIENTO DE IA
+   ========================================= */
+
+.dataset-ready-content {
+  width: 100%;
+}
+
+.train-model-button {
+  margin-top: 12px;
+  padding: 12px 22px;
+
+  border: 1px solid #00eaff;
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 234, 255, 0.18),
+      rgba(66, 73, 255, 0.18)
+    );
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.train-model-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 234, 255, 0.30),
+      rgba(66, 73, 255, 0.30)
+    );
+
+  box-shadow:
+    0 0 18px rgba(0, 234, 255, 0.35);
+}
+
+.train-model-button:active {
+  transform: translateY(0);
+}
+
+.train-model-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.model-training-status {
+  margin-top: 10px;
+
+  color: #7defff;
+
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   HANDVERSE - RESULTADO DE PREDICCIÓN IA
+========================================================= */
+
+.prediction-panel {
+  width: 100%;
+  margin-top: 14px;
+  padding: 16px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 18, 35, 0.94),
+      rgba(3, 10, 24, 0.96)
+    );
+
+  border:
+    1px solid
+    rgba(34, 211, 238, 0.22);
+
+  border-radius: 14px;
+
+  box-shadow:
+    inset 0 0 20px
+    rgba(34, 211, 238, 0.03);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.prediction-icon {
+  min-width: 58px;
+
+  font-size: 2.6rem;
+
+  text-align: center;
+
+  filter:
+    drop-shadow(
+      0 0 12px
+      rgba(34, 211, 238, 0.45)
+    );
+}
+
+
+.prediction-information {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+}
+
+
+.prediction-eyebrow {
+  color: var(--cyan);
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+}
+
+
+#prediction-name {
+  margin-top: 3px;
+
+  color: var(--text-primary);
+
+  font-size: 1.1rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.04em;
+}
+
+
+#prediction-action {
+  margin-top: 2px;
+
+  color: var(--cyan-light);
+
+  font-size: 0.78rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+.prediction-confidence {
+  min-width: 105px;
+
+  display: flex;
+  flex-direction: column;
+
+  text-align: right;
+}
+
+
+.prediction-confidence span {
+  color: var(--text-secondary);
+
+  font-size: 0.6rem;
+
+  letter-spacing: 0.12em;
+}
+
+
+#prediction-confidence {
+  color: var(--cyan-light);
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 1.25rem;
+}
+
+
+/* ESCUDO */
+
+.prediction-panel.shield {
+  border-color:
+    rgba(34, 211, 238, 0.65);
+
+  box-shadow:
+    0 0 24px
+    rgba(34, 211, 238, 0.12);
+}
+
+
+/* ATAQUE */
+
+.prediction-panel.attack {
+  border-color:
+    rgba(239, 68, 68, 0.75);
+
+  box-shadow:
+    0 0 24px
+    rgba(239, 68, 68, 0.14);
+}
+
+
+/* PODER */
+
+.prediction-panel.power {
+  border-color:
+    rgba(139, 92, 246, 0.8);
+
+  box-shadow:
+    0 0 24px
+    rgba(139, 92, 246, 0.16);
+}
+
+
+/* MÓVIL */
+
+@media (max-width: 650px) {
+
+  .prediction-panel {
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .prediction-icon {
+    min-width: 42px;
+
+    font-size: 2rem;
+  }
+
+  #prediction-name {
+    font-size: 0.9rem;
+  }
+
+  #prediction-action {
+    font-size: 0.68rem;
+  }
+
+  .prediction-confidence {
+    min-width: 75px;
+  }
+
+  #prediction-confidence {
+    font-size: 1rem;
+  }
+
+}
