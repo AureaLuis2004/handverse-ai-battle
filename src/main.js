@@ -1,3 +1,8 @@
+// ============================================================
+// HANDVERSE: AI BATTLE
+// MAIN.JS COMPLETO
+// ============================================================
+
 import './style.css'
 
 import {
@@ -27,23 +32,29 @@ import {
   resetGestureModel
 } from './ai/model.js'
 
+import {
+  startBattle,
+  startNextRound,
+  playBattleTurn,
+  getBattleState,
+  isBattleActive,
+  resetBattle
+} from './game/battleEngine.js'
 
-// ======================================================
-// HANDVERSE: AI BATTLE
-// Aplicación principal
-// ======================================================
 
-
-// ======================================================
-// 1. INTERFAZ
-// ======================================================
+// ============================================================
+// 1. INTERFAZ PRINCIPAL
+// ============================================================
 
 const app =
   document.querySelector('#app')
 
-
 app.innerHTML = `
   <main class="app-shell">
+
+    <!-- ================================================== -->
+    <!-- CABECERA -->
+    <!-- ================================================== -->
 
     <section class="hero">
 
@@ -53,7 +64,9 @@ app.innerHTML = `
 
       <h1>
         HANDVERSE:
-        <span>BATALLA DE IA</span>
+        <span>
+          BATALLA DE IA
+        </span>
       </h1>
 
       <p class="subtitle">
@@ -82,6 +95,10 @@ app.innerHTML = `
     </section>
 
 
+    <!-- ================================================== -->
+    <!-- CÁMARA -->
+    <!-- ================================================== -->
+
     <section class="camera-panel">
 
       <div class="camera-stage">
@@ -97,7 +114,9 @@ app.innerHTML = `
 
         <div id="camera-placeholder">
 
-          <span>📷</span>
+          <span>
+            📷
+          </span>
 
           <p>
             Cámara preparada
@@ -122,11 +141,17 @@ app.innerHTML = `
         </button>
 
       </div>
-      
+
+
+      <!-- ================================================= -->
+      <!-- RECONOCIMIENTO DE GESTO -->
+      <!-- ================================================= -->
+
       <div
         id="prediction-panel"
         class="prediction-panel"
       >
+
         <div class="prediction-icon">
           🧠
         </div>
@@ -158,14 +183,15 @@ app.innerHTML = `
           </strong>
 
         </div>
+
       </div>
 
     </section>
 
 
-    <!-- ================================================
-         PANEL DE ENTRENAMIENTO
-    ================================================= -->
+    <!-- ================================================== -->
+    <!-- ENTRENAMIENTO -->
+    <!-- ================================================== -->
 
     <section class="training-panel">
 
@@ -202,7 +228,9 @@ app.innerHTML = `
       <div class="training-grid">
 
 
+        <!-- ================================================ -->
         <!-- MANO ABIERTA -->
+        <!-- ================================================ -->
 
         <article
           class="gesture-training-card"
@@ -259,7 +287,9 @@ app.innerHTML = `
         </article>
 
 
-        <!-- PUÑO -->
+        <!-- ================================================ -->
+        <!-- PUÑO CERRADO -->
+        <!-- ================================================ -->
 
         <article
           class="gesture-training-card"
@@ -316,7 +346,9 @@ app.innerHTML = `
         </article>
 
 
+        <!-- ================================================ -->
         <!-- PULGAR ARRIBA -->
+        <!-- ================================================ -->
 
         <article
           class="gesture-training-card"
@@ -375,6 +407,10 @@ app.innerHTML = `
       </div>
 
 
+      <!-- ================================================= -->
+      <!-- ESTADO DEL DATASET -->
+      <!-- ================================================= -->
+
       <div
         id="dataset-ready"
         class="dataset-ready"
@@ -400,33 +436,265 @@ app.innerHTML = `
 
     </section>
 
+
+    <!-- ================================================== -->
+    <!-- ARENA DE BATALLA -->
+    <!-- ================================================== -->
+
+    <section
+      id="battle-section"
+      class="battle-section battle-locked"
+    >
+
+      <div class="battle-header">
+
+        <span class="battle-eyebrow">
+          HANDVERSE COMBAT SYSTEM
+        </span>
+
+        <h2>
+          ⚔️ ARENA DE BATALLA
+        </h2>
+
+        <p id="battle-message">
+          Entrena la IA para desbloquear la batalla.
+        </p>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- HUD DE VIDA -->
+      <!-- ================================================= -->
+
+      <div class="battle-hud">
+
+
+        <!-- JUGADOR -->
+
+        <div class="battle-player">
+
+          <span class="battle-character">
+            👤
+          </span>
+
+          <div>
+
+            <span class="battle-label">
+              JUGADOR
+            </span>
+
+            <div class="health-info">
+
+              <span>
+                VIDA
+              </span>
+
+              <span id="player-health-text">
+                100 / 100
+              </span>
+
+            </div>
+
+            <div class="health-bar">
+
+              <div
+                id="player-health-bar"
+                class="health-fill player-health"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CENTRO -->
+
+        <div class="battle-center">
+
+          <span class="round-label">
+            RONDA
+          </span>
+
+          <strong id="battle-round">
+            0
+          </strong>
+
+          <span class="battle-vs">
+            VS
+          </span>
+
+        </div>
+
+
+        <!-- IA -->
+
+        <div class="battle-player battle-ai">
+
+          <span class="battle-character">
+            🤖
+          </span>
+
+          <div>
+
+            <span class="battle-label">
+              HANDVERSE IA
+            </span>
+
+            <div class="health-info">
+
+              <span>
+                VIDA
+              </span>
+
+              <span id="ai-health-text">
+                100 / 100
+              </span>
+
+            </div>
+
+            <div class="health-bar">
+
+              <div
+                id="ai-health-bar"
+                class="health-fill ai-health"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- MOVIMIENTOS -->
+      <!-- ================================================= -->
+
+      <div class="battle-actions">
+
+
+        <!-- JUGADOR -->
+
+        <div class="battle-action-card">
+
+          <span>
+            TU MOVIMIENTO
+          </span>
+
+          <strong id="player-battle-emoji">
+            ❔
+          </strong>
+
+          <p id="player-battle-action">
+            ESPERANDO
+          </p>
+
+        </div>
+
+
+        <div class="battle-action-versus">
+          VS
+        </div>
+
+
+        <!-- IA -->
+
+        <div class="battle-action-card">
+
+          <span>
+            MOVIMIENTO IA
+          </span>
+
+          <strong id="ai-battle-emoji">
+            🤖
+          </strong>
+
+          <p id="ai-battle-action">
+            ESPERANDO
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- RESULTADO -->
+      <!-- ================================================= -->
+
+      <div
+        id="battle-result"
+        class="battle-result"
+      >
+        🔒 BATALLA BLOQUEADA
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- NUEVA PARTIDA -->
+      <!-- ================================================= -->
+
+      <div
+        id="new-battle-container"
+        class="new-battle-container"
+        hidden
+      >
+
+        <button
+          id="new-battle-button"
+          class="new-battle-button"
+          type="button"
+        >
+          🎮 GENERAR OTRA PARTIDA
+        </button>
+
+      </div>
+
+    </section>
+
   </main>
 `
 
 
-// ======================================================
-// 2. ELEMENTOS DE LA CÁMARA
-// ======================================================
+// ============================================================
+// 2. ELEMENTOS DEL DOM
+// ============================================================
 
 const video =
-  document.querySelector('#webcam')
+  document.querySelector(
+    '#webcam'
+  )
 
 const canvas =
-  document.querySelector('#overlay')
+  document.querySelector(
+    '#overlay'
+  )
 
 const context =
-  canvas.getContext('2d')
+  canvas.getContext(
+    '2d'
+  )
 
-const button =
-  document.querySelector('#start-camera')
+const cameraButton =
+  document.querySelector(
+    '#start-camera'
+  )
 
-const status =
-  document.querySelector('#camera-status')
+const cameraStatus =
+  document.querySelector(
+    '#camera-status'
+  )
 
-const placeholder =
+const cameraPlaceholder =
   document.querySelector(
     '#camera-placeholder'
   )
+
 
 const predictionPanel =
   document.querySelector(
@@ -454,10 +722,6 @@ const predictionIcon =
   )
 
 
-// ======================================================
-// 3. ELEMENTOS DEL ENTRENAMIENTO
-// ======================================================
-
 const trainingStatus =
   document.querySelector(
     '#training-status'
@@ -474,28 +738,85 @@ const trainButtons =
   )
 
 
-// ======================================================
-// 4. ESTADO GENERAL
-// ======================================================
+const newBattleContainer =
+  document.querySelector(
+    '#new-battle-container'
+  )
 
-let handTrackerReady = false
-
-let detectionRunning = false
-
-let lastVideoTime = -1
-
-let currentLandmarks = null
-
-let captureInProgress = false
-
-let lastPredictionLogTime = 0
-
-const PREDICTION_LOG_INTERVAL_MS = 250
+const newBattleButton =
+  document.querySelector(
+    '#new-battle-button'
+  )
 
 
-// ======================================================
-// 5. INFORMACIÓN DE LOS GESTOS
-// ======================================================
+// ============================================================
+// 3. ESTADO GENERAL
+// ============================================================
+
+let handTrackerReady =
+  false
+
+let detectionRunning =
+  false
+
+let lastVideoTime =
+  -1
+
+let currentLandmarks =
+  null
+
+let captureInProgress =
+  false
+
+let lastPredictionLogTime =
+  0
+
+
+// ============================================================
+// CONTROL DE GESTOS DE BATALLA
+// ============================================================
+
+let battleGestureLocked =
+  false
+
+let lastBattleGesture =
+  null
+
+let battleGestureStartTime =
+  0
+
+
+// ============================================================
+// TRANSICIÓN ENTRE RONDAS
+// ============================================================
+
+let roundTransitionActive =
+  false
+
+let roundTransitionTimer =
+  null
+
+
+// ============================================================
+// CONFIGURACIÓN DE RECONOCIMIENTO
+// ============================================================
+
+const BATTLE_GESTURE_HOLD_MS =
+  350
+
+const BATTLE_MIN_CONFIDENCE =
+  0.80
+
+const PREDICTION_LOG_INTERVAL_MS =
+  250
+
+const ROUND_TRANSITION_MS =
+  1800
+
+
+// ============================================================
+// 4. INFORMACIÓN DE LOS GESTOS
+// ============================================================
 
 const GESTURES = {
 
@@ -511,9 +832,68 @@ const GESTURES = {
 }
 
 
-// ======================================================
-// 6. CONEXIONES DE LA MANO
-// ======================================================
+// ============================================================
+// INFORMACIÓN VISUAL
+// ============================================================
+
+const GESTURE_VIEW = {
+
+  open_hand: {
+
+    icon:
+      '🖐️',
+
+    name:
+      'MANO ABIERTA',
+
+    action:
+      'ESCUDO',
+
+    className:
+      'shield'
+
+  },
+
+
+  fist: {
+
+    icon:
+      '✊',
+
+    name:
+      'PUÑO CERRADO',
+
+    action:
+      'ATAQUE',
+
+    className:
+      'attack'
+
+  },
+
+
+  thumbs_up: {
+
+    icon:
+      '👍',
+
+    name:
+      'PULGAR ARRIBA',
+
+    action:
+      'PODER',
+
+    className:
+      'power'
+
+  }
+
+}
+
+
+// ============================================================
+// 5. CONEXIONES DE LA MANO
+// ============================================================
 
 const HAND_CONNECTIONS = [
 
@@ -553,26 +933,151 @@ const HAND_CONNECTIONS = [
 ]
 
 
-// ======================================================
-// 7. UTILIDAD DE ESPERA
-// ======================================================
+// ============================================================
+// 6. UTILIDAD DE ESPERA
+// ============================================================
 
-function sleep(milliseconds) {
+function sleep(
+  milliseconds
+) {
 
   return new Promise(
-    resolve =>
+    resolve => {
+
       setTimeout(
         resolve,
         milliseconds
       )
+
+    }
   )
 
 }
 
 
-// ======================================================
-// 8. PREPARAR CANVAS
-// ======================================================
+// ============================================================
+// LIMITAR VIDA ENTRE 0 Y 100
+// ============================================================
+
+function clampHealth(
+  value
+) {
+
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      Number(
+        value ?? 100
+      )
+    )
+  )
+
+}
+
+
+// ============================================================
+// REINICIAR CONTROL DE GESTOS
+// ============================================================
+
+function resetBattleGestureControl() {
+
+  lastBattleGesture =
+    null
+
+  battleGestureStartTime =
+    0
+
+  battleGestureLocked =
+    false
+
+}
+
+
+// ============================================================
+// CANCELAR TRANSICIÓN DE RONDA
+// ============================================================
+
+function cancelRoundTransition() {
+
+  if (
+    roundTransitionTimer
+  ) {
+
+    clearTimeout(
+      roundTransitionTimer
+    )
+
+    roundTransitionTimer =
+      null
+
+  }
+
+
+  roundTransitionActive =
+    false
+
+}
+
+
+// ============================================================
+// INICIAR TRANSICIÓN DE RONDA
+// ============================================================
+
+function beginRoundTransition() {
+
+  cancelRoundTransition()
+
+  roundTransitionActive =
+    true
+
+  battleGestureLocked =
+    true
+
+
+  roundTransitionTimer =
+    setTimeout(
+      () => {
+
+        roundTransitionTimer =
+          null
+
+
+        // ==============================================
+        // PEDIR AL BATTLE ENGINE LA SIGUIENTE RONDA
+        // ==============================================
+
+        const nextRoundState =
+          startNextRound()
+
+
+        console.log(
+          '🔥 SIGUIENTE RONDA:',
+          nextRoundState
+        )
+
+
+        roundTransitionActive =
+          false
+
+
+        resetBattleGestureControl()
+
+
+        updateBattleUI(
+          nextRoundState
+        )
+
+      },
+      ROUND_TRANSITION_MS
+    )
+
+}
+
+
+// ============================================================
+// 7. PREPARAR CANVAS
+// ============================================================
 
 function resizeOverlay() {
 
@@ -595,9 +1100,9 @@ function resizeOverlay() {
 }
 
 
-// ======================================================
-// 9. CONVERTIR LANDMARK AL CANVAS
-// ======================================================
+// ============================================================
+// CONVERTIR LANDMARK AL CANVAS
+// ============================================================
 
 function getCanvasPoint(
   landmark
@@ -606,7 +1111,10 @@ function getCanvasPoint(
   return {
 
     x:
-      (1 - landmark.x) *
+      (
+        1 -
+        landmark.x
+      ) *
       canvas.width,
 
     y:
@@ -618,9 +1126,9 @@ function getCanvasPoint(
 }
 
 
-// ======================================================
-// 10. LIMPIAR OVERLAY
-// ======================================================
+// ============================================================
+// LIMPIAR MANO
+// ============================================================
 
 function clearHandOverlay() {
 
@@ -634,9 +1142,9 @@ function clearHandOverlay() {
 }
 
 
-// ======================================================
-// 11. DIBUJAR MANO FUTURISTA
-// ======================================================
+// ============================================================
+// DIBUJAR MANO
+// ============================================================
 
 function drawHandOverlay(
   landmarks
@@ -645,13 +1153,14 @@ function drawHandOverlay(
   clearHandOverlay()
 
 
-  // ----------------------------------------------------
-  // Líneas
-  // ----------------------------------------------------
+  // ========================================================
+  // LÍNEAS
+  // ========================================================
 
   context.save()
 
-  context.lineWidth = 4
+  context.lineWidth =
+    4
 
   context.lineCap =
     'round'
@@ -665,7 +1174,8 @@ function drawHandOverlay(
   context.shadowColor =
     '#22d3ee'
 
-  context.shadowBlur = 16
+  context.shadowBlur =
+    16
 
 
   for (
@@ -679,14 +1189,15 @@ function drawHandOverlay(
     const start =
       getCanvasPoint(
         landmarks[
-          startIndex
+        startIndex
         ]
       )
+
 
     const end =
       getCanvasPoint(
         landmarks[
-          endIndex
+        endIndex
         ]
       )
 
@@ -711,9 +1222,9 @@ function drawHandOverlay(
   context.restore()
 
 
-  // ----------------------------------------------------
-  // 21 puntos
-  // ----------------------------------------------------
+  // ========================================================
+  // 21 PUNTOS
+  // ========================================================
 
   for (
     const landmark
@@ -744,7 +1255,7 @@ function drawHandOverlay(
     context.fill()
 
 
-    // Punto principal
+    // Punto blanco
 
     context.beginPath()
 
@@ -762,7 +1273,8 @@ function drawHandOverlay(
     context.shadowColor =
       '#22d3ee'
 
-    context.shadowBlur = 16
+    context.shadowBlur =
+      16
 
     context.fill()
 
@@ -787,14 +1299,15 @@ function drawHandOverlay(
   }
 
 
-  context.shadowBlur = 0
+  context.shadowBlur =
+    0
 
 }
 
 
-// ======================================================
-// 12. ACTUALIZAR INTERFAZ DEL DATASET
-// ======================================================
+// ============================================================
+// 8. ACTUALIZAR INTERFAZ DEL DATASET
+// ============================================================
 
 function updateTrainingUI() {
 
@@ -815,7 +1328,9 @@ function updateTrainingUI() {
       )
 
 
-    if (!card) {
+    if (
+      !card
+    ) {
 
       continue
 
@@ -856,12 +1371,24 @@ function updateTrainingUI() {
       )
 
 
-    countElement.textContent =
-      `${count} / ${TARGET_SAMPLES_PER_CLASS}`
+    if (
+      countElement
+    ) {
+
+      countElement.textContent =
+        `${count} / ${TARGET_SAMPLES_PER_CLASS}`
+
+    }
 
 
-    progressFill.style.width =
-      `${percentage}%`
+    if (
+      progressFill
+    ) {
+
+      progressFill.style.width =
+        `${percentage}%`
+
+    }
 
 
     if (
@@ -873,26 +1400,42 @@ function updateTrainingUI() {
         'gesture-complete'
       )
 
-      trainButton.textContent =
-        'RECAPTURAR'
 
-    } else {
+      if (
+        trainButton
+      ) {
+
+        trainButton.textContent =
+          'RECAPTURAR'
+
+      }
+
+    }
+
+    else {
 
       card.classList.remove(
         'gesture-complete'
       )
 
-      trainButton.textContent =
-        'ENTRENAR'
+
+      if (
+        trainButton
+      ) {
+
+        trainButton.textContent =
+          'ENTRENAR'
+
+      }
 
     }
 
   }
 
 
-  // ----------------------------------------------------
-  // Dataset completo
-  // ----------------------------------------------------
+  // ========================================================
+  // DATASET COMPLETO
+  // ========================================================
 
   if (
     isDatasetReady()
@@ -908,6 +1451,7 @@ function updateTrainingUI() {
 
 
     datasetReadyBox.innerHTML = `
+
       <span>
         ✅
       </span>
@@ -926,30 +1470,38 @@ function updateTrainingUI() {
           id="train-model-button"
           class="train-model-button"
           type="button"
-          ${modelAlreadyTrained ? 'disabled' : ''}
+          ${modelAlreadyTrained
+        ? 'disabled'
+        : ''
+      }
         >
-          ${
-            modelAlreadyTrained
-              ? '✅ IA ENTRENADA'
-              : '🧠 ENTRENAR MODELO IA'
-          }
+
+          ${modelAlreadyTrained
+        ? '✅ IA ENTRENADA'
+        : '🧠 ENTRENAR MODELO IA'
+      }
+
         </button>
 
         <p
           id="model-training-status"
           class="model-training-status"
         >
-          ${
-            modelAlreadyTrained
-              ? '✅ IA entrenada correctamente. HANDVERSE está lista.'
-              : 'Esperando entrenamiento...'
-          }
+
+          ${modelAlreadyTrained
+        ? '✅ IA entrenada correctamente. HANDVERSE está lista.'
+        : 'Esperando entrenamiento...'
+      }
+
         </p>
 
       </div>
+
     `
 
-  } else {
+  }
+
+  else {
 
     datasetReadyBox.classList.remove(
       'ready'
@@ -957,6 +1509,7 @@ function updateTrainingUI() {
 
 
     datasetReadyBox.innerHTML = `
+
       <span>
         🧠
       </span>
@@ -972,6 +1525,7 @@ function updateTrainingUI() {
         </p>
 
       </div>
+
     `
 
   }
@@ -980,12 +1534,12 @@ function updateTrainingUI() {
 
 
 // ============================================================
-//  ENTRENAMIENTO DE LA INTELIGENCIA ARTIFICIAL
+// 9. ENTRENAR MODELO DE IA
 // ============================================================
 
 async function handleTrainModel() {
 
-  const trainButton =
+  const trainModelButton =
     document.querySelector(
       '#train-model-button'
     )
@@ -998,7 +1552,7 @@ async function handleTrainModel() {
 
 
   if (
-    !trainButton ||
+    !trainModelButton ||
     !modelTrainingStatus
   ) {
 
@@ -1006,8 +1560,6 @@ async function handleTrainModel() {
 
   }
 
-
-  // Evita dos entrenamientos simultáneos
 
   if (
     isTraining()
@@ -1021,13 +1573,11 @@ async function handleTrainModel() {
   }
 
 
-  trainButton.disabled =
+  trainModelButton.disabled =
     true
 
-
-  trainButton.textContent =
+  trainModelButton.textContent =
     '🧠 ENTRENANDO IA...'
-
 
   modelTrainingStatus.textContent =
     '⚙️ Preparando red neuronal...'
@@ -1044,41 +1594,70 @@ async function handleTrainModel() {
 
 
     if (
-      isModelTrained()
+      !isModelTrained()
     ) {
-
-      modelTrainingStatus.textContent =
-        '✅ IA entrenada correctamente. HANDVERSE está lista.'
-
-
-      trainButton.textContent =
-        '✅ IA ENTRENADA'
-
-
-      trainButton.disabled =
-        true
-
-
-      console.log(
-        '✅ Modelo HANDVERSE entrenado correctamente.'
-      )
-
-    } else {
 
       modelTrainingStatus.textContent =
         '⚠️ El entrenamiento terminó, pero el modelo no está listo.'
 
 
-      trainButton.textContent =
+      trainModelButton.textContent =
         '🧠 ENTRENAR NUEVAMENTE'
 
-
-      trainButton.disabled =
+      trainModelButton.disabled =
         false
+
+
+      return
 
     }
 
-  } catch (error) {
+
+    modelTrainingStatus.textContent =
+      '✅ IA entrenada correctamente. HANDVERSE está lista.'
+
+
+    trainModelButton.textContent =
+      '✅ IA ENTRENADA'
+
+
+    trainModelButton.disabled =
+      true
+
+
+    console.log(
+      '✅ Modelo HANDVERSE entrenado correctamente.'
+    )
+
+
+    // ======================================================
+    // INICIAR NUEVA BATALLA
+    // ======================================================
+
+    cancelRoundTransition()
+
+    resetBattleGestureControl()
+
+
+    const initialBattleState =
+      startBattle()
+
+
+    console.log(
+      '🔥 BATALLA HANDVERSE INICIADA:',
+      initialBattleState
+    )
+
+
+    updateBattleUI(
+      initialBattleState
+    )
+
+  }
+
+  catch (
+  error
+  ) {
 
     console.error(
       '❌ Error entrenando HANDVERSE:',
@@ -1090,11 +1669,11 @@ async function handleTrainModel() {
       '❌ Error durante el entrenamiento. Revisa la consola.'
 
 
-    trainButton.textContent =
+    trainModelButton.textContent =
       '🧠 INTENTAR ENTRENAMIENTO'
 
 
-    trainButton.disabled =
+    trainModelButton.disabled =
       false
 
   }
@@ -1103,37 +1682,8 @@ async function handleTrainModel() {
 
 
 // ============================================================
-// EVENTO DEL BOTÓN ENTRENAR MODELO
+// 10. HABILITAR / DESHABILITAR BOTONES
 // ============================================================
-
-document.addEventListener(
-  'click',
-  async event => {
-
-    const trainButton =
-      event.target.closest(
-        '#train-model-button'
-      )
-
-
-    if (
-      !trainButton
-    ) {
-
-      return
-
-    }
-
-
-    await handleTrainModel()
-
-  }
-)
-
-
-// ======================================================
-// 13. ACTIVAR/DESACTIVAR BOTONES DE ENTRENAMIENTO
-// ======================================================
 
 function setTrainingButtonsDisabled(
   disabled
@@ -1151,9 +1701,9 @@ function setTrainingButtonsDisabled(
 }
 
 
-// ======================================================
-// 14. CAPTURA AUTOMÁTICA DE UN GESTO
-// ======================================================
+// ============================================================
+// 11. CAPTURAR GESTO
+// ============================================================
 
 async function captureGesture(
   gestureKey
@@ -1183,7 +1733,7 @@ async function captureGesture(
 
   const gesture =
     GESTURES[
-      gestureKey
+    gestureKey
     ]
 
 
@@ -1196,16 +1746,26 @@ async function captureGesture(
   }
 
 
-  // ----------------------------------------------------
-  // Si ya existe un modelo entrenado y modificamos
-  // los datos, ese modelo deja de ser válido.
-  // ----------------------------------------------------
+  // ========================================================
+  // SI CAMBIAMOS EL DATASET DESPUÉS DE ENTRENAR
+  // ========================================================
 
   if (
     isModelTrained()
   ) {
 
     resetGestureModel()
+
+    resetBattle()
+
+    cancelRoundTransition()
+
+    resetBattleGestureControl()
+
+
+    updateBattleUI(
+      getBattleState()
+    )
 
 
     trainingStatus.textContent =
@@ -1214,9 +1774,9 @@ async function captureGesture(
   }
 
 
-  // ----------------------------------------------------
-  // Si estaba completo permite recapturarlo
-  // ----------------------------------------------------
+  // ========================================================
+  // RECAPTURAR
+  // ========================================================
 
   if (
     getSampleCount(
@@ -1244,203 +1804,211 @@ async function captureGesture(
   )
 
 
-  // ----------------------------------------------------
-  // Cuenta regresiva
-  // ----------------------------------------------------
-
-  trainingStatus.textContent =
-    `${gesture.emoji} Prepárate para ${gesture.name}`
-
-
-  await sleep(
-    800
-  )
-
-
-  for (
-    let number = 3;
-    number >= 1;
-    number--
-  ) {
+  try {
 
     trainingStatus.textContent =
-      `${gesture.emoji} ${number}`
+      `${gesture.emoji} Prepárate para ${gesture.name}`
 
 
     await sleep(
       800
     )
 
-  }
 
+    // ======================================================
+    // CUENTA REGRESIVA
+    // ======================================================
 
-  trainingStatus.textContent =
-    `🔴 CAPTURANDO ${gesture.name}... mueve ligeramente la mano`
-
-
-  // ----------------------------------------------------
-  // Capturar 30 muestras
-  // ----------------------------------------------------
-
-  while (
-    getSampleCount(
-      gestureKey
-    ) <
-    TARGET_SAMPLES_PER_CLASS
-  ) {
-
-    // Si MediaPipe no detecta mano
-    // no guardamos datos.
-
-    if (
-      !currentLandmarks
+    for (
+      let number = 3;
+      number >= 1;
+      number--
     ) {
 
       trainingStatus.textContent =
-        '⚠️ No veo tu mano. Colócala frente a la cámara.'
+        `${gesture.emoji} ${number}`
 
 
       await sleep(
-        150
+        800
       )
-
-
-      continue
 
     }
 
 
-    const added =
-      addSample(
-        gestureKey,
-        currentLandmarks
-      )
+    trainingStatus.textContent =
+      `🔴 CAPTURANDO ${gesture.name}... mueve ligeramente la mano`
 
 
-    if (
-      added
+    // ======================================================
+    // CAPTURAR MUESTRAS
+    // ======================================================
+
+    while (
+      getSampleCount(
+        gestureKey
+      ) <
+      TARGET_SAMPLES_PER_CLASS
     ) {
 
-      const currentCount =
-        getSampleCount(
-          gestureKey
+      if (
+        !currentLandmarks
+      ) {
+
+        trainingStatus.textContent =
+          '⚠️ No veo tu mano. Colócala frente a la cámara.'
+
+
+        await sleep(
+          150
         )
 
 
-      trainingStatus.textContent =
-        `🔴 ${gesture.emoji} Capturando ${currentCount}/${TARGET_SAMPLES_PER_CLASS}`
+        continue
+
+      }
 
 
-      updateTrainingUI()
+      const added =
+        addSample(
+          gestureKey,
+          currentLandmarks
+        )
+
+
+      if (
+        added
+      ) {
+
+        const currentCount =
+          getSampleCount(
+            gestureKey
+          )
+
+
+        trainingStatus.textContent =
+          `🔴 ${gesture.emoji} Capturando ${currentCount}/${TARGET_SAMPLES_PER_CLASS}`
+
+
+        updateTrainingUI()
+
+      }
+
+
+      await sleep(
+        120
+      )
 
     }
 
 
-    // Dejamos pasar frames para evitar
-    // capturar exactamente la misma posición.
-
-    await sleep(
-      120
-    )
+    trainingStatus.textContent =
+      `✅ ${gesture.emoji} ${gesture.name} aprendido correctamente`
 
   }
 
-
-  // ----------------------------------------------------
-  // Finalizado
-  // ----------------------------------------------------
-
-  trainingStatus.textContent =
-    `✅ ${gesture.emoji} ${gesture.name} aprendido correctamente`
-
-
-  captureInProgress =
-    false
-
-
-  setTrainingButtonsDisabled(
-    false
-  )
-
-
-  updateTrainingUI()
-
-
-  if (
-    isDatasetReady()
+  catch (
+  error
   ) {
 
+    console.error(
+      `❌ Error capturando ${gestureKey}:`,
+      error
+    )
+
+
     trainingStatus.textContent =
-      '🧠 Dataset completo. HANDVERSE está listo para entrenar el modelo.'
+      '❌ Ocurrió un error durante la captura.'
+
+  }
+
+  finally {
+
+    captureInProgress =
+      false
+
+
+    setTrainingButtonsDisabled(
+      false
+    )
+
+
+    updateTrainingUI()
+
+
+    if (
+      isDatasetReady()
+    ) {
+
+      trainingStatus.textContent =
+        '🧠 Dataset completo. HANDVERSE está listo para entrenar el modelo.'
+
+    }
 
   }
 
 }
 
 
+// ============================================================
+// 12. ACTUALIZAR RECONOCIMIENTO VISUAL
+// ============================================================
+
 function updatePredictionUI(
   prediction
 ) {
 
-  if (!prediction) {
+  if (
+    !prediction
+  ) {
 
     predictionIcon.textContent =
       '🧠'
 
+
     predictionName.textContent =
       'ESPERANDO GESTO'
+
 
     predictionAction.textContent =
       'Muestra tu mano frente a la cámara'
 
+
     predictionConfidence.textContent =
       '-- %'
+
 
     predictionPanel.className =
       'prediction-panel'
 
+
     return
-  }
-
-
-  const gestureData = {
-
-    open_hand: {
-      icon: '🖐️',
-      name: 'MANO ABIERTA',
-      action: 'ESCUDO',
-      className: 'shield'
-    },
-
-    fist: {
-      icon: '✊',
-      name: 'PUÑO CERRADO',
-      action: 'ATAQUE',
-      className: 'attack'
-    },
-
-    thumbs_up: {
-      icon: '👍',
-      name: 'PULGAR ARRIBA',
-      action: 'PODER',
-      className: 'power'
-    }
 
   }
 
 
   const gesture =
-    gestureData[prediction.key]
+    GESTURE_VIEW[
+    prediction.key
+    ]
 
 
-  if (!gesture) {
+  if (
+    !gesture
+  ) {
+
     return
+
   }
 
 
   const confidence =
     Math.round(
-      prediction.confidence * 100
+      (
+        prediction.confidence ??
+        0
+      ) *
+      100
     )
 
 
@@ -1465,9 +2033,1122 @@ function updatePredictionUI(
 
 }
 
-// ======================================================
-// 15. BUCLE DE VISIÓN ARTIFICIAL
-// ======================================================
+
+// ============================================================
+// 13. MOSTRAR GESTO EN LA ARENA EN TIEMPO REAL
+// ============================================================
+
+function updateBattleGesturePreview(
+  prediction
+) {
+
+  if (
+    !prediction ||
+    roundTransitionActive
+  ) {
+
+    return
+
+  }
+
+
+  const state =
+    getBattleState()
+
+
+  if (
+    !state ||
+    !state.battleStarted ||
+    state.battleFinished
+  ) {
+
+    return
+
+  }
+
+
+  const action =
+    GESTURE_VIEW[
+    prediction.key
+    ]
+
+
+  if (
+    !action
+  ) {
+
+    return
+
+  }
+
+
+  const playerActionIcon =
+    document.getElementById(
+      'player-battle-emoji'
+    )
+
+
+  const playerActionName =
+    document.getElementById(
+      'player-battle-action'
+    )
+
+
+  if (
+    !playerActionIcon ||
+    !playerActionName
+  ) {
+
+    return
+
+  }
+
+
+  // ========================================================
+  // VISTA PREVIA INMEDIATA
+  // ========================================================
+
+  playerActionIcon.textContent =
+    action.icon
+
+
+  playerActionName.textContent =
+    action.action
+
+}
+
+
+// ============================================================
+// 14. PROCESAR GESTO COMO TURNO
+// ============================================================
+
+function processBattlePrediction(
+  prediction
+) {
+
+  if (
+    !prediction
+  ) {
+
+    return
+
+  }
+
+
+  // Mostrar gesto inmediatamente.
+
+  updateBattleGesturePreview(
+    prediction
+  )
+
+
+  // Durante transición de ronda
+  // no aceptamos otro ataque.
+
+  if (
+    roundTransitionActive
+  ) {
+
+    return
+
+  }
+
+
+  // La batalla debe estar activa.
+
+  if (
+    !isBattleActive()
+  ) {
+
+    return
+
+  }
+
+
+  const gesture =
+    prediction.key
+
+
+  const confidence =
+    prediction.confidence ??
+    0
+
+
+  // ========================================================
+  // CONFIANZA MÍNIMA
+  // ========================================================
+
+  if (
+    confidence <
+    BATTLE_MIN_CONFIDENCE
+  ) {
+
+    resetBattleGestureControl()
+
+    return
+
+  }
+
+
+  const now =
+    performance.now()
+
+
+  // ========================================================
+  // GESTO NUEVO
+  // ========================================================
+
+  if (
+    gesture !==
+    lastBattleGesture
+  ) {
+
+    lastBattleGesture =
+      gesture
+
+
+    battleGestureStartTime =
+      now
+
+
+    battleGestureLocked =
+      false
+
+
+    return
+
+  }
+
+
+  // ========================================================
+  // EVITAR REPETICIÓN AUTOMÁTICA
+  // ========================================================
+
+  if (
+    battleGestureLocked
+  ) {
+
+    return
+
+  }
+
+
+  // ========================================================
+  // CONFIRMAR GESTO DURANTE 350 ms
+  // ========================================================
+
+  if (
+    now -
+    battleGestureStartTime <
+    BATTLE_GESTURE_HOLD_MS
+  ) {
+
+    return
+
+  }
+
+
+  // ========================================================
+  // EJECUTAR TURNO
+  // ========================================================
+
+  const result =
+    playBattleTurn(
+      gesture
+    )
+
+
+  if (
+    !result ||
+    !result.success
+  ) {
+
+    console.warn(
+      'Movimiento de batalla rechazado:',
+      result?.message ??
+      'Resultado de batalla inválido'
+    )
+
+
+    // ========================================================
+    // PODER ESPECIAL YA UTILIZADO
+    // ========================================================
+
+    if (
+      result?.powerAlreadyUsed
+    ) {
+
+      const battleResult =
+        document.getElementById(
+          'battle-result'
+        )
+
+
+      if (
+        battleResult
+      ) {
+
+        battleResult.textContent =
+          '⚠️ PODER ESPECIAL YA UTILIZADO · ELIGE ATAQUE O ESCUDO'
+
+      }
+
+
+      // Bloqueamos este mismo gesto
+      // hasta que el estudiante cambie la mano.
+
+      battleGestureLocked =
+        true
+
+    }
+
+
+    return
+  }
+
+
+  // Impedir que un mismo gesto
+  // se dispare varias veces.
+
+  battleGestureLocked =
+    true
+
+
+  // Actualizamos la interfaz.
+
+  updateBattleUI(
+    result
+  )
+
+
+  console.log(
+    '⚔️ TURNO HANDVERSE:',
+    result
+  )
+
+
+  // ========================================================
+  // SI TERMINÓ UNA RONDA
+  // ========================================================
+
+  if (
+    result.roundFinished &&
+    !result.battleFinished
+  ) {
+
+    beginRoundTransition()
+
+  }
+
+}
+
+
+// ============================================================
+// 15. GENERAR OTRA PARTIDA
+// ============================================================
+//
+// IMPORTANTE:
+//
+// NO:
+// - recarga la página
+// - borra las muestras
+// - elimina el modelo
+// - vuelve a entrenar la IA
+// - apaga la cámara
+//
+// SÍ:
+// - vuelve a ronda 1
+// - devuelve ambas vidas a 100
+// - coloca marcador 0 - 0
+// ============================================================
+
+function startNewBattle() {
+
+  if (
+    !isModelTrained()
+  ) {
+
+    console.warn(
+      'No se puede generar otra partida porque la IA no está entrenada.'
+    )
+
+    return
+
+  }
+
+
+  const currentState =
+    getBattleState()
+
+
+  if (
+    !currentState ||
+    !currentState.battleFinished
+  ) {
+
+    console.warn(
+      'La partida actual todavía no ha terminado.'
+    )
+
+    return
+
+  }
+
+
+  // Detenemos cualquier temporizador
+  // sobrante de la partida anterior.
+
+  cancelRoundTransition()
+
+
+  // Limpiamos solamente el control
+  // temporal de gestos.
+
+  resetBattleGestureControl()
+
+
+  // startBattle() reinicia únicamente
+  // el motor de batalla.
+
+  const newBattleState =
+    startBattle()
+
+
+  updateBattleUI(
+    newBattleState
+  )
+
+
+  console.log(
+    '🎮 NUEVA PARTIDA HANDVERSE INICIADA:',
+    newBattleState
+  )
+
+}
+
+
+// ============================================================
+// 16. ACTUALIZAR INTERFAZ DE BATALLA
+// ============================================================
+
+function updateBattleUI(
+  state
+) {
+
+  if (
+    !state
+  ) {
+
+    return
+
+  }
+
+
+  // ========================================================
+  // BOTÓN GENERAR OTRA PARTIDA
+  // ========================================================
+
+  if (
+    newBattleContainer
+  ) {
+
+    newBattleContainer.hidden =
+      !state.battleFinished
+
+  }
+
+
+  // ========================================================
+  // ELEMENTOS
+  // ========================================================
+
+  const battleSection =
+    document.getElementById(
+      'battle-section'
+    )
+
+
+  const battleMessage =
+    document.getElementById(
+      'battle-message'
+    )
+
+
+  const battleResult =
+    document.getElementById(
+      'battle-result'
+    )
+
+
+  const battleRound =
+    document.getElementById(
+      'battle-round'
+    )
+
+
+  const playerHealthText =
+    document.getElementById(
+      'player-health-text'
+    )
+
+
+  const aiHealthText =
+    document.getElementById(
+      'ai-health-text'
+    )
+
+
+  const playerHealthBar =
+    document.getElementById(
+      'player-health-bar'
+    )
+
+
+  const aiHealthBar =
+    document.getElementById(
+      'ai-health-bar'
+    )
+
+
+  const playerActionIcon =
+    document.getElementById(
+      'player-battle-emoji'
+    )
+
+
+  const playerActionName =
+    document.getElementById(
+      'player-battle-action'
+    )
+
+
+  const aiActionIcon =
+    document.getElementById(
+      'ai-battle-emoji'
+    )
+
+
+  const aiActionName =
+    document.getElementById(
+      'ai-battle-action'
+    )
+
+
+  const playerRoundsWon =
+    Number(
+      state.playerRoundsWon ??
+      0
+    )
+
+
+  const aiRoundsWon =
+    Number(
+      state.aiRoundsWon ??
+      0
+    )
+
+
+  // ========================================================
+  // BATALLA NO INICIADA
+  // ========================================================
+
+  if (
+    !state.battleStarted
+  ) {
+
+    battleSection?.classList.add(
+      'battle-locked'
+    )
+
+
+    if (
+      battleRound
+    ) {
+
+      battleRound.textContent =
+        '0'
+
+    }
+
+
+    if (
+      playerHealthText
+    ) {
+
+      playerHealthText.textContent =
+        '100 / 100'
+
+    }
+
+
+    if (
+      aiHealthText
+    ) {
+
+      aiHealthText.textContent =
+        '100 / 100'
+
+    }
+
+
+    if (
+      playerHealthBar
+    ) {
+
+      playerHealthBar.style.width =
+        '100%'
+
+    }
+
+
+    if (
+      aiHealthBar
+    ) {
+
+      aiHealthBar.style.width =
+        '100%'
+
+    }
+
+
+    if (
+      battleMessage
+    ) {
+
+      battleMessage.textContent =
+        'Entrena la IA para desbloquear la batalla.'
+
+    }
+
+
+    if (
+      battleResult
+    ) {
+
+      battleResult.textContent =
+        '🔒 BATALLA BLOQUEADA'
+
+    }
+
+
+    if (
+      playerActionIcon
+    ) {
+
+      playerActionIcon.textContent =
+        '❔'
+
+    }
+
+
+    if (
+      playerActionName
+    ) {
+
+      playerActionName.textContent =
+        'ESPERANDO'
+
+    }
+
+
+    if (
+      aiActionIcon
+    ) {
+
+      aiActionIcon.textContent =
+        '🤖'
+
+    }
+
+
+    if (
+      aiActionName
+    ) {
+
+      aiActionName.textContent =
+        'ESPERANDO'
+
+    }
+
+
+    return
+
+  }
+
+
+  // ========================================================
+  // DESBLOQUEAR ARENA
+  // ========================================================
+
+  battleSection?.classList.remove(
+    'battle-locked'
+  )
+
+
+  // ========================================================
+  // RONDA ACTUAL
+  // ========================================================
+
+  const currentRound =
+    Math.max(
+      1,
+      Number(
+        state.round ??
+        1
+      )
+    )
+
+
+  if (
+    battleRound
+  ) {
+
+    battleRound.textContent =
+      String(
+        currentRound
+      )
+
+  }
+
+
+  // ========================================================
+  // VIDAS
+  // ========================================================
+
+  let playerHealth =
+    clampHealth(
+      state.playerHealth
+    )
+
+
+  let aiHealth =
+    clampHealth(
+      state.aiHealth
+    )
+
+
+  /*
+    Durante la transición mantenemos visualmente
+    la vida del perdedor en 0 hasta entrar a la
+    siguiente ronda.
+  */
+
+  if (
+    state.roundFinished &&
+    !state.battleFinished
+  ) {
+
+    if (
+      state.roundWinner ===
+      'player'
+    ) {
+
+      aiHealth =
+        0
+
+    }
+
+    else if (
+      state.roundWinner ===
+      'ai'
+    ) {
+
+      playerHealth =
+        0
+
+    }
+
+  }
+
+
+  if (
+    playerHealthText
+  ) {
+
+    playerHealthText.textContent =
+      `${playerHealth} / 100`
+
+  }
+
+
+  if (
+    aiHealthText
+  ) {
+
+    aiHealthText.textContent =
+      `${aiHealth} / 100`
+
+  }
+
+
+  if (
+    playerHealthBar
+  ) {
+
+    playerHealthBar.style.width =
+      `${playerHealth}%`
+
+  }
+
+
+  if (
+    aiHealthBar
+  ) {
+
+    aiHealthBar.style.width =
+      `${aiHealth}%`
+
+  }
+
+
+  // ========================================================
+  // MOVIMIENTO DEL JUGADOR
+  // ========================================================
+
+  if (
+    state.playerAction
+  ) {
+
+    if (
+      playerActionIcon
+    ) {
+
+      playerActionIcon.textContent =
+        state.playerAction.emoji ??
+        '❔'
+
+    }
+
+
+    if (
+      playerActionName
+    ) {
+
+      playerActionName.textContent =
+        state.playerAction.name ??
+        'ESPERANDO'
+
+    }
+
+  }
+
+  else {
+
+    if (
+      playerActionIcon
+    ) {
+
+      playerActionIcon.textContent =
+        '❔'
+
+    }
+
+
+    if (
+      playerActionName
+    ) {
+
+      playerActionName.textContent =
+        'ESPERANDO'
+
+    }
+
+  }
+
+
+  // ========================================================
+  // MOVIMIENTO DE HANDVERSE
+  // ========================================================
+
+  if (
+    state.aiAction
+  ) {
+
+    if (
+      aiActionIcon
+    ) {
+
+      aiActionIcon.textContent =
+        state.aiAction.emoji ??
+        '🤖'
+
+    }
+
+
+    if (
+      aiActionName
+    ) {
+
+      aiActionName.textContent =
+        state.aiAction.name ??
+        'ESPERANDO'
+
+    }
+
+  }
+
+  else {
+
+    if (
+      aiActionIcon
+    ) {
+
+      aiActionIcon.textContent =
+        '🤖'
+
+    }
+
+
+    if (
+      aiActionName
+    ) {
+
+      aiActionName.textContent =
+        'ESPERANDO'
+
+    }
+
+  }
+
+
+  // ========================================================
+  // PARTIDA COMPLETA TERMINADA
+  // ========================================================
+
+  if (
+    state.battleFinished
+  ) {
+
+    cancelRoundTransition()
+
+
+    battleGestureLocked =
+      true
+
+
+    if (
+      state.winner ===
+      'player'
+    ) {
+
+      if (
+        battleMessage
+      ) {
+
+        battleMessage.textContent =
+          `🏆 ¡GANASTE LA BATALLA! Marcador ${playerRoundsWon} - ${aiRoundsWon}`
+
+      }
+
+
+      if (
+        battleResult
+      ) {
+
+        battleResult.textContent =
+          '🏆 VICTORIA FINAL DEL ESTUDIANTE'
+
+      }
+
+    }
+
+
+    else if (
+      state.winner ===
+      'ai'
+    ) {
+
+      if (
+        battleMessage
+      ) {
+
+        battleMessage.textContent =
+          `🤖 HANDVERSE IA GANÓ LA BATALLA. Marcador ${playerRoundsWon} - ${aiRoundsWon}`
+
+      }
+
+
+      if (
+        battleResult
+      ) {
+
+        battleResult.textContent =
+          '🤖 VICTORIA FINAL DE HANDVERSE IA'
+
+      }
+
+    }
+
+
+    else {
+
+      if (
+        battleMessage
+      ) {
+
+        battleMessage.textContent =
+          '🤝 BATALLA EMPATADA.'
+
+      }
+
+
+      if (
+        battleResult
+      ) {
+
+        battleResult.textContent =
+          '🤝 EMPATE FINAL'
+
+      }
+
+    }
+
+
+    return
+
+  }
+
+
+  // ========================================================
+  // RONDA COMPLETA FINALIZADA
+  // ========================================================
+
+  if (
+    state.roundFinished
+  ) {
+
+    if (
+      battleMessage
+    ) {
+
+      battleMessage.textContent =
+        `Ronda ${currentRound} terminada · Marcador ${playerRoundsWon} - ${aiRoundsWon}`
+
+    }
+
+
+    if (
+      battleResult
+    ) {
+
+      if (
+        state.roundWinner ===
+        'player'
+      ) {
+
+        battleResult.textContent =
+          `🏆 EL ESTUDIANTE GANÓ LA RONDA ${currentRound}`
+
+      }
+
+
+      else if (
+        state.roundWinner ===
+        'ai'
+      ) {
+
+        battleResult.textContent =
+          `🤖 HANDVERSE IA GANÓ LA RONDA ${currentRound}`
+
+      }
+
+
+      else {
+
+        battleResult.textContent =
+          `⚔️ RONDA ${currentRound} FINALIZADA`
+
+      }
+
+    }
+
+
+    return
+
+  }
+
+
+  // ========================================================
+  // RONDA EN CURSO
+  //
+  // CADA GESTO ES UN TURNO.
+  // NO ES UNA NUEVA RONDA.
+  // ========================================================
+
+  if (
+    battleMessage
+  ) {
+
+    battleMessage.textContent =
+      `Ronda ${currentRound} · Marcador ${playerRoundsWon} - ${aiRoundsWon} · Sigue combatiendo.`
+
+  }
+
+
+  if (
+    !battleResult
+  ) {
+
+    return
+
+  }
+
+
+  // Todavía no se realizó ningún turno.
+
+  if (
+    !state.playerAction ||
+    !state.aiAction
+  ) {
+
+    battleResult.textContent =
+      '🎮 ESPERANDO TU MOVIMIENTO'
+
+
+    return
+
+  }
+
+
+  // ========================================================
+  // RESULTADO DEL TURNO
+  // ========================================================
+
+  if (
+    state.turnWinner ===
+    'player'
+  ) {
+
+    battleResult.textContent =
+      '⚡ GANASTE EL INTERCAMBIO · LA RONDA CONTINÚA'
+
+  }
+
+
+  else if (
+    state.turnWinner ===
+    'ai'
+  ) {
+
+    battleResult.textContent =
+      '🤖 HANDVERSE GANÓ EL INTERCAMBIO · LA RONDA CONTINÚA'
+
+  }
+
+
+  else {
+
+    battleResult.textContent =
+      '⚔️ EMPATE · LA RONDA CONTINÚA'
+
+  }
+
+}
+
+
+// ============================================================
+// 17. BUCLE DE VISIÓN ARTIFICIAL
+// ============================================================
 
 function startHandDetection() {
 
@@ -1510,27 +3191,34 @@ function startHandDetection() {
             )
 
 
+          // ==================================================
+          // MANO DETECTADA
+          // ==================================================
+
           if (
-            results &&
-            results.landmarks &&
+            results?.landmarks &&
             results.landmarks.length > 0
           ) {
-
-            // Guardamos una copia de los
-            // landmarks del frame actual.
 
             currentLandmarks =
               results.landmarks[0]
                 .map(
                   point => ({
-                    x: point.x,
-                    y: point.y,
-                    z: point.z
+
+                    x:
+                      point.x,
+
+                    y:
+                      point.y,
+
+                    z:
+                      point.z
+
                   })
                 )
 
 
-            status.textContent =
+            cameraStatus.textContent =
               `🖐️ Mano detectada — ${currentLandmarks.length} puntos`
 
 
@@ -1539,9 +3227,9 @@ function startHandDetection() {
             )
 
 
-            // ------------------------------------------------
-            // PREDICCIÓN DE GESTOS
-            // ------------------------------------------------
+            // ================================================
+            // PREDICCIÓN
+            // ================================================
 
             if (
               isModelTrained() &&
@@ -1562,6 +3250,10 @@ function startHandDetection() {
                   performance.now()
 
 
+                // ============================================
+                // CONSOLA LIMITADA A 250 ms
+                // ============================================
+
                 if (
                   now -
                   lastPredictionLogTime >=
@@ -1577,24 +3269,54 @@ function startHandDetection() {
                     prediction
                   )
 
-                  updatePredictionUI(
-                    prediction
-                  )
-
                 }
+
+
+                // Interfaz superior
+
+                updatePredictionUI(
+                  prediction
+                )
+
+
+                // Juego
+
+                processBattlePrediction(
+                  prediction
+                )
 
               }
 
             }
 
-          } else {
+          }
+
+
+          // ==================================================
+          // NO HAY MANO
+          // ==================================================
+
+          else {
 
             currentLandmarks =
               null
 
 
-            status.textContent =
+            /*
+              Al retirar la mano desbloqueamos
+              el control para permitir otro gesto.
+            */
+
+            resetBattleGestureControl()
+
+
+            cameraStatus.textContent =
               '👁️ Buscando una mano...'
+
+
+            updatePredictionUI(
+              null
+            )
 
 
             clearHandOverlay()
@@ -1603,7 +3325,12 @@ function startHandDetection() {
 
         }
 
-      } catch (error) {
+      }
+
+
+      catch (
+      error
+      ) {
 
         console.error(
           'Error durante la detección:',
@@ -1615,8 +3342,16 @@ function startHandDetection() {
           null
 
 
-        status.textContent =
+        resetBattleGestureControl()
+
+
+        cameraStatus.textContent =
           '❌ Error durante la detección'
+
+
+        updatePredictionUI(
+          null
+        )
 
 
         clearHandOverlay()
@@ -1640,17 +3375,18 @@ function startHandDetection() {
 }
 
 
-// ======================================================
-// 16. ACTIVAR WEBCAM
-// ======================================================
+// ============================================================
+// 18. ACTIVAR CÁMARA
+// ============================================================
 
 async function startCamera() {
 
   if (
-    !navigator.mediaDevices?.getUserMedia
+    !navigator.mediaDevices
+      ?.getUserMedia
   ) {
 
-    status.textContent =
+    cameraStatus.textContent =
       '❌ Este navegador no permite usar la cámara'
 
 
@@ -1659,23 +3395,23 @@ async function startCamera() {
   }
 
 
-  button.disabled =
+  cameraButton.disabled =
     true
 
 
-  button.textContent =
+  cameraButton.textContent =
     'CONECTANDO...'
 
 
-  status.textContent =
+  cameraStatus.textContent =
     '● Solicitando permiso de cámara...'
 
 
   try {
 
-    // --------------------------------------------------
-    // Webcam
-    // --------------------------------------------------
+    // ========================================================
+    // SOLICITAR WEBCAM
+    // ========================================================
 
     const stream =
       await navigator.mediaDevices
@@ -1684,11 +3420,13 @@ async function startCamera() {
           video: {
 
             width: {
-              ideal: 1280
+              ideal:
+                1280
             },
 
             height: {
-              ideal: 720
+              ideal:
+                720
             },
 
             facingMode:
@@ -1712,15 +3450,15 @@ async function startCamera() {
     resizeOverlay()
 
 
-    placeholder.style.display =
+    cameraPlaceholder.style.display =
       'none'
 
 
-    // --------------------------------------------------
-    // MediaPipe
-    // --------------------------------------------------
+    // ========================================================
+    // MEDIAPIPE
+    // ========================================================
 
-    status.textContent =
+    cameraStatus.textContent =
       '🧠 Inicializando visión artificial...'
 
 
@@ -1737,20 +3475,20 @@ async function startCamera() {
     }
 
 
-    status.textContent =
+    cameraStatus.textContent =
       '👁️ Buscando una mano...'
 
 
     startHandDetection()
 
 
-    button.textContent =
+    cameraButton.textContent =
       'CÁMARA ACTIVADA'
 
 
-    // --------------------------------------------------
-    // Habilitar botones de entrenamiento
-    // --------------------------------------------------
+    // ========================================================
+    // HABILITAR ENTRENAMIENTO
+    // ========================================================
 
     setTrainingButtonsDisabled(
       false
@@ -1760,7 +3498,12 @@ async function startCamera() {
     trainingStatus.textContent =
       'Selecciona un gesto para comenzar el entrenamiento.'
 
-  } catch (error) {
+  }
+
+
+  catch (
+  error
+  ) {
 
     console.error(
       'Error al iniciar HANDVERSE:',
@@ -1773,38 +3516,47 @@ async function startCamera() {
       'NotAllowedError'
     ) {
 
-      status.textContent =
+      cameraStatus.textContent =
         '❌ Permiso de cámara rechazado'
 
-    } else if (
+    }
+
+
+    else if (
       error.name ===
       'NotFoundError'
     ) {
 
-      status.textContent =
+      cameraStatus.textContent =
         '❌ No se encontró una cámara'
 
-    } else if (
+    }
+
+
+    else if (
       error.name ===
       'NotReadableError'
     ) {
 
-      status.textContent =
+      cameraStatus.textContent =
         '❌ La cámara está siendo utilizada por otra aplicación'
 
-    } else {
+    }
 
-      status.textContent =
+
+    else {
+
+      cameraStatus.textContent =
         '❌ No se pudo iniciar HANDVERSE'
 
     }
 
 
-    button.disabled =
+    cameraButton.disabled =
       false
 
 
-    button.textContent =
+    cameraButton.textContent =
       'INTENTAR DE NUEVO'
 
   }
@@ -1812,9 +3564,9 @@ async function startCamera() {
 }
 
 
-// ======================================================
-// MANTENER CANVAS SINCRONIZADO
-// ======================================================
+// ============================================================
+// 19. EVENTOS
+// ============================================================
 
 video.addEventListener(
   'loadedmetadata',
@@ -1828,15 +3580,31 @@ window.addEventListener(
 )
 
 
-// ======================================================
-// 17. EVENTOS
-// ======================================================
-
-button.addEventListener(
+cameraButton.addEventListener(
   'click',
   startCamera
 )
 
+
+// ============================================================
+// BOTÓN GENERAR OTRA PARTIDA
+// ============================================================
+
+if (
+  newBattleButton
+) {
+
+  newBattleButton.addEventListener(
+    'click',
+    startNewBattle
+  )
+
+}
+
+
+// ============================================================
+// BOTONES PARA CAPTURAR GESTOS
+// ============================================================
 
 trainButtons.forEach(
   trainButton => {
@@ -1856,16 +3624,50 @@ trainButtons.forEach(
 )
 
 
-// ======================================================
-// 18. ESTADO INICIAL
-// ======================================================
+// ============================================================
+// BOTÓN DINÁMICO PARA ENTRENAR IA
+// ============================================================
+
+document.addEventListener(
+  'click',
+  async event => {
+
+    const trainModelButton =
+      event.target.closest(
+        '#train-model-button'
+      )
+
+
+    if (
+      !trainModelButton
+    ) {
+
+      return
+
+    }
+
+
+    await handleTrainModel()
+
+  }
+)
+
+
+// ============================================================
+// 20. ESTADO INICIAL
+// ============================================================
 
 updateTrainingUI()
 
 
-// ======================================================
-// 19. INICIALIZACIÓN DEL MOTOR DE IA
-// ======================================================
+updateBattleUI(
+  getBattleState()
+)
+
+
+// ============================================================
+// 21. INICIALIZACIÓN DE TENSORFLOW / IA
+// ============================================================
 
 async function initializeHandverseAI() {
 
@@ -1883,7 +3685,12 @@ async function initializeHandverseAI() {
       '✅ Motor de Inteligencia Artificial preparado'
     )
 
-  } catch (error) {
+  }
+
+
+  catch (
+  error
+  ) {
 
     console.error(
       '❌ Error inicializando la IA de HANDVERSE:',
