@@ -122,10 +122,13 @@ Proyecto desarrollado para la Casa Abierta de ECOTEC.
 
 **Proyecto:** HANDVERSE: Batalla de IA
 
-**Integrantes:**
+**Integrantes y sus funciones:**
 
-- Luis Aurea
-- [Agrega aquí los demás integrantes si corresponde]
+- Luis Aurea (INTEGRACIÓN DE MAIN.JS, BATTLEENGINE.J Y UNIÓN DE CODIFICACIÓN)
+- Sury Cobos (BATTLEMODE)
+- Melanie Villegas (IMPLEMENTACIÓN DE HANDVERSE: AI)
+- Emily Ayana (DISEÑO DE MEJORAS UI/UX)
+- Edwin Cruz (MEDIAPIPE)
 
 ---
 
