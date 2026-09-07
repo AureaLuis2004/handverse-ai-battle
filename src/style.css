@@ -8201,3 +8201,202 @@ button:not(:disabled):active {
 /* ============================================================
    FIN OPTIMIZACIÓN MÓVIL HANDVERSE
    ============================================================ */
+
+
+/* ============================================================
+   HANDVERSE
+   PERFORMANCE MODE PARA DISPOSITIVOS TÁCTILES
+   ============================================================ */
+
+
+/*
+   La clase touch-device se agrega desde JavaScript.
+   Por eso también funciona cuando Chrome utiliza
+   "Sitio para computadora".
+*/
+
+
+/* ============================================================
+   1. QUITAR FILTROS PESADOS
+   ============================================================ */
+
+html.touch-device
+.camera-panel,
+
+html.touch-device
+.training-panel,
+
+html.touch-device
+.battle-section,
+
+html.touch-device
+.gesture-training-card,
+
+html.touch-device
+.prediction-panel {
+
+  -webkit-backdrop-filter:
+    none !important;
+
+  backdrop-filter:
+    none !important;
+
+}
+
+
+/* ============================================================
+   2. REDUCIR SOMBRAS GRANDES
+   ============================================================ */
+
+html.touch-device
+.camera-panel,
+
+html.touch-device
+.training-panel,
+
+html.touch-device
+.battle-section {
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.30) !important;
+
+}
+
+
+html.touch-device
+.gesture-training-card {
+
+  box-shadow:
+    none !important;
+
+}
+
+
+/* ============================================================
+   3. ESCÁNER DE CÁMARA
+   Conservamos la estética, pero sin animación GPU continua.
+   ============================================================ */
+
+html.touch-device
+.camera-stage::before {
+
+  opacity:
+    0.16;
+
+}
+
+
+html.touch-device
+.camera-stage::after {
+
+  animation:
+    none !important;
+
+  top:
+    50%;
+
+  opacity:
+    0.22;
+
+  box-shadow:
+    none;
+
+}
+
+
+/* ============================================================
+   4. VICTORIA FINAL
+   Conservamos entrada, eliminamos efectos infinitos.
+   ============================================================ */
+
+html.touch-device
+.battle-finished::after {
+
+  animation:
+    none !important;
+
+  opacity:
+    0.28;
+
+}
+
+
+html.touch-device
+.battle-finished
+.battle-result::after {
+
+  animation:
+    none !important;
+
+  opacity:
+    0.10;
+
+}
+
+
+/* ============================================================
+   5. FONDO DE BATALLA TERMINADA
+   Evitar blur gráfico costoso.
+   ============================================================ */
+
+html.touch-device
+.battle-finished
+.battle-hud,
+
+html.touch-device
+.battle-finished
+.battle-actions {
+
+  filter:
+    saturate(0.55)
+    brightness(0.60) !important;
+
+}
+
+
+/* ============================================================
+   6. TELÉFONOS LIMITADOS
+   ============================================================ */
+
+html.low-power-device
+.camera-stage::before,
+
+html.low-power-device
+.camera-stage::after {
+
+  display:
+    none;
+
+}
+
+
+html.low-power-device
+.battle-finished::after,
+
+html.low-power-device
+.battle-finished
+.battle-result::after {
+
+  display:
+    none;
+
+}
+
+
+/* ============================================================
+   7. TRANSICIONES IMPORTANTES SIGUEN ACTIVAS
+   ============================================================ */
+
+html.touch-device
+.health-fill {
+
+  transition:
+    width 0.30s ease;
+
+}
+
+
+/* ============================================================
+   FIN PERFORMANCE MODE
+   ============================================================ */

@@ -862,6 +862,159 @@ const ROUND_TRANSITION_MS =
 
 
 // ============================================================
+// HANDVERSE - PERFIL DE RENDIMIENTO ADAPTATIVO
+// ============================================================
+
+// Detecta teléfono/tablet incluso si Chrome tiene activado
+// "Sitio para computadora".
+const IS_TOUCH_DEVICE =
+  navigator.maxTouchPoints > 0 ||
+  window.matchMedia(
+    '(pointer: coarse)'
+  ).matches
+
+
+// Información aproximada del dispositivo.
+const DEVICE_CPU_CORES =
+  navigator.hardwareConcurrency ??
+  8
+
+
+const DEVICE_MEMORY =
+  navigator.deviceMemory ??
+  Infinity
+
+
+// Consideramos dispositivo limitado si es táctil
+// y tiene pocos núcleos o poca memoria.
+const IS_LOW_POWER_DEVICE =
+  IS_TOUCH_DEVICE &&
+  (
+    DEVICE_CPU_CORES <= 4 ||
+    DEVICE_MEMORY <= 4
+  )
+
+
+// ============================================================
+// FRECUENCIA DE VISIÓN ARTIFICIAL
+// ============================================================
+
+// PC potente: aprox. 30 FPS
+// Teléfono normal: aprox. 20 FPS
+// Teléfono limitado: aprox. 15 FPS
+//
+// Para reconocer ATAQUE / ESCUDO / PODER
+// no necesitamos analizar 60 frames por segundo.
+const VISION_INTERVAL_MS =
+  IS_LOW_POWER_DEVICE
+    ? 66
+    : IS_TOUCH_DEVICE
+      ? 50
+      : 33
+
+
+// TensorFlow no necesita predecir en absolutamente
+// cada frame de MediaPipe.
+const PREDICTION_INTERVAL_MS =
+  IS_LOW_POWER_DEVICE
+    ? 100
+    : IS_TOUCH_DEVICE
+      ? 75
+      : 50
+
+
+// ============================================================
+// CAPTURA DEL DATASET
+// ============================================================
+
+const CAPTURE_COUNTDOWN_DELAY_MS =
+  IS_TOUCH_DEVICE
+    ? 600
+    : 800
+
+
+const CAPTURE_SAMPLE_DELAY_MS =
+  IS_TOUCH_DEVICE
+    ? 90
+    : 120
+
+
+// ============================================================
+// CONSOLA
+// ============================================================
+
+// FALSE para la versión de feria.
+// Evitamos imprimir predicciones constantemente.
+const DEBUG_PREDICTIONS =
+  false
+
+
+// ============================================================
+// CONTROL INTERNO
+// ============================================================
+
+let lastVisionProcessTime =
+  0
+
+
+let lastPredictionProcessTime =
+  0
+
+
+let handWasDetected =
+  false
+
+
+// ============================================================
+// CLASES DE RENDIMIENTO PARA CSS
+// ============================================================
+
+if (
+  IS_TOUCH_DEVICE
+) {
+
+  document.documentElement
+    .classList.add(
+      'touch-device'
+    )
+
+}
+
+
+if (
+  IS_LOW_POWER_DEVICE
+) {
+
+  document.documentElement
+    .classList.add(
+      'low-power-device'
+    )
+
+}
+
+
+console.log(
+  '⚙️ Perfil HANDVERSE:',
+  {
+    touch:
+      IS_TOUCH_DEVICE,
+
+    lowPower:
+      IS_LOW_POWER_DEVICE,
+
+    cpu:
+      DEVICE_CPU_CORES,
+
+    memory:
+      DEVICE_MEMORY,
+
+    visionInterval:
+      VISION_INTERVAL_MS
+  }
+)
+
+
+// ============================================================
 // 4. INFORMACIÓN DE LOS GESTOS
 // ============================================================
 
@@ -1207,7 +1360,9 @@ function drawHandOverlay(
   context.save()
 
   context.lineWidth =
-    4
+    IS_TOUCH_DEVICE
+      ? 3
+      : 4
 
   context.lineCap =
     'round'
@@ -1222,7 +1377,9 @@ function drawHandOverlay(
     '#22d3ee'
 
   context.shadowBlur =
-    16
+    IS_TOUCH_DEVICE
+      ? 0
+      : 16
 
 
   for (
@@ -1284,22 +1441,29 @@ function drawHandOverlay(
       )
 
 
-    // Glow
+    // Glow solamente en escritorio.
+    // En móvil ahorramos GPU.
 
-    context.beginPath()
+    if (
+      !IS_TOUCH_DEVICE
+    ) {
 
-    context.arc(
-      point.x,
-      point.y,
-      9,
-      0,
-      Math.PI * 2
-    )
+      context.beginPath()
 
-    context.fillStyle =
-      'rgba(34, 211, 238, 0.25)'
+      context.arc(
+        point.x,
+        point.y,
+        9,
+        0,
+        Math.PI * 2
+      )
 
-    context.fill()
+      context.fillStyle =
+        'rgba(34, 211, 238, 0.25)'
+
+      context.fill()
+
+    }
 
 
     // Punto blanco
@@ -1309,7 +1473,9 @@ function drawHandOverlay(
     context.arc(
       point.x,
       point.y,
-      5,
+      IS_TOUCH_DEVICE
+        ? 4
+        : 5,
       0,
       Math.PI * 2
     )
@@ -1321,7 +1487,9 @@ function drawHandOverlay(
       '#22d3ee'
 
     context.shadowBlur =
-      16
+      IS_TOUCH_DEVICE
+        ? 0
+        : 16
 
     context.fill()
 
@@ -1932,7 +2100,7 @@ async function captureGesture(
 
 
     await sleep(
-      800
+      CAPTURE_COUNTDOWN_DELAY_MS
     )
 
 
@@ -1951,7 +2119,7 @@ async function captureGesture(
 
 
       await sleep(
-        800
+        CAPTURE_COUNTDOWN_DELAY_MS
       )
 
     }
@@ -2011,13 +2179,23 @@ async function captureGesture(
           `🔴 ${gesture.emoji} Capturando ${currentCount}/${TARGET_SAMPLES_PER_CLASS}`
 
 
-        updateTrainingUI()
+        // Actualizamos tarjetas cada 2 muestras.
+        // Reduce trabajo del DOM en teléfonos.
+        if (
+          currentCount % 2 === 0 ||
+          currentCount ===
+          TARGET_SAMPLES_PER_CLASS
+        ) {
+
+          updateTrainingUI()
+
+        }
 
       }
 
 
       await sleep(
-        120
+        CAPTURE_SAMPLE_DELAY_MS
       )
 
     }
@@ -4454,6 +4632,10 @@ function updateBattleUI(
 // 17. BUCLE DE VISIÓN ARTIFICIAL
 // ============================================================
 
+// ============================================================
+// BUCLE DE VISIÓN ARTIFICIAL OPTIMIZADO
+// ============================================================
+
 function startHandDetection() {
 
   if (
@@ -4469,161 +4651,218 @@ function startHandDetection() {
     true
 
 
-  function detectFrame() {
+  lastVisionProcessTime =
+    0
+
+
+  lastPredictionProcessTime =
+    0
+
+
+  handWasDetected =
+    false
+
+
+  // ==========================================================
+  // FRAME DE VISIÓN
+  // ==========================================================
+
+  function detectFrame(
+    timestamp
+  ) {
+
+    // Programamos inmediatamente
+    // el siguiente frame visual.
+    requestAnimationFrame(
+      detectFrame
+    )
+
+
+    // ========================================================
+    // VALIDACIONES
+    // ========================================================
 
     if (
-      video.srcObject &&
-      handTrackerReady &&
-      video.readyState >= 2
+      !video.srcObject ||
+      !handTrackerReady ||
+      video.readyState < 2
     ) {
 
-      try {
+      return
 
-        if (
-          video.currentTime !==
-          lastVideoTime
-        ) {
-
-          lastVideoTime =
-            video.currentTime
+    }
 
 
-          const results =
-            detectHands(
-              video,
-              performance.now()
+    // ========================================================
+    // LIMITAR CARGA DE MEDIAPIPE
+    // ========================================================
+
+    if (
+      timestamp -
+      lastVisionProcessTime <
+      VISION_INTERVAL_MS
+    ) {
+
+      return
+
+    }
+
+
+    // Si todavía estamos viendo exactamente
+    // el mismo frame de cámara, no procesamos.
+    if (
+      video.currentTime ===
+      lastVideoTime
+    ) {
+
+      return
+
+    }
+
+
+    lastVisionProcessTime =
+      timestamp
+
+
+    lastVideoTime =
+      video.currentTime
+
+
+    try {
+
+      // ======================================================
+      // MEDIAPIPE
+      // ======================================================
+
+      const results =
+        detectHands(
+          video,
+          performance.now()
+        )
+
+
+      // ======================================================
+      // MANO DETECTADA
+      // ======================================================
+
+      if (
+        results?.landmarks &&
+        results.landmarks.length > 0
+      ) {
+
+        currentLandmarks =
+          results.landmarks[0]
+            .map(
+              point => ({
+
+                x:
+                  point.x,
+
+                y:
+                  point.y,
+
+                z:
+                  point.z
+
+              })
             )
 
 
-          // ==================================================
-          // MANO DETECTADA
-          // ==================================================
-
-          if (
-            results?.landmarks &&
-            results.landmarks.length > 0
-          ) {
-
-            currentLandmarks =
-              results.landmarks[0]
-                .map(
-                  point => ({
-
-                    x:
-                      point.x,
-
-                    y:
-                      point.y,
-
-                    z:
-                      point.z
-
-                  })
-                )
+        handWasDetected =
+          true
 
 
-            cameraStatus.textContent =
-              `🖐️ Mano detectada — ${currentLandmarks.length} puntos`
+        // Evitamos escribir el mismo texto
+        // en el DOM continuamente.
+        const handStatusText =
+          `🖐️ Mano detectada — ${currentLandmarks.length} puntos`
 
 
-            drawHandOverlay(
+        if (
+          cameraStatus.textContent !==
+          handStatusText
+        ) {
+
+          cameraStatus.textContent =
+            handStatusText
+
+        }
+
+
+        // ====================================================
+        // DIBUJAR 21 LANDMARKS
+        // ====================================================
+
+        drawHandOverlay(
+          currentLandmarks
+        )
+
+
+        // ====================================================
+        // PREDICCIÓN IA
+        // ====================================================
+
+        if (
+          isModelTrained() &&
+          !captureInProgress &&
+          timestamp -
+          lastPredictionProcessTime >=
+          PREDICTION_INTERVAL_MS
+        ) {
+
+          lastPredictionProcessTime =
+            timestamp
+
+
+          const prediction =
+            predictGesture(
               currentLandmarks
             )
 
 
+          if (
+            prediction
+          ) {
+
             // ================================================
-            // PREDICCIÓN
+            // DEBUG
             // ================================================
 
             if (
-              isModelTrained() &&
-              !captureInProgress
+              DEBUG_PREDICTIONS &&
+              timestamp -
+              lastPredictionLogTime >=
+              PREDICTION_LOG_INTERVAL_MS
             ) {
 
-              const prediction =
-                predictGesture(
-                  currentLandmarks
-                )
+              lastPredictionLogTime =
+                timestamp
 
 
-              if (
+              console.log(
+                '🤖 Predicción HANDVERSE:',
                 prediction
-              ) {
-
-                const now =
-                  performance.now()
-
-
-                // ============================================
-                // CONSOLA LIMITADA A 250 ms
-                // ============================================
-
-                if (
-                  now -
-                  lastPredictionLogTime >=
-                  PREDICTION_LOG_INTERVAL_MS
-                ) {
-
-                  lastPredictionLogTime =
-                    now
-
-
-                  console.log(
-                    '🤖 Predicción HANDVERSE:',
-                    prediction
-                  )
-
-                }
-
-
-                // Interfaz superior
-
-                updatePredictionUI(
-                  prediction
-                )
-
-
-                // Juego
-
-                processBattlePrediction(
-                  prediction
-                )
-
-              }
+              )
 
             }
 
-          }
 
-
-          // ==================================================
-          // NO HAY MANO
-          // ==================================================
-
-          else {
-
-            currentLandmarks =
-              null
-
-
-            /*
-              Al retirar la mano desbloqueamos
-              el control para permitir otro gesto.
-            */
-
-            resetBattleGestureControl()
-
-
-            cameraStatus.textContent =
-              '👁️ Buscando una mano...'
-
+            // ================================================
+            // INTERFAZ
+            // ================================================
 
             updatePredictionUI(
-              null
+              prediction
             )
 
 
-            clearHandOverlay()
+            // ================================================
+            // BATALLA
+            // ================================================
+
+            processBattlePrediction(
+              prediction
+            )
 
           }
 
@@ -4632,45 +4871,98 @@ function startHandDetection() {
       }
 
 
-      catch (
-      error
-      ) {
+      // ======================================================
+      // NO HAY MANO
+      // ======================================================
 
-        console.error(
-          'Error durante la detección:',
-          error
-        )
-
+      else {
 
         currentLandmarks =
           null
 
 
-        resetBattleGestureControl()
+        // Solo actualizamos toda la interfaz
+        // una vez cuando la mano desaparece.
+        if (
+          handWasDetected
+        ) {
+
+          handWasDetected =
+            false
 
 
-        cameraStatus.textContent =
-          '❌ Error durante la detección'
+          resetBattleGestureControl()
 
 
-        updatePredictionUI(
-          null
-        )
+          updatePredictionUI(
+            null
+          )
 
 
-        clearHandOverlay()
+          clearHandOverlay()
+
+        }
+
+
+        const searchingText =
+          '👁️ Buscando una mano...'
+
+
+        if (
+          cameraStatus.textContent !==
+          searchingText
+        ) {
+
+          cameraStatus.textContent =
+            searchingText
+
+        }
 
       }
 
     }
 
 
-    requestAnimationFrame(
-      detectFrame
-    )
+    catch (
+    error
+    ) {
+
+      console.error(
+        'Error durante la detección:',
+        error
+      )
+
+
+      currentLandmarks =
+        null
+
+
+      handWasDetected =
+        false
+
+
+      resetBattleGestureControl()
+
+
+      cameraStatus.textContent =
+        '❌ Error durante la detección'
+
+
+      updatePredictionUI(
+        null
+      )
+
+
+      clearHandOverlay()
+
+    }
 
   }
 
+
+  // ==========================================================
+  // COMENZAR BUCLE
+  // ==========================================================
 
   requestAnimationFrame(
     detectFrame
@@ -4717,26 +5009,103 @@ async function startCamera() {
     // SOLICITAR WEBCAM
     // ========================================================
 
+    // ========================================================
+    // CONFIGURACIÓN ADAPTATIVA DE CÁMARA
+    // ========================================================
+
+    let videoConstraints
+
+
+    if (
+      IS_LOW_POWER_DEVICE
+    ) {
+
+      // Teléfono de entrada / antiguo.
+      videoConstraints = {
+
+        width: {
+          ideal: 640
+        },
+
+        height: {
+          ideal: 360
+        },
+
+        frameRate: {
+          ideal: 24,
+          max: 24
+        },
+
+        facingMode:
+          'user'
+
+      }
+
+    }
+
+    else if (
+      IS_TOUCH_DEVICE
+    ) {
+
+      // Teléfono moderno.
+      videoConstraints = {
+
+        width: {
+          ideal: 960
+        },
+
+        height: {
+          ideal: 540
+        },
+
+        frameRate: {
+          ideal: 30,
+          max: 30
+        },
+
+        facingMode:
+          'user'
+
+      }
+
+    }
+
+    else {
+
+      // Computadora.
+      videoConstraints = {
+
+        width: {
+          ideal: 1280
+        },
+
+        height: {
+          ideal: 720
+        },
+
+        frameRate: {
+          ideal: 30,
+          max: 30
+        },
+
+        facingMode:
+          'user'
+
+      }
+
+    }
+
+
+    // ========================================================
+    // SOLICITAR CÁMARA
+    // ========================================================
+
     const stream =
       await navigator.mediaDevices
         .getUserMedia({
 
-          video: {
-
-            width: {
-              ideal:
-                1280
-            },
-
-            height: {
-              ideal:
-                720
-            },
-
-            facingMode:
-              'user'
-
-          },
+          video:
+            videoConstraints,
 
           audio:
             false
