@@ -460,6 +460,23 @@ app.innerHTML = `
           Entrena la IA para desbloquear la batalla.
         </p>
 
+        <!-- ====================================================== -->
+        <!-- CUENTA REGRESIVA DE BATALLA -->
+        <!-- ====================================================== -->
+
+        <div
+          id="battle-countdown"
+          class="battle-countdown"
+          aria-live="assertive"
+        >
+
+          <span
+            id="battle-countdown-text"
+            class="battle-countdown-text"
+          ></span>
+
+        </div>
+
       </div>
 
 
@@ -1606,8 +1623,10 @@ async function handleTrainModel() {
   trainModelButton.disabled =
     true
 
+
   trainModelButton.textContent =
     '🧠 ENTRENANDO IA...'
+
 
   modelTrainingStatus.textContent =
     '⚙️ Preparando red neuronal...'
@@ -1623,6 +1642,10 @@ async function handleTrainModel() {
     await trainGestureModel()
 
 
+    // ======================================================
+    // COMPROBAR QUE EL MODELO SE ENTRENÓ CORRECTAMENTE
+    // ======================================================
+
     if (
       !isModelTrained()
     ) {
@@ -1634,6 +1657,7 @@ async function handleTrainModel() {
       trainModelButton.textContent =
         '🧠 ENTRENAR NUEVAMENTE'
 
+
       trainModelButton.disabled =
         false
 
@@ -1642,6 +1666,10 @@ async function handleTrainModel() {
 
     }
 
+
+    // ======================================================
+    // MODELO ENTRENADO CORRECTAMENTE
+    // ======================================================
 
     modelTrainingStatus.textContent =
       '✅ IA entrenada correctamente. HANDVERSE está lista.'
@@ -1661,16 +1689,54 @@ async function handleTrainModel() {
 
 
     // ======================================================
-    // INICIAR NUEVA BATALLA
+    // PREPARAR PRIMERA BATALLA
     // ======================================================
 
+    // Cancela cualquier transición de ronda
+    // que pudiera estar activa.
+
     cancelRoundTransition()
+
+
+    // Cancela cualquier cuenta regresiva
+    // anterior antes de crear una nueva.
+
+    cancelBattleCountdown()
+
+
+    // Reinicia el control temporal
+    // de reconocimiento de gestos.
 
     resetBattleGestureControl()
 
 
+    // ======================================================
+    // REINICIAR EFECTOS DEL PODER ESPECIAL
+    // ======================================================
+
+    lastPlayerPowerAnimation =
+      null
+
+
+    lastAiPowerAnimation =
+      null
+
+
+    // ======================================================
+    // INICIAR MOTOR DE BATALLA
+    // ======================================================
+
     const initialBattleState =
       startBattle()
+
+
+    // ======================================================
+    // ACTUALIZAR INTERFAZ
+    // ======================================================
+
+    updateBattleUI(
+      initialBattleState
+    )
 
 
     console.log(
@@ -1679,9 +1745,22 @@ async function handleTrainModel() {
     )
 
 
-    updateBattleUI(
-      initialBattleState
-    )
+    // ======================================================
+    // INICIAR CUENTA REGRESIVA DE LA PRIMERA BATALLA
+    // ======================================================
+    //
+    // Ahora, inmediatamente después del entrenamiento:
+    //
+    // 3
+    // 2
+    // 1
+    // ⚔️ ¡COMBATE!
+    //
+    // Durante esta cuenta regresiva,
+    // los movimientos permanecen bloqueados.
+    // ======================================================
+
+    startBattleCountdown()
 
   }
 
@@ -2277,6 +2356,17 @@ function processBattlePrediction(
 
   }
 
+  // ============================================================
+  // BLOQUEAR MOVIMIENTOS DURANTE LA CUENTA REGRESIVA
+  // ============================================================
+
+  if (
+    battleCountdownActive
+  ) {
+
+    return
+
+  }
 
   // ========================================================
   // EJECUTAR TURNO
@@ -2460,6 +2550,9 @@ function startNewBattle() {
     newBattleState
   )
 
+  cancelBattleCountdown()
+
+  startBattleCountdown()
 
   console.log(
     '🎮 NUEVA PARTIDA HANDVERSE INICIADA:',
@@ -2717,6 +2810,257 @@ let lastPlayerPowerAnimation =
 let lastAiPowerAnimation =
   null
 
+// ============================================================
+// CONTROL DE CUENTA REGRESIVA DE BATALLA
+// ============================================================
+
+// Elementos visuales de la cuenta regresiva.
+const battleCountdown =
+  document.getElementById(
+    'battle-countdown'
+  )
+
+const battleCountdownText =
+  document.getElementById(
+    'battle-countdown-text'
+  )
+
+// Indica si actualmente existe una cuenta regresiva activa.
+let battleCountdownActive = false
+
+// Identificador para cancelar una cuenta regresiva anterior
+// si se inicia una nueva ronda o una nueva partida.
+let battleCountdownToken = 0
+
+// Tiempo entre cada número de la cuenta regresiva.
+// 700 ms = 0.7 segundos.
+const BATTLE_COUNTDOWN_DELAY = 700
+
+// ============================================================
+// EJECUTAR CUENTA REGRESIVA DE BATALLA
+// ============================================================
+
+function waitBattleCountdown(ms) {
+
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  )
+
+}
+
+
+// ============================================================
+// LIMPIAR CUENTA REGRESIVA
+// ============================================================
+
+function clearBattleCountdown() {
+
+  const battleCountdown =
+    document.getElementById(
+      'battle-countdown'
+    )
+
+  if (!battleCountdown) {
+    return
+  }
+
+  battleCountdown.textContent = ''
+
+  battleCountdown.classList.remove(
+    'countdown-visible',
+    'countdown-pop',
+    'countdown-combat'
+  )
+
+}
+
+
+// ============================================================
+// CANCELAR CUENTA REGRESIVA ACTUAL
+// ============================================================
+
+function cancelBattleCountdown() {
+
+  // Invalida cualquier cuenta anterior.
+  battleCountdownToken++
+
+  battleCountdownActive = false
+
+  clearBattleCountdown()
+
+}
+
+
+// ============================================================
+// INICIAR CUENTA REGRESIVA
+// ============================================================
+
+async function startBattleCountdown() {
+
+  const battleCountdown =
+    document.getElementById(
+      'battle-countdown'
+    )
+
+  if (!battleCountdown) {
+
+    console.warn(
+      'No se encontró #battle-countdown'
+    )
+
+    battleCountdownActive = false
+
+    return
+
+  }
+
+
+  // Cancelamos cualquier cuenta anterior.
+  battleCountdownToken++
+
+  const currentToken =
+    battleCountdownToken
+
+
+  // Mientras esto sea TRUE,
+  // ningún gesto podrá ejecutar un turno.
+  battleCountdownActive = true
+
+
+  battleCountdown.classList.add(
+    'countdown-visible'
+  )
+
+
+  // ==========================================================
+  // 3
+  // ==========================================================
+
+  battleCountdown.textContent = '3'
+
+  battleCountdown.classList.remove(
+    'countdown-pop',
+    'countdown-combat'
+  )
+
+  void battleCountdown.offsetWidth
+
+  battleCountdown.classList.add(
+    'countdown-pop'
+  )
+
+  await waitBattleCountdown(
+    BATTLE_COUNTDOWN_DELAY
+  )
+
+
+  if (
+    currentToken !==
+    battleCountdownToken
+  ) {
+    return
+  }
+
+
+  // ==========================================================
+  // 2
+  // ==========================================================
+
+  battleCountdown.textContent = '2'
+
+  battleCountdown.classList.remove(
+    'countdown-pop'
+  )
+
+  void battleCountdown.offsetWidth
+
+  battleCountdown.classList.add(
+    'countdown-pop'
+  )
+
+  await waitBattleCountdown(
+    BATTLE_COUNTDOWN_DELAY
+  )
+
+
+  if (
+    currentToken !==
+    battleCountdownToken
+  ) {
+    return
+  }
+
+
+  // ==========================================================
+  // 1
+  // ==========================================================
+
+  battleCountdown.textContent = '1'
+
+  battleCountdown.classList.remove(
+    'countdown-pop'
+  )
+
+  void battleCountdown.offsetWidth
+
+  battleCountdown.classList.add(
+    'countdown-pop'
+  )
+
+  await waitBattleCountdown(
+    BATTLE_COUNTDOWN_DELAY
+  )
+
+
+  if (
+    currentToken !==
+    battleCountdownToken
+  ) {
+    return
+  }
+
+
+  // ==========================================================
+  // COMBATE
+  // ==========================================================
+
+  battleCountdown.textContent =
+    '⚔️ ¡COMBATE!'
+
+  battleCountdown.classList.remove(
+    'countdown-pop'
+  )
+
+  battleCountdown.classList.add(
+    'countdown-combat'
+  )
+
+  await waitBattleCountdown(
+    BATTLE_COUNTDOWN_DELAY
+  )
+
+
+  if (
+    currentToken !==
+    battleCountdownToken
+  ) {
+    return
+  }
+
+
+  // ==========================================================
+  // HABILITAR COMBATE
+  // ==========================================================
+
+  clearBattleCountdown()
+
+  battleCountdownActive = false
+
+  console.log(
+    '⚔️ HANDVERSE: combate habilitado'
+  )
+
+}
 
 // ============================================================
 // 16. ACTUALIZAR INTERFAZ DE BATALLA

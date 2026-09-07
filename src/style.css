@@ -3442,3 +3442,224 @@ body::before {
   }
 
 }
+
+/* ============================================================
+   CUENTA REGRESIVA DE BATALLA
+   ============================================================ */
+
+#battle-section {
+  position: relative;
+}
+
+/* Contenedor del contador */
+#battle-countdown {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 180px;
+  min-height: 180px;
+
+  padding: 25px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(2, 13, 32, 0.92);
+
+  border:
+    2px solid
+    rgba(0, 229, 255, 0.8);
+
+  box-shadow:
+    0 0 20px
+    rgba(0, 229, 255, 0.35),
+    0 0 60px
+    rgba(0, 229, 255, 0.18);
+
+  color: #ffffff;
+
+  font-size: 82px;
+  font-weight: 900;
+
+  text-align: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  visibility: hidden;
+}
+
+
+/* ============================================================
+   CONTADOR VISIBLE
+   ============================================================ */
+
+#battle-countdown.countdown-visible {
+
+  visibility: visible;
+
+  opacity: 1;
+
+  animation:
+    handverse-countdown-pop
+    0.55s
+    ease-out;
+}
+
+
+/* ============================================================
+   ESTADO COMBATE
+   ============================================================ */
+
+#battle-countdown.countdown-fight {
+
+  min-width: 320px;
+
+  min-height: 110px;
+
+  border-radius: 18px;
+
+  padding:
+    20px
+    35px;
+
+  font-size: 38px;
+
+  letter-spacing: 3px;
+
+  color:
+    #5ffcff;
+
+  border-color:
+    #5ffcff;
+
+  box-shadow:
+    0 0 25px
+    rgba(0, 229, 255, 0.6),
+    0 0 80px
+    rgba(0, 229, 255, 0.25);
+
+  animation:
+    handverse-fight-pop
+    0.65s
+    ease-out;
+}
+
+
+/* ============================================================
+   ANIMACIÓN 3 - 2 - 1
+   ============================================================ */
+
+@keyframes handverse-countdown-pop {
+
+  0% {
+
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.3);
+
+  }
+
+  45% {
+
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.18);
+
+  }
+
+  100% {
+
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+
+  }
+
+}
+
+
+/* ============================================================
+   ANIMACIÓN COMBATE
+   ============================================================ */
+
+@keyframes handverse-fight-pop {
+
+  0% {
+
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.5);
+
+  }
+
+  50% {
+
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.12);
+
+  }
+
+  100% {
+
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+
+  }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  #battle-countdown {
+
+    min-width: 130px;
+
+    min-height: 130px;
+
+    font-size: 58px;
+
+  }
+
+  #battle-countdown.countdown-fight {
+
+    min-width: 230px;
+
+    min-height: 90px;
+
+    font-size: 27px;
+
+  }
+
+}
