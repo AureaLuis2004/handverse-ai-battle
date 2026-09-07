@@ -496,6 +496,11 @@ app.innerHTML = `
 
             </div>
 
+            <span
+              id="player-damage-indicator"
+              class="damage-indicator"
+            ></span>
+
             <div class="health-bar">
 
               <div
@@ -503,6 +508,16 @@ app.innerHTML = `
                 class="health-fill player-health"
               ></div>
 
+            </div>
+
+
+            <!-- ESTADO DEL PODER ESPECIAL DEL JUGADOR -->
+
+            <div
+              id="player-power-status"
+              class="power-status power-available"
+            >
+              ⚡ PODER ESPECIAL · 3/3
             </div>
 
           </div>
@@ -555,6 +570,11 @@ app.innerHTML = `
 
             </div>
 
+            <span
+              id="ai-damage-indicator"
+              class="damage-indicator"
+            ></span>
+
             <div class="health-bar">
 
               <div
@@ -562,6 +582,16 @@ app.innerHTML = `
                 class="health-fill ai-health"
               ></div>
 
+            </div>
+
+
+            <!-- ESTADO DEL PODER ESPECIAL DE HANDVERSE IA -->
+
+            <div
+              id="ai-power-status"
+              class="power-status power-available"
+            >
+              ⚡ PODER ESPECIAL · 3/3
             </div>
 
           </div>
@@ -2271,11 +2301,12 @@ function processBattlePrediction(
 
 
     // ========================================================
-    // PODER ESPECIAL YA UTILIZADO
+    // PODER ESPECIAL AGOTADO
     // ========================================================
 
     if (
-      result?.powerAlreadyUsed
+      result?.powerAlreadyUsed ||
+      result?.powerExhausted
     ) {
 
       const battleResult =
@@ -2289,7 +2320,7 @@ function processBattlePrediction(
       ) {
 
         battleResult.textContent =
-          '⚠️ PODER ESPECIAL YA UTILIZADO · ELIGE ATAQUE O ESCUDO'
+          `${result?.message ?? '⚠️ PODER ESPECIAL AGOTADO'} · ELIGE ATAQUE O ESCUDO`
 
       }
 
@@ -2377,6 +2408,17 @@ function startNewBattle() {
   }
 
 
+  // ==========================================================
+  // REINICIAR CONTROL DE EFECTOS DE LA NUEVA PARTIDA
+  // ==========================================================
+
+  lastPlayerPowerAnimation =
+    null
+
+  lastAiPowerAnimation =
+    null
+
+
   const currentState =
     getBattleState()
 
@@ -2425,6 +2467,255 @@ function startNewBattle() {
   )
 
 }
+
+
+// ============================================================
+// CONTROL VISUAL DE DAÑO
+// ============================================================
+
+let previousPlayerHealth = 100
+let previousAiHealth = 100
+
+let playerDamageTimeout = null
+let aiDamageTimeout = null
+
+
+function showDamageIndicator(
+  element,
+  damage,
+  type
+) {
+
+  if (
+    !element ||
+    damage <= 0
+  ) {
+
+    return
+
+  }
+
+
+  element.textContent =
+    `💥 -${damage}`
+
+
+  element.classList.remove(
+    'damage-visible'
+  )
+
+
+  // Reinicia la animación
+
+  void element.offsetWidth
+
+
+  element.classList.add(
+    'damage-visible'
+  )
+
+
+  if (
+    type === 'player'
+  ) {
+
+    clearTimeout(
+      playerDamageTimeout
+    )
+
+
+    playerDamageTimeout =
+      setTimeout(
+        () => {
+
+          element.classList.remove(
+            'damage-visible'
+          )
+
+          element.textContent =
+            ''
+
+        },
+        850
+      )
+
+  }
+
+
+  if (
+    type === 'ai'
+  ) {
+
+    clearTimeout(
+      aiDamageTimeout
+    )
+
+
+    aiDamageTimeout =
+      setTimeout(
+        () => {
+
+          element.classList.remove(
+            'damage-visible'
+          )
+
+          element.textContent =
+            ''
+
+        },
+        850
+      )
+
+  }
+
+}
+
+
+// ============================================================
+// EFECTO VISUAL AL RECIBIR DAÑO
+// ============================================================
+
+function showBattleHitEffect(
+  damageIndicator,
+  type
+) {
+
+  if (
+    !damageIndicator
+  ) {
+
+    return
+
+  }
+
+
+  // Busca automáticamente el panel del personaje
+
+  const characterPanel =
+    damageIndicator.closest(
+      '.battle-player'
+    )
+
+
+  if (
+    !characterPanel
+  ) {
+
+    return
+
+  }
+
+
+  const hitClass =
+    type === 'player'
+      ? 'battle-hit-player'
+      : 'battle-hit-ai'
+
+
+  // Quitamos la clase anterior
+  // para poder reiniciar la animación.
+
+  characterPanel.classList.remove(
+    hitClass
+  )
+
+
+  void characterPanel.offsetWidth
+
+
+  // Ejecutamos impacto
+
+  characterPanel.classList.add(
+    hitClass
+  )
+
+
+  // Después la eliminamos.
+
+  setTimeout(
+    () => {
+
+      characterPanel.classList.remove(
+        hitClass
+      )
+
+    },
+    500
+  )
+
+}
+
+
+// ============================================================
+// EFECTO VISUAL DEL PODER ESPECIAL
+// ============================================================
+
+function showPowerSpecialEffect(
+  actionIcon,
+  type
+) {
+
+  if (
+    !actionIcon
+  ) {
+
+    return
+
+  }
+
+
+  const powerClass =
+    type === 'player'
+      ? 'player-power-effect'
+      : 'ai-power-effect'
+
+
+  // Eliminamos la clase anterior
+  // para permitir reiniciar la animación.
+
+  actionIcon.classList.remove(
+    powerClass
+  )
+
+
+  // Forzamos el reinicio de la animación.
+
+  void actionIcon.offsetWidth
+
+
+  // Activamos el poder especial.
+
+  actionIcon.classList.add(
+    powerClass
+  )
+
+
+  // La animación termina
+  // y limpiamos la clase.
+
+  setTimeout(
+    () => {
+
+      actionIcon.classList.remove(
+        powerClass
+      )
+
+    },
+    900
+  )
+
+}
+
+
+// ============================================================
+// CONTROL DE ANIMACIÓN DEL PODER ESPECIAL
+// ============================================================
+
+let lastPlayerPowerAnimation =
+  null
+
+let lastAiPowerAnimation =
+  null
 
 
 // ============================================================
@@ -2495,6 +2786,30 @@ function updateBattleUI(
   const aiHealthText =
     document.getElementById(
       'ai-health-text'
+    )
+
+
+  const playerDamageIndicator =
+    document.getElementById(
+      'player-damage-indicator'
+    )
+
+
+  const aiDamageIndicator =
+    document.getElementById(
+      'ai-damage-indicator'
+    )
+
+
+  const playerPowerStatus =
+    document.getElementById(
+      'player-power-status'
+    )
+
+
+  const aiPowerStatus =
+    document.getElementById(
+      'ai-power-status'
     )
 
 
@@ -2671,6 +2986,50 @@ function updateBattleUI(
     }
 
 
+    // ======================================================
+    // REINICIAR ESTADO VISUAL DEL PODER ESPECIAL
+    // ======================================================
+
+    if (
+      playerPowerStatus
+    ) {
+
+      playerPowerStatus.textContent =
+        '⚡ PODER ESPECIAL · 3/3'
+
+
+      playerPowerStatus.classList.remove(
+        'power-used'
+      )
+
+
+      playerPowerStatus.classList.add(
+        'power-available'
+      )
+
+    }
+
+
+    if (
+      aiPowerStatus
+    ) {
+
+      aiPowerStatus.textContent =
+        '⚡ PODER ESPECIAL · 3/3'
+
+
+      aiPowerStatus.classList.remove(
+        'power-used'
+      )
+
+
+      aiPowerStatus.classList.add(
+        'power-available'
+      )
+
+    }
+
+
     return
 
   }
@@ -2725,6 +3084,73 @@ function updateBattleUI(
     clampHealth(
       state.aiHealth
     )
+
+
+  // ============================================================
+  // DETECTAR DAÑO RECIBIDO
+  // ============================================================
+
+  const playerDamage =
+    previousPlayerHealth -
+    playerHealth
+
+
+  const aiDamage =
+    previousAiHealth -
+    aiHealth
+
+
+  // El estudiante recibió daño
+
+  if (
+    playerDamage > 0
+  ) {
+
+    showDamageIndicator(
+      playerDamageIndicator,
+      playerDamage,
+      'player'
+    )
+
+
+    showBattleHitEffect(
+      playerDamageIndicator,
+      'player'
+    )
+
+  }
+
+
+  // HANDVERSE recibió daño
+
+  if (
+    aiDamage > 0
+  ) {
+
+    showDamageIndicator(
+      aiDamageIndicator,
+      aiDamage,
+      'ai'
+    )
+
+
+    showBattleHitEffect(
+      aiDamageIndicator,
+      'ai'
+    )
+
+  }
+
+
+  // Guardamos las vidas actuales para
+  // compararlas en la siguiente actualización.
+
+  previousPlayerHealth =
+    playerHealth
+
+
+  previousAiHealth =
+    aiHealth
 
 
   /*
@@ -2797,6 +3223,170 @@ function updateBattleUI(
 
     aiHealthBar.style.width =
       `${aiHealth}%`
+
+  }
+
+
+  // ============================================================
+  // ESTADO DEL PODER ESPECIAL
+  // ============================================================
+
+  // El Battle Engine entrega:
+  //
+  // playerPowerUses          -> usos realizados por el estudiante
+  // aiPowerUses              -> usos realizados por HANDVERSE IA
+  // maxPowerUsesPerRound     -> máximo permitido por ronda
+  // playerPowerUsesRemaining -> usos restantes del estudiante
+  // aiPowerUsesRemaining     -> usos restantes de HANDVERSE IA
+
+  const maxPowerUses =
+    Math.max(
+      1,
+      Number(
+        state.maxPowerUsesPerRound ??
+        3
+      )
+    )
+
+
+  const playerPowerUses =
+    Math.max(
+      0,
+      Math.min(
+        maxPowerUses,
+        Number(
+          state.playerPowerUses ??
+          0
+        )
+      )
+    )
+
+
+  const aiPowerUses =
+    Math.max(
+      0,
+      Math.min(
+        maxPowerUses,
+        Number(
+          state.aiPowerUses ??
+          0
+        )
+      )
+    )
+
+
+  const playerPowerRemaining =
+    Math.max(
+      0,
+      Number(
+        state.playerPowerUsesRemaining ??
+        maxPowerUses -
+        playerPowerUses
+      )
+    )
+
+
+  const aiPowerRemaining =
+    Math.max(
+      0,
+      Number(
+        state.aiPowerUsesRemaining ??
+        maxPowerUses -
+        aiPowerUses
+      )
+    )
+
+
+  // ------------------------------------------------------------
+  // PODER DEL ESTUDIANTE
+  // ------------------------------------------------------------
+
+  if (
+    playerPowerStatus
+  ) {
+
+    if (
+      playerPowerRemaining <= 0
+    ) {
+
+      playerPowerStatus.textContent =
+        `⚡ PODER AGOTADO · 0/${maxPowerUses}`
+
+
+      playerPowerStatus.classList.remove(
+        'power-available'
+      )
+
+
+      playerPowerStatus.classList.add(
+        'power-used'
+      )
+
+    }
+
+    else {
+
+      playerPowerStatus.textContent =
+        `⚡ PODER ESPECIAL · ${playerPowerRemaining}/${maxPowerUses}`
+
+
+      playerPowerStatus.classList.remove(
+        'power-used'
+      )
+
+
+      playerPowerStatus.classList.add(
+        'power-available'
+      )
+
+    }
+
+  }
+
+
+  // ------------------------------------------------------------
+  // PODER DE HANDVERSE IA
+  // ------------------------------------------------------------
+
+  if (
+    aiPowerStatus
+  ) {
+
+    if (
+      aiPowerRemaining <= 0
+    ) {
+
+      aiPowerStatus.textContent =
+        `⚡ PODER AGOTADO · 0/${maxPowerUses}`
+
+
+      aiPowerStatus.classList.remove(
+        'power-available'
+      )
+
+
+      aiPowerStatus.classList.add(
+        'power-used'
+      )
+
+    }
+
+    else {
+
+      aiPowerStatus.textContent =
+        `⚡ PODER ESPECIAL · ${aiPowerRemaining}/${maxPowerUses}`
+
+
+      aiPowerStatus.classList.remove(
+        'power-used'
+      )
+
+
+      aiPowerStatus.classList.add(
+        'power-available'
+      )
+
+    }
 
   }
 
@@ -2907,6 +3497,60 @@ function updateBattleUI(
         'ESPERANDO'
 
     }
+
+  }
+
+
+  // ============================================================
+  // ANIMACIÓN DEL PODER ESPECIAL
+  // ============================================================
+
+  const currentBattleActionId =
+    `${state.round}-${state.turn}`
+
+
+  // ============================================================
+  // PODER ESPECIAL DEL ESTUDIANTE
+  // ============================================================
+
+  if (
+    state.playerAction &&
+    state.playerAction.key === 'power' &&
+    lastPlayerPowerAnimation !==
+    currentBattleActionId
+  ) {
+
+    showPowerSpecialEffect(
+      playerActionIcon,
+      'player'
+    )
+
+
+    lastPlayerPowerAnimation =
+      currentBattleActionId
+
+  }
+
+
+  // ============================================================
+  // PODER ESPECIAL DE HANDVERSE
+  // ============================================================
+
+  if (
+    state.aiAction &&
+    state.aiAction.key === 'power' &&
+    lastAiPowerAnimation !==
+    currentBattleActionId
+  ) {
+
+    showPowerSpecialEffect(
+      aiActionIcon,
+      'ai'
+    )
+
+
+    lastAiPowerAnimation =
+      currentBattleActionId
 
   }
 

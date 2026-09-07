@@ -14,12 +14,16 @@ export const BATTLE_CONFIG = {
   // al iniciar una nueva ronda.
   INITIAL_HEALTH: 100,
 
-  // Daño recibido cuando se pierde un turno.
+  // Daño recibido cuando se pierde un intercambio.
   DAMAGE_PER_TURN: 20,
 
   // Mejor de 3:
   // el primero que gane 2 rondas gana la partida.
   ROUNDS_TO_WIN: 2,
+
+  // Cada participante puede usar PODER
+  // máximo 3 veces durante cada ronda.
+  MAX_POWER_USES_PER_ROUND: 3,
 
   // Tiempo para mostrar quién ganó una ronda
   // antes de permitir comenzar la siguiente.
@@ -100,16 +104,17 @@ function createInitialBattleState() {
 
     aiRoundsWon: 0,
 
+
     // --------------------------------------------------------
     // CONTROL DEL PODER ESPECIAL
     // --------------------------------------------------------
 
-    // Cada participante puede utilizar
-    // 👍 PODER solamente una vez por ronda.
+    // Número de veces que cada participante
+    // ha utilizado PODER durante la ronda actual.
 
-    playerPowerUsed: false,
+    playerPowerUses: 0,
 
-    aiPowerUsed: false,
+    aiPowerUses: 0,
 
 
     // --------------------------------------------------------
@@ -128,6 +133,7 @@ function createInitialBattleState() {
     // player
     // ai
     // draw
+
     turnWinner: null,
 
 
@@ -137,6 +143,7 @@ function createInitialBattleState() {
 
     // Solamente tendrá valor cuando
     // alguien llegue a 0 de vida.
+
     roundWinner: null,
 
 
@@ -184,11 +191,9 @@ export function resetBattle() {
   battleState =
     createInitialBattleState()
 
-
   console.log(
     '⚔️ Batalla HANDVERSE reiniciada'
   )
-
 
   return getBattleState()
 }
@@ -203,15 +208,12 @@ export function startBattle() {
   // Reiniciamos absolutamente todo.
   resetBattle()
 
-
   // Activamos la batalla.
   battleState.battleStarted = true
-
 
   console.log(
     '🔥 BATALLA HANDVERSE INICIADA'
   )
-
 
   return getBattleState()
 }
@@ -249,7 +251,7 @@ export function gestureToBattleAction(
 }
 
 
-/// ============================================================
+// ============================================================
 // 8. GENERAR MOVIMIENTO DE HANDVERSE IA
 // ============================================================
 
@@ -258,23 +260,37 @@ export function generateAIAction() {
   // ATAQUE y ESCUDO siempre están disponibles.
 
   const actions = [
+
     BATTLE_ACTIONS.ATTACK,
+
     BATTLE_ACTIONS.SHIELD
   ]
 
 
-  // PODER solamente está disponible
-  // si HANDVERSE todavía NO lo utilizó
-  // durante la ronda actual.
+  // ----------------------------------------------------------
+  // PODER ESPECIAL DE HANDVERSE
+  // ----------------------------------------------------------
+  //
+  // HANDVERSE puede utilizar PODER
+  // máximo 3 veces durante la ronda.
+  //
+  // Cuando llega al máximo,
+  // PODER deja de formar parte
+  // de sus movimientos disponibles.
+  // ----------------------------------------------------------
 
   if (
-    !battleState.aiPowerUsed
+
+    battleState.aiPowerUses <
+
+    BATTLE_CONFIG
+      .MAX_POWER_USES_PER_ROUND
+
   ) {
 
     actions.push(
       BATTLE_ACTIONS.POWER
     )
-
   }
 
 
@@ -284,8 +300,10 @@ export function generateAIAction() {
   const randomIndex =
 
     Math.floor(
+
       Math.random() *
       actions.length
+
     )
 
 
@@ -317,8 +335,10 @@ export function determineRoundWinner(
   // ----------------------------------------------------------
 
   if (
+
     !playerAction ||
     !aiAction
+
   ) {
 
     return null
@@ -330,8 +350,10 @@ export function determineRoundWinner(
   // ----------------------------------------------------------
 
   if (
+
     playerAction.key ===
     aiAction.key
+
   ) {
 
     return 'draw'
@@ -343,8 +365,11 @@ export function determineRoundWinner(
   // ----------------------------------------------------------
 
   if (
+
     playerAction.key === 'attack' &&
+
     aiAction.key === 'power'
+
   ) {
 
     return 'player'
@@ -356,8 +381,11 @@ export function determineRoundWinner(
   // ----------------------------------------------------------
 
   if (
+
     playerAction.key === 'power' &&
+
     aiAction.key === 'shield'
+
   ) {
 
     return 'player'
@@ -369,8 +397,11 @@ export function determineRoundWinner(
   // ----------------------------------------------------------
 
   if (
+
     playerAction.key === 'shield' &&
+
     aiAction.key === 'attack'
+
   ) {
 
     return 'player'
@@ -391,9 +422,9 @@ export function determineRoundWinner(
 // ============================================================
 //
 // Conservamos determineRoundWinner()
-// porque tu main.js puede estar importándolo.
+// porque main.js puede estar importándolo.
 //
-// Pero realmente esta función determina
+// Realmente esta función determina
 // el ganador de un TURNO.
 //
 // ============================================================
@@ -424,7 +455,9 @@ export function playBattleTurn(
   // ==========================================================
 
   if (
+
     !battleState.battleStarted
+
   ) {
 
     return {
@@ -444,7 +477,9 @@ export function playBattleTurn(
   // ==========================================================
 
   if (
+
     battleState.battleFinished
+
   ) {
 
     return {
@@ -463,18 +498,19 @@ export function playBattleTurn(
   // SI LA RONDA ANTERIOR TERMINÓ
   // ==========================================================
   //
-  // Aquí evitamos que el mismo gesto
-  // inmediatamente cause daño en la siguiente ronda.
+  // Evitamos que el mismo gesto
+  // cause daño inmediatamente
+  // en la siguiente ronda.
   //
-  // Primero mostramos el ganador aproximadamente
-  // 1.8 segundos.
+  // Primero se muestra el ganador.
   //
-  // Después preparamos RONDA 2, RONDA 3, etc.
-  //
+  // Después se prepara la nueva ronda.
   // ==========================================================
 
   if (
+
     battleState.roundFinished
+
   ) {
 
     const elapsed =
@@ -482,21 +518,23 @@ export function playBattleTurn(
       battleState.roundEndedAt
 
         ? Date.now() -
-        battleState.roundEndedAt
+          battleState.roundEndedAt
 
         : BATTLE_CONFIG
           .ROUND_TRANSITION_DELAY_MS
 
 
     // --------------------------------------------------------
-    // TODAVÍA ESTAMOS MOSTRANDO
-    // EL RESULTADO DE LA RONDA
+    // TODAVÍA MOSTRAMOS RESULTADO
     // --------------------------------------------------------
 
     if (
+
       elapsed <
+
       BATTLE_CONFIG
         .ROUND_TRANSITION_DELAY_MS
+
     ) {
 
       return {
@@ -520,7 +558,7 @@ export function playBattleTurn(
 
 
     // --------------------------------------------------------
-    // YA PODEMOS PASAR A LA SIGUIENTE RONDA
+    // YA SE PUEDE INICIAR SIGUIENTE RONDA
     // --------------------------------------------------------
 
     return startNextRound()
@@ -543,7 +581,9 @@ export function playBattleTurn(
   // ==========================================================
 
   if (
+
     !playerAction
+
   ) {
 
     return {
@@ -557,29 +597,46 @@ export function playBattleTurn(
     }
   }
 
+
   // ==========================================================
   // COMPROBAR PODER ESPECIAL DEL ESTUDIANTE
   // ==========================================================
+  //
+  // Ahora PODER puede utilizarse
+  // hasta 3 veces durante cada ronda.
+  // ==========================================================
 
   if (
+
     playerAction.key === 'power' &&
-    battleState.playerPowerUsed
+
+    battleState.playerPowerUses >=
+
+    BATTLE_CONFIG
+      .MAX_POWER_USES_PER_ROUND
+
   ) {
 
     return {
 
       success: false,
 
+      // Conservamos esta propiedad
+      // para compatibilidad con main.js.
       powerAlreadyUsed: true,
 
+      powerExhausted: true,
+
       message:
-        '👍 Ya utilizaste tu PODER ESPECIAL en esta ronda.',
+
+        `⚠️ PODER ESPECIAL AGOTADO · ` +
+        `${battleState.playerPowerUses}/` +
+        `${BATTLE_CONFIG.MAX_POWER_USES_PER_ROUND} usos.`,
 
       ...getBattleState()
-
     }
-
   }
+
 
   // ==========================================================
   // HANDVERSE IA ELIGE MOVIMIENTO
@@ -588,34 +645,39 @@ export function playBattleTurn(
   const aiAction =
     generateAIAction()
 
+
   // ==========================================================
   // REGISTRAR USO DEL PODER ESPECIAL
   // ==========================================================
 
-  // Si el estudiante utilizó PODER,
-  // queda gastado durante esta ronda.
+
+  // ----------------------------------------------------------
+  // PODER DEL ESTUDIANTE
+  // ----------------------------------------------------------
 
   if (
+
     playerAction.key === 'power'
+
   ) {
 
-    battleState.playerPowerUsed =
-      true
-
+    battleState.playerPowerUses++
   }
 
 
-  // Si HANDVERSE utilizó PODER,
-  // también queda gastado durante esta ronda.
+  // ----------------------------------------------------------
+  // PODER DE HANDVERSE IA
+  // ----------------------------------------------------------
 
   if (
+
     aiAction.key === 'power'
+
   ) {
 
-    battleState.aiPowerUsed =
-      true
-
+    battleState.aiPowerUses++
   }
+
 
   // ==========================================================
   // GUARDAR MOVIMIENTOS
@@ -667,7 +729,9 @@ export function playBattleTurn(
   // ----------------------------------------------------------
 
   if (
+
     turnWinner === 'player'
+
   ) {
 
     battleState.aiHealth -=
@@ -683,7 +747,9 @@ export function playBattleTurn(
   // ----------------------------------------------------------
 
   else if (
+
     turnWinner === 'ai'
+
   ) {
 
     battleState.playerHealth -=
@@ -773,6 +839,7 @@ export function playBattleTurn(
     // --------------------------------------------------------
 
     message:
+
       buildTurnMessage(
         turnWinner
       )
@@ -808,13 +875,16 @@ export function playBattleTurn(
 function checkRoundEnd() {
 
   // ----------------------------------------------------------
-  // EVITAMOS CONTABILIZAR DOS VECES
+  // EVITAR CONTABILIZAR DOS VECES
   // LA MISMA RONDA
   // ----------------------------------------------------------
 
   if (
+
     battleState.roundFinished ||
+
     battleState.battleFinished
+
   ) {
 
     return
@@ -826,28 +896,35 @@ function checkRoundEnd() {
   // ==========================================================
 
   if (
+
     battleState.aiHealth <= 0
+
   ) {
 
     // Dejamos exactamente 0.
+
     battleState.aiHealth = 0
 
 
     // Marcamos ronda terminada.
+
     battleState.roundFinished =
       true
 
 
     // Guardamos ganador.
+
     battleState.roundWinner =
       'player'
 
 
     // Sumamos una ronda ganada.
+
     battleState.playerRoundsWon++
 
 
     // Guardamos momento en que terminó.
+
     battleState.roundEndedAt =
       Date.now()
 
@@ -860,6 +937,7 @@ function checkRoundEnd() {
 
     // Verificamos si además ganó
     // toda la partida.
+
     checkMatchWinner()
 
 
@@ -872,28 +950,35 @@ function checkRoundEnd() {
   // ==========================================================
 
   if (
+
     battleState.playerHealth <= 0
+
   ) {
 
     // Dejamos exactamente 0.
+
     battleState.playerHealth = 0
 
 
     // Marcamos ronda terminada.
+
     battleState.roundFinished =
       true
 
 
     // Guardamos ganador.
+
     battleState.roundWinner =
       'ai'
 
 
     // Sumamos una ronda ganada.
+
     battleState.aiRoundsWon++
 
 
     // Guardamos momento.
+
     battleState.roundEndedAt =
       Date.now()
 
@@ -905,6 +990,7 @@ function checkRoundEnd() {
 
 
     // Verificar ganador final.
+
     checkMatchWinner()
   }
 }
@@ -939,6 +1025,7 @@ function checkMatchWinner() {
     battleState.playerRoundsWon >=
 
     BATTLE_CONFIG.ROUNDS_TO_WIN
+
   ) {
 
     battleState.battleFinished =
@@ -967,6 +1054,7 @@ function checkMatchWinner() {
     battleState.aiRoundsWon >=
 
     BATTLE_CONFIG.ROUNDS_TO_WIN
+
   ) {
 
     battleState.battleFinished =
@@ -987,8 +1075,6 @@ function checkMatchWinner() {
 // ============================================================
 // 14. INICIAR SIGUIENTE RONDA
 // ============================================================
-//
-// Esta función sirve para:
 //
 // RONDA 1 termina
 //
@@ -1015,7 +1101,9 @@ export function startNextRound() {
   // ==========================================================
 
   if (
+
     !battleState.battleStarted
+
   ) {
 
     return {
@@ -1036,7 +1124,9 @@ export function startNextRound() {
   // ==========================================================
 
   if (
+
     battleState.battleFinished
+
   ) {
 
     return {
@@ -1057,7 +1147,9 @@ export function startNextRound() {
   // ==========================================================
 
   if (
+
     !battleState.roundFinished
+
   ) {
 
     return {
@@ -1085,18 +1177,20 @@ export function startNextRound() {
 
   battleState.turn = 0
 
+
   // ==========================================================
   // RECARGAR PODER ESPECIAL
   // ==========================================================
-
+  //
   // Cada nueva ronda devuelve
-  // un PODER al estudiante y uno a HANDVERSE.
+  // los 3 usos de PODER
+  // al estudiante y a HANDVERSE.
+  // ==========================================================
 
-  battleState.playerPowerUsed =
-    false
+  battleState.playerPowerUses = 0
 
-  battleState.aiPowerUsed =
-    false
+  battleState.aiPowerUses = 0
+
 
   // ==========================================================
   // RECUPERAR TODA LA VIDA
@@ -1174,7 +1268,8 @@ export function startNextRound() {
 
     // Esto sirve para que main.js sepa
     // que solo cambió de ronda y NO debe
-    // interpretar este evento como un ataque.
+    // interpretar este evento como ataque.
+
     transitionOnly: true,
 
     message:
@@ -1214,7 +1309,9 @@ function buildTurnMessage(
   // ----------------------------------------------------------
 
   if (
+
     battleState.battleFinished
+
   ) {
 
     return buildBattleFinishedMessage()
@@ -1226,7 +1323,9 @@ function buildTurnMessage(
   // ----------------------------------------------------------
 
   if (
+
     battleState.roundFinished
+
   ) {
 
     return buildRoundFinishedMessage()
@@ -1238,7 +1337,9 @@ function buildTurnMessage(
   // ----------------------------------------------------------
 
   if (
+
     turnWinner === 'player'
+
   ) {
 
     return (
@@ -1253,7 +1354,9 @@ function buildTurnMessage(
   // ----------------------------------------------------------
 
   if (
+
     turnWinner === 'ai'
+
   ) {
 
     return (
@@ -1285,7 +1388,9 @@ function buildRoundFinishedMessage() {
   // ----------------------------------------------------------
 
   if (
+
     battleState.battleFinished
+
   ) {
 
     return buildBattleFinishedMessage()
@@ -1297,8 +1402,10 @@ function buildRoundFinishedMessage() {
   // ----------------------------------------------------------
 
   if (
+
     battleState.roundWinner ===
     'player'
+
   ) {
 
     return (
@@ -1313,8 +1420,10 @@ function buildRoundFinishedMessage() {
   // ----------------------------------------------------------
 
   if (
+
     battleState.roundWinner ===
     'ai'
+
   ) {
 
     return (
@@ -1342,11 +1451,14 @@ function buildBattleFinishedMessage() {
   // ----------------------------------------------------------
 
   if (
+
     battleState.winner ===
     'player'
+
   ) {
 
     return (
+
       '🏆 ¡GANASTE LA BATALLA HANDVERSE!'
     )
   }
@@ -1357,17 +1469,21 @@ function buildBattleFinishedMessage() {
   // ----------------------------------------------------------
 
   if (
+
     battleState.winner ===
     'ai'
+
   ) {
 
     return (
+
       '🤖 HANDVERSE IA GANÓ LA BATALLA'
     )
   }
 
 
   return (
+
     '⚔️ BATALLA FINALIZADA'
   )
 }
@@ -1379,9 +1495,77 @@ function buildBattleFinishedMessage() {
 
 export function getBattleState() {
 
+  const maxPowerUses =
+
+    BATTLE_CONFIG
+      .MAX_POWER_USES_PER_ROUND
+
+
+  const playerPowerUsesRemaining =
+
+    Math.max(
+
+      0,
+
+      maxPowerUses -
+      battleState.playerPowerUses
+    )
+
+
+  const aiPowerUsesRemaining =
+
+    Math.max(
+
+      0,
+
+      maxPowerUses -
+      battleState.aiPowerUses
+    )
+
+
   return {
 
     ...battleState,
+
+
+    // ========================================================
+    // INFORMACIÓN DEL PODER ESPECIAL
+    // ========================================================
+
+    maxPowerUsesPerRound:
+      maxPowerUses,
+
+
+    playerPowerUsesRemaining,
+
+    aiPowerUsesRemaining,
+
+
+    // --------------------------------------------------------
+    // COMPATIBILIDAD CON TU MAIN.JS ACTUAL
+    // --------------------------------------------------------
+    //
+    // Si main.js todavía consulta:
+    //
+    // state.playerPowerUsed
+    // state.aiPowerUsed
+    //
+    // seguirá funcionando.
+    //
+    // Ahora significa:
+    // true = los 3 poderes ya fueron utilizados.
+    // --------------------------------------------------------
+
+    playerPowerUsed:
+
+      battleState.playerPowerUses >=
+      maxPowerUses,
+
+
+    aiPowerUsed:
+
+      battleState.aiPowerUses >=
+      maxPowerUses,
 
 
     // Creamos copias para evitar que main.js
@@ -1393,8 +1577,10 @@ export function getBattleState() {
       battleState.playerAction
 
         ? {
-          ...battleState.playerAction
-        }
+
+            ...battleState.playerAction
+
+          }
 
         : null,
 
@@ -1404,8 +1590,10 @@ export function getBattleState() {
       battleState.aiAction
 
         ? {
-          ...battleState.aiAction
-        }
+
+            ...battleState.aiAction
+
+          }
 
         : null
   }
@@ -1473,11 +1661,13 @@ export function getBattleEngineInfo() {
   return {
 
     name:
+
       'HANDVERSE AI Battle Engine',
 
 
     version:
-      '2.0.0',
+
+      '2.1.0',
 
 
     initialHealth:
@@ -1499,12 +1689,23 @@ export function getBattleEngineInfo() {
 
 
     // Mejor de 3.
+
     maximumPossibleRounds:
 
       BATTLE_CONFIG
         .ROUNDS_TO_WIN *
       2 -
       1,
+
+
+    // Máximo de poderes especiales
+    // disponibles por participante
+    // durante cada ronda.
+
+    maxPowerUsesPerRound:
+
+      BATTLE_CONFIG
+        .MAX_POWER_USES_PER_ROUND,
 
 
     roundTransitionDelayMs:
@@ -1516,15 +1717,21 @@ export function getBattleEngineInfo() {
     actions: [
 
       {
+
         ...BATTLE_ACTIONS.ATTACK
+
       },
 
       {
+
         ...BATTLE_ACTIONS.SHIELD
+
       },
 
       {
+
         ...BATTLE_ACTIONS.POWER
+
       }
     ]
   }
