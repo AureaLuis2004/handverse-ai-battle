@@ -1711,6 +1711,18 @@ async function handleTrainModel() {
 
 
     // ======================================================
+    // REINICIAR AUDIO DE LA PRIMERA PARTIDA
+    // ======================================================
+    //
+    // Garantiza que la primera partida comience con el
+    // sistema de audio limpio y que la música de victoria
+    // pueda reproducirse correctamente cuando termine.
+    // ======================================================
+
+    resetBattleAudio()
+
+
+    // ======================================================
     // REINICIAR EFECTOS DEL PODER ESPECIAL
     // ======================================================
 
@@ -2527,32 +2539,70 @@ function startNewBattle() {
   }
 
 
-  // Detenemos cualquier temporizador
-  // sobrante de la partida anterior.
+  // ==========================================================
+  // REINICIAR AUDIO PARA LA NUEVA PARTIDA
+  // ==========================================================
+  //
+  // 1. Detiene victoria-total.mp3.
+  // 2. Detiene combate-feroz.mp3.
+  // 3. Devuelve ambos audios al segundo 0.
+  // 4. Vuelve victoryMusicPlayed a false.
+  //
+  // Esto permite que la música de victoria vuelva a
+  // reproducirse en la partida 2, 3, 4, 5, etc.
+  // ==========================================================
+
+  resetBattleAudio()
+
+
+  // ==========================================================
+  // CANCELAR TRANSICIÓN ANTERIOR
+  // ==========================================================
 
   cancelRoundTransition()
 
 
-  // Limpiamos solamente el control
-  // temporal de gestos.
+  // ==========================================================
+  // REINICIAR CONTROL TEMPORAL DE GESTOS
+  // ==========================================================
 
   resetBattleGestureControl()
 
 
-  // startBattle() reinicia únicamente
-  // el motor de batalla.
+  // ==========================================================
+  // INICIAR NUEVA PARTIDA EN EL MOTOR
+  // ==========================================================
 
   const newBattleState =
     startBattle()
 
 
+  // ==========================================================
+  // ACTUALIZAR INTERFAZ
+  // ==========================================================
+
   updateBattleUI(
     newBattleState
   )
 
+
+  // ==========================================================
+  // PREPARAR NUEVA CUENTA REGRESIVA
+  // ==========================================================
+
   cancelBattleCountdown()
 
+
+  // ==========================================================
+  // 3 → 2 → 1 → COMBATE
+  // ==========================================================
+  //
+  // startBattleCountdown() será quien active
+  // combate-feroz.mp3 al llegar a COMBATE.
+  // ==========================================================
+
   startBattleCountdown()
+
 
   console.log(
     '🎮 NUEVA PARTIDA HANDVERSE INICIADA:',
@@ -2836,6 +2886,186 @@ let battleCountdownToken = 0
 // 700 ms = 0.7 segundos.
 const BATTLE_COUNTDOWN_DELAY = 700
 
+// ======================================================
+// AUDIO DEL SISTEMA DE BATALLA
+// ======================================================
+
+// Música que sonará durante el combate.
+const battleMusic =
+  new Audio(
+    '/audio/combate-feroz.mp3'
+  )
+
+// Música que sonará cuando termine la partida.
+const victoryMusic =
+  new Audio(
+    '/audio/victoria-total.mp3'
+  )
+
+
+// ======================================================
+// CONFIGURACIÓN DE AUDIO
+// ======================================================
+
+// La música de combate se repite
+// mientras dure toda la partida.
+battleMusic.loop = true
+
+
+// La música de victoria solamente
+// se reproduce una vez.
+victoryMusic.loop = false
+
+
+// Volumen
+battleMusic.volume = 0.35
+victoryMusic.volume = 0.55
+
+
+// Evita que la música de victoria
+// se ejecute varias veces cuando
+// updateBattleUI se actualiza.
+let victoryMusicPlayed = false
+
+
+// ======================================================
+// INICIAR MÚSICA DE COMBATE
+// ======================================================
+
+function startBattleMusic() {
+
+  // Si ya está sonando, no volver a comenzarla.
+  if (
+    !battleMusic.paused
+  ) {
+
+    return
+
+  }
+
+  // Detener posible música de victoria.
+  victoryMusic.pause()
+
+  victoryMusic.currentTime = 0
+
+
+  battleMusic
+    .play()
+    .then(
+      () => {
+
+        console.log(
+          '🎵 Música de combate HANDVERSE iniciada'
+        )
+
+      }
+    )
+    .catch(
+      error => {
+
+        console.warn(
+          '🔇 El navegador bloqueó la música:',
+          error
+        )
+
+      }
+    )
+
+}
+
+
+// ======================================================
+// DETENER MÚSICA DE COMBATE
+// ======================================================
+
+function stopBattleMusic() {
+
+  battleMusic.pause()
+
+  battleMusic.currentTime = 0
+
+}
+
+
+// ======================================================
+// REPRODUCIR MÚSICA DE VICTORIA
+// ======================================================
+
+function playVictoryMusic() {
+
+  // Evitar ejecutarla varias veces.
+  if (
+    victoryMusicPlayed
+  ) {
+
+    return
+
+  }
+
+  victoryMusicPlayed = true
+
+
+  // Primero detener música de combate.
+  stopBattleMusic()
+
+
+  victoryMusic.pause()
+
+  victoryMusic.currentTime = 0
+
+
+  victoryMusic
+    .play()
+    .then(
+      () => {
+
+        console.log(
+          '🏆 Música de victoria HANDVERSE iniciada'
+        )
+
+      }
+    )
+    .catch(
+      error => {
+
+        console.warn(
+          '🔇 No se pudo reproducir música de victoria:',
+          error
+        )
+
+      }
+    )
+
+}
+
+
+// ======================================================
+// REINICIAR AUDIO PARA NUEVA PARTIDA
+// ======================================================
+
+function resetBattleAudio() {
+
+  victoryMusicPlayed = false
+
+
+  // Detener combate.
+  battleMusic.pause()
+
+  battleMusic.currentTime = 0
+
+
+  // Detener victoria.
+  victoryMusic.pause()
+
+  victoryMusic.currentTime = 0
+
+
+  console.log(
+    '🔄 Sistema de audio HANDVERSE reiniciado'
+  )
+
+}
+
 // ============================================================
 // EJECUTAR CUENTA REGRESIVA DE BATALLA
 // ============================================================
@@ -3026,6 +3256,8 @@ async function startBattleCountdown() {
 
   battleCountdown.textContent =
     '⚔️ ¡COMBATE!'
+
+  startBattleMusic()
 
   battleCountdown.classList.remove(
     'countdown-pop'
@@ -3913,6 +4145,25 @@ function updateBattleUI(
     battleGestureLocked =
       true
 
+    // ======================================================
+    // MUSICA DE VICTORIA FINAL
+    // ======================================================
+
+    if (
+      state.battleFinished &&
+      (
+        state.winner === 'player' ||
+        state.winner === 'ai'
+      )
+    ) {
+
+      playVictoryMusic()
+
+    }
+
+    // ======================================================
+    // DETERMINAR GANADOR FINAL
+    // ======================================================
 
     if (
       state.winner ===
