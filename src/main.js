@@ -3334,6 +3334,21 @@ function updateBattleUI(
       'battle-section'
     )
 
+  // ======================================================
+  // LIMPIAR EFECTOS DE VICTORIA AL INICIAR OTRA PARTIDA
+  // ======================================================
+
+  if (
+    !state.battleFinished
+  ) {
+
+    battleSection?.classList.remove(
+      'battle-finished',
+      'battle-winner-player',
+      'battle-winner-ai'
+    )
+
+  }
 
   const battleMessage =
     document.getElementById(
@@ -4144,6 +4159,56 @@ function updateBattleUI(
 
     battleGestureLocked =
       true
+
+
+    // ======================================================
+    // ACTIVAR PANTALLA VISUAL DE VICTORIA FINAL
+    // ======================================================
+
+    battleSection?.classList.add(
+      'battle-finished'
+    )
+
+
+    // Limpiar posibles ganadores anteriores.
+
+    battleSection?.classList.remove(
+      'battle-winner-player',
+      'battle-winner-ai'
+    )
+
+
+    // ======================================================
+    // GANADOR: ESTUDIANTE
+    // ======================================================
+
+    if (
+      state.winner ===
+      'player'
+    ) {
+
+      battleSection?.classList.add(
+        'battle-winner-player'
+      )
+
+    }
+
+
+    // ======================================================
+    // GANADOR: HANDVERSE IA
+    // ======================================================
+
+    else if (
+      state.winner ===
+      'ai'
+    ) {
+
+      battleSection?.classList.add(
+        'battle-winner-ai'
+      )
+
+    }
+
 
     // ======================================================
     // MUSICA DE VICTORIA FINAL
