@@ -7248,3 +7248,956 @@ button:not(:disabled):active {
 /* ============================================================
    FIN DE PANTALLA CINEMATOGRÁFICA DE VICTORIA
    ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   OPTIMIZACIÓN FINAL PARA TELÉFONOS Y DISPOSITIVOS TÁCTILES
+   ============================================================ */
+
+
+/* ============================================================
+   DETECCIÓN DE TELÉFONO
+   También funciona aunque Chrome use "Sitio para computadora"
+   porque detectamos el tipo de puntero táctil.
+   ============================================================ */
+
+@media (max-width: 700px),
+(hover: none) and (pointer: coarse) {
+
+
+  /* ========================================================
+     1. CONTENEDOR GENERAL
+     ======================================================== */
+
+  html {
+
+    width:
+      100%;
+
+    overflow-x:
+      hidden;
+
+  }
+
+
+  body {
+
+    width:
+      100%;
+
+    min-width:
+      0;
+
+    overflow-x:
+      hidden;
+
+  }
+
+
+  .app-shell {
+
+    width:
+      100%;
+
+    max-width:
+      none;
+
+    padding:
+      12px 8px 40px;
+
+    gap:
+      22px;
+
+  }
+
+
+  /* ========================================================
+     2. CABECERA
+     ======================================================== */
+
+  .hero {
+
+    width:
+      calc(100vw - 16px);
+
+    max-width:
+      none;
+
+    padding:
+      26px 14px 24px;
+
+    margin:
+      0 auto 10px;
+
+    border-radius:
+      16px;
+
+  }
+
+
+  .hero h1 {
+
+    font-size:
+      clamp(1.65rem,
+        8vw,
+        2.5rem);
+
+    line-height:
+      1.05;
+
+    text-align:
+      center;
+
+  }
+
+
+  .subtitle {
+
+    margin-top:
+      12px;
+
+    font-size:
+      0.95rem;
+
+    text-align:
+      center;
+
+  }
+
+
+  /* ========================================================
+     3. ATAQUE / ESCUDO / PODER DE LA CABECERA
+     ======================================================== */
+
+  .gesture-legend {
+
+    width:
+      100%;
+
+    margin-top:
+      20px;
+
+    display:
+      grid;
+
+    grid-template-columns:
+      repeat(3,
+        minmax(0, 1fr));
+
+    gap:
+      8px;
+
+  }
+
+
+  .gesture-legend>div {
+
+    min-width:
+      0;
+
+    width:
+      100%;
+
+    min-height:
+      74px;
+
+    padding:
+      10px 5px;
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      7px;
+
+    border-radius:
+      13px;
+
+  }
+
+
+  .gesture-legend strong {
+
+    font-size:
+      1.65rem;
+
+  }
+
+
+  .gesture-legend span {
+
+    font-size:
+      0.72rem;
+
+    letter-spacing:
+      0.05em;
+
+  }
+
+
+  /* ========================================================
+     4. PANEL NEURAL VISION
+     CASI TODO EL ANCHO REAL DEL TELÉFONO
+     ======================================================== */
+
+  .camera-panel {
+
+    width:
+      calc(100vw - 12px);
+
+    max-width:
+      none;
+
+    margin:
+      0 auto;
+
+    padding:
+      12px 8px 14px;
+
+    border-radius:
+      18px;
+
+  }
+
+
+  .camera-panel::before {
+
+    margin-left:
+      6px;
+
+    margin-bottom:
+      10px;
+
+    font-size:
+      0.76rem;
+
+    letter-spacing:
+      0.16em;
+
+  }
+
+
+  /* ========================================================
+     5. CÁMARA
+     Conservamos 16:9 para no desalinear MediaPipe + Canvas
+     ======================================================== */
+
+  .camera-stage {
+
+    width:
+      100%;
+
+    max-width:
+      none;
+
+    aspect-ratio:
+      16 / 9;
+
+    margin:
+      0;
+
+    border-radius:
+      14px;
+
+  }
+
+
+  #webcam,
+  #overlay {
+
+    width:
+      100%;
+
+    height:
+      100%;
+
+  }
+
+
+  /* ========================================================
+     6. ESTADO DE CÁMARA
+     ======================================================== */
+
+  .camera-controls {
+
+    width:
+      100%;
+
+    margin-top:
+      14px;
+
+    margin-bottom:
+      14px;
+
+    padding:
+      0 4px;
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+
+    gap:
+      10px;
+
+  }
+
+
+  #camera-status {
+
+    width:
+      100%;
+
+    min-height:
+      38px;
+
+    margin:
+      0;
+
+    display:
+      flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    text-align:
+      center;
+
+    font-size:
+      0.83rem;
+
+    line-height:
+      1.35;
+
+  }
+
+
+  /* ========================================================
+     7. BOTÓN DE CÁMARA GRANDE PARA DEDO
+     ======================================================== */
+
+  #start-camera {
+
+    width:
+      100%;
+
+    min-height:
+      54px;
+
+    padding:
+      14px 18px;
+
+    border-radius:
+      13px;
+
+    font-size:
+      0.90rem;
+
+    font-weight:
+      900;
+
+    letter-spacing:
+      0.08em;
+
+    touch-action:
+      manipulation;
+
+  }
+
+
+  /* ========================================================
+     8. RECONOCIMIENTO IA
+     ======================================================== */
+
+  .prediction-panel {
+
+    width:
+      100%;
+
+    min-height:
+      100px;
+
+    padding:
+      16px 14px;
+
+    display:
+      grid;
+
+    grid-template-columns:
+      auto 1fr auto;
+
+    align-items:
+      center;
+
+    gap:
+      12px;
+
+    border-radius:
+      15px;
+
+  }
+
+
+  .prediction-icon {
+
+    font-size:
+      2.3rem;
+
+  }
+
+
+  .prediction-information {
+
+    min-width:
+      0;
+
+  }
+
+
+  .prediction-eyebrow {
+
+    display:
+      block;
+
+    font-size:
+      0.63rem;
+
+    letter-spacing:
+      0.13em;
+
+  }
+
+
+  #prediction-name {
+
+    display:
+      block;
+
+    margin-top:
+      4px;
+
+    font-size:
+      1rem;
+
+    line-height:
+      1.15;
+
+  }
+
+
+  #prediction-action {
+
+    display:
+      block;
+
+    margin-top:
+      4px;
+
+    font-size:
+      0.78rem;
+
+    line-height:
+      1.25;
+
+  }
+
+
+  .prediction-confidence {
+
+    min-width:
+      66px;
+
+    text-align:
+      center;
+
+  }
+
+
+  .prediction-confidence span {
+
+    font-size:
+      0.55rem;
+
+  }
+
+
+  #prediction-confidence {
+
+    font-size:
+      1rem;
+
+  }
+
+
+  /* ========================================================
+     9. PANEL ENTRENA TU IA
+     ======================================================== */
+
+  .training-panel {
+
+    width:
+      calc(100vw - 16px);
+
+    max-width:
+      none;
+
+    margin:
+      0 auto;
+
+    padding:
+      22px 12px;
+
+    border-radius:
+      18px;
+
+  }
+
+
+  .training-header {
+
+    margin-bottom:
+      20px;
+
+    text-align:
+      center;
+
+  }
+
+
+  .training-header h2 {
+
+    margin-top:
+      7px;
+
+    font-size:
+      1.65rem;
+
+  }
+
+
+  .training-header>p:last-child {
+
+    font-size:
+      0.90rem;
+
+    line-height:
+      1.35;
+
+  }
+
+
+  /* ========================================================
+     10. ESTADO DEL ENTRENAMIENTO
+     ======================================================== */
+
+  .training-status-box {
+
+    width:
+      100%;
+
+    min-height:
+      64px;
+
+    margin-bottom:
+      18px;
+
+    padding:
+      12px 14px;
+
+    border-radius:
+      13px;
+
+  }
+
+
+  #training-status {
+
+    font-size:
+      0.78rem;
+
+    line-height:
+      1.35;
+
+    text-align:
+      center;
+
+  }
+
+
+  /* ========================================================
+     11. LOS 3 GESTOS
+     UNO DEBAJO DEL OTRO EN TELÉFONO
+     ======================================================== */
+
+  .training-grid {
+
+    width:
+      100%;
+
+    display:
+      grid;
+
+    grid-template-columns:
+      1fr !important;
+
+    gap:
+      14px;
+
+  }
+
+
+  /* ========================================================
+     12. TARJETAS GRANDES DE ENTRENAMIENTO
+     ======================================================== */
+
+  .gesture-training-card {
+
+    width:
+      100%;
+
+    min-height:
+      230px;
+
+    padding:
+      22px 20px;
+
+    border-radius:
+      17px;
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    justify-content:
+      center;
+
+  }
+
+
+  .gesture-training-icon {
+
+    margin-bottom:
+      8px;
+
+    font-size:
+      3.3rem;
+
+  }
+
+
+  .gesture-training-card h3 {
+
+    font-size:
+      1.10rem;
+
+    line-height:
+      1.2;
+
+  }
+
+
+  .gesture-action {
+
+    margin-top:
+      5px;
+
+    font-size:
+      0.78rem;
+
+  }
+
+
+  /* ========================================================
+     13. PROGRESO DE MUESTRAS
+     ======================================================== */
+
+  .progress-container {
+
+    width:
+      100%;
+
+    margin:
+      22px 0 18px;
+
+  }
+
+
+  .progress-info {
+
+    margin-bottom:
+      9px;
+
+    font-size:
+      0.80rem;
+
+  }
+
+
+  .progress-track {
+
+    height:
+      11px;
+
+    border-radius:
+      999px;
+
+  }
+
+
+  /* ========================================================
+     14. BOTONES ENTRENAR / RECAPTURAR
+     ======================================================== */
+
+  .train-button {
+
+    width:
+      100%;
+
+    min-height:
+      52px;
+
+    margin-top:
+      auto;
+
+    padding:
+      13px 16px;
+
+    border-radius:
+      12px;
+
+    font-size:
+      0.87rem;
+
+    font-weight:
+      900;
+
+    letter-spacing:
+      0.08em;
+
+    touch-action:
+      manipulation;
+
+  }
+
+
+  /* ========================================================
+     15. DATASET
+     ======================================================== */
+
+  .dataset-ready {
+
+    width:
+      100%;
+
+    margin-top:
+      18px;
+
+    padding:
+      17px 14px;
+
+    border-radius:
+      14px;
+
+  }
+
+
+  .dataset-ready strong {
+
+    font-size:
+      0.90rem;
+
+  }
+
+
+  .dataset-ready p {
+
+    font-size:
+      0.76rem;
+
+    line-height:
+      1.35;
+
+  }
+
+
+  /* ========================================================
+     16. BOTÓN DE ENTRENAMIENTO DEL MODELO
+     ======================================================== */
+
+  .train-model-button {
+
+    width:
+      100%;
+
+    min-height:
+      54px;
+
+    padding:
+      14px 18px;
+
+    font-size:
+      0.88rem;
+
+    touch-action:
+      manipulation;
+
+  }
+
+
+}
+
+
+/* ============================================================
+   TELÉFONO MUY PEQUEÑO
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+
+  .app-shell {
+
+    padding-left:
+      5px;
+
+    padding-right:
+      5px;
+
+  }
+
+
+  .camera-panel {
+
+    width:
+      calc(100vw - 8px);
+
+    padding-left:
+      6px;
+
+    padding-right:
+      6px;
+
+  }
+
+
+  .training-panel {
+
+    width:
+      calc(100vw - 10px);
+
+    padding-left:
+      10px;
+
+    padding-right:
+      10px;
+
+  }
+
+
+  .gesture-training-card {
+
+    min-height:
+      220px;
+
+    padding:
+      20px 17px;
+
+  }
+
+
+  .prediction-panel {
+
+    grid-template-columns:
+      auto 1fr;
+
+  }
+
+
+  .prediction-confidence {
+
+    grid-column:
+      1 / -1;
+
+    width:
+      100%;
+
+    margin-top:
+      4px;
+
+    padding-top:
+      8px;
+
+    border-top:
+      1px solid rgba(34, 211, 238, 0.12);
+
+  }
+
+}
+
+
+/* ============================================================
+   TELÉFONO EN HORIZONTAL
+   ============================================================ */
+
+@media (orientation: landscape) and (hover: none) and (pointer: coarse) {
+
+
+  .camera-panel {
+
+    width:
+      min(96vw,
+        900px);
+
+  }
+
+
+  .camera-stage {
+
+    width:
+      100%;
+
+    aspect-ratio:
+      16 / 9;
+
+  }
+
+
+  .training-grid {
+
+    grid-template-columns:
+      repeat(3,
+        minmax(0, 1fr)) !important;
+
+  }
+
+
+  .gesture-training-card {
+
+    min-height:
+      210px;
+
+  }
+
+}
+
+
+/* ============================================================
+   FIN OPTIMIZACIÓN MÓVIL HANDVERSE
+   ============================================================ */

@@ -2062,7 +2062,7 @@ async function captureGesture(
     ) {
 
       trainingStatus.textContent =
-        '🧠 Dataset completo. HANDVERSE está listo para entrenar el modelo.'
+        'Dataset completo. HANDVERSE está listo para entrenar el modelo.'
 
     }
 
