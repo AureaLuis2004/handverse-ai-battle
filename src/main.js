@@ -5,6 +5,8 @@
 
 import './style.css'
 
+import { supabase } from './lib/supabaseClient.js'
+
 import {
   initializeHandTracker,
   detectHands
@@ -36,6 +38,7 @@ import {
   startBattle,
   startNextRound,
   playBattleTurn,
+  playTimeoutTurn,
   getBattleState,
   isBattleActive,
   resetBattle
@@ -50,7 +53,146 @@ const app =
   document.querySelector('#app')
 
 app.innerHTML = `
-  <main class="app-shell">
+
+  <!-- ====================================================== -->
+  <!-- COUNTDOWN GLOBAL DE HANDVERSE -->
+  <!-- ====================================================== -->
+
+  <div
+    id="battle-countdown"
+    class="battle-countdown"
+    aria-live="assertive"
+  ></div>
+
+  <!-- ====================================================== -->
+  <!-- REGISTRO OBLIGATORIO DEL JUGADOR -->
+  <!-- ====================================================== -->
+
+  <section
+    id="player-registration-screen"
+    class="player-registration-screen"
+  >
+
+    <div class="player-registration-card">
+
+      <div class="registration-brand">
+        <span class="registration-eyebrow">
+          ECOTEC · SISTEMAS INTELIGENTES
+        </span>
+
+        <h1>
+          HANDVERSE:
+          <span>BATALLA DE IA</span>
+        </h1>
+
+        <p>
+          Registra tus datos para ingresar a la experiencia.
+        </p>
+      </div>
+
+
+      <form
+        id="player-registration-form"
+        class="player-registration-form"
+        autocomplete="off"
+      >
+
+        <div class="registration-field">
+
+          <label for="player-first-names">
+            Nombre(s)
+          </label>
+
+          <input
+            id="player-first-names"
+            name="firstNames"
+            type="text"
+            placeholder="Ej. Luis Andrés"
+            maxlength="60"
+            required
+          >
+
+          <small>
+            Ingresa uno o dos nombres.
+          </small>
+
+        </div>
+
+
+        <div class="registration-field">
+
+          <label for="player-last-names">
+            Apellido(s)
+          </label>
+
+          <input
+            id="player-last-names"
+            name="lastNames"
+            type="text"
+            placeholder="Ej. Aurea Pérez"
+            maxlength="60"
+            required
+          >
+
+          <small>
+            Ingresa uno o dos apellidos.
+          </small>
+
+        </div>
+
+
+        <div class="registration-field">
+
+          <label for="player-institution">
+            Institución educativa
+          </label>
+
+          <input
+            id="player-institution"
+            name="institution"
+            type="text"
+            placeholder="Ej. Unidad Educativa..."
+            maxlength="100"
+            required
+          >
+
+        </div>
+
+
+        <p
+          id="registration-error"
+          class="registration-error"
+          aria-live="polite"
+        ></p>
+
+
+        <button
+          type="submit"
+          class="registration-submit-button"
+        >
+          ⚔️ ENTRAR A HANDVERSE
+        </button>
+
+      </form>
+
+
+      <p class="registration-privacy">
+        Los datos se utilizarán únicamente para identificar al participante
+        durante la demostración de HANDVERSE.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- APLICACIÓN PRINCIPAL -->
+  <!-- ====================================================== -->
+
+  <main
+    id="handverse-app"
+    class="app-shell app-registration-locked"
+  >
 
     <!-- ================================================== -->
     <!-- CABECERA -->
@@ -460,23 +602,6 @@ app.innerHTML = `
           Entrena la IA para desbloquear la batalla.
         </p>
 
-        <!-- ====================================================== -->
-        <!-- CUENTA REGRESIVA DE BATALLA -->
-        <!-- ====================================================== -->
-
-        <div
-          id="battle-countdown"
-          class="battle-countdown"
-          aria-live="assertive"
-        >
-
-          <span
-            id="battle-countdown-text"
-            class="battle-countdown-text"
-          ></span>
-
-        </div>
-
       </div>
 
 
@@ -497,9 +622,27 @@ app.innerHTML = `
 
           <div>
 
-            <span class="battle-label">
-              JUGADOR
-            </span>
+            <!-- ====================================================== -->
+            <!-- IDENTIDAD DEL JUGADOR -->
+            <!-- ====================================================== -->
+
+            <div class="battle-player-identity">
+
+              <strong
+                id="battle-player-name"
+                class="battle-player-name"
+              >
+                JUGADOR
+              </strong>
+
+              <span
+                id="battle-player-institution"
+                class="battle-player-institution"
+              >
+                INSTITUCIÓN EDUCATIVA
+              </span>
+
+            </div>
 
             <div class="health-info">
 
@@ -554,11 +697,49 @@ app.innerHTML = `
             0
           </strong>
 
-          <span class="battle-vs">
-            VS
-          </span>
+
+          <!-- =============================================== -->
+          <!-- TEMPORIZADOR DEL TURNO -->
+          <!-- =============================================== -->
+
+          <div
+            id="turn-timer"
+            class="turn-timer turn-timer-paused"
+          >
+
+            <span class="turn-timer-label">
+              TIEMPO
+            </span>
+
+          <div class="turn-timer-number-row">
+
+            <strong id="turn-timer-value">
+             --
+            </strong>
+
+            <span class="turn-timer-unit">
+             s
+            </span>
+
+          </div>
+
+          <div class="turn-timer-track">
+
+            <span
+              id="turn-timer-fill"
+              class="turn-timer-fill"
+            ></span>
+
+          </div>
 
         </div>
+
+
+      <span class="battle-vs">
+        VS
+      </span>
+
+    </div>
 
 
         <!-- IA -->
@@ -681,6 +862,27 @@ app.innerHTML = `
         🔒 BATALLA BLOQUEADA
       </div>
 
+      <!-- ====================================================== -->
+      <!-- IDENTIDAD DEL GANADOR -->
+      <!-- ====================================================== -->
+
+      <div
+        id="battle-winner-identity"
+        class="battle-winner-identity"
+      >
+
+        <strong
+          id="battle-winner-name"
+          class="battle-winner-name"
+        ></strong>
+
+        <span
+          id="battle-winner-institution"
+          class="battle-winner-institution"
+        ></span>
+
+      </div>
+
 
       <!-- ================================================= -->
       <!-- NUEVA PARTIDA -->
@@ -698,6 +900,14 @@ app.innerHTML = `
           type="button"
         >
           🎮 GENERAR OTRA PARTIDA
+        </button>
+
+        <button
+          id="new-student-button"
+          class="new-student-button"
+          type="button"
+        >
+          👤 NUEVO ESTUDIANTE
         </button>
 
       </div>
@@ -795,6 +1005,89 @@ const newBattleButton =
     '#new-battle-button'
   )
 
+// ============================================================
+// NUEVO ESTUDIANTE
+// ============================================================
+
+const newStudentButton =
+  document.getElementById(
+    'new-student-button'
+  )
+
+// ============================================================
+// IDENTIDAD DEL GANADOR EN LA PANTALLA FINAL
+// ============================================================
+
+const battleWinnerIdentity =
+  document.getElementById(
+    'battle-winner-identity'
+  )
+
+
+const battleWinnerName =
+  document.getElementById(
+    'battle-winner-name'
+  )
+
+
+const battleWinnerInstitution =
+  document.getElementById(
+    'battle-winner-institution'
+  )
+
+// ============================================================
+// ELEMENTOS DEL REGISTRO
+// ============================================================
+
+const playerRegistrationScreen =
+  document.getElementById(
+    'player-registration-screen'
+  )
+
+const playerRegistrationForm =
+  document.getElementById(
+    'player-registration-form'
+  )
+
+const playerFirstNamesInput =
+  document.getElementById(
+    'player-first-names'
+  )
+
+const playerLastNamesInput =
+  document.getElementById(
+    'player-last-names'
+  )
+
+const playerInstitutionInput =
+  document.getElementById(
+    'player-institution'
+  )
+
+const registrationError =
+  document.getElementById(
+    'registration-error'
+  )
+
+const handverseApp =
+  document.getElementById(
+    'handverse-app'
+  )
+
+// ============================================================
+// IDENTIDAD DEL JUGADOR EN LA BATALLA
+// ============================================================
+
+const battlePlayerName =
+  document.getElementById(
+    'battle-player-name'
+  )
+
+
+const battlePlayerInstitution =
+  document.getElementById(
+    'battle-player-institution'
+  )
 
 // ============================================================
 // 3. ESTADO GENERAL
@@ -830,6 +1123,41 @@ let lastBattleGesture =
   null
 
 let battleGestureStartTime =
+  0
+
+
+// ============================================================
+// TEMPORIZADOR DE CADA TURNO
+// ============================================================
+
+// Tiempo máximo para realizar uno de los 3 gestos.
+const TURN_TIME_LIMIT_MS =
+  5000
+
+
+// Actualizamos visualmente el contador cada 100 ms.
+// Es suficientemente fluido y ligero para móviles.
+const TURN_TIMER_TICK_MS =
+  100
+
+
+let turnTimerInterval =
+  null
+
+
+let turnTimerDeadline =
+  0
+
+
+let turnTimerActive =
+  false
+
+
+let turnTimerResolving =
+  false
+
+
+let turnTimerToken =
   0
 
 
@@ -1193,6 +1521,501 @@ function resetBattleGestureControl() {
 
 }
 
+// ============================================================
+// OBTENER ELEMENTOS DEL TEMPORIZADOR
+// ============================================================
+
+function getTurnTimerElements() {
+
+  return {
+
+    container:
+      document.getElementById(
+        'turn-timer'
+      ),
+
+    value:
+      document.getElementById(
+        'turn-timer-value'
+      ),
+
+    fill:
+      document.getElementById(
+        'turn-timer-fill'
+      )
+
+  }
+
+}
+
+
+// ============================================================
+// ACTUALIZAR VISUALMENTE EL TEMPORIZADOR
+// ============================================================
+
+function updateTurnTimerVisual(
+  remainingMs
+) {
+
+  const {
+    container,
+    value,
+    fill
+  } =
+    getTurnTimerElements()
+
+
+  if (
+    !container ||
+    !value ||
+    !fill
+  ) {
+
+    return
+
+  }
+
+
+  const safeRemaining =
+    Math.max(
+      0,
+      remainingMs
+    )
+
+
+  // Mostramos 5, 4, 3, 2, 1.
+  const seconds =
+    Math.ceil(
+      safeRemaining /
+      1000
+    )
+
+
+  value.textContent =
+    String(
+      seconds
+    )
+
+
+  const progress =
+    Math.max(
+      0,
+      Math.min(
+        1,
+        safeRemaining /
+        TURN_TIME_LIMIT_MS
+      )
+    )
+
+
+  fill.style.transform =
+    `scaleX(${progress})`
+
+
+  // ==========================================================
+  // ESTADOS VISUALES
+  // ==========================================================
+
+  container.classList.remove(
+    'turn-timer-paused',
+    'turn-timer-warning',
+    'turn-timer-danger'
+  )
+
+
+  // 2 segundos.
+  if (
+    safeRemaining <=
+    2000 &&
+    safeRemaining >
+    1000
+  ) {
+
+    container.classList.add(
+      'turn-timer-warning'
+    )
+
+  }
+
+
+  // Último segundo.
+  else if (
+    safeRemaining <=
+    1000
+  ) {
+
+    container.classList.add(
+      'turn-timer-danger'
+    )
+
+  }
+
+}
+
+
+// ============================================================
+// MOSTRAR TEMPORIZADOR DETENIDO
+// ============================================================
+
+function showTurnTimerPaused() {
+
+  const {
+    container,
+    value,
+    fill
+  } =
+    getTurnTimerElements()
+
+
+  if (
+    !container ||
+    !value ||
+    !fill
+  ) {
+
+    return
+
+  }
+
+
+  value.textContent =
+    '--'
+
+
+  fill.style.transform =
+    'scaleX(0)'
+
+
+  container.classList.remove(
+    'turn-timer-warning',
+    'turn-timer-danger'
+  )
+
+
+  container.classList.add(
+    'turn-timer-paused'
+  )
+
+}
+
+
+// ============================================================
+// DETENER TEMPORIZADOR
+// ============================================================
+
+function stopTurnTimer(
+  showPaused = false
+) {
+
+  turnTimerToken++
+
+
+  if (
+    turnTimerInterval
+  ) {
+
+    clearInterval(
+      turnTimerInterval
+    )
+
+
+    turnTimerInterval =
+      null
+
+  }
+
+
+  turnTimerActive =
+    false
+
+
+  if (
+    showPaused
+  ) {
+
+    showTurnTimerPaused()
+
+  }
+
+}
+
+
+// ============================================================
+// TIEMPO AGOTADO
+// ============================================================
+
+function handleTurnTimeout() {
+
+  if (
+    turnTimerResolving
+  ) {
+
+    return
+
+  }
+
+
+  if (
+    battleCountdownActive ||
+    roundTransitionActive ||
+    !isBattleActive()
+  ) {
+
+    stopTurnTimer(
+      true
+    )
+
+    return
+
+  }
+
+
+  const currentState =
+    getBattleState()
+
+
+  if (
+    !currentState ||
+    currentState.roundFinished ||
+    currentState.battleFinished
+  ) {
+
+    stopTurnTimer(
+      true
+    )
+
+    return
+
+  }
+
+
+  turnTimerResolving =
+    true
+
+
+  stopTurnTimer(
+    false
+  )
+
+
+  // Bloqueamos cualquier gesto que pudiera entrar
+  // exactamente cuando llegó a cero.
+  battleGestureLocked =
+    true
+
+
+  const result =
+    playTimeoutTurn()
+
+
+  if (
+    !result ||
+    !result.success
+  ) {
+
+    turnTimerResolving =
+      false
+
+    return
+
+  }
+
+
+  updateBattleUI(
+    result
+  )
+
+
+  console.log(
+    '⏱️ HANDVERSE: tiempo agotado',
+    result
+  )
+
+
+  // ==========================================================
+  // TERMINÓ UNA RONDA
+  // ==========================================================
+
+  if (
+    result.roundFinished &&
+    !result.battleFinished
+  ) {
+
+    turnTimerResolving =
+      false
+
+
+    beginRoundTransition()
+
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // TERMINÓ TODA LA PARTIDA
+  // ==========================================================
+
+  if (
+    result.battleFinished
+  ) {
+
+    turnTimerResolving =
+      false
+
+
+    stopTurnTimer(
+      true
+    )
+
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // SIGUE LA MISMA RONDA
+  // ==========================================================
+
+  resetBattleGestureControl()
+
+
+  turnTimerResolving =
+    false
+
+
+  startTurnTimer()
+
+}
+
+
+// ============================================================
+// INICIAR TEMPORIZADOR DE 5 SEGUNDOS
+// ============================================================
+
+function startTurnTimer() {
+
+  // Elimina cualquier reloj anterior.
+  stopTurnTimer(
+    false
+  )
+
+
+  if (
+    battleCountdownActive ||
+    roundTransitionActive ||
+    !isBattleActive()
+  ) {
+
+    showTurnTimerPaused()
+
+    return
+
+  }
+
+
+  const state =
+    getBattleState()
+
+
+  if (
+    !state ||
+    state.roundFinished ||
+    state.battleFinished
+  ) {
+
+    showTurnTimerPaused()
+
+    return
+
+  }
+
+
+  turnTimerResolving =
+    false
+
+
+  turnTimerActive =
+    true
+
+
+  turnTimerDeadline =
+    performance.now() +
+    TURN_TIME_LIMIT_MS
+
+
+  // Token para impedir que un timer antiguo
+  // pueda ejecutarse después de reiniciarse.
+  const currentToken =
+    ++turnTimerToken
+
+
+  updateTurnTimerVisual(
+    TURN_TIME_LIMIT_MS
+  )
+
+
+  turnTimerInterval =
+    setInterval(
+      () => {
+
+        if (
+          currentToken !==
+          turnTimerToken
+        ) {
+
+          return
+
+        }
+
+
+        if (
+          !turnTimerActive
+        ) {
+
+          return
+
+        }
+
+
+        const remainingMs =
+          turnTimerDeadline -
+          performance.now()
+
+
+        if (
+          remainingMs <= 0
+        ) {
+
+          updateTurnTimerVisual(
+            0
+          )
+
+
+          stopTurnTimer(
+            false
+          )
+
+
+          handleTurnTimeout()
+
+
+          return
+
+        }
+
+
+        updateTurnTimerVisual(
+          remainingMs
+        )
+
+      },
+      TURN_TIMER_TICK_MS
+    )
+
+}
 
 // ============================================================
 // CANCELAR TRANSICIÓN DE RONDA
@@ -1227,6 +2050,10 @@ function cancelRoundTransition() {
 function beginRoundTransition() {
 
   cancelRoundTransition()
+
+  stopTurnTimer(
+    true
+  )
 
   roundTransitionActive =
     true
@@ -1268,6 +2095,7 @@ function beginRoundTransition() {
           nextRoundState
         )
 
+        startTurnTimer()
       },
       ROUND_TRANSITION_MS
     )
@@ -2433,6 +3261,18 @@ function processBattlePrediction(
 
   }
 
+  // Si justamente se está resolviendo
+  // una derrota por tiempo,
+  // no aceptamos otro movimiento.
+
+  if (
+    turnTimerResolving
+  ) {
+
+    return
+
+  }
+
 
   // Mostrar gesto inmediatamente.
 
@@ -2624,6 +3464,12 @@ function processBattlePrediction(
   battleGestureLocked =
     true
 
+  // El estudiante sí realizó un movimiento válido.
+  // Este turno ya terminó.
+
+  stopTurnTimer(
+    false
+  )
 
   // Actualizamos la interfaz.
 
@@ -2649,7 +3495,31 @@ function processBattlePrediction(
 
     beginRoundTransition()
 
+    return
   }
+
+
+  // ============================================================
+  // SI LA PARTIDA TERMINÓ
+  // ============================================================
+
+  if (
+    result.battleFinished
+  ) {
+
+    stopTurnTimer(
+      true
+    )
+
+    return
+  }
+
+
+  // ============================================================
+  // NUEVO TURNO DE LA MISMA RONDA
+  // ============================================================
+
+  startTurnTimer()
 
 }
 
@@ -2674,6 +3544,18 @@ function processBattlePrediction(
 // ============================================================
 
 function startNewBattle() {
+
+  // ==========================================================
+  // LIMPIAR GANADOR ANTERIOR
+  // ==========================================================
+
+  hideRegisteredPlayerVictory()
+
+  // ======================================================
+  // PERMITIR GUARDAR EL RESULTADO DE LA NUEVA PARTIDA
+  // ======================================================
+
+  battleResultSaved = false
 
   if (
     !isModelTrained()
@@ -2740,6 +3622,10 @@ function startNewBattle() {
   cancelRoundTransition()
 
 
+  stopTurnTimer(
+    true
+  )
+
   // ==========================================================
   // REINICIAR CONTROL TEMPORAL DE GESTOS
   // ==========================================================
@@ -2789,6 +3675,15 @@ function startNewBattle() {
 
 }
 
+// ============================================================
+// INICIAR SESIÓN DE UN NUEVO ESTUDIANTE
+// ============================================================
+
+function startNewStudentSession() {
+
+  window.location.reload()
+
+}
 
 // ============================================================
 // CONTROL VISUAL DE DAÑO
@@ -3027,6 +3922,24 @@ function showPowerSpecialEffect(
 
 }
 
+
+// ============================================================
+// JUGADOR REGISTRADO
+// ============================================================
+
+let registeredPlayer = {
+  firstNames: '',
+  lastNames: '',
+  fullName: '',
+  institution: ''
+}
+
+// ======================================================
+// CONTROL DE GUARDADO EN SUPABASE
+// Evita registrar varias veces la misma partida
+// ======================================================
+
+let battleResultSaved = false
 
 // ============================================================
 // CONTROL DE ANIMACIÓN DEL PODER ESPECIAL
@@ -3465,6 +4378,12 @@ async function startBattleCountdown() {
   clearBattleCountdown()
 
   battleCountdownActive = false
+
+  // ==========================================================
+  // COMIENZA EL PRIMER TURNO DE 5 SEGUNDOS
+  // ==========================================================
+
+  startTurnTimer()
 
   console.log(
     '⚔️ HANDVERSE: combate habilitado'
@@ -4428,9 +5347,20 @@ function updateBattleUI(
       ) {
 
         battleResult.textContent =
-          '🏆 VICTORIA FINAL DEL ESTUDIANTE'
+          '🏆 VICTORIA FINAL'
 
       }
+
+
+      // ==========================================================
+      // MOSTRAR NOMBRE E INSTITUCIÓN DEL ESTUDIANTE GANADOR
+      // ==========================================================
+
+      showRegisteredPlayerVictory()
+
+      saveBattleResultToSupabase(
+        state
+      )
 
     }
 
@@ -4439,6 +5369,8 @@ function updateBattleUI(
       state.winner ===
       'ai'
     ) {
+
+      hideRegisteredPlayerVictory()
 
       if (
         battleMessage
@@ -4458,6 +5390,10 @@ function updateBattleUI(
           '🤖 VICTORIA FINAL DE HANDVERSE IA'
 
       }
+
+      saveBattleResultToSupabase(
+        state
+      )
 
     }
 
@@ -4612,16 +5548,21 @@ function updateBattleUI(
     'ai'
   ) {
 
-    battleResult.textContent =
-      '🤖 HANDVERSE GANÓ EL INTERCAMBIO · LA RONDA CONTINÚA'
+    if (
+      state.timeout
+    ) {
 
-  }
+      battleResult.textContent =
+        '⏱️ TIEMPO AGOTADO · HANDVERSE GANA EL INTERCAMBIO · -20 HP'
 
+    }
 
-  else {
+    else {
 
-    battleResult.textContent =
-      '⚔️ EMPATE · LA RONDA CONTINÚA'
+      battleResult.textContent =
+        '🤖 HANDVERSE GANÓ EL INTERCAMBIO · LA RONDA CONTINÚA'
+
+    }
 
   }
 
@@ -5236,6 +6177,537 @@ async function startCamera() {
 
 }
 
+// ============================================================
+// NORMALIZAR TEXTO DEL REGISTRO
+// ============================================================
+
+function normalizeRegistrationText(
+  value
+) {
+
+  return value
+    .trim()
+    .replace(/\s+/g, ' ')
+
+}
+
+// ============================================================
+// VALIDAR NOMBRES Y APELLIDOS
+// ============================================================
+
+function isValidPersonName(
+  value
+) {
+
+  const normalized =
+    normalizeRegistrationText(
+      value
+    )
+
+  const words =
+    normalized.split(' ')
+
+  if (
+    words.length < 1 ||
+    words.length > 2
+  ) {
+
+    return false
+
+  }
+
+
+  const validWordPattern =
+    /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'-]+$/
+
+
+  return words.every(
+    word =>
+      validWordPattern.test(
+        word
+      )
+  )
+
+}
+
+// ============================================================
+// VALIDAR INSTITUCIÓN
+// ============================================================
+
+function isValidInstitution(
+  value
+) {
+
+  const normalized =
+    normalizeRegistrationText(
+      value
+    )
+
+  return normalized.length >= 3
+
+}
+
+// ============================================================
+// MOSTRAR IDENTIDAD DEL JUGADOR EN LA BATALLA
+// ============================================================
+
+function updateRegisteredPlayerUI() {
+
+  // ==========================================================
+  // VALIDAR QUE EXISTA UN JUGADOR REGISTRADO
+  // ==========================================================
+
+  if (
+    !registeredPlayer ||
+    !registeredPlayer.fullName
+  ) {
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // MOSTRAR NOMBRE COMPLETO
+  // ==========================================================
+
+  if (
+    battlePlayerName
+  ) {
+
+    battlePlayerName.textContent =
+      registeredPlayer.fullName
+        .toUpperCase()
+
+
+    battlePlayerName.title =
+      registeredPlayer.fullName
+
+  }
+
+
+  // ==========================================================
+  // MOSTRAR INSTITUCIÓN EDUCATIVA
+  // ==========================================================
+
+  if (
+    battlePlayerInstitution
+  ) {
+
+    battlePlayerInstitution.textContent =
+      registeredPlayer.institution
+
+
+    battlePlayerInstitution.title =
+      registeredPlayer.institution
+
+  }
+
+}
+
+// ============================================================
+// MOSTRAR IDENTIDAD DEL ESTUDIANTE GANADOR
+// ============================================================
+
+function showRegisteredPlayerVictory() {
+
+  // ==========================================================
+  // VALIDAR QUE EXISTA UN JUGADOR REGISTRADO
+  // ==========================================================
+
+  if (
+    !registeredPlayer ||
+    !registeredPlayer.fullName
+  ) {
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // MOSTRAR NOMBRE COMPLETO
+  // ==========================================================
+
+  if (
+    battleWinnerName
+  ) {
+
+    battleWinnerName.textContent =
+      registeredPlayer.fullName
+        .toUpperCase()
+
+
+    battleWinnerName.title =
+      registeredPlayer.fullName
+
+  }
+
+
+  // ==========================================================
+  // MOSTRAR INSTITUCIÓN EDUCATIVA
+  // ==========================================================
+
+  if (
+    battleWinnerInstitution
+  ) {
+
+    battleWinnerInstitution.textContent =
+      registeredPlayer.institution
+
+
+    battleWinnerInstitution.title =
+      registeredPlayer.institution
+
+  }
+
+
+  // ==========================================================
+  // HACER VISIBLE EL CONTENEDOR
+  // ==========================================================
+
+  if (
+    battleWinnerIdentity
+  ) {
+
+    battleWinnerIdentity.classList.add(
+      'winner-identity-visible'
+    )
+
+  }
+
+}
+
+// ============================================================
+// OCULTAR IDENTIDAD DEL GANADOR
+// ============================================================
+
+function hideRegisteredPlayerVictory() {
+
+  if (
+    battleWinnerIdentity
+  ) {
+
+    battleWinnerIdentity.classList.remove(
+      'winner-identity-visible'
+    )
+
+  }
+
+
+  if (
+    battleWinnerName
+  ) {
+
+    battleWinnerName.textContent =
+      ''
+
+  }
+
+
+  if (
+    battleWinnerInstitution
+  ) {
+
+    battleWinnerInstitution.textContent =
+      ''
+
+  }
+
+}
+
+// ======================================================
+// GUARDAR RESULTADO DE LA PARTIDA EN SUPABASE
+// ======================================================
+
+async function saveBattleResultToSupabase(state) {
+
+  // Evitar guardar la misma partida varias veces
+  if (battleResultSaved) {
+    return
+  }
+
+  // Verificar que exista un jugador registrado
+  if (
+    !registeredPlayer ||
+    !registeredPlayer.fullName ||
+    !registeredPlayer.institution
+  ) {
+    console.warn(
+      '⚠️ No existe un jugador registrado para guardar.'
+    )
+
+    return
+  }
+
+  // Verificar que exista un ganador final
+  if (
+    state?.winner !== 'player' &&
+    state?.winner !== 'ai'
+  ) {
+    return
+  }
+
+  const playerScore =
+    Number(
+      state.playerRoundsWon ?? 0
+    )
+
+  const aiScore =
+    Number(
+      state.aiRoundsWon ?? 0
+    )
+
+  // Comprobar que realmente sea un resultado final
+  if (
+    state.winner === 'player' &&
+    playerScore !== 2
+  ) {
+    return
+  }
+
+  if (
+    state.winner === 'ai' &&
+    aiScore !== 2
+  ) {
+    return
+  }
+
+  const result =
+    state.winner === 'player'
+      ? 'GANADOR'
+      : 'DERROTA'
+
+  // Bloquear inmediatamente para evitar INSERT duplicado
+  battleResultSaved = true
+
+  try {
+
+    const { error } =
+      await supabase
+        .from(
+          'handverse_participants'
+        )
+        .insert([
+          {
+            first_names:
+              registeredPlayer.firstNames,
+
+            last_names:
+              registeredPlayer.lastNames,
+
+            full_name:
+              registeredPlayer.fullName,
+
+            institution:
+              registeredPlayer.institution,
+
+            result:
+              result,
+
+            player_score:
+              playerScore,
+
+            ai_score:
+              aiScore
+          }
+        ])
+
+    if (error) {
+
+      battleResultSaved = false
+
+      console.error(
+        '❌ ERROR AL GUARDAR RESULTADO EN SUPABASE:',
+        error
+      )
+
+      return
+    }
+
+    console.log(
+      '✅ RESULTADO HANDVERSE GUARDADO EN SUPABASE:',
+      {
+        jugador:
+          registeredPlayer.fullName,
+
+        institucion:
+          registeredPlayer.institution,
+
+        resultado:
+          result,
+
+        marcador:
+          `${playerScore} - ${aiScore}`
+      }
+    )
+
+  } catch (error) {
+
+    battleResultSaved = false
+
+    console.error(
+      '❌ ERROR DE CONEXIÓN CON SUPABASE:',
+      error
+    )
+
+  }
+
+}
+
+// ============================================================
+// REGISTRAR JUGADOR
+// ============================================================
+
+function registerPlayer(
+  event
+) {
+
+  event.preventDefault()
+
+
+  const firstNames =
+    normalizeRegistrationText(
+      playerFirstNamesInput.value
+    )
+
+
+  const lastNames =
+    normalizeRegistrationText(
+      playerLastNamesInput.value
+    )
+
+
+  const institution =
+    normalizeRegistrationText(
+      playerInstitutionInput.value
+    )
+
+
+  registrationError.textContent =
+    ''
+
+
+  // ==========================================================
+  // VALIDACIÓN NOMBRES
+  // ==========================================================
+
+  if (
+    !isValidPersonName(
+      firstNames
+    )
+  ) {
+
+    registrationError.textContent =
+      '⚠️ Ingresa uno o dos nombres válidos.'
+
+    playerFirstNamesInput.focus()
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // VALIDACIÓN APELLIDOS
+  // ==========================================================
+
+  if (
+    !isValidPersonName(
+      lastNames
+    )
+  ) {
+
+    registrationError.textContent =
+      '⚠️ Ingresa uno o dos apellidos válidos.'
+
+    playerLastNamesInput.focus()
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // VALIDACIÓN INSTITUCIÓN
+  // ==========================================================
+
+  if (
+    !isValidInstitution(
+      institution
+    )
+  ) {
+
+    registrationError.textContent =
+      '⚠️ Ingresa el nombre de tu institución educativa.'
+
+    playerInstitutionInput.focus()
+
+    return
+
+  }
+
+
+  // ==========================================================
+  // GUARDAR JUGADOR ACTIVO
+  // ==========================================================
+
+  registeredPlayer = {
+
+    firstNames,
+
+    lastNames,
+
+    fullName:
+      `${firstNames} ${lastNames}`,
+
+    institution
+
+  }
+
+
+  console.log(
+    '👤 JUGADOR HANDVERSE REGISTRADO:',
+    registeredPlayer
+  )
+
+  // ==========================================================
+  // ACTUALIZAR IDENTIDAD DEL JUGADOR EN LA BATALLA
+  // ==========================================================
+
+  updateRegisteredPlayerUI()
+
+  // ==========================================================
+  // MOSTRAR APLICACIÓN
+  // ==========================================================
+
+  playerRegistrationScreen.classList.add(
+    'registration-completed'
+  )
+
+
+  handverseApp.classList.remove(
+    'app-registration-locked'
+  )
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+
+}
+
+if (
+  playerRegistrationForm
+) {
+
+  playerRegistrationForm.addEventListener(
+    'submit',
+    registerPlayer
+  )
+
+}
 
 // ============================================================
 // 19. EVENTOS
@@ -5270,6 +6742,17 @@ if (
   newBattleButton.addEventListener(
     'click',
     startNewBattle
+  )
+
+}
+
+if (
+  newStudentButton
+) {
+
+  newStudentButton.addEventListener(
+    'click',
+    startNewStudentSession
   )
 
 }

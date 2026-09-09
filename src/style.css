@@ -3246,210 +3246,7 @@ body::before {
 
 }
 
-/* ============================================================
-   CUENTA REGRESIVA DE BATALLA
-   ============================================================ */
 
-#battle-section {
-  position: relative;
-}
-
-/* Contenedor del contador */
-#battle-countdown {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  z-index: 100;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 180px;
-  min-height: 180px;
-
-  padding: 25px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(2, 13, 32, 0.92);
-
-  border:
-    2px solid rgba(0, 229, 255, 0.8);
-
-  box-shadow:
-    0 0 20px rgba(0, 229, 255, 0.35),
-    0 0 60px rgba(0, 229, 255, 0.18);
-
-  color: #ffffff;
-
-  font-size: 82px;
-  font-weight: 900;
-
-  text-align: center;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  visibility: hidden;
-}
-
-
-/* ============================================================
-   CONTADOR VISIBLE
-   ============================================================ */
-
-#battle-countdown.countdown-visible {
-
-  visibility: visible;
-
-  opacity: 1;
-
-  animation:
-    handverse-countdown-pop 0.55s ease-out;
-}
-
-
-/* ============================================================
-   ESTADO COMBATE
-   ============================================================ */
-
-#battle-countdown.countdown-fight {
-
-  min-width: 320px;
-
-  min-height: 110px;
-
-  border-radius: 18px;
-
-  padding:
-    20px 35px;
-
-  font-size: 38px;
-
-  letter-spacing: 3px;
-
-  color:
-    #5ffcff;
-
-  border-color:
-    #5ffcff;
-
-  box-shadow:
-    0 0 25px rgba(0, 229, 255, 0.6),
-    0 0 80px rgba(0, 229, 255, 0.25);
-
-  animation:
-    handverse-fight-pop 0.65s ease-out;
-}
-
-
-/* ============================================================
-   ANIMACIÓN 3 - 2 - 1
-   ============================================================ */
-
-@keyframes handverse-countdown-pop {
-
-  0% {
-
-    opacity: 0;
-
-    transform:
-      translate(-50%, -50%) scale(0.3);
-
-  }
-
-  45% {
-
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%) scale(1.18);
-
-  }
-
-  100% {
-
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%) scale(1);
-
-  }
-
-}
-
-
-/* ============================================================
-   ANIMACIÓN COMBATE
-   ============================================================ */
-
-@keyframes handverse-fight-pop {
-
-  0% {
-
-    opacity: 0;
-
-    transform:
-      translate(-50%, -50%) scale(0.5);
-
-  }
-
-  50% {
-
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%) scale(1.12);
-
-  }
-
-  100% {
-
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%) scale(1);
-
-  }
-
-}
-
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 600px) {
-
-  #battle-countdown {
-
-    min-width: 130px;
-
-    min-height: 130px;
-
-    font-size: 58px;
-
-  }
-
-  #battle-countdown.countdown-fight {
-
-    min-width: 230px;
-
-    min-height: 90px;
-
-    font-size: 27px;
-
-  }
-
-}
 
 /* ============================================================
    HANDVERSE: AI BATTLE
@@ -4985,221 +4782,6 @@ body {
 
   box-shadow:
     inset 0 0 25px rgba(34, 211, 238, 0.025);
-
-}
-
-
-/* ============================================================
-   23. CUENTA REGRESIVA 3 - 2 - 1
-   ============================================================ */
-
-#battle-countdown {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9999;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  pointer-events:
-    none;
-
-  visibility:
-    hidden;
-
-  opacity:
-    0;
-
-  background:
-    radial-gradient(circle,
-      rgba(7, 18, 40, 0.72),
-      rgba(1, 4, 12, 0.92));
-
-  -webkit-backdrop-filter:
-    blur(3px);
-
-  backdrop-filter:
-    blur(3px);
-
-}
-
-
-#battle-countdown.countdown-visible {
-
-  visibility:
-    visible;
-
-  opacity:
-    1;
-
-}
-
-
-#battle-countdown.countdown-pop {
-
-  font-size:
-    clamp(110px,
-      16vw,
-      220px);
-
-  font-weight:
-    950;
-
-  color:
-    #ffffff;
-
-  text-shadow:
-    0 0 10px #22d3ee,
-    0 0 30px rgba(34, 211, 238, 0.85),
-    0 0 70px rgba(34, 211, 238, 0.45);
-
-  animation:
-    hvCountdownNumber 0.68s cubic-bezier(0.2,
-      0.9,
-      0.3,
-      1);
-
-}
-
-
-@keyframes hvCountdownNumber {
-
-  0% {
-
-    opacity:
-      0;
-
-    transform:
-      scale(2.2);
-
-    filter:
-      blur(15px);
-
-  }
-
-  35% {
-
-    opacity:
-      1;
-
-    transform:
-      scale(0.88);
-
-    filter:
-      blur(0);
-
-  }
-
-  65% {
-
-    transform:
-      scale(1.10);
-
-  }
-
-  100% {
-
-    transform:
-      scale(1);
-
-  }
-
-}
-
-
-/* ============================================================
-   24. ¡COMBATE!
-   ============================================================ */
-
-#battle-countdown.countdown-combat {
-
-  visibility:
-    visible;
-
-  opacity:
-    1;
-
-  font-size:
-    clamp(48px,
-      8vw,
-      105px);
-
-  font-weight:
-    950;
-
-  letter-spacing:
-    0.07em;
-
-  color:
-    #ffffff;
-
-  text-shadow:
-    0 0 8px #22d3ee,
-    0 0 24px rgba(34, 211, 238, 0.9),
-    0 0 55px rgba(139, 92, 246, 0.55);
-
-  animation:
-    hvCombatStart 0.70s cubic-bezier(0.17,
-      0.84,
-      0.44,
-      1);
-
-}
-
-
-@keyframes hvCombatStart {
-
-  0% {
-
-    opacity:
-      0;
-
-    transform:
-      scale(0.20);
-
-    letter-spacing:
-      0.5em;
-
-  }
-
-  50% {
-
-    opacity:
-      1;
-
-    transform:
-      scale(1.25);
-
-  }
-
-  75% {
-
-    transform:
-      scale(0.96);
-
-  }
-
-  100% {
-
-    transform:
-      scale(1);
-
-    letter-spacing:
-      0.07em;
-
-  }
 
 }
 
@@ -8220,20 +7802,15 @@ button:not(:disabled):active {
    1. QUITAR FILTROS PESADOS
    ============================================================ */
 
-html.touch-device
-.camera-panel,
+html.touch-device .camera-panel,
 
-html.touch-device
-.training-panel,
+html.touch-device .training-panel,
 
-html.touch-device
-.battle-section,
+html.touch-device .battle-section,
 
-html.touch-device
-.gesture-training-card,
+html.touch-device .gesture-training-card,
 
-html.touch-device
-.prediction-panel {
+html.touch-device .prediction-panel {
 
   -webkit-backdrop-filter:
     none !important;
@@ -8248,24 +7825,19 @@ html.touch-device
    2. REDUCIR SOMBRAS GRANDES
    ============================================================ */
 
-html.touch-device
-.camera-panel,
+html.touch-device .camera-panel,
 
-html.touch-device
-.training-panel,
+html.touch-device .training-panel,
 
-html.touch-device
-.battle-section {
+html.touch-device .battle-section {
 
   box-shadow:
-    0 12px 30px
-    rgba(0, 0, 0, 0.30) !important;
+    0 12px 30px rgba(0, 0, 0, 0.30) !important;
 
 }
 
 
-html.touch-device
-.gesture-training-card {
+html.touch-device .gesture-training-card {
 
   box-shadow:
     none !important;
@@ -8278,8 +7850,7 @@ html.touch-device
    Conservamos la estética, pero sin animación GPU continua.
    ============================================================ */
 
-html.touch-device
-.camera-stage::before {
+html.touch-device .camera-stage::before {
 
   opacity:
     0.16;
@@ -8287,8 +7858,7 @@ html.touch-device
 }
 
 
-html.touch-device
-.camera-stage::after {
+html.touch-device .camera-stage::after {
 
   animation:
     none !important;
@@ -8310,8 +7880,7 @@ html.touch-device
    Conservamos entrada, eliminamos efectos infinitos.
    ============================================================ */
 
-html.touch-device
-.battle-finished::after {
+html.touch-device .battle-finished::after {
 
   animation:
     none !important;
@@ -8322,9 +7891,7 @@ html.touch-device
 }
 
 
-html.touch-device
-.battle-finished
-.battle-result::after {
+html.touch-device .battle-finished .battle-result::after {
 
   animation:
     none !important;
@@ -8340,17 +7907,12 @@ html.touch-device
    Evitar blur gráfico costoso.
    ============================================================ */
 
-html.touch-device
-.battle-finished
-.battle-hud,
+html.touch-device .battle-finished .battle-hud,
 
-html.touch-device
-.battle-finished
-.battle-actions {
+html.touch-device .battle-finished .battle-actions {
 
   filter:
-    saturate(0.55)
-    brightness(0.60) !important;
+    saturate(0.55) brightness(0.60) !important;
 
 }
 
@@ -8359,11 +7921,9 @@ html.touch-device
    6. TELÉFONOS LIMITADOS
    ============================================================ */
 
-html.low-power-device
-.camera-stage::before,
+html.low-power-device .camera-stage::before,
 
-html.low-power-device
-.camera-stage::after {
+html.low-power-device .camera-stage::after {
 
   display:
     none;
@@ -8371,12 +7931,9 @@ html.low-power-device
 }
 
 
-html.low-power-device
-.battle-finished::after,
+html.low-power-device .battle-finished::after,
 
-html.low-power-device
-.battle-finished
-.battle-result::after {
+html.low-power-device .battle-finished .battle-result::after {
 
   display:
     none;
@@ -8388,8 +7945,7 @@ html.low-power-device
    7. TRANSICIONES IMPORTANTES SIGUEN ACTIVAS
    ============================================================ */
 
-html.touch-device
-.health-fill {
+html.touch-device .health-fill {
 
   transition:
     width 0.30s ease;
@@ -8400,3 +7956,2117 @@ html.touch-device
 /* ============================================================
    FIN PERFORMANCE MODE
    ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   TEMPORIZADOR DE BATALLA - 5 SEGUNDOS
+   ============================================================ */
+
+
+/* ============================================================
+   CENTRO DE LA BATALLA
+   Más espacio para RONDA + TIEMPO + VS
+   ============================================================ */
+
+.battle-center {
+
+  min-width:
+    120px;
+
+  padding:
+    6px 8px;
+
+  gap:
+    5px;
+
+}
+
+
+/* ============================================================
+   CONTENEDOR DEL TEMPORIZADOR
+   ============================================================ */
+
+.turn-timer {
+
+  width:
+    98px;
+
+  margin:
+    5px 0 2px;
+
+  padding:
+    8px 10px 9px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    3px;
+
+  border:
+    1px solid rgba(34, 211, 238, 0.30);
+
+  border-radius:
+    12px;
+
+  background:
+    linear-gradient(145deg,
+      rgba(4, 20, 42, 0.88),
+      rgba(5, 12, 28, 0.94));
+
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.08);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+
+}
+
+
+/* ============================================================
+   ETIQUETA TIEMPO
+   ============================================================ */
+
+.turn-timer-label {
+
+  color:
+    #6888aa;
+
+  font-size:
+    8px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.18em;
+
+}
+
+
+/* ============================================================
+   NÚMERO
+   ============================================================ */
+
+.turn-timer-number-row {
+
+  display:
+    flex;
+
+  align-items:
+    baseline;
+
+  justify-content:
+    center;
+
+  gap:
+    3px;
+
+}
+
+
+#turn-timer-value {
+
+  min-width:
+    24px;
+
+  color:
+    #67e8f9;
+
+  font-family:
+    monospace;
+
+  font-size:
+    26px;
+
+  font-weight:
+    950;
+
+  line-height:
+    1;
+
+  text-align:
+    center;
+
+  text-shadow:
+    0 0 13px rgba(34, 211, 238, 0.55);
+
+}
+
+
+.turn-timer-unit {
+
+  color:
+    #6888aa;
+
+  font-size:
+    10px;
+
+  font-weight:
+    800;
+
+}
+
+
+/* ============================================================
+   BARRA DEL TIEMPO
+   ============================================================ */
+
+.turn-timer-track {
+
+  width:
+    100%;
+
+  height:
+    4px;
+
+  margin-top:
+    3px;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+}
+
+
+.turn-timer-fill {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  transform:
+    scaleX(1);
+
+  transform-origin:
+    left center;
+
+  border-radius:
+    inherit;
+
+  background:
+    linear-gradient(90deg,
+      #22d3ee,
+      #67e8f9);
+
+  box-shadow:
+    0 0 8px rgba(34, 211, 238, 0.55);
+
+}
+
+
+/* ============================================================
+   PAUSADO
+   ============================================================ */
+
+.turn-timer.turn-timer-paused {
+
+  opacity:
+    0.55;
+
+  border-color:
+    rgba(104, 136, 170, 0.20);
+
+}
+
+
+.turn-timer-paused #turn-timer-value {
+
+  color:
+    #6888aa;
+
+  text-shadow:
+    none;
+
+}
+
+
+/* ============================================================
+   QUEDAN 2 SEGUNDOS
+   ============================================================ */
+
+.turn-timer.turn-timer-warning {
+
+  border-color:
+    rgba(250, 204, 21, 0.65);
+
+  box-shadow:
+    0 0 20px rgba(250, 204, 21, 0.15);
+
+}
+
+
+.turn-timer-warning #turn-timer-value {
+
+  color:
+    #facc15;
+
+  text-shadow:
+    0 0 14px rgba(250, 204, 21, 0.65);
+
+}
+
+
+.turn-timer-warning .turn-timer-fill {
+
+  background:
+    #facc15;
+
+  box-shadow:
+    0 0 8px rgba(250, 204, 21, 0.60);
+
+}
+
+
+/* ============================================================
+   ÚLTIMO SEGUNDO
+   ============================================================ */
+
+.turn-timer.turn-timer-danger {
+
+  border-color:
+    rgba(248, 113, 113, 0.80);
+
+  background:
+    linear-gradient(145deg,
+      rgba(55, 10, 20, 0.82),
+      rgba(10, 8, 20, 0.96));
+
+  box-shadow:
+    0 0 24px rgba(248, 113, 113, 0.22);
+
+  animation:
+    hvTimerDanger 0.45s ease-in-out infinite alternate;
+
+}
+
+
+.turn-timer-danger #turn-timer-value {
+
+  color:
+    #fb7185;
+
+  text-shadow:
+    0 0 16px rgba(251, 113, 133, 0.80);
+
+}
+
+
+.turn-timer-danger .turn-timer-fill {
+
+  background:
+    #fb7185;
+
+  box-shadow:
+    0 0 10px rgba(251, 113, 133, 0.70);
+
+}
+
+
+@keyframes hvTimerDanger {
+
+  from {
+
+    transform:
+      scale(1);
+
+  }
+
+  to {
+
+    transform:
+      scale(1.035);
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVILES
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .battle-center {
+
+    min-width:
+      92px;
+
+    padding:
+      4px;
+
+  }
+
+
+  .turn-timer {
+
+    width:
+      82px;
+
+    padding:
+      7px 8px;
+
+  }
+
+
+  #turn-timer-value {
+
+    font-size:
+      22px;
+
+  }
+
+
+  .turn-timer-label {
+
+    font-size:
+      7px;
+
+  }
+
+}
+
+
+/* ============================================================
+   TELÉFONOS LIMITADOS
+   No usamos animación infinita para ahorrar GPU.
+   ============================================================ */
+
+html.low-power-device .turn-timer-danger {
+
+  animation:
+    none;
+
+}
+
+
+/* ============================================================
+   FIN TEMPORIZADOR DE BATALLA
+   ============================================================ */
+
+
+/* ============================================================
+   HANDVERSE
+   COUNTDOWN GLOBAL DEFINITIVO
+   3 → 2 → 1 → COMBATE
+   ============================================================ */
+
+
+/* ============================================================
+   OVERLAY GLOBAL
+   CUBRE TODA LA PANTALLA
+   ============================================================ */
+
+#battle-countdown {
+
+  position:
+    fixed !important;
+
+  top:
+    0 !important;
+
+  right:
+    0 !important;
+
+  bottom:
+    0 !important;
+
+  left:
+    0 !important;
+
+  inset:
+    0 !important;
+
+
+  width:
+    100vw !important;
+
+  height:
+    100vh !important;
+
+  max-width:
+    none !important;
+
+  max-height:
+    none !important;
+
+
+  margin:
+    0 !important;
+
+  padding:
+    0 !important;
+
+
+  transform:
+    none;
+
+
+  z-index:
+    999999 !important;
+
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+
+  visibility:
+    hidden;
+
+  opacity:
+    0;
+
+
+  overflow:
+    hidden;
+
+
+  pointer-events:
+    none;
+
+
+  border:
+    0 !important;
+
+  border-radius:
+    0 !important;
+
+
+  background:
+    radial-gradient(circle at center,
+      rgba(8, 35, 62, 0.82) 0%,
+      rgba(3, 13, 31, 0.94) 48%,
+      rgba(1, 5, 15, 0.98) 100%);
+
+
+  -webkit-backdrop-filter:
+    blur(8px);
+
+  backdrop-filter:
+    blur(8px);
+
+
+  color:
+    #ffffff;
+
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+
+  font-size:
+    clamp(6rem,
+      16vw,
+      13rem);
+
+
+  font-weight:
+    1000;
+
+
+  line-height:
+    1;
+
+
+  text-align:
+    center;
+
+
+  text-shadow:
+    0 0 18px rgba(34, 211, 238, 1),
+
+    0 0 45px rgba(34, 211, 238, 0.70),
+
+    0 0 100px rgba(34, 211, 238, 0.35);
+
+
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease;
+
+}
+
+
+/* ============================================================
+   VISIBLE
+   ============================================================ */
+
+#battle-countdown.countdown-visible {
+
+  visibility:
+    visible !important;
+
+  opacity:
+    1 !important;
+
+}
+
+
+/* ============================================================
+   3 / 2 / 1
+   ============================================================ */
+
+#battle-countdown.countdown-pop {
+
+  animation:
+    handverseCountdownPop 0.58s cubic-bezier(0.16,
+      1,
+      0.3,
+      1);
+
+}
+
+
+@keyframes handverseCountdownPop {
+
+  0% {
+
+    opacity:
+      0;
+
+    text-shadow:
+      0 0 70px rgba(34, 211, 238, 1);
+
+  }
+
+
+  45% {
+
+    opacity:
+      1;
+
+  }
+
+
+  100% {
+
+    opacity:
+      1;
+
+  }
+
+}
+
+
+/* ============================================================
+   TEXTO COMBATE
+   ============================================================ */
+
+#battle-countdown.countdown-combat {
+
+  color:
+    #67e8f9;
+
+
+  font-size:
+    clamp(3.7rem,
+      10vw,
+      8rem);
+
+
+  font-weight:
+    1000;
+
+
+  letter-spacing:
+    0.04em;
+
+
+  text-shadow:
+    0 0 20px rgba(34, 211, 238, 1),
+
+    0 0 55px rgba(34, 211, 238, 0.90),
+
+    0 0 110px rgba(139, 92, 246, 0.65);
+
+
+  animation:
+    handverseCombatEntrance 0.70s cubic-bezier(0.16,
+      1,
+      0.3,
+      1);
+
+}
+
+
+@keyframes handverseCombatEntrance {
+
+  0% {
+
+    opacity:
+      0;
+
+    letter-spacing:
+      0.22em;
+
+  }
+
+
+  55% {
+
+    opacity:
+      1;
+
+    letter-spacing:
+      0.08em;
+
+  }
+
+
+  100% {
+
+    opacity:
+      1;
+
+    letter-spacing:
+      0.04em;
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVIL
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  #battle-countdown {
+
+    width:
+      100vw !important;
+
+    height:
+      100dvh !important;
+
+
+    font-size:
+      clamp(5rem,
+        28vw,
+        8rem);
+
+
+    -webkit-backdrop-filter:
+      blur(5px);
+
+    backdrop-filter:
+      blur(5px);
+
+  }
+
+
+  #battle-countdown.countdown-combat {
+
+    padding:
+      20px;
+
+
+    font-size:
+      clamp(2.4rem,
+        12vw,
+        4.5rem);
+
+  }
+
+}
+
+
+/* ============================================================
+   TELÉFONOS DE BAJO RENDIMIENTO
+   ============================================================ */
+
+html.low-power-device #battle-countdown {
+
+  -webkit-backdrop-filter:
+    none;
+
+  backdrop-filter:
+    none;
+
+
+  background:
+    rgba(1,
+      6,
+      18,
+      0.96);
+
+}
+
+
+/* ============================================================
+   FIN COUNTDOWN GLOBAL
+   ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   OPTIMIZACIÓN FINAL DE GPU PARA MÓVILES
+   ============================================================ */
+
+
+/*
+   Se activa mediante la clase touch-device
+   que main.js coloca automáticamente.
+
+   También funciona aunque el teléfono utilice
+   "Sitio para computadora".
+*/
+
+
+/* ============================================================
+   1. FONDO
+   ============================================================ */
+
+html.touch-device body {
+
+  background-attachment:
+    scroll !important;
+
+}
+
+
+/* ============================================================
+   2. DETENER ANIMACIONES DECORATIVAS INFINITAS
+   ============================================================ */
+
+html.touch-device .hero::before,
+
+html.touch-device .battle-section::after,
+
+html.touch-device .battle-character,
+
+html.touch-device .health-bar::after,
+
+html.touch-device .battle-vs,
+
+html.touch-device .power-status.power-available::after,
+
+html.touch-device .new-battle-button {
+
+  animation:
+    none !important;
+
+}
+
+
+/* ============================================================
+   3. COUNTDOWN
+   Evitamos blur de pantalla completa en teléfonos.
+   El fondo oscuro seguirá viéndose.
+   ============================================================ */
+
+html.touch-device #battle-countdown {
+
+  -webkit-backdrop-filter:
+    none !important;
+
+  backdrop-filter:
+    none !important;
+
+}
+
+
+/* ============================================================
+   4. TELÉFONOS LIMITADOS
+   Reducimos efectos adicionales.
+   ============================================================ */
+
+html.low-power-device .gesture-training-card::before {
+
+  display:
+    none !important;
+
+}
+
+
+html.low-power-device .battle-player {
+
+  box-shadow:
+    none !important;
+
+}
+
+
+html.low-power-device .battle-action-card {
+
+  box-shadow:
+    none !important;
+
+}
+
+
+/* ============================================================
+   5. CONSERVAMOS LAS ANIMACIONES IMPORTANTES
+   ============================================================ */
+
+/*
+   NO estamos desactivando:
+
+   - impacto -20
+   - ataque
+   - poder especial
+   - cambio de vida
+   - countdown 3-2-1
+   - COMBATE
+   - transición de ronda
+   - victoria
+   - temporizador
+
+   Solo eliminamos efectos decorativos
+   que trabajan continuamente.
+*/
+
+
+/* ============================================================
+   FIN OPTIMIZACIÓN GPU MÓVIL
+   ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   REGISTRO OBLIGATORIO DEL JUGADOR
+   ============================================================ */
+
+
+/* ============================================================
+   BLOQUEAR APLICACIÓN
+   ============================================================ */
+
+.app-registration-locked {
+
+  display:
+    none !important;
+
+}
+
+
+/* ============================================================
+   PANTALLA PRINCIPAL DE REGISTRO
+   ============================================================ */
+
+.player-registration-screen {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  min-height:
+    100dvh;
+
+  padding:
+    40px 20px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    radial-gradient(circle at 20% 20%,
+      rgba(34, 211, 238, 0.12),
+      transparent 30%),
+    radial-gradient(circle at 80% 70%,
+      rgba(139, 92, 246, 0.12),
+      transparent 32%),
+    #020617;
+
+}
+
+
+/* ============================================================
+   OCULTAR AL COMPLETARSE
+   ============================================================ */
+
+.player-registration-screen.registration-completed {
+
+  display:
+    none;
+
+}
+
+
+/* ============================================================
+   TARJETA
+   ============================================================ */
+
+.player-registration-card {
+
+  width:
+    min(620px,
+      100%);
+
+  padding:
+    42px;
+
+  border:
+    1px solid rgba(34,
+      211,
+      238,
+      0.30);
+
+  border-radius:
+    24px;
+
+  background:
+    linear-gradient(145deg,
+      rgba(8, 18, 35, 0.97),
+      rgba(3, 8, 24, 0.98));
+
+  box-shadow:
+    0 30px 80px rgba(0,
+      0,
+      0,
+      0.50);
+
+}
+
+
+/* ============================================================
+   MARCA
+   ============================================================ */
+
+.registration-brand {
+
+  margin-bottom:
+    32px;
+
+  text-align:
+    center;
+
+}
+
+
+.registration-eyebrow {
+
+  color:
+    #67e8f9;
+
+  font-size:
+    0.70rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.22em;
+
+}
+
+
+.registration-brand h1 {
+
+  margin-top:
+    10px;
+
+  color:
+    #f8fafc;
+
+  font-size:
+    clamp(2rem,
+      6vw,
+      3.1rem);
+
+  font-weight:
+    950;
+
+  line-height:
+    1;
+
+}
+
+
+.registration-brand h1 span {
+
+  color:
+    #22d3ee;
+
+  text-shadow:
+    0 0 25px rgba(34,
+      211,
+      238,
+      0.35);
+
+}
+
+
+.registration-brand p {
+
+  margin-top:
+    14px;
+
+  color:
+    #94a3b8;
+
+  line-height:
+    1.5;
+
+}
+
+
+/* ============================================================
+   FORMULARIO
+   ============================================================ */
+
+.player-registration-form {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    20px;
+
+}
+
+
+/* ============================================================
+   CAMPOS
+   ============================================================ */
+
+.registration-field {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    8px;
+
+}
+
+
+.registration-field label {
+
+  color:
+    #e2e8f0;
+
+  font-size:
+    0.82rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.06em;
+
+}
+
+
+.registration-field input {
+
+  width:
+    100%;
+
+  min-height:
+    52px;
+
+  padding:
+    13px 15px;
+
+  color:
+    #f8fafc;
+
+  background:
+    rgba(2,
+      10,
+      28,
+      0.88);
+
+  border:
+    1px solid rgba(34,
+      211,
+      238,
+      0.22);
+
+  border-radius:
+    12px;
+
+  outline:
+    none;
+
+  font-family:
+    inherit;
+
+  font-size:
+    1rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+
+.registration-field input:focus {
+
+  border-color:
+    #22d3ee;
+
+  box-shadow:
+    0 0 0 3px rgba(34,
+      211,
+      238,
+      0.10);
+
+}
+
+
+.registration-field input::placeholder {
+
+  color:
+    #64748b;
+
+}
+
+
+.registration-field small {
+
+  color:
+    #64748b;
+
+  font-size:
+    0.72rem;
+
+}
+
+
+/* ============================================================
+   ERROR
+   ============================================================ */
+
+.registration-error {
+
+  min-height:
+    20px;
+
+  color:
+    #fb7185;
+
+  font-size:
+    0.82rem;
+
+  font-weight:
+    700;
+
+  text-align:
+    center;
+
+}
+
+
+/* ============================================================
+   BOTÓN
+   ============================================================ */
+
+.registration-submit-button {
+
+  width:
+    100%;
+
+  min-height:
+    58px;
+
+  padding:
+    15px 20px;
+
+  color:
+    white;
+
+  border:
+    1px solid rgba(103,
+      232,
+      249,
+      0.65);
+
+  border-radius:
+    13px;
+
+  background:
+    linear-gradient(135deg,
+      #0891b2,
+      #2563eb,
+      #7c3aed);
+
+  font-size:
+    0.90rem;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.08em;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 12px 30px rgba(37,
+      99,
+      235,
+      0.20);
+
+}
+
+
+/* ============================================================
+   PRIVACIDAD
+   ============================================================ */
+
+.registration-privacy {
+
+  margin-top:
+    24px;
+
+  color:
+    #64748b;
+
+  font-size:
+    0.72rem;
+
+  line-height:
+    1.5;
+
+  text-align:
+    center;
+
+}
+
+
+/* ============================================================
+   MÓVIL
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .player-registration-screen {
+
+    padding:
+      18px 10px;
+
+    align-items:
+      flex-start;
+
+  }
+
+
+  .player-registration-card {
+
+    margin-top:
+      15px;
+
+    padding:
+      27px 18px;
+
+    border-radius:
+      18px;
+
+  }
+
+
+  .registration-brand {
+
+    margin-bottom:
+      25px;
+
+  }
+
+
+  .registration-brand h1 {
+
+    font-size:
+      2rem;
+
+  }
+
+
+  .registration-field input {
+
+    min-height:
+      56px;
+
+    font-size:
+      16px;
+
+  }
+
+
+  .registration-submit-button {
+
+    min-height:
+      58px;
+
+    touch-action:
+      manipulation;
+
+  }
+
+}
+
+
+/* ============================================================
+   FIN REGISTRO HANDVERSE
+   ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   IDENTIDAD DEL JUGADOR EN LA ARENA
+   ============================================================ */
+
+
+/* ============================================================
+   CONTENEDOR DEL NOMBRE + INSTITUCIÓN
+   ============================================================ */
+
+.battle-player-identity {
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  margin-bottom:
+    8px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    center;
+
+  gap:
+    3px;
+
+}
+
+
+/* ============================================================
+   NOMBRE COMPLETO DEL JUGADOR
+   ============================================================ */
+
+.battle-player-name {
+
+  display:
+    -webkit-box;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  overflow:
+    hidden;
+
+  color:
+    #67e8f9;
+
+  font-size:
+    clamp(0.78rem,
+      1.25vw,
+      1rem);
+
+  font-weight:
+    950;
+
+  line-height:
+    1.12;
+
+  letter-spacing:
+    0.025em;
+
+  text-align:
+    left;
+
+  overflow-wrap:
+    anywhere;
+
+  word-break:
+    normal;
+
+  -webkit-box-orient:
+    vertical;
+
+  -webkit-line-clamp:
+    2;
+
+  line-clamp:
+    2;
+
+  text-shadow:
+    0 0 10px rgba(34,
+      211,
+      238,
+      0.25);
+
+}
+
+
+/* ============================================================
+   INSTITUCIÓN EDUCATIVA
+   ============================================================ */
+
+.battle-player-institution {
+
+  display:
+    -webkit-box;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  overflow:
+    hidden;
+
+  color:
+    #94a3b8;
+
+  font-size:
+    0.66rem;
+
+  font-weight:
+    650;
+
+  line-height:
+    1.18;
+
+  letter-spacing:
+    0.015em;
+
+  text-align:
+    left;
+
+  overflow-wrap:
+    anywhere;
+
+  word-break:
+    normal;
+
+  -webkit-box-orient:
+    vertical;
+
+  -webkit-line-clamp:
+    2;
+
+  line-clamp:
+    2;
+
+}
+
+
+/* ============================================================
+   EVITAR QUE EL CONTENIDO ROMPA LA TARJETA
+   ============================================================ */
+
+.battle-player>div {
+
+  min-width:
+    0;
+
+  width:
+    100%;
+
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .battle-player-identity {
+
+    margin-bottom:
+      6px;
+
+  }
+
+
+  .battle-player-name {
+
+    font-size:
+      0.80rem;
+
+  }
+
+
+  .battle-player-institution {
+
+    font-size:
+      0.62rem;
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVILES
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .battle-player-identity {
+
+    margin-bottom:
+      5px;
+
+    gap:
+      2px;
+
+  }
+
+
+  .battle-player-name {
+
+    font-size:
+      0.74rem;
+
+    line-height:
+      1.08;
+
+  }
+
+
+  .battle-player-institution {
+
+    font-size:
+      0.58rem;
+
+    line-height:
+      1.12;
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVILES PEQUEÑOS
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+  .battle-player-name {
+
+    font-size:
+      0.68rem;
+
+  }
+
+
+  .battle-player-institution {
+
+    font-size:
+      0.54rem;
+
+  }
+
+}
+
+
+/* ============================================================
+   FIN IDENTIDAD DEL JUGADOR
+   ============================================================ */
+
+/* ============================================================
+   HANDVERSE
+   IDENTIDAD DEL GANADOR EN LA PANTALLA FINAL
+   ============================================================ */
+
+
+/* ============================================================
+   CONTENEDOR DE IDENTIDAD
+   OCULTO DURANTE LA BATALLA
+   ============================================================ */
+
+.battle-winner-identity {
+
+  display:
+    none;
+
+  width:
+    min(620px, 90%);
+
+  margin:
+    0 auto;
+
+  padding:
+    18px 24px;
+
+  box-sizing:
+    border-box;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    7px;
+
+  text-align:
+    center;
+
+  position:
+    relative;
+
+  z-index:
+    20;
+
+  border:
+    1px solid rgba(34,
+      211,
+      238,
+      0.22);
+
+  border-radius:
+    14px;
+
+  background:
+    rgba(5,
+      15,
+      35,
+      0.72);
+
+  box-shadow:
+    0 0 25px rgba(34,
+      211,
+      238,
+      0.08);
+
+}
+
+
+/* ============================================================
+   HACER VISIBLE SOLO CUANDO EL ESTUDIANTE GANA
+   ============================================================ */
+
+.battle-winner-identity.winner-identity-visible {
+
+  display:
+    flex;
+
+  animation:
+    handverseWinnerIdentityIn 0.65s ease-out both;
+
+}
+
+
+/* ============================================================
+   NOMBRE COMPLETO DEL GANADOR
+   ============================================================ */
+
+.battle-winner-name {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  margin:
+    0;
+
+  color:
+    #67e8f9;
+
+  font-size:
+    clamp(1.05rem,
+      2vw,
+      1.45rem);
+
+  font-weight:
+    950;
+
+  line-height:
+    1.15;
+
+  letter-spacing:
+    0.045em;
+
+  text-align:
+    center;
+
+  overflow-wrap:
+    anywhere;
+
+  text-shadow:
+    0 0 8px rgba(34,
+      211,
+      238,
+      0.55),
+    0 0 20px rgba(34,
+      211,
+      238,
+      0.20);
+
+}
+
+
+/* ============================================================
+   INSTITUCIÓN EDUCATIVA
+   ============================================================ */
+
+.battle-winner-institution {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  color:
+    #cbd5e1;
+
+  font-size:
+    clamp(0.72rem,
+      1.3vw,
+      0.90rem);
+
+  font-weight:
+    650;
+
+  line-height:
+    1.3;
+
+  letter-spacing:
+    0.025em;
+
+  text-align:
+    center;
+
+  overflow-wrap:
+    anywhere;
+
+}
+
+
+/* ============================================================
+   PEQUEÑO DETALLE VISUAL SOBRE EL NOMBRE
+   ============================================================ */
+
+.battle-winner-identity::before {
+
+  content:
+    '👤 ESTUDIANTE GANADOR';
+
+  display:
+    block;
+
+  margin-bottom:
+    3px;
+
+  color:
+    #facc15;
+
+  font-size:
+    0.66rem;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.17em;
+
+  text-transform:
+    uppercase;
+
+}
+
+
+/* ============================================================
+   ANIMACIÓN DE ENTRADA
+   ============================================================ */
+
+@keyframes handverseWinnerIdentityIn {
+
+  0% {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(12px) scale(0.96);
+
+  }
+
+
+  100% {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0) scale(1);
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVILES
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .battle-winner-identity {
+
+    width:
+      92%;
+
+    padding:
+      14px 14px;
+
+    gap:
+      5px;
+
+    border-radius:
+      12px;
+
+  }
+
+
+  .battle-winner-name {
+
+    font-size:
+      0.95rem;
+
+    line-height:
+      1.12;
+
+  }
+
+
+  .battle-winner-institution {
+
+    font-size:
+      0.67rem;
+
+  }
+
+
+  .battle-winner-identity::before {
+
+    font-size:
+      0.55rem;
+
+    letter-spacing:
+      0.12em;
+
+  }
+
+}
+
+
+/* ============================================================
+   MÓVILES PEQUEÑOS
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+  .battle-winner-identity {
+
+    width:
+      94%;
+
+    padding:
+      12px 10px;
+
+  }
+
+
+  .battle-winner-name {
+
+    font-size:
+      0.86rem;
+
+  }
+
+
+  .battle-winner-institution {
+
+    font-size:
+      0.62rem;
+
+  }
+
+}
+
+
+/* ============================================================
+   FIN IDENTIDAD DEL GANADOR
+   ============================================================ */
+
+/* ============================================================
+   ESPACIO ENTRE BOTÓN NUEVA PARTIDA Y GANADOR
+   ============================================================ */
+
+.battle-winner-identity.winner-identity-visible {
+  margin-top: 24px;
+}
+
+
+/* MÓVIL */
+@media (max-width: 600px) {
+
+  .battle-winner-identity.winner-identity-visible {
+    margin-top: 18px;
+  }
+
+}
+
+/* ============================================================
+   BOTÓN NUEVO ESTUDIANTE
+   ============================================================ */
+
+.new-student-button {
+
+  min-width: 220px;
+
+  padding:
+    14px 24px;
+
+  border:
+    1px solid rgba(34, 211, 238, 0.45);
+
+  border-radius:
+    14px;
+
+  background:
+    rgba(5, 15, 35, 0.82);
+
+  color:
+    #cbd5e1;
+
+  font-size:
+    0.82rem;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.06em;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+
+}
+
+
+.new-student-button:hover {
+
+  transform:
+    translateY(-2px);
+
+  color:
+    #67e8f9;
+
+  border-color:
+    #22d3ee;
+
+  box-shadow:
+    0 0 20px rgba(34, 211, 238, 0.18);
+
+}
+
+
+/* Separación entre ambos botones */
+
+.new-battle-container {
+
+  gap:
+    14px;
+
+}
+
+
+/* MÓVIL */
+
+@media (max-width: 600px) {
+
+  .new-student-button {
+
+    width:
+      100%;
+
+    min-width:
+      0;
+
+  }
+
+}
+
+/* =========================================================
+   ESPACIO ENTRE BOTONES Y ESTUDIANTE GANADOR
+   ========================================================= */
+
+.battle-winner-identity {
+  margin-top: 22px;
+}

@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 Partes_Integrantes/
+
+.env
+.env.local
+.env.*.local

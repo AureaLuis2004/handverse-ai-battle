@@ -518,7 +518,7 @@ export function playBattleTurn(
       battleState.roundEndedAt
 
         ? Date.now() -
-          battleState.roundEndedAt
+        battleState.roundEndedAt
 
         : BATTLE_CONFIG
           .ROUND_TRANSITION_DELAY_MS
@@ -855,6 +855,189 @@ export function playBattleTurn(
 
 
   return result
+}
+
+// ============================================================
+// TURNO PERDIDO POR TIEMPO AGOTADO
+// ============================================================
+//
+// Si el estudiante no realiza un gesto dentro
+// de los 5 segundos disponibles:
+//
+// - HANDVERSE gana automáticamente el intercambio.
+// - El estudiante pierde 20 HP.
+// - No se consume PODER de ningún participante.
+// - Se conserva el sistema normal de rondas.
+// ============================================================
+
+export function playTimeoutTurn() {
+
+  // ==========================================================
+  // VALIDAR QUE LA BATALLA ESTÉ ACTIVA
+  // ==========================================================
+
+  if (
+    !battleState.battleStarted
+  ) {
+
+    return {
+      success: false,
+      message:
+        'La batalla todavía no ha comenzado.',
+      ...getBattleState()
+    }
+
+  }
+
+
+  if (
+    battleState.battleFinished
+  ) {
+
+    return {
+      success: false,
+      message:
+        'La batalla ya terminó.',
+      ...getBattleState()
+    }
+
+  }
+
+
+  if (
+    battleState.roundFinished
+  ) {
+
+    return {
+      success: false,
+      message:
+        'La ronda ya terminó.',
+      ...getBattleState()
+    }
+
+  }
+
+
+  // ==========================================================
+  // MOVIMIENTO ESPECIAL POR TIEMPO AGOTADO
+  // ==========================================================
+
+  const playerAction = {
+
+    key:
+      'timeout',
+
+    name:
+      'SIN MOVIMIENTO',
+
+    gesture:
+      null,
+
+    emoji:
+      '⏱️'
+
+  }
+
+
+  // HANDVERSE obtiene un ataque automático.
+  const aiAction = {
+
+    ...BATTLE_ACTIONS.ATTACK,
+
+    name:
+      'ATAQUE AUTOMÁTICO'
+
+  }
+
+
+  // ==========================================================
+  // GUARDAR MOVIMIENTOS
+  // ==========================================================
+
+  battleState.playerAction =
+    playerAction
+
+  battleState.aiAction =
+    aiAction
+
+
+  // ==========================================================
+  // AUMENTAR TURNO
+  // ==========================================================
+
+  battleState.turn++
+
+
+  // ==========================================================
+  // HANDVERSE GANA EL TURNO
+  // ==========================================================
+
+  battleState.turnWinner =
+    'ai'
+
+
+  // ==========================================================
+  // APLICAR DAÑO
+  // ==========================================================
+
+  battleState.playerHealth -=
+    BATTLE_CONFIG
+      .DAMAGE_PER_TURN
+
+
+  battleState.playerHealth =
+    Math.max(
+      0,
+      battleState.playerHealth
+    )
+
+
+  // ==========================================================
+  // COMPROBAR SI TERMINÓ LA RONDA / PARTIDA
+  // ==========================================================
+
+  checkRoundEnd()
+
+
+  // ==========================================================
+  // RESULTADO PARA MAIN.JS
+  // ==========================================================
+
+  const result = {
+
+    success:
+      true,
+
+    timeout:
+      true,
+
+    ...getBattleState(),
+
+    playerAction: {
+      ...playerAction
+    },
+
+    aiAction: {
+      ...aiAction
+    },
+
+    turnWinner:
+      'ai',
+
+    message:
+      '⏱️ TIEMPO AGOTADO · HANDVERSE GANA EL TURNO'
+
+  }
+
+
+  console.log(
+    '⏱️ TURNO PERDIDO POR TIEMPO:',
+    result
+  )
+
+
+  return result
+
 }
 
 
@@ -1578,9 +1761,9 @@ export function getBattleState() {
 
         ? {
 
-            ...battleState.playerAction
+          ...battleState.playerAction
 
-          }
+        }
 
         : null,
 
@@ -1591,9 +1774,9 @@ export function getBattleState() {
 
         ? {
 
-            ...battleState.aiAction
+          ...battleState.aiAction
 
-          }
+        }
 
         : null
   }
