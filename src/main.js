@@ -6230,6 +6230,24 @@ function isValidPersonName(
 
 }
 
+// ======================================================
+// VALIDAR PALABRAS REPETIDAS EN NOMBRES Y APELLIDOS
+// ======================================================
+
+function hasRepeatedWords(value) {
+
+  const words =
+    normalizeRegistrationText(value)
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean)
+
+  return (
+    new Set(words).size !==
+    words.length
+  )
+}
+
 // ============================================================
 // VALIDAR INSTITUCIÓN
 // ============================================================
@@ -6582,6 +6600,46 @@ function registerPlayer(
     normalizeRegistrationText(
       playerInstitutionInput.value
     )
+
+  // ======================================================
+  // VALIDAR NOMBRES Y APELLIDOS REPETIDOS
+  // ======================================================
+
+  if (
+    hasRepeatedWords(firstNames)
+  ) {
+    playerFirstNamesInput.setCustomValidity(
+      'No repitas el mismo nombre. Ejemplo: Luis Luis.'
+    )
+
+    playerFirstNamesInput.reportValidity()
+
+    playerFirstNamesInput.setCustomValidity(
+      ''
+    )
+
+    playerFirstNamesInput.focus()
+
+    return
+  }
+
+  if (
+    hasRepeatedWords(lastNames)
+  ) {
+    playerLastNamesInput.setCustomValidity(
+      'No repitas el mismo apellido. Ejemplo: Aurea Aurea.'
+    )
+
+    playerLastNamesInput.reportValidity()
+
+    playerLastNamesInput.setCustomValidity(
+      ''
+    )
+
+    playerLastNamesInput.focus()
+
+    return
+  }
 
 
   registrationError.textContent =
