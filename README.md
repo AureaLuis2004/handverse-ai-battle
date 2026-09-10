@@ -1,139 +1,140 @@
-# HANDVERSE: BATALLA DE IA
+# HANDVERSE: AI BATTLE
 
-![HANDVERSE](https://img.shields.io/badge/HANDVERSE-AI%20BATTLE-22d3ee)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow)
-![TensorFlow.js](https://img.shields.io/badge/TensorFlow.js-Machine%20Learning-orange)
-![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand%20Tracking-blue)
-![Vite](https://img.shields.io/badge/Vite-Frontend-purple)
+Proyecto interactivo desarrollado para la Casa Abierta de la carrera de Sistemas Inteligentes de ECOTEC.
 
-## Descripción
-
-HANDVERSE: Batalla de IA es una aplicación web interactiva que utiliza
-visión artificial y aprendizaje automático para reconocer gestos de la mano
-en tiempo real y convertirlos en acciones dentro de un sistema de batalla.
-
-El usuario primero enseña tres gestos a la inteligencia artificial y
-posteriormente utiliza esos mismos gestos para combatir contra HANDVERSE IA.
-
-El proyecto fue desarrollado como demostración de Inteligencia Artificial
-aplicada para la carrera de Sistemas Inteligentes de ECOTEC.
+HANDVERSE permite que un estudiante entrene una Inteligencia Artificial mediante gestos realizados frente a una cámara web y posteriormente se enfrente a la IA en una batalla interactiva.
 
 ---
 
 ## Objetivo
 
-Demostrar de manera interactiva cómo una inteligencia artificial puede:
-
-- Detectar una mano mediante una cámara.
-- Identificar puntos de referencia de la mano.
-- Crear un dataset personalizado.
-- Entrenar un modelo de clasificación.
-- Reconocer gestos en tiempo real.
-- Convertir las predicciones del modelo en acciones dentro de un videojuego.
+Demostrar de forma práctica y visual cómo una Inteligencia Artificial puede aprender a reconocer diferentes gestos de la mano mediante ejemplos proporcionados por el usuario.
 
 ---
 
-## Gestos disponibles
+## Gestos utilizados
 
-HANDVERSE reconoce tres gestos:
+El sistema reconoce tres movimientos:
 
-| Gesto            | Acción |
-| ---------------- | ------ |
-| ✊ Puño cerrado  | ATAQUE |
-| 🖐️ Mano abierta  | ESCUDO |
-| 👍 Pulgar arriba | PODER  |
+- ✊ Puño cerrado → ATAQUE
+- 🖐️ Mano abierta → ESCUDO
+- 👍 Pulgar arriba → PODER
+
+Cada gesto es aprendido por el modelo mediante muestras capturadas con la cámara.
 
 ---
 
 ## Funcionamiento
 
-El sistema sigue este flujo:
+1. El participante registra:
+   - Nombre(s)
+   - Apellido(s)
+   - Institución educativa
 
-```text
-CÁMARA
-   ↓
-MEDIAPIPE HAND LANDMARKER
-   ↓
-21 PUNTOS DE LA MANO
-   ↓
-EXTRACCIÓN DE CARACTERÍSTICAS
-   ↓
-DATASET
-   ↓
-TENSORFLOW.JS
-   ↓
-ENTRENAMIENTO
-   ↓
-PREDICCIÓN DEL GESTO
-   ↓
-BATTLE ENGINE
-   ↓
-ACCIÓN DEL JUGADOR
-```
+2. Se activa la cámara web.
 
-## Demo pública
+3. MediaPipe detecta los 21 puntos de referencia de la mano.
 
-HANDVERSE se encuentra desplegado en Vercel y puede utilizarse desde cualquier navegador compatible con cámara.
+4. El participante registra muestras de los tres gestos.
 
-## Enlace de la aplicación
+5. TensorFlow.js entrena un modelo de Inteligencia Artificial.
 
-handverse-ai-battle.vercel.app
+6. El sistema utiliza el modelo entrenado para reconocer los movimientos del jugador.
 
-> Al ingresar por primera vez, el navegador solicitará permiso para utilizar la cámara.
+7. El estudiante se enfrenta a HANDVERSE IA.
+
+8. Al finalizar la batalla se registra el resultado en Supabase.
 
 ---
 
-## Estado del proyecto
+## Sistema de batalla
 
-## Estado actual: COMPLETADO
+Cada jugador inicia con:
 
-El proyecto cuenta con:
+- ❤️ 100 puntos de vida
+- ⚡ 3 usos de poder especial por ronda
 
-- Reconocimiento de manos en tiempo real.
-- 21 landmarks mediante MediaPipe.
-- Dataset personalizado de 90 muestras.
-- Entrenamiento con TensorFlow.js.
-- Clasificación de tres gestos.
-- Sistema de batalla por rondas.
-- Control de vida y daño.
-- Poder especial limitado.
-- Música dinámica de combate y victoria.
-- Animaciones y efectos visuales.
-- Nueva partida sin necesidad de reentrenamiento.
-- Deployment público mediante Vercel.
+Cada ataque efectivo produce:
 
----
+- 💥 20 puntos de daño
 
-## Limitaciones actuales
+La batalla funciona por rondas.
 
-- El modelo se entrena nuevamente en cada nueva sesión del navegador.
-- El rendimiento puede variar según la iluminación y la calidad de la cámara.
-- Los gestos deben mantenerse visibles frente a la cámara para obtener una predicción estable.
-- La aplicación requiere permiso de acceso a la cámara.
-- Para la versión pública se necesita conexión a Internet.
+El primero en ganar **2 rondas** gana la partida.
+
+### Reglas
+
+- ✊ ATAQUE vence a 👍 PODER
+- 🖐️ ESCUDO vence a ✊ ATAQUE
+- 👍 PODER vence a 🖐️ ESCUDO
 
 ---
 
-## Autores
+## Inteligencia Artificial
 
-Proyecto desarrollado para la Casa Abierta de ECOTEC.
+HANDVERSE utiliza:
 
-**Carrera:** Ingeniería en Sistemas Inteligentes
+- TensorFlow.js
+- MediaPipe Hand Landmarker
+- 21 puntos de referencia de la mano
+- Entrenamiento personalizado en tiempo real
+- Clasificación de gestos mediante una red neuronal
 
-**Proyecto:** HANDVERSE: Batalla de IA
-
-**Integrantes y sus funciones:**
-
-- Luis Aurea (INTEGRACIÓN DE MAIN.JS, BATTLEENGINE.J Y UNIÓN DE CODIFICACIÓN)
-- Sury Cobos (BATTLEMODE)
-- Melanie Villegas (IMPLEMENTACIÓN DE HANDVERSE: AI)
-- Emily Ayana (DISEÑO DE MEJORAS UI/UX)
-- Edwin Cruz (MEDIAPIPE)
+Cada participante puede entrenar el modelo directamente desde el navegador.
 
 ---
 
-## Versión
+## Base de datos
 
-## HANDVERSE AI BATTLE v1.0
+Se utiliza **Supabase PostgreSQL** para almacenar el historial de las partidas.
 
-Versión preparada para demostración académica y Casa Abierta ECOTEC 2026.
+La tabla registra:
+
+- Nombre(s)
+- Apellido(s)
+- Nombre completo
+- Institución educativa
+- Resultado
+- Marcador del estudiante
+- Marcador de la IA
+- Fecha y hora
+
+La base de datos utiliza **Row Level Security (RLS)** y únicamente permite al aplicativo insertar nuevos resultados.
+
+---
+
+## Validaciones
+
+El formulario de participantes incluye validaciones para:
+
+- Campos obligatorios
+- Longitud de nombres y apellidos
+- Institución educativa
+- Evitar nombres repetidos como `Luis Luis`
+- Evitar apellidos repetidos como `Aurea Aurea`
+
+---
+
+## Tecnologías utilizadas
+
+- HTML5
+- CSS3
+- JavaScript
+- Vite
+- TensorFlow.js
+- MediaPipe
+- Supabase
+- PostgreSQL
+- Git
+- GitHub
+- Vercel
+
+---
+
+## Instalación
+
+Clonar el repositorio:
+
+```bash
+
+git clone https://github.com/AureaLuis2004/handverse-ai-battle.git
