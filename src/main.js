@@ -6605,37 +6605,39 @@ function registerPlayer(
   // VALIDAR NOMBRES Y APELLIDOS REPETIDOS
   // ======================================================
 
+  // Limpiar mensajes anteriores
+  playerFirstNamesInput.setCustomValidity('')
+  playerLastNamesInput.setCustomValidity('')
+
+  // ------------------------------------------------------
+  // VALIDAR NOMBRES REPETIDOS
+  // ------------------------------------------------------
+
   if (
     hasRepeatedWords(firstNames)
   ) {
     playerFirstNamesInput.setCustomValidity(
-      'No repitas el mismo nombre. Ejemplo: Luis Luis.'
+      'No puedes repetir el mismo nombre. Ejemplo: Luis Luis.'
     )
 
     playerFirstNamesInput.reportValidity()
-
-    playerFirstNamesInput.setCustomValidity(
-      ''
-    )
-
     playerFirstNamesInput.focus()
 
     return
   }
 
+  // ------------------------------------------------------
+  // VALIDAR APELLIDOS REPETIDOS
+  // ------------------------------------------------------
+
   if (
     hasRepeatedWords(lastNames)
   ) {
     playerLastNamesInput.setCustomValidity(
-      'No repitas el mismo apellido. Ejemplo: Aurea Aurea.'
+      'No puedes repetir el mismo apellido. Ejemplo: Aurea Aurea.'
     )
 
     playerLastNamesInput.reportValidity()
-
-    playerLastNamesInput.setCustomValidity(
-      ''
-    )
-
     playerLastNamesInput.focus()
 
     return
@@ -6766,6 +6768,24 @@ if (
   )
 
 }
+
+// ======================================================
+// LIMPIAR VALIDACIÓN AL CORREGIR NOMBRE O APELLIDO
+// ======================================================
+
+playerFirstNamesInput.addEventListener(
+  'input',
+  () => {
+    playerFirstNamesInput.setCustomValidity('')
+  }
+)
+
+playerLastNamesInput.addEventListener(
+  'input',
+  () => {
+    playerLastNamesInput.setCustomValidity('')
+  }
+)
 
 // ============================================================
 // 19. EVENTOS
