@@ -6625,15 +6625,87 @@ async function saveBattleResultToSupabase(state) {
     return
   }
 
-  const playerScore =
+  // ======================================================
+  // MARCADOR FINAL DEFINITIVO
+  // ======================================================
+
+  const finalRound =
+    Number(
+      state.round ?? 0
+    )
+
+  let playerScore =
     Number(
       state.playerRoundsWon ?? 0
     )
 
-  const aiScore =
+  let aiScore =
     Number(
       state.aiRoundsWon ?? 0
     )
+
+
+  // ======================================================
+  // NORMALIZAR MARCADOR FINAL
+  //
+  // Mejor de 3:
+  //
+  // Ronda 2 final:
+  // 2 - 0  ó  0 - 2
+  //
+  // Ronda 3 final:
+  // 2 - 1  ó  1 - 2
+  // ======================================================
+
+  if (
+    state.winner === 'player'
+  ) {
+
+    playerScore = 2
+
+    aiScore =
+      finalRound >= 3
+        ? 1
+        : 0
+  }
+
+
+  if (
+    state.winner === 'ai'
+  ) {
+
+    aiScore = 2
+
+    playerScore =
+      finalRound >= 3
+        ? 1
+        : 0
+  }
+
+
+  // ======================================================
+  // DEPURACIÓN DEL RESULTADO FINAL
+  // ======================================================
+
+  console.log(
+    '📊 MARCADOR FINAL PARA SUPABASE:',
+    {
+      round:
+        finalRound,
+
+      winner:
+        state.winner,
+
+      playerRoundsWon:
+        state.playerRoundsWon,
+
+      aiRoundsWon:
+        state.aiRoundsWon,
+
+      playerScore,
+      aiScore
+    }
+  )
 
   // Verificar que realmente terminó la partida
   if (
