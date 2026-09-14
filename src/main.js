@@ -3973,6 +3973,7 @@ function showPowerSpecialEffect(
 // ============================================================
 // JUGADOR REGISTRADO
 // ============================================================
+let registeredPlayerSupabaseId = null
 
 let registeredPlayer = {
   firstNames: '',
@@ -6580,7 +6581,7 @@ function hideRegisteredPlayerVictory() {
 }
 
 // ======================================================
-// GUARDAR RESULTADO DE LA PARTIDA EN SUPABASE
+// ACTUALIZAR RESULTADO DE LA PARTIDA EN SUPABASE
 // ======================================================
 
 async function saveBattleResultToSupabase(state) {
@@ -6590,20 +6591,33 @@ async function saveBattleResultToSupabase(state) {
     return
   }
 
-  // Verificar que exista un jugador registrado
+  // Verificar que exista el jugador
   if (
     !registeredPlayer ||
     !registeredPlayer.fullName ||
     !registeredPlayer.institution
   ) {
+
     console.warn(
-      '⚠️ No existe un jugador registrado para guardar.'
+      '⚠️ No existe un jugador registrado.'
     )
 
     return
   }
 
-  // Verificar que exista un ganador final
+  // Verificar que tengamos el ID de Supabase
+  if (
+    !registeredPlayerSupabaseId
+  ) {
+
+    console.warn(
+      '⚠️ No existe el ID del participante en Supabase.'
+    )
+
+    return
+  }
+
+  // Verificar ganador final
   if (
     state?.winner !== 'player' &&
     state?.winner !== 'ai'
@@ -6621,7 +6635,7 @@ async function saveBattleResultToSupabase(state) {
       state.aiRoundsWon ?? 0
     )
 
-  // Comprobar que realmente sea un resultado final
+  // Verificar que realmente terminó la partida
   if (
     state.winner === 'player' &&
     playerScore !== 2
@@ -6641,47 +6655,43 @@ async function saveBattleResultToSupabase(state) {
       ? 'GANADOR'
       : 'DERROTA'
 
-  // Bloquear inmediatamente para evitar INSERT duplicado
+
+  // Evitar actualizaciones duplicadas
   battleResultSaved = true
 
   try {
 
-    const { error } =
+    const {
+      error
+    } =
       await supabase
         .from(
           'handverse_participants'
         )
-        .insert([
-          {
-            first_names:
-              registeredPlayer.firstNames,
+        .update({
+          result:
+            result,
 
-            last_names:
-              registeredPlayer.lastNames,
+          player_score:
+            playerScore,
 
-            full_name:
-              registeredPlayer.fullName,
+          ai_score:
+            aiScore
+        })
+        .eq(
+          'id',
+          registeredPlayerSupabaseId
+        )
 
-            institution:
-              registeredPlayer.institution,
+    if (
+      error
+    ) {
 
-            result:
-              result,
-
-            player_score:
-              playerScore,
-
-            ai_score:
-              aiScore
-          }
-        ])
-
-    if (error) {
-
-      battleResultSaved = false
+      battleResultSaved =
+        false
 
       console.error(
-        '❌ ERROR AL GUARDAR RESULTADO EN SUPABASE:',
+        '❌ ERROR AL ACTUALIZAR RESULTADO EN SUPABASE:',
         error
       )
 
@@ -6689,8 +6699,11 @@ async function saveBattleResultToSupabase(state) {
     }
 
     console.log(
-      '✅ RESULTADO HANDVERSE GUARDADO EN SUPABASE:',
+      '✅ RESULTADO HANDVERSE ACTUALIZADO EN SUPABASE:',
       {
+        id:
+          registeredPlayerSupabaseId,
+
         jugador:
           registeredPlayer.fullName,
 
@@ -6705,9 +6718,12 @@ async function saveBattleResultToSupabase(state) {
       }
     )
 
-  } catch (error) {
+  } catch (
+  error
+  ) {
 
-    battleResultSaved = false
+    battleResultSaved =
+      false
 
     console.error(
       '❌ ERROR DE CONEXIÓN CON SUPABASE:',
@@ -6719,10 +6735,88 @@ async function saveBattleResultToSupabase(state) {
 }
 
 // ============================================================
+// REGISTRAR PARTICIPANTE INMEDIATAMENTE EN SUPABASE
+// ============================================================
+
+async function registerPlayerInSupabase(player) {
+
+  try {
+
+    console.log(
+      '☁️ Registrando participante en Supabase...',
+      player
+    )
+
+    const {
+      data,
+      error
+    } =
+      await supabase
+        .from(
+          'handverse_participants'
+        )
+        .insert([
+          {
+            first_names:
+              player.firstNames,
+
+            last_names:
+              player.lastNames,
+
+            full_name:
+              player.fullName,
+
+            institution:
+              player.institution,
+
+            result:
+              'PENDIENTE',
+
+            player_score:
+              0,
+
+            ai_score:
+              0
+          }
+        ])
+        .select(
+          'id'
+        )
+        .single()
+
+    if (error) {
+      throw error
+    }
+
+    registeredPlayerSupabaseId =
+      data.id
+
+    console.log(
+      '✅ PARTICIPANTE GUARDADO EN SUPABASE:',
+      registeredPlayerSupabaseId
+    )
+
+    return true
+
+  } catch (error) {
+
+    console.error(
+      '❌ ERROR REGISTRANDO PARTICIPANTE:',
+      error
+    )
+
+    registeredPlayerSupabaseId =
+      null
+
+    return false
+  }
+}
+
+// ============================================================
 // REGISTRAR JUGADOR
 // ============================================================
 
-function registerPlayer(
+async function registerPlayer(
   event
 ) {
 
@@ -6855,6 +6949,31 @@ function registerPlayer(
     institution
 
   }
+
+  // ==========================================================
+  // REGISTRAR PARTICIPANTE EN SUPABASE
+  // ==========================================================
+
+  registrationError.textContent =
+    '☁️ Registrando participante...'
+
+  const playerSaved =
+    await registerPlayerInSupabase(
+      registeredPlayer
+    )
+
+  if (
+    !playerSaved
+  ) {
+
+    registrationError.textContent =
+      '❌ No se pudo registrar al participante. Intenta nuevamente.'
+
+    return
+  }
+
+  registrationError.textContent =
+    ''
 
 
   console.log(
