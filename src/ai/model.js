@@ -368,7 +368,17 @@ export async function trainGestureModel(
       `Entrenando HANDVERSE con ${inputs.length} muestras...`
     )
 
+    console.log(
+      '⚙️ Backend TensorFlow:',
+      tf.getBackend()
+    )
 
+    const trainingStartTime =
+      performance.now()
+
+    console.log(
+      '⏱️ Iniciando model.fit...'
+    )
     // --------------------------------------------------
     // ENTRENAMIENTO
     // --------------------------------------------------
@@ -490,6 +500,20 @@ export async function trainGestureModel(
 
         }
       )
+
+    const trainingEndTime =
+      performance.now()
+
+    console.log(
+      '⏱️ Tiempo REAL de entrenamiento:',
+      (
+        (
+          trainingEndTime -
+          trainingStartTime
+        ) / 1000
+      ).toFixed(2),
+      'segundos'
+    )
 
 
     modelTrained =
