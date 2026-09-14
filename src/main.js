@@ -6734,6 +6734,7 @@ async function saveBattleResultToSupabase(state) {
   try {
 
     const {
+      data,
       error
     } =
       await supabase
@@ -6754,6 +6755,10 @@ async function saveBattleResultToSupabase(state) {
           'id',
           registeredPlayerSupabaseId
         )
+        .select(
+          'id, result, player_score, ai_score'
+        )
+        .single()
 
     if (
       error
@@ -6769,6 +6774,15 @@ async function saveBattleResultToSupabase(state) {
 
       return
     }
+
+    // ======================================================
+    // CONFIRMAR FILA REALMENTE ACTUALIZADA
+    // ======================================================
+
+    console.log(
+      '📊 FILA ACTUALIZADA REALMENTE EN SUPABASE:',
+      data
+    )
 
     console.log(
       '✅ RESULTADO HANDVERSE ACTUALIZADO EN SUPABASE:',
