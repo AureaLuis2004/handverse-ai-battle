@@ -2582,6 +2582,22 @@ function updateTrainingUI() {
 
 async function handleTrainModel() {
 
+  const isMobileDevice =
+    window.matchMedia(
+      '(max-width: 768px)'
+    ).matches
+
+  document.body.classList.add(
+    'training-mode'
+  )
+
+  console.log(
+    '📱 Modo entrenamiento:',
+    isMobileDevice
+      ? 'MÓVIL'
+      : 'ESCRITORIO'
+  )
+
   const trainModelButton =
     document.querySelector(
       '#train-model-button'
@@ -2657,6 +2673,9 @@ async function handleTrainModel() {
       trainModelButton.disabled =
         false
 
+      document.body.classList.remove(
+        'training-mode'
+      )
 
       return
 
@@ -2681,6 +2700,14 @@ async function handleTrainModel() {
 
     console.log(
       '✅ Modelo HANDVERSE entrenado correctamente.'
+    )
+
+    // ======================================================
+    // SALIR DEL MODO DE ENTRENAMIENTO
+    // ======================================================
+
+    document.body.classList.remove(
+      'training-mode'
     )
 
 
@@ -2775,6 +2802,10 @@ async function handleTrainModel() {
   catch (
   error
   ) {
+
+    document.body.classList.remove(
+      'training-mode'
+    )
 
     console.error(
       '❌ Error entrenando HANDVERSE:',

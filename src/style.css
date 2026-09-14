@@ -10070,3 +10070,114 @@ html.low-power-device .battle-action-card {
 .battle-winner-identity {
   margin-top: 22px;
 }
+
+/* ==========================================================
+   HANDVERSE - PROTECCION RESPONSIVE GLOBAL
+   ========================================================== */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+/* ==========================================================
+   FORMULARIOS MOVILES
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  button {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* ==========================================================
+   ARENA HANDVERSE - TABLETS Y CELULARES
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+  .battle-section {
+    width: calc(100% - 24px);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .battle-header h2 {
+    font-size: clamp(1.55rem,
+        7vw,
+        2.3rem);
+    line-height: 1.05;
+  }
+}
+
+/* ==========================================================
+   CELULARES PEQUEÑOS
+   ========================================================== */
+
+@media (max-width: 480px) {
+
+  body {
+    font-size: 14px;
+  }
+
+  .battle-section {
+    width: calc(100% - 16px);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .battle-header h2 {
+    font-size: 1.65rem;
+  }
+
+  button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+/* ==========================================================
+   MODO ENTRENAMIENTO - OPTIMIZACION MOVIL
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+  body.training-mode * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  body.training-mode {
+    scroll-behavior: auto;
+  }
+}

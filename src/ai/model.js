@@ -380,7 +380,7 @@ export async function trainGestureModel(
         {
 
           epochs:
-            EPOCHS,
+            trainingEpochs,
 
           batchSize:
             BATCH_SIZE,
@@ -416,8 +416,35 @@ export async function trainGestureModel(
                   0
 
 
+                // ======================================================
+                // EARLY STOPPING PARA MOVILES
+                // Detener si la IA ya aprendió correctamente
+                // ======================================================
+
+                if (
+                  isMobileDevice &&
+                  epoch >= 9 &&
+                  accuracy >= 0.98 &&
+                  validationAccuracy >= 0.98
+                ) {
+                  consecutiveGoodEpochs += 1
+                } else {
+                  consecutiveGoodEpochs = 0
+                }
+
+                if (
+                  isMobileDevice &&
+                  consecutiveGoodEpochs >= 3
+                ) {
+                  console.log(
+                    '📱 IA aprendida correctamente. Finalizando entrenamiento móvil.'
+                  )
+
+                  model.stopTraining = true
+                }
+
                 console.log(
-                  `Epoch ${epoch + 1}/${EPOCHS}`,
+                  `Epoch ${epoch + 1}/${trainingEpochs}`,
                   {
                     accuracy,
                     validationAccuracy,
@@ -440,7 +467,7 @@ export async function trainGestureModel(
                       epoch + 1,
 
                     totalEpochs:
-                      EPOCHS,
+                      trainingEpochs,
 
                     accuracy,
 
@@ -449,7 +476,12 @@ export async function trainGestureModel(
                     loss
 
                   })
-
+                  if (
+                    isMobileDevice &&
+                    epoch % 2 === 0
+                  ) {
+                    await tf.nextFrame()
+                  }
                 }
 
               }
@@ -507,6 +539,37 @@ export async function trainGestureModel(
   }
 
 }
+
+// ======================================================
+// OPTIMIZACION DE ENTRENAMIENTO PARA MOVILES
+// ======================================================
+
+const isMobileDevice =
+  typeof window !== 'undefined' &&
+  window.matchMedia(
+    '(max-width: 768px)'
+  ).matches
+
+const trainingEpochs =
+  isMobileDevice
+    ? Math.min(EPOCHS, 25)
+    : EPOCHS
+
+let consecutiveGoodEpochs = 0
+
+console.log(
+  '🧠 Configuración de entrenamiento:',
+  {
+    dispositivo:
+      isMobileDevice
+        ? 'MÓVIL'
+        : 'ESCRITORIO',
+    epochs:
+      trainingEpochs,
+    batchSize:
+      BATCH_SIZE
+  }
+)
 
 
 // ======================================================
@@ -611,7 +674,7 @@ export function predictFeatures(
 
       const gesture =
         CLASS_BY_ID[
-          bestClassId
+        bestClassId
         ]
 
 
