@@ -3974,6 +3974,7 @@ function showPowerSpecialEffect(
 // JUGADOR REGISTRADO
 // ============================================================
 let registeredPlayerSupabaseId = null
+let playerRegistrationPromise = null
 
 let registeredPlayer = {
   firstNames: '',
@@ -6826,76 +6827,139 @@ async function saveBattleResultToSupabase(state) {
 
 async function registerPlayerInSupabase(player) {
 
-  try {
+  // ======================================================
+  // EVITAR VOLVER A REGISTRAR AL MISMO PARTICIPANTE
+  // ======================================================
+
+  if (
+    registeredPlayerSupabaseId
+  ) {
 
     console.log(
-      '☁️ Registrando participante en Supabase...',
-      player
-    )
-
-    const {
-      data,
-      error
-    } =
-      await supabase
-        .from(
-          'handverse_participants'
-        )
-        .insert([
-          {
-            first_names:
-              player.firstNames,
-
-            last_names:
-              player.lastNames,
-
-            full_name:
-              player.fullName,
-
-            institution:
-              player.institution,
-
-            result:
-              'PENDIENTE',
-
-            player_score:
-              0,
-
-            ai_score:
-              0
-          }
-        ])
-        .select(
-          'id'
-        )
-        .single()
-
-    if (error) {
-      throw error
-    }
-
-    registeredPlayerSupabaseId =
-      data.id
-
-    console.log(
-      '✅ PARTICIPANTE GUARDADO EN SUPABASE:',
+      'ℹ️ Participante ya registrado en Supabase:',
       registeredPlayerSupabaseId
     )
 
     return true
+  }
 
-  } catch (error) {
 
-    console.error(
-      '❌ ERROR REGISTRANDO PARTICIPANTE:',
-      error
+  // ======================================================
+  // EVITAR DOS INSERT SIMULTÁNEOS
+  // ======================================================
+
+  if (
+    playerRegistrationPromise
+  ) {
+
+    console.log(
+      '⏳ Ya existe un registro en proceso...'
     )
 
-    registeredPlayerSupabaseId =
-      null
-
-    return false
+    return playerRegistrationPromise
   }
+
+
+  // ======================================================
+  // CREAR UN ÚNICO PROCESO DE REGISTRO
+  // ======================================================
+
+  playerRegistrationPromise =
+    (async () => {
+
+      try {
+
+        console.log(
+          '☁️ Registrando participante en Supabase...',
+          player
+        )
+
+
+        const {
+          data,
+          error
+        } =
+          await supabase
+            .from(
+              'handverse_participants'
+            )
+            .insert([
+              {
+                first_names:
+                  player.firstNames,
+
+                last_names:
+                  player.lastNames,
+
+                full_name:
+                  player.fullName,
+
+                institution:
+                  player.institution,
+
+                result:
+                  'PENDIENTE',
+
+                player_score:
+                  0,
+
+                ai_score:
+                  0
+              }
+            ])
+            .select(
+              'id'
+            )
+            .single()
+
+
+        if (
+          error
+        ) {
+
+          throw error
+        }
+
+
+        registeredPlayerSupabaseId =
+          data.id
+
+
+        console.log(
+          '✅ PARTICIPANTE GUARDADO EN SUPABASE:',
+          registeredPlayerSupabaseId
+        )
+
+
+        return true
+
+      } catch (
+      error
+      ) {
+
+        console.error(
+          '❌ ERROR REGISTRANDO PARTICIPANTE:',
+          error
+        )
+
+
+        registeredPlayerSupabaseId =
+          null
+
+
+        return false
+
+      } finally {
+
+        playerRegistrationPromise =
+          null
+
+      }
+
+    })()
+
+
+  return playerRegistrationPromise
 }
 
 // ============================================================
@@ -7036,6 +7100,18 @@ async function registerPlayer(
 
   }
 
+  const registrationSubmitButton =
+    playerRegistrationForm.querySelector(
+      'button[type="submit"]'
+    )
+
+  if (
+    registrationSubmitButton
+  ) {
+    registrationSubmitButton.disabled =
+      true
+  }
+
   // ==========================================================
   // REGISTRAR PARTICIPANTE EN SUPABASE
   // ==========================================================
@@ -7052,8 +7128,17 @@ async function registerPlayer(
     !playerSaved
   ) {
 
+    if (
+      registrationSubmitButton
+    ) {
+      registrationSubmitButton.disabled =
+        false
+    }
+
+
     registrationError.textContent =
       '❌ No se pudo registrar al participante. Intenta nuevamente.'
+
 
     return
   }
