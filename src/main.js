@@ -107,7 +107,6 @@ app.innerHTML = `
             id="player-first-names"
             name="firstNames"
             type="text"
-            placeholder="Ej. Luis Andrés"
             maxlength="60"
             required
           >
@@ -129,7 +128,6 @@ app.innerHTML = `
             id="player-last-names"
             name="lastNames"
             type="text"
-            placeholder="Ej. Aurea Pérez"
             maxlength="60"
             required
           >
@@ -151,7 +149,6 @@ app.innerHTML = `
             id="player-institution"
             name="institution"
             type="text"
-            placeholder="Ej. Unidad Educativa..."
             maxlength="100"
             required
           >
@@ -1099,6 +1096,12 @@ let handTrackerReady =
 let detectionRunning =
   false
 
+// ======================================================
+// CONTROL DE RENDIMIENTO DURANTE ENTRENAMIENTO
+// ======================================================
+
+let modelTrainingInProgress = false
+
 let lastVideoTime =
   -1
 
@@ -1125,7 +1128,7 @@ let lastBattleGesture =
 let battleGestureStartTime =
   0
 
-
+let lastHandDetectionTime = 0
 // ============================================================
 // TEMPORIZADOR DE CADA TURNO
 // ============================================================
@@ -2650,8 +2653,19 @@ async function handleTrainModel() {
       '🧠 Iniciando entrenamiento de HANDVERSE...'
     )
 
+    modelTrainingInProgress = true
+
+    console.log(
+      '⏸️ MediaPipe pausado durante entrenamiento'
+    )
 
     await trainGestureModel()
+
+    modelTrainingInProgress = false
+
+    console.log(
+      '▶️ MediaPipe reanudado'
+    )
 
 
     // ======================================================
@@ -2802,6 +2816,8 @@ async function handleTrainModel() {
   catch (
   error
   ) {
+
+    modelTrainingInProgress = false
 
     document.body.classList.remove(
       'training-mode'
@@ -5643,11 +5659,49 @@ function startHandDetection() {
     timestamp
   ) {
 
-    // Programamos inmediatamente
-    // el siguiente frame visual.
+    // ==================================================
+    // PROGRAMAR UN ÚNICO SIGUIENTE FRAME
+    // ==================================================
+
     requestAnimationFrame(
       detectFrame
     )
+
+    // ==================================================
+    // PAUSAR MEDIAPIPE DURANTE ENTRENAMIENTO
+    // ==================================================
+
+    if (
+      modelTrainingInProgress
+    ) {
+      return
+    }
+
+    // ==================================================
+    // LIMITAR FRECUENCIA DE DETECCIÓN
+    // ==================================================
+
+    const now =
+      timestamp ??
+      performance.now()
+
+    const detectionInterval =
+      window.matchMedia(
+        '(max-width: 768px)'
+      ).matches
+        ? 66
+        : 33
+
+    if (
+      now -
+      lastHandDetectionTime <
+      detectionInterval
+    ) {
+      return
+    }
+
+    lastHandDetectionTime =
+      now
 
 
     // ========================================================
@@ -5949,6 +6003,11 @@ function startHandDetection() {
 
 async function startCamera() {
 
+  const isMobileCamera =
+    window.matchMedia(
+      '(max-width: 768px)'
+    ).matches
+
   if (
     !navigator.mediaDevices
       ?.getUserMedia
@@ -6023,20 +6082,32 @@ async function startCamera() {
       videoConstraints = {
 
         width: {
-          ideal: 960
+          ideal:
+            isMobileCamera
+              ? 640
+              : 1280
         },
 
         height: {
-          ideal: 540
+          ideal:
+            isMobileCamera
+              ? 480
+              : 720
         },
 
         frameRate: {
-          ideal: 30,
-          max: 30
+          ideal:
+            isMobileCamera
+              ? 24
+              : 30,
+
+          max:
+            30
         },
 
         facingMode:
           'user'
+
 
       }
 
@@ -6066,7 +6137,6 @@ async function startCamera() {
       }
 
     }
-
 
     // ========================================================
     // SOLICITAR CÁMARA
@@ -6222,45 +6292,6 @@ function normalizeRegistrationText(
 
 }
 
-// ============================================================
-// VALIDAR NOMBRES Y APELLIDOS
-// ============================================================
-
-function isValidPersonName(
-  value
-) {
-
-  const normalized =
-    normalizeRegistrationText(
-      value
-    )
-
-  const words =
-    normalized.split(' ')
-
-  if (
-    words.length < 1 ||
-    words.length > 2
-  ) {
-
-    return false
-
-  }
-
-
-  const validWordPattern =
-    /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'-]+$/
-
-
-  return words.every(
-    word =>
-      validWordPattern.test(
-        word
-      )
-  )
-
-}
-
 // ======================================================
 // VALIDAR PALABRAS REPETIDAS EN NOMBRES Y APELLIDOS
 // ======================================================
@@ -6279,21 +6310,104 @@ function hasRepeatedWords(value) {
   )
 }
 
-// ============================================================
-// VALIDAR INSTITUCIÓN
-// ============================================================
+// ======================================================
+// VALIDACIÓN SEGURA DE NOMBRES Y APELLIDOS
+// ======================================================
 
-function isValidInstitution(
-  value
-) {
+function isValidPersonName(value) {
+  const text =
+    normalizeRegistrationText(value)
 
-  const normalized =
-    normalizeRegistrationText(
-      value
+  // Longitud permitida
+  if (
+    text.length < 2 ||
+    text.length > 80
+  ) {
+    return false
+  }
+
+  // Solo letras, espacios, apóstrofes y guiones.
+  // Acepta tildes y Ñ.
+  const validCharacters =
+    /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/u
+
+  if (
+    !validCharacters.test(text)
+  ) {
+    return false
+  }
+
+  // Debe contener por lo menos dos letras
+  const letters =
+    text.match(
+      /[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/gu
     )
 
-  return normalized.length >= 3
+  if (
+    !letters ||
+    letters.length < 2
+  ) {
+    return false
+  }
 
+  // No permitir espacios, guiones o apóstrofes repetidos exageradamente
+  if (
+    /\s{2,}/.test(text) ||
+    /-{2,}/.test(text) ||
+    /'{2,}/.test(text)
+  ) {
+    return false
+  }
+
+  return true
+}
+
+// ======================================================
+// VALIDAR INSTITUCIÓN EDUCATIVA
+// ======================================================
+
+function isValidInstitution(value) {
+  const text =
+    normalizeRegistrationText(value)
+
+  // Mínimo 3 caracteres y máximo 160
+  if (
+    text.length < 3 ||
+    text.length > 160
+  ) {
+    return false
+  }
+
+  // Solo caracteres normales para una institución:
+  // letras, números, espacios, puntos, comas,
+  // apóstrofes, &, paréntesis, # y guion
+  const validCharacters =
+    /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 .,'&()#-]+$/
+
+  if (
+    !validCharacters.test(text)
+  ) {
+    return false
+  }
+
+  // Debe contener al menos una letra
+  const containsLetter =
+    /[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(text)
+
+  if (
+    !containsLetter
+  ) {
+    return false
+  }
+
+  // No permitir dos o más espacios seguidos
+  if (
+    /\s{2,}/.test(text)
+  ) {
+    return false
+  }
+
+  return true
 }
 
 // ============================================================
@@ -6660,20 +6774,6 @@ function registerPlayer(
   // ------------------------------------------------------
   // VALIDAR APELLIDOS REPETIDOS
   // ------------------------------------------------------
-
-  if (
-    hasRepeatedWords(lastNames)
-  ) {
-    playerLastNamesInput.setCustomValidity(
-      'No puedes repetir el mismo apellido. Ejemplo: Aurea Aurea.'
-    )
-
-    playerLastNamesInput.reportValidity()
-    playerLastNamesInput.focus()
-
-    return
-  }
-
 
   registrationError.textContent =
     ''
