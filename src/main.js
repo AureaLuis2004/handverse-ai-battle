@@ -62,6 +62,12 @@ app.innerHTML = `
     id="battle-countdown"
     class="battle-countdown"
     aria-live="assertive"
+    aria-hidden="true"
+  >
+    <span
+      id="battle-countdown-text"
+      class="battle-countdown-text"
+    ></span>
   ></div>
 
   <!-- ====================================================== -->
@@ -211,6 +217,51 @@ app.innerHTML = `
       <p class="subtitle">
         Entrena tu IA. Combate con tus manos.
       </p>
+
+      <!-- ====================================================== -->
+      <!-- ESTADO GENERAL DEL SISTEMA HANDVERSE -->
+      <!-- ====================================================== -->
+
+      <div
+        id="handverse-system-status"
+        class="handverse-system-status"
+        aria-label="Estado del sistema HANDVERSE"
+      >
+
+        <div
+          id="system-status-ai"
+          class="system-status-item system-status-ready"
+        >
+          <span class="system-status-dot"></span>
+
+          <span class="system-status-text">
+            IA PREPARADA
+          </span>
+        </div>
+
+        <div
+          id="system-status-camera"
+          class="system-status-item system-status-waiting"
+        >
+          <span class="system-status-dot"></span>
+
+          <span class="system-status-text">
+            CÁMARA EN ESPERA
+          </span>
+        </div>
+
+        <div
+          id="system-status-app"
+          class="system-status-item system-status-ready"
+        >
+          <span class="system-status-dot"></span>
+
+          <span class="system-status-text">
+            SISTEMA LISTO
+          </span>
+        </div>
+
+      </div>
 
       <div class="gesture-legend">
 
@@ -2809,7 +2860,7 @@ async function handleTrainModel() {
     // los movimientos permanecen bloqueados.
     // ======================================================
 
-    startBattleCountdown()
+    await startBattleCountdown()
 
   }
 
@@ -3327,6 +3378,40 @@ function processBattlePrediction(
     prediction
   )
 
+  // ============================================================
+  // BLOQUEAR COMPLETAMENTE DURANTE LA CUENTA REGRESIVA
+  // ============================================================
+  //
+  // Durante:
+  // 3 → 2 → 1 → COMBATE
+  //
+  // podemos seguir mostrando visualmente el gesto,
+  // pero NO permitimos que se prepare ni se acumule
+  // el tiempo de confirmación de 350 ms.
+  // ============================================================
+
+  if (
+    battleCountdownActive
+  ) {
+
+    resetBattleGestureControl()
+
+    return
+
+  }
+
+
+  // Durante transición de ronda
+  // no aceptamos otro ataque.
+
+  if (
+    roundTransitionActive
+  ) {
+
+    return
+
+  }
+
 
   // Durante transición de ronda
   // no aceptamos otro ataque.
@@ -3590,7 +3675,7 @@ function processBattlePrediction(
 // - coloca marcador 0 - 0
 // ============================================================
 
-function startNewBattle() {
+async function startNewBattle() {
 
   // ==========================================================
   // LIMPIAR GANADOR ANTERIOR
@@ -3712,7 +3797,7 @@ function startNewBattle() {
   // combate-feroz.mp3 al llegar a COMBATE.
   // ==========================================================
 
-  startBattleCountdown()
+  await startBattleCountdown()
 
 
   console.log(
@@ -4023,8 +4108,8 @@ let battleCountdownActive = false
 let battleCountdownToken = 0
 
 // Tiempo entre cada número de la cuenta regresiva.
-// 700 ms = 0.7 segundos.
-const BATTLE_COUNTDOWN_DELAY = 700
+// 800 ms = 0.8 segundos.
+const BATTLE_COUNTDOWN_DELAY = 800
 
 // ======================================================
 // AUDIO DEL SISTEMA DE BATALLA
@@ -4225,22 +4310,45 @@ function waitBattleCountdown(ms) {
 
 function clearBattleCountdown() {
 
-  const battleCountdown =
+  const countdownContainer =
     document.getElementById(
       'battle-countdown'
     )
 
-  if (!battleCountdown) {
-    return
+  const countdownText =
+    document.getElementById(
+      'battle-countdown-text'
+    )
+
+
+  if (
+    countdownText
+  ) {
+
+    countdownText.textContent =
+      ''
+
+    countdownText.classList.remove(
+      'battle-countdown-combat'
+    )
+
   }
 
-  battleCountdown.textContent = ''
 
-  battleCountdown.classList.remove(
-    'countdown-visible',
-    'countdown-pop',
-    'countdown-combat'
-  )
+  if (
+    countdownContainer
+  ) {
+
+    countdownContainer.classList.remove(
+      'battle-countdown-visible'
+    )
+
+    countdownContainer.setAttribute(
+      'aria-hidden',
+      'true'
+    )
+
+  }
 
 }
 
@@ -4251,12 +4359,72 @@ function clearBattleCountdown() {
 
 function cancelBattleCountdown() {
 
-  // Invalida cualquier cuenta anterior.
+  // ======================================================
+  // INVALIDAR CUALQUIER COUNTDOWN QUE ESTÉ EJECUTÁNDOSE
+  // ======================================================
+
   battleCountdownToken++
 
-  battleCountdownActive = false
 
-  clearBattleCountdown()
+  // ======================================================
+  // BLOQUEO DEL COUNTDOWN DESACTIVADO
+  // ======================================================
+
+  battleCountdownActive =
+    false
+
+
+  // ======================================================
+  // OBTENER ELEMENTOS DEL COUNTDOWN
+  // ======================================================
+
+  const countdownContainer =
+    document.getElementById(
+      'battle-countdown'
+    )
+
+  const countdownText =
+    document.getElementById(
+      'battle-countdown-text'
+    )
+
+
+  // ======================================================
+  // LIMPIAR TEXTO
+  // ======================================================
+
+  if (
+    countdownText
+  ) {
+
+    countdownText.textContent =
+      ''
+
+    countdownText.classList.remove(
+      'battle-countdown-combat'
+    )
+
+  }
+
+
+  // ======================================================
+  // OCULTAR CONTENEDOR COMPLETAMENTE
+  // ======================================================
+
+  if (
+    countdownContainer
+  ) {
+
+    countdownContainer.classList.remove(
+      'battle-countdown-visible'
+    )
+
+    countdownContainer.setAttribute(
+      'aria-hidden',
+      'true'
+    )
+
+  }
 
 }
 
@@ -4267,62 +4435,136 @@ function cancelBattleCountdown() {
 
 async function startBattleCountdown() {
 
-  const battleCountdown =
+  const countdownContainer =
     document.getElementById(
       'battle-countdown'
     )
 
-  if (!battleCountdown) {
-
-    console.warn(
-      'No se encontró #battle-countdown'
+  const countdownText =
+    document.getElementById(
+      'battle-countdown-text'
     )
 
-    battleCountdownActive = false
+  if (
+    !countdownContainer ||
+    !countdownText
+  ) {
+
+    console.error(
+      '❌ No se encontró el contador de batalla.'
+    )
+
+    battleCountdownActive =
+      false
 
     return
 
   }
 
 
-  // Cancelamos cualquier cuenta anterior.
-  battleCountdownToken++
+  // ======================================================
+  // CREAR UNA NUEVA EJECUCIÓN DEL COUNTDOWN
+  // ======================================================
 
   const currentToken =
-    battleCountdownToken
+    ++battleCountdownToken
 
 
-  // Mientras esto sea TRUE,
-  // ningún gesto podrá ejecutar un turno.
-  battleCountdownActive = true
+  battleCountdownActive =
+    true
 
 
-  battleCountdown.classList.add(
-    'countdown-visible'
+  // ======================================================
+  // MOSTRAR CONTENEDOR
+  // ======================================================
+
+  countdownContainer.classList.add(
+    'battle-countdown-visible'
+  )
+
+  countdownContainer.setAttribute(
+    'aria-hidden',
+    'false'
   )
 
 
-  // ==========================================================
-  // 3
-  // ==========================================================
+  const countdownSteps = [
+    '3',
+    '2',
+    '1',
+    '⚔️ COMBATE'
+  ]
 
-  battleCountdown.textContent = '3'
 
-  battleCountdown.classList.remove(
-    'countdown-pop',
-    'countdown-combat'
-  )
+  // ======================================================
+  // EJECUTAR 3 → 2 → 1 → COMBATE
+  // ======================================================
 
-  void battleCountdown.offsetWidth
+  for (
+    const step
+    of countdownSteps
+  ) {
 
-  battleCountdown.classList.add(
-    'countdown-pop'
-  )
+    // Si otro countdown fue iniciado,
+    // detenemos este.
+    if (
+      currentToken !==
+      battleCountdownToken
+    ) {
+      return
+    }
 
-  await waitBattleCountdown(
-    BATTLE_COUNTDOWN_DELAY
-  )
 
+    countdownText.textContent =
+      step
+
+
+    // Clase especial para COMBATE
+    if (
+      step.includes(
+        'COMBATE'
+      )
+    ) {
+
+      countdownText.classList.add(
+        'battle-countdown-combat'
+      )
+
+      // ======================================================
+      // INICIAR MÚSICA JUSTO AL COMENZAR EL COMBATE
+      // ======================================================
+
+      startBattleMusic()
+
+    } else {
+
+      countdownText.classList.remove(
+        'battle-countdown-combat'
+      )
+
+    }
+
+
+    console.log(
+      '⚔️ COUNTDOWN HANDVERSE:',
+      step
+    )
+
+
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          BATTLE_COUNTDOWN_DELAY
+        )
+    )
+
+  }
+
+
+  // ======================================================
+  // VERIFICAR QUE ESTE COUNTDOWN SIGA SIENDO EL ACTUAL
+  // ======================================================
 
   if (
     currentToken !==
@@ -4332,107 +4574,48 @@ async function startBattleCountdown() {
   }
 
 
-  // ==========================================================
-  // 2
-  // ==========================================================
+  // ======================================================
+  // OCULTAR COUNTDOWN AL TERMINAR
+  // ======================================================
 
-  battleCountdown.textContent = '2'
+  countdownText.textContent =
+    ''
 
-  battleCountdown.classList.remove(
-    'countdown-pop'
+  countdownText.classList.remove(
+    'battle-countdown-combat'
   )
 
-  void battleCountdown.offsetWidth
-
-  battleCountdown.classList.add(
-    'countdown-pop'
+  countdownContainer.classList.remove(
+    'battle-countdown-visible'
   )
 
-  await waitBattleCountdown(
-    BATTLE_COUNTDOWN_DELAY
-  )
-
-
-  if (
-    currentToken !==
-    battleCountdownToken
-  ) {
-    return
-  }
-
-
-  // ==========================================================
-  // 1
-  // ==========================================================
-
-  battleCountdown.textContent = '1'
-
-  battleCountdown.classList.remove(
-    'countdown-pop'
-  )
-
-  void battleCountdown.offsetWidth
-
-  battleCountdown.classList.add(
-    'countdown-pop'
-  )
-
-  await waitBattleCountdown(
-    BATTLE_COUNTDOWN_DELAY
+  countdownContainer.setAttribute(
+    'aria-hidden',
+    'true'
   )
 
 
-  if (
-    currentToken !==
-    battleCountdownToken
-  ) {
-    return
-  }
+  // ======================================================
+  // AHORA SÍ SE PERMITE COMBATIR
+  // ======================================================
+
+  battleCountdownActive =
+    false
 
 
-  // ==========================================================
-  // COMBATE
-  // ==========================================================
+  // ======================================================
+  // PREPARAR CONTROL DE GESTO PARA EL PRIMER TURNO
+  // ======================================================
 
-  battleCountdown.textContent =
-    '⚔️ ¡COMBATE!'
-
-  startBattleMusic()
-
-  battleCountdown.classList.remove(
-    'countdown-pop'
-  )
-
-  battleCountdown.classList.add(
-    'countdown-combat'
-  )
-
-  await waitBattleCountdown(
-    BATTLE_COUNTDOWN_DELAY
-  )
+  resetBattleGestureControl()
 
 
-  if (
-    currentToken !==
-    battleCountdownToken
-  ) {
-    return
-  }
-
-
-  // ==========================================================
-  // HABILITAR COMBATE
-  // ==========================================================
-
-  clearBattleCountdown()
-
-  battleCountdownActive = false
-
-  // ==========================================================
-  // COMIENZA EL PRIMER TURNO DE 5 SEGUNDOS
-  // ==========================================================
+  // ======================================================
+  // INICIAR TEMPORIZADOR DEL PRIMER TURNO
+  // ======================================================
 
   startTurnTimer()
+
 
   console.log(
     '⚔️ HANDVERSE: combate habilitado'
