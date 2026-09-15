@@ -68,7 +68,7 @@ app.innerHTML = `
       id="battle-countdown-text"
       class="battle-countdown-text"
     ></span>
-  ></div>
+  </div>
 
   <!-- ====================================================== -->
   <!-- REGISTRO OBLIGATORIO DEL JUGADOR -->

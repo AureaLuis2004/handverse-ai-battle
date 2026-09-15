@@ -6876,3 +6876,157 @@ html.low-power-device .system-status-active .system-status-dot {
   margin-top: 18px;
   margin-bottom: 24px;
 }
+
+/* ==========================================================
+   HANDVERSE - COUNTDOWN GLOBAL DEFINITIVO
+   3 → 2 → 1 → COMBATE
+   ========================================================== */
+
+#battle-countdown {
+  display: none !important;
+
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  background:
+    radial-gradient(circle at center,
+      rgba(8, 47, 73, 0.55) 0%,
+      rgba(2, 8, 23, 0.88) 45%,
+      rgba(2, 6, 23, 0.96) 100%) !important;
+
+  z-index: 999999 !important;
+
+  pointer-events: none !important;
+}
+
+
+/* JavaScript coloca esta clase
+   cuando empieza el countdown */
+
+#battle-countdown.battle-countdown-visible {
+  display: flex !important;
+}
+
+
+/* ==========================================================
+   TEXTO 3 / 2 / 1
+   ========================================================== */
+
+#battle-countdown-text {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 220px;
+  min-height: 220px;
+
+  padding: 30px 45px;
+
+  border:
+    2px solid rgba(34, 211, 238, 0.55);
+
+  border-radius:
+    40px;
+
+  background:
+    rgba(2, 8, 23, 0.88);
+
+  color:
+    #67e8f9;
+
+  font-size:
+    clamp(6rem,
+      15vw,
+      12rem);
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+
+  text-align:
+    center;
+
+  text-shadow:
+    0 0 15px rgba(34, 211, 238, 1),
+    0 0 35px rgba(34, 211, 238, 0.80),
+    0 0 80px rgba(34, 211, 238, 0.45);
+
+  box-shadow:
+    0 0 30px rgba(34, 211, 238, 0.15),
+    0 0 90px rgba(34, 211, 238, 0.15);
+
+  animation:
+    handverse-countdown-impact 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ==========================================================
+   COMBATE
+   ========================================================== */
+
+#battle-countdown-text.battle-countdown-combat {
+  min-width:
+    min(760px, 86vw);
+
+  min-height:
+    200px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    clamp(3rem,
+      8vw,
+      7rem);
+
+  text-shadow:
+    0 0 15px rgba(255, 255, 255, 0.80),
+    0 0 30px rgba(34, 211, 238, 0.90),
+    0 0 70px rgba(124, 58, 237, 0.75);
+
+  border-color:
+    rgba(124, 58, 237, 0.75);
+
+  box-shadow:
+    0 0 50px rgba(34, 211, 238, 0.18),
+    0 0 110px rgba(124, 58, 237, 0.25);
+}
+
+
+/* ==========================================================
+   ANIMACIÓN
+   ========================================================== */
+
+@keyframes handverse-countdown-impact {
+
+  0% {
+    opacity: 0;
+    transform:
+      scale(1.8);
+  }
+
+  55% {
+    opacity: 1;
+    transform:
+      scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      scale(1);
+  }
+
+}
