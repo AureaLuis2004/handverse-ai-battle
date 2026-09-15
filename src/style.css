@@ -5488,9 +5488,16 @@ html.low-power-device .turn-timer-danger {
 /* Cuando todavía no existe un ganador,
    queda visualmente vacío. */
 
-.battle-winner-identity:empty {
-  display:
-    none;
+/* ==========================================================
+   OCULTAR IDENTIDAD DEL GANADOR HASTA QUE EXISTA UN GANADOR
+   ========================================================== */
+
+.battle-winner-identity {
+  display: none;
+}
+
+.battle-winner-identity:has(.battle-winner-name:not(:empty)) {
+  display: block;
 }
 
 
@@ -6486,3 +6493,309 @@ body {
    FIN PARTE 9
    RESPONSIVE GENERAL + OPTIMIZACIÓN FINAL
    ============================================================ */
+
+
+/* ==========================================================
+   PARTE 10
+   PANEL DE ESTADO DEL SISTEMA HANDVERSE
+   ========================================================== */
+
+.handverse-system-status {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    10px;
+
+  width:
+    100%;
+
+  max-width:
+    720px;
+
+  margin:
+    22px auto 0;
+
+  padding:
+    0 16px;
+}
+
+
+.system-status-item {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  min-height:
+    34px;
+
+  padding:
+    8px 14px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.14);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(2, 8, 23, 0.72);
+
+  font-size:
+    0.68rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.09em;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.system-status-dot {
+  width:
+    8px;
+
+  height:
+    8px;
+
+  flex:
+    0 0 8px;
+
+  border-radius:
+    50%;
+
+  background:
+    #64748b;
+}
+
+
+/* ==========================================================
+   ESTADO LISTO
+   ========================================================== */
+
+.system-status-ready {
+  color:
+    #67e8f9;
+
+  border-color:
+    rgba(34, 211, 238, 0.22);
+
+  background:
+    rgba(8, 47, 73, 0.22);
+}
+
+
+.system-status-ready .system-status-dot {
+  background:
+    #22d3ee;
+
+  box-shadow:
+    0 0 5px rgba(34, 211, 238, 0.9),
+    0 0 12px rgba(34, 211, 238, 0.45);
+}
+
+
+/* ==========================================================
+   ESTADO EN ESPERA
+   ========================================================== */
+
+.system-status-waiting {
+  color:
+    #94a3b8;
+}
+
+
+.system-status-waiting .system-status-dot {
+  background:
+    #64748b;
+}
+
+
+/* ==========================================================
+   ESTADO ACTIVO
+   ========================================================== */
+
+.system-status-active {
+  color:
+    #86efac;
+
+  border-color:
+    rgba(74, 222, 128, 0.28);
+
+  background:
+    rgba(20, 83, 45, 0.20);
+}
+
+
+.system-status-active .system-status-dot {
+  background:
+    #4ade80;
+
+  box-shadow:
+    0 0 6px rgba(74, 222, 128, 0.95),
+    0 0 14px rgba(74, 222, 128, 0.48);
+
+  animation:
+    handverse-status-pulse 1.8s ease-in-out infinite;
+}
+
+
+/* ==========================================================
+   ESTADO DE ERROR
+   ========================================================== */
+
+.system-status-error {
+  color:
+    #fda4af;
+
+  border-color:
+    rgba(244, 63, 94, 0.32);
+
+  background:
+    rgba(127, 29, 29, 0.20);
+}
+
+
+.system-status-error .system-status-dot {
+  background:
+    #fb7185;
+
+  box-shadow:
+    0 0 6px rgba(251, 113, 133, 0.9);
+}
+
+
+/* ==========================================================
+   ANIMACIÓN
+   ========================================================== */
+
+@keyframes handverse-status-pulse {
+
+  0%,
+  100% {
+    transform:
+      scale(1);
+
+    opacity:
+      1;
+  }
+
+  50% {
+    transform:
+      scale(1.35);
+
+    opacity:
+      0.65;
+  }
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+  .handverse-system-status {
+    gap:
+      7px;
+
+    margin-top:
+      18px;
+
+    padding:
+      0 10px;
+  }
+
+
+  .system-status-item {
+    min-height:
+      31px;
+
+    padding:
+      7px 10px;
+
+    font-size:
+      0.58rem;
+
+    letter-spacing:
+      0.06em;
+  }
+
+}
+
+
+/* ==========================================================
+   DISPOSITIVOS DE BAJO RENDIMIENTO
+   ========================================================== */
+
+html.low-power-device .system-status-active .system-status-dot {
+  animation:
+    none;
+}
+
+
+/* ==========================================================
+   FIN PARTE 10
+   PANEL DE ESTADO DEL SISTEMA HANDVERSE
+   ========================================================== */
+
+
+/* ==========================================================
+   CUENTA REGRESIVA
+   OCULTA COMPLETAMENTE CUANDO NO ESTÁ ACTIVA
+   ========================================================== */
+
+#battle-countdown {
+  display: none;
+  width: min(100%, 760px);
+  margin: 18px auto 0;
+}
+
+/* Solo aparece durante 3 - 2 - 1 - COMBATE */
+#battle-countdown.battle-countdown-visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================================
+   ESPACIADO DEL ESTADO DE BATALLA
+   ========================================================== */
+
+#battle-result {
+  margin-top: 18px;
+  margin-bottom: 24px;
+}
