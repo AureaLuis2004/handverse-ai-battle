@@ -4,7 +4,6 @@
    ECOTEC · SISTEMAS INTELIGENTES
    ============================================================ */
 
-
 /* ============================================================
    01. VARIABLES GLOBALES
    ============================================================ */
@@ -32,14 +31,11 @@
   --bg-secondary: #050b16;
   --bg-panel: #07111f;
 
-  --panel:
-    rgba(8, 18, 35, 0.94);
+  --panel: rgba(8, 18, 35, 0.94);
 
-  --panel-strong:
-    rgba(4, 12, 27, 0.97);
+  --panel-strong: rgba(4, 12, 27, 0.97);
 
-  --panel-soft:
-    rgba(15, 30, 52, 0.72);
+  --panel-soft: rgba(15, 30, 52, 0.72);
 
   /* Colores HANDVERSE */
 
@@ -68,25 +64,19 @@
 
   /* Bordes */
 
-  --border:
-    rgba(34, 211, 238, 0.26);
+  --border: rgba(34, 211, 238, 0.26);
 
-  --border-soft:
-    rgba(148, 163, 184, 0.13);
+  --border-soft: rgba(148, 163, 184, 0.13);
 
-  --border-purple:
-    rgba(139, 92, 246, 0.30);
+  --border-purple: rgba(139, 92, 246, 0.3);
 
   /* Sombras */
 
-  --shadow-panel:
-    0 24px 60px rgba(0, 0, 0, 0.38);
+  --shadow-panel: 0 24px 60px rgba(0, 0, 0, 0.38);
 
-  --glow-cyan:
-    0 0 28px rgba(34, 211, 238, 0.18);
+  --glow-cyan: 0 0 28px rgba(34, 211, 238, 0.18);
 
-  --glow-purple:
-    0 0 28px rgba(139, 92, 246, 0.18);
+  --glow-purple: 0 0 28px rgba(139, 92, 246, 0.18);
 
   /* Bordes redondeados */
 
@@ -96,13 +86,10 @@
 
   /* Transiciones */
 
-  --transition-fast:
-    160ms ease;
+  --transition-fast: 160ms ease;
 
-  --transition-normal:
-    240ms ease;
+  --transition-normal: 240ms ease;
 }
-
 
 /* ============================================================
    02. RESET GENERAL
@@ -114,17 +101,14 @@
   box-sizing: border-box;
 }
 
-
 html {
   min-width: 320px;
   min-height: 100%;
 
-  background:
-    var(--bg-primary);
+  background: var(--bg-primary);
 
   scroll-behavior: smooth;
 }
-
 
 body {
   min-width: 320px;
@@ -135,22 +119,21 @@ body {
 
   overflow-x: hidden;
 
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
   background:
-    radial-gradient(circle at 15% 15%,
-      rgba(34, 211, 238, 0.10),
-      transparent 30%),
-    radial-gradient(circle at 85% 35%,
-      rgba(139, 92, 246, 0.10),
-      transparent 32%),
-    linear-gradient(180deg,
-      #020617 0%,
-      #050b16 50%,
-      #020617 100%);
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(34, 211, 238, 0.1),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 35%,
+      rgba(139, 92, 246, 0.1),
+      transparent 32%
+    ),
+    linear-gradient(180deg, #020617 0%, #050b16 50%, #020617 100%);
 }
-
 
 body,
 button,
@@ -158,34 +141,27 @@ input {
   font-family: inherit;
 }
 
-
 button,
 input {
   font-size: inherit;
 }
 
-
 button {
   border: 0;
 }
-
 
 button:not(:disabled) {
   cursor: pointer;
 }
 
-
 button:disabled {
   cursor: not-allowed;
 }
 
-
 button,
 input {
-  -webkit-tap-highlight-color:
-    transparent;
+  -webkit-tap-highlight-color: transparent;
 }
-
 
 /* ============================================================
    03. FONDO TECNOLÓGICO GLOBAL
@@ -204,31 +180,27 @@ body::before {
   opacity: 0.09;
 
   background-image:
-    linear-gradient(rgba(34, 211, 238, 0.10) 1px,
-      transparent 1px),
-    linear-gradient(90deg,
-      rgba(34, 211, 238, 0.10) 1px,
-      transparent 1px);
+    linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
 
-  background-size:
-    48px 48px;
+  background-size: 48px 48px;
 
-  -webkit-mask-image:
-    linear-gradient(to bottom,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
 
-  mask-image:
-    linear-gradient(to bottom,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent);
-
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
 }
-
 
 /* ============================================================
    04. UTILIDADES GENERALES
@@ -238,7 +210,6 @@ body::before {
   display: none !important;
 }
 
-
 #app {
   position: relative;
 
@@ -247,27 +218,22 @@ body::before {
   min-height: 100dvh;
 }
 
-
 .app-registration-locked {
   display: none !important;
 }
-
 
 /* ============================================================
    05. CONTENEDOR PRINCIPAL
    ============================================================ */
 
 .app-shell {
-  width:
-    min(1180px, 94vw);
+  width: min(1180px, 94vw);
 
   min-height: 100vh;
 
-  margin:
-    0 auto;
+  margin: 0 auto;
 
-  padding:
-    36px 0 72px;
+  padding: 36px 0 72px;
 
   display: flex;
   flex-direction: column;
@@ -276,14 +242,12 @@ body::before {
   gap: 34px;
 }
 
-
 /* ============================================================
    06. BOTONES - COMPORTAMIENTO GLOBAL
    ============================================================ */
 
 button {
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
   transition:
     transform var(--transition-fast),
@@ -293,31 +257,22 @@ button {
     background var(--transition-fast);
 }
 
-
 button:not(:disabled):hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
-  filter:
-    brightness(1.08);
+  filter: brightness(1.08);
 }
-
 
 button:not(:disabled):active {
-  transform:
-    translateY(0) scale(0.985);
+  transform: translateY(0) scale(0.985);
 }
-
 
 button:focus-visible,
 input:focus-visible {
-  outline:
-    2px solid var(--cyan-light);
+  outline: 2px solid var(--cyan-light);
 
-  outline-offset:
-    3px;
+  outline-offset: 3px;
 }
-
 
 /* ============================================================
    07. HERO PRINCIPAL
@@ -328,8 +283,7 @@ input:focus-visible {
 
   width: 100%;
 
-  padding:
-    40px 30px 34px;
+  padding: 40px 30px 34px;
 
   display: flex;
   flex-direction: column;
@@ -339,18 +293,16 @@ input:focus-visible {
 
   text-align: center;
 
-  background:
-    linear-gradient(145deg,
-      rgba(8, 18, 35, 0.40),
-      rgba(4, 10, 25, 0.22));
+  background: linear-gradient(
+    145deg,
+    rgba(8, 18, 35, 0.4),
+    rgba(4, 10, 25, 0.22)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.16);
+  border: 1px solid rgba(34, 211, 238, 0.16);
 
-  border-radius:
-    var(--radius-large);
+  border-radius: var(--radius-large);
 }
-
 
 .hero::before {
   content: "";
@@ -363,91 +315,70 @@ input:focus-visible {
   top: -140px;
   left: 50%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   pointer-events: none;
 
-  background:
-    radial-gradient(circle,
-      rgba(34, 211, 238, 0.16),
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.16),
+    transparent 68%
+  );
 }
-
 
 .eyebrow {
   position: relative;
 
   margin: 0 0 12px;
 
-  color:
-    var(--cyan-light);
+  color: var(--cyan-light);
 
-  font-size:
-    0.75rem;
+  font-size: 0.75rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.24em;
+  letter-spacing: 0.24em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 .hero h1 {
   position: relative;
 
   margin: 0;
 
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-size:
-    clamp(2.25rem, 5vw, 4.5rem);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  line-height:
-    0.96;
+  line-height: 0.96;
 
-  letter-spacing:
-    -0.045em;
+  letter-spacing: -0.045em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
 
-
 .hero h1 span {
-  color:
-    var(--cyan);
+  color: var(--cyan);
 
   text-shadow:
     0 0 12px rgba(34, 211, 238, 0.48),
     0 0 35px rgba(34, 211, 238, 0.22);
 }
 
-
 .subtitle {
   position: relative;
 
-  margin:
-    17px 0 0;
+  margin: 17px 0 0;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    clamp(0.95rem, 2vw, 1.15rem);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
 
-  line-height:
-    1.5;
+  line-height: 1.5;
 }
-
 
 /* ============================================================
    08. LEYENDA ATAQUE / ESCUDO / PODER
@@ -458,8 +389,7 @@ input:focus-visible {
 
   width: 100%;
 
-  margin-top:
-    28px;
+  margin-top: 28px;
 
   display: flex;
 
@@ -471,13 +401,10 @@ input:focus-visible {
   flex-wrap: wrap;
 }
 
+.gesture-legend > div {
+  min-width: 150px;
 
-.gesture-legend>div {
-  min-width:
-    150px;
-
-  padding:
-    14px 22px;
+  padding: 14px 22px;
 
   display: flex;
 
@@ -486,22 +413,19 @@ input:focus-visible {
 
   gap: 10px;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  background:
-    linear-gradient(145deg,
-      rgba(15, 30, 52, 0.82),
-      rgba(5, 13, 28, 0.88));
+  background: linear-gradient(
+    145deg,
+    rgba(15, 30, 52, 0.82),
+    rgba(5, 13, 28, 0.88)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.19);
+  border: 1px solid rgba(34, 211, 238, 0.19);
 
-  border-radius:
-    12px;
+  border-radius: 12px;
 
-  box-shadow:
-    inset 0 0 18px rgba(34, 211, 238, 0.025);
+  box-shadow: inset 0 0 18px rgba(34, 211, 238, 0.025);
 
   transition:
     transform var(--transition-fast),
@@ -509,176 +433,122 @@ input:focus-visible {
     box-shadow var(--transition-fast);
 }
 
+.gesture-legend > div:hover {
+  transform: translateY(-3px);
 
-.gesture-legend>div:hover {
-  transform:
-    translateY(-3px);
-
-  border-color:
-    rgba(34, 211, 238, 0.48);
+  border-color: rgba(34, 211, 238, 0.48);
 
   box-shadow:
     0 8px 25px rgba(0, 0, 0, 0.18),
     0 0 20px rgba(34, 211, 238, 0.08);
 }
 
-
 .gesture-legend strong {
-  font-size:
-    1.45rem;
+  font-size: 1.45rem;
 
-  line-height:
-    1;
+  line-height: 1;
 }
-
 
 .gesture-legend span {
-  font-size:
-    0.78rem;
+  font-size: 0.78rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.10em;
+  letter-spacing: 0.1em;
 }
-
 
 /* ============================================================
    09. BASE RESPONSIVE
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .app-shell {
-    width:
-      95vw;
+    width: 95vw;
 
-    padding-top:
-      24px;
+    padding-top: 24px;
 
-    gap:
-      26px;
+    gap: 26px;
   }
-
 
   .hero {
-    padding:
-      34px 22px 30px;
+    padding: 34px 22px 30px;
   }
 
+  .gesture-legend > div {
+    min-width: 125px;
 
-  .gesture-legend>div {
-    min-width:
-      125px;
-
-    padding:
-      12px 16px;
+    padding: 12px 16px;
   }
-
 }
-
 
 @media (max-width: 600px) {
-
   .app-shell {
-    width:
-      calc(100% - 18px);
+    width: calc(100% - 18px);
 
-    padding:
-      16px 0 42px;
+    padding: 16px 0 42px;
 
-    gap:
-      20px;
+    gap: 20px;
   }
-
 
   .hero {
-    padding:
-      28px 12px 24px;
+    padding: 28px 12px 24px;
 
-    border-radius:
-      16px;
+    border-radius: 16px;
   }
-
 
   .eyebrow {
-    font-size:
-      0.62rem;
+    font-size: 0.62rem;
 
-    letter-spacing:
-      0.18em;
+    letter-spacing: 0.18em;
   }
-
 
   .hero h1 {
-    font-size:
-      clamp(2rem, 11vw, 3rem);
+    font-size: clamp(2rem, 11vw, 3rem);
   }
-
 
   .subtitle {
-    margin-top:
-      12px;
+    margin-top: 12px;
 
-    padding:
-      0 8px;
+    padding: 0 8px;
   }
-
 
   .gesture-legend {
-    gap:
-      7px;
+    gap: 7px;
 
-    margin-top:
-      22px;
+    margin-top: 22px;
   }
 
+  .gesture-legend > div {
+    flex: 1 1 calc(33.333% - 7px);
 
-  .gesture-legend>div {
-    flex:
-      1 1 calc(33.333% - 7px);
+    min-width: 0;
 
-    min-width:
-      0;
+    padding: 10px 5px;
 
-    padding:
-      10px 5px;
+    flex-direction: column;
 
-    flex-direction:
-      column;
-
-    gap:
-      5px;
+    gap: 5px;
   }
-
 
   .gesture-legend strong {
-    font-size:
-      1.3rem;
+    font-size: 1.3rem;
   }
-
 
   .gesture-legend span {
-    font-size:
-      0.60rem;
+    font-size: 0.6rem;
   }
-
 }
-
 
 /* ============================================================
    FIN PARTE 1
    BASE + HERO
    ============================================================ */
 
-
 /* ============================================================
    HANDVERSE
    PARTE 2
    REGISTRO DEL ESTUDIANTE
    ============================================================ */
-
 
 /* ============================================================
    10. PANTALLA DE REGISTRO
@@ -691,8 +561,7 @@ input:focus-visible {
   min-height: 100vh;
   min-height: 100dvh;
 
-  padding:
-    40px 20px;
+  padding: 40px 20px;
 
   display: flex;
 
@@ -702,17 +571,18 @@ input:focus-visible {
   overflow: hidden;
 
   background:
-    radial-gradient(circle at 18% 18%,
+    radial-gradient(
+      circle at 18% 18%,
       rgba(34, 211, 238, 0.13),
-      transparent 30%),
-    radial-gradient(circle at 82% 75%,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 82% 75%,
       rgba(139, 92, 246, 0.13),
-      transparent 32%),
-    linear-gradient(145deg,
-      #020617,
-      #030819);
+      transparent 32%
+    ),
+    linear-gradient(145deg, #020617, #030819);
 }
-
 
 /* ============================================================
    11. EFECTO DECORATIVO DE REGISTRO
@@ -733,12 +603,12 @@ input:focus-visible {
 
   border-radius: 50%;
 
-  background:
-    radial-gradient(circle,
-      rgba(34, 211, 238, 0.12),
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.12),
+    transparent 68%
+  );
 }
-
 
 .player-registration-screen::after {
   content: "";
@@ -755,12 +625,12 @@ input:focus-visible {
 
   border-radius: 50%;
 
-  background:
-    radial-gradient(circle,
-      rgba(139, 92, 246, 0.13),
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.13),
+    transparent 68%
+  );
 }
-
 
 /* ============================================================
    12. OCULTAR REGISTRO AL COMPLETARSE
@@ -769,7 +639,6 @@ input:focus-visible {
 .player-registration-screen.registration-completed {
   display: none !important;
 }
-
 
 /* ============================================================
    13. TARJETA PRINCIPAL DE REGISTRO
@@ -780,30 +649,26 @@ input:focus-visible {
 
   z-index: 2;
 
-  width:
-    min(620px, 100%);
+  width: min(620px, 100%);
 
-  padding:
-    42px;
+  padding: 42px;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(145deg,
-      rgba(8, 18, 35, 0.98),
-      rgba(3, 8, 24, 0.98));
+  background: linear-gradient(
+    145deg,
+    rgba(8, 18, 35, 0.98),
+    rgba(3, 8, 24, 0.98)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.30);
+  border: 1px solid rgba(34, 211, 238, 0.3);
 
-  border-radius:
-    24px;
+  border-radius: 24px;
 
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.50),
+    0 30px 80px rgba(0, 0, 0, 0.5),
     0 0 45px rgba(34, 211, 238, 0.06);
 }
-
 
 /* ============================================================
    14. LÍNEA DE LUZ SUPERIOR
@@ -820,103 +685,77 @@ input:focus-visible {
 
   height: 1px;
 
-  background:
-    linear-gradient(90deg,
-      transparent,
-      rgba(103, 232, 249, 0.95),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(103, 232, 249, 0.95),
+    transparent
+  );
 
-  box-shadow:
-    0 0 18px rgba(34, 211, 238, 0.65);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.65);
 }
-
 
 /* ============================================================
    15. MARCA
    ============================================================ */
 
 .registration-brand {
-  margin-bottom:
-    32px;
+  margin-bottom: 32px;
 
-  text-align:
-    center;
+  text-align: center;
 }
-
 
 .registration-eyebrow {
   display: block;
 
-  color:
-    var(--cyan-light);
+  color: var(--cyan-light);
 
-  font-size:
-    0.70rem;
+  font-size: 0.7rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.22em;
+  letter-spacing: 0.22em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 .registration-brand h1 {
-  margin:
-    10px 0 0;
+  margin: 10px 0 0;
 
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-size:
-    clamp(2rem, 6vw, 3.1rem);
+  font-size: clamp(2rem, 6vw, 3.1rem);
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  letter-spacing:
-    -0.035em;
+  letter-spacing: -0.035em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 .registration-brand h1 span {
   display: block;
 
-  margin-top:
-    4px;
+  margin-top: 4px;
 
-  color:
-    var(--cyan);
+  color: var(--cyan);
 
   text-shadow:
-    0 0 15px rgba(34, 211, 238, 0.50),
+    0 0 15px rgba(34, 211, 238, 0.5),
     0 0 32px rgba(34, 211, 238, 0.22);
 }
 
-
 .registration-brand p {
-  margin:
-    16px 0 0;
+  margin: 16px 0 0;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    0.95rem;
+  font-size: 0.95rem;
 
-  line-height:
-    1.55;
+  line-height: 1.55;
 }
-
 
 /* ============================================================
    16. FORMULARIO
@@ -932,7 +771,6 @@ input:focus-visible {
   gap: 20px;
 }
 
-
 /* ============================================================
    17. CAMPOS
    ============================================================ */
@@ -947,45 +785,32 @@ input:focus-visible {
   gap: 8px;
 }
 
-
 .registration-field label {
-  color:
-    #e2e8f0;
+  color: #e2e8f0;
 
-  font-size:
-    0.78rem;
+  font-size: 0.78rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.02em;
+  letter-spacing: 0.02em;
 }
-
 
 .registration-field input {
   width: 100%;
 
-  min-height:
-    52px;
+  min-height: 52px;
 
-  padding:
-    0 15px;
+  padding: 0 15px;
 
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  background:
-    rgba(3, 12, 28, 0.92);
+  background: rgba(3, 12, 28, 0.92);
 
-  border:
-    1px solid rgba(34, 211, 238, 0.27);
+  border: 1px solid rgba(34, 211, 238, 0.27);
 
-  border-radius:
-    11px;
+  border-radius: 11px;
 
-  outline:
-    none;
+  outline: none;
 
   transition:
     border-color var(--transition-fast),
@@ -993,75 +818,55 @@ input:focus-visible {
     background var(--transition-fast);
 }
 
-
 .registration-field input:hover {
-  border-color:
-    rgba(34, 211, 238, 0.42);
+  border-color: rgba(34, 211, 238, 0.42);
 }
 
-
 .registration-field input:focus {
-  background:
-    rgba(5, 18, 38, 0.98);
+  background: rgba(5, 18, 38, 0.98);
 
-  border-color:
-    var(--cyan);
+  border-color: var(--cyan);
 
   box-shadow:
     0 0 0 3px rgba(34, 211, 238, 0.09),
     0 0 22px rgba(34, 211, 238, 0.09);
 }
 
-
 .registration-field input::placeholder {
-  color:
-    #475569;
+  color: #475569;
 }
-
 
 /* ============================================================
    18. AYUDA DE CAMPOS
    ============================================================ */
 
 .registration-field small {
-  color:
-    #64748b;
+  color: #64748b;
 
-  font-size:
-    0.68rem;
+  font-size: 0.68rem;
 
-  line-height:
-    1.4;
+  line-height: 1.4;
 }
-
 
 /* ============================================================
    19. MENSAJE DE VALIDACIÓN / SUPABASE
    ============================================================ */
 
 .registration-error {
-  min-height:
-    20px;
+  min-height: 20px;
 
-  margin:
-    -2px 0 0;
+  margin: -2px 0 0;
 
-  color:
-    var(--red-light);
+  color: var(--red-light);
 
-  font-size:
-    0.74rem;
+  font-size: 0.74rem;
 
-  font-weight:
-    750;
+  font-weight: 750;
 
-  line-height:
-    1.4;
+  line-height: 1.4;
 
-  text-align:
-    center;
+  text-align: center;
 }
-
 
 /* ============================================================
    20. BOTÓN ENTRAR A HANDVERSE
@@ -1072,43 +877,30 @@ input:focus-visible {
 
   width: 100%;
 
-  min-height:
-    54px;
+  min-height: 54px;
 
-  padding:
-    14px 22px;
+  padding: 14px 22px;
 
   overflow: hidden;
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  background:
-    linear-gradient(135deg,
-      #0891b2 0%,
-      #2563eb 55%,
-      #7c3aed 100%);
+  background: linear-gradient(135deg, #0891b2 0%, #2563eb 55%, #7c3aed 100%);
 
-  border:
-    1px solid rgba(103, 232, 249, 0.65);
+  border: 1px solid rgba(103, 232, 249, 0.65);
 
-  border-radius:
-    11px;
+  border-radius: 11px;
 
-  font-size:
-    0.80rem;
+  font-size: 0.8rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.10em;
+  letter-spacing: 0.1em;
 
   box-shadow:
     0 12px 28px rgba(37, 99, 235, 0.18),
-    0 0 20px rgba(34, 211, 238, 0.10);
+    0 0 20px rgba(34, 211, 238, 0.1);
 }
-
 
 /* ============================================================
    21. EFECTO DE LUZ DEL BOTÓN
@@ -1127,25 +919,21 @@ input:focus-visible {
 
   pointer-events: none;
 
-  transform:
-    rotate(20deg);
+  transform: rotate(20deg);
 
-  background:
-    linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.28),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
 
-  transition:
-    left 0.55s ease;
+  transition: left 0.55s ease;
 }
-
 
 .registration-submit-button:hover:not(:disabled)::before {
-  left:
-    140%;
+  left: 140%;
 }
-
 
 .registration-submit-button:hover:not(:disabled) {
   box-shadow:
@@ -1153,183 +941,131 @@ input:focus-visible {
     0 0 28px rgba(34, 211, 238, 0.18);
 }
 
-
 /* ============================================================
    22. BOTÓN DESACTIVADO DURANTE REGISTRO
    ============================================================ */
 
 .registration-submit-button:disabled {
-  opacity:
-    0.62;
+  opacity: 0.62;
 
-  filter:
-    saturate(0.65);
+  filter: saturate(0.65);
 
-  transform:
-    none;
+  transform: none;
 
-  cursor:
-    wait;
+  cursor: wait;
 }
-
 
 /* ============================================================
    23. TEXTO DE PRIVACIDAD
    ============================================================ */
 
 .registration-privacy {
-  max-width:
-    500px;
+  max-width: 500px;
 
-  margin:
-    20px auto 0;
+  margin: 20px auto 0;
 
-  color:
-    #64748b;
+  color: #64748b;
 
-  font-size:
-    0.67rem;
+  font-size: 0.67rem;
 
-  line-height:
-    1.5;
+  line-height: 1.5;
 
-  text-align:
-    center;
+  text-align: center;
 }
-
 
 /* ============================================================
    24. TABLET
    ============================================================ */
 
 @media (max-width: 700px) {
-
   .player-registration-screen {
-    padding:
-      26px 16px;
+    padding: 26px 16px;
   }
-
 
   .player-registration-card {
-    padding:
-      32px 26px;
+    padding: 32px 26px;
 
-    border-radius:
-      20px;
+    border-radius: 20px;
   }
-
 
   .registration-brand {
-    margin-bottom:
-      26px;
+    margin-bottom: 26px;
   }
-
 }
-
 
 /* ============================================================
    25. MÓVIL
    ============================================================ */
 
 @media (max-width: 480px) {
-
   .player-registration-screen {
-    padding:
-      14px 10px;
+    padding: 14px 10px;
   }
-
 
   .player-registration-card {
-    padding:
-      27px 18px;
+    padding: 27px 18px;
 
-    border-radius:
-      17px;
+    border-radius: 17px;
   }
-
 
   .registration-eyebrow {
-    font-size:
-      0.59rem;
+    font-size: 0.59rem;
 
-    letter-spacing:
-      0.17em;
+    letter-spacing: 0.17em;
   }
-
 
   .registration-brand h1 {
-    font-size:
-      clamp(1.9rem, 11vw, 2.6rem);
+    font-size: clamp(1.9rem, 11vw, 2.6rem);
   }
-
 
   .registration-brand p {
-    font-size:
-      0.84rem;
+    font-size: 0.84rem;
   }
-
 
   .player-registration-form {
-    gap:
-      17px;
+    gap: 17px;
   }
-
 
   .registration-field input {
-    min-height:
-      49px;
+    min-height: 49px;
   }
-
 
   .registration-submit-button {
-    min-height:
-      52px;
+    min-height: 52px;
 
-    padding:
-      13px 14px;
+    padding: 13px 14px;
 
-    font-size:
-      0.73rem;
+    font-size: 0.73rem;
   }
-
 
   .registration-privacy {
-    font-size:
-      0.62rem;
+    font-size: 0.62rem;
   }
-
 }
-
 
 /* ============================================================
    26. OPTIMIZACIÓN PARA DISPOSITIVOS TÁCTILES
    ============================================================ */
 
 html.touch-device .player-registration-card {
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.40);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
 }
-
 
 html.low-power-device .player-registration-screen::before,
 html.low-power-device .player-registration-screen::after {
-  display:
-    none;
+  display: none;
 }
-
 
 /* ============================================================
    FIN PARTE 2
    REGISTRO DEL ESTUDIANTE
    ============================================================ */
 
-
 /* ============================================================
    HANDVERSE
    PARTE 3
    CÁMARA + NEURAL VISION + RECONOCIMIENTO IA
    ============================================================ */
-
 
 /* ============================================================
    27. PANEL GENERAL DE CÁMARA
@@ -1340,27 +1076,24 @@ html.low-power-device .player-registration-screen::after {
 
   width: 100%;
 
-  padding:
-    26px;
+  padding: 26px;
 
-  background:
-    linear-gradient(145deg,
-      rgba(5, 15, 32, 0.96),
-      rgba(3, 9, 25, 0.98));
+  background: linear-gradient(
+    145deg,
+    rgba(5, 15, 32, 0.96),
+    rgba(3, 9, 25, 0.98)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.22);
+  border: 1px solid rgba(34, 211, 238, 0.22);
 
-  border-radius:
-    22px;
+  border-radius: 22px;
 
   box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.30),
+    0 24px 60px rgba(0, 0, 0, 0.3),
     0 0 35px rgba(34, 211, 238, 0.04);
 
   overflow: hidden;
 }
-
 
 /* ============================================================
    28. ÁREA DE VIDEO
@@ -1371,26 +1104,18 @@ html.low-power-device .player-registration-screen::after {
 
   width: 100%;
 
-  aspect-ratio:
-    16 / 9;
+  aspect-ratio: 16 / 9;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(145deg,
-      #020817,
-      #061126);
+  background: linear-gradient(145deg, #020817, #061126);
 
-  border:
-    1px solid rgba(34, 211, 238, 0.38);
+  border: 1px solid rgba(34, 211, 238, 0.38);
 
-  border-radius:
-    18px;
+  border-radius: 18px;
 
-  box-shadow:
-    inset 0 0 35px rgba(34, 211, 238, 0.04);
+  box-shadow: inset 0 0 35px rgba(34, 211, 238, 0.04);
 }
-
 
 /* ============================================================
    29. VIDEO DE LA WEBCAM
@@ -1406,10 +1131,8 @@ html.low-power-device .player-registration-screen::after {
 
   object-fit: cover;
 
-  background:
-    #020617;
+  background: #020617;
 }
-
 
 /* ============================================================
    30. CANVAS DE MEDIAPIPE
@@ -1427,7 +1150,6 @@ html.low-power-device .player-registration-screen::after {
 
   pointer-events: none;
 }
-
 
 /* ============================================================
    31. PLACEHOLDER ANTES DE ACTIVAR LA CÁMARA
@@ -1449,47 +1171,38 @@ html.low-power-device .player-registration-screen::after {
 
   gap: 14px;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   background:
-    radial-gradient(circle at center,
+    radial-gradient(
+      circle at center,
       rgba(34, 211, 238, 0.06),
-      transparent 48%),
+      transparent 48%
+    ),
     #030b1d;
 
   text-align: center;
 }
 
-
 #camera-placeholder span {
-  font-size:
-    clamp(2.8rem, 7vw, 4.5rem);
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
 
-  filter:
-    drop-shadow(0 0 18px rgba(34, 211, 238, 0.25));
+  filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.25));
 }
-
 
 #camera-placeholder p {
   margin: 0;
 
-  color:
-    #94a3b8;
+  color: #94a3b8;
 
-  font-size:
-    0.95rem;
+  font-size: 0.95rem;
 
-  font-weight:
-    700;
+  font-weight: 700;
 
-  letter-spacing:
-    0.10em;
+  letter-spacing: 0.1em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    32. CONTROLES DE LA CÁMARA
@@ -1498,8 +1211,7 @@ html.low-power-device .player-registration-screen::after {
 .camera-controls {
   width: 100%;
 
-  margin-top:
-    18px;
+  margin-top: 18px;
 
   display: flex;
 
@@ -1509,7 +1221,6 @@ html.low-power-device .player-registration-screen::after {
   gap: 16px;
 }
 
-
 /* ============================================================
    33. ESTADO DE LA CÁMARA
    ============================================================ */
@@ -1517,56 +1228,43 @@ html.low-power-device .player-registration-screen::after {
 #camera-status {
   margin: 0;
 
-  color:
-    var(--cyan-light);
+  color: var(--cyan-light);
 
-  font-size:
-    0.82rem;
+  font-size: 0.82rem;
 
-  font-weight:
-    750;
+  font-weight: 750;
 
-  letter-spacing:
-    0.025em;
+  letter-spacing: 0.025em;
 }
-
 
 /* ============================================================
    34. BOTÓN ACTIVAR CÁMARA
    ============================================================ */
 
 #start-camera {
-  min-width:
-    190px;
+  min-width: 190px;
 
-  min-height:
-    48px;
+  min-height: 48px;
 
-  padding:
-    12px 20px;
+  padding: 12px 20px;
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 145, 178, 0.95),
-      rgba(37, 99, 235, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.95),
+    rgba(37, 99, 235, 0.95)
+  );
 
-  border:
-    1px solid rgba(103, 232, 249, 0.55);
+  border: 1px solid rgba(103, 232, 249, 0.55);
 
-  border-radius:
-    11px;
+  border-radius: 11px;
 
-  font-size:
-    0.74rem;
+  font-size: 0.74rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.08em;
+  letter-spacing: 0.08em;
 
   box-shadow:
     0 8px 24px rgba(37, 99, 235, 0.16),
@@ -1578,40 +1276,29 @@ html.low-power-device .player-registration-screen::after {
     border-color var(--transition-fast);
 }
 
-
 #start-camera:hover:not(:disabled) {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
-  border-color:
-    rgba(103, 232, 249, 0.85);
+  border-color: rgba(103, 232, 249, 0.85);
 
   box-shadow:
     0 12px 30px rgba(37, 99, 235, 0.24),
     0 0 24px rgba(34, 211, 238, 0.15);
 }
 
-
 #start-camera:active:not(:disabled) {
-  transform:
-    translateY(0);
+  transform: translateY(0);
 }
-
 
 #start-camera:disabled {
-  opacity:
-    0.62;
+  opacity: 0.62;
 
-  cursor:
-    default;
+  cursor: default;
 
-  transform:
-    none;
+  transform: none;
 
-  filter:
-    saturate(0.70);
+  filter: saturate(0.7);
 }
-
 
 /* ============================================================
    35. PANEL DE RECONOCIMIENTO IA
@@ -1622,38 +1309,31 @@ html.low-power-device .player-registration-screen::after {
 
   width: 100%;
 
-  min-height:
-    104px;
+  min-height: 104px;
 
-  margin-top:
-    20px;
+  margin-top: 20px;
 
-  padding:
-    18px 20px;
+  padding: 18px 20px;
 
   display: grid;
 
-  grid-template-columns:
-    auto 1fr auto;
+  grid-template-columns: auto 1fr auto;
 
   align-items: center;
 
-  gap:
-    18px;
+  gap: 18px;
 
-  background:
-    linear-gradient(135deg,
-      rgba(7, 20, 40, 0.95),
-      rgba(3, 11, 28, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(7, 20, 40, 0.95),
+    rgba(3, 11, 28, 0.98)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.25);
+  border: 1px solid rgba(34, 211, 238, 0.25);
 
-  border-radius:
-    16px;
+  border-radius: 16px;
 
-  box-shadow:
-    inset 0 0 30px rgba(34, 211, 238, 0.025);
+  box-shadow: inset 0 0 30px rgba(34, 211, 238, 0.025);
 
   overflow: hidden;
 
@@ -1662,7 +1342,6 @@ html.low-power-device .player-registration-screen::after {
     box-shadow 0.25s ease,
     background 0.25s ease;
 }
-
 
 /* ============================================================
    36. LÍNEA DECORATIVA DEL PANEL IA
@@ -1677,30 +1356,23 @@ html.low-power-device .player-registration-screen::after {
   top: 16%;
   bottom: 16%;
 
-  width:
-    3px;
+  width: 3px;
 
-  border-radius:
-    10px;
+  border-radius: 10px;
 
-  background:
-    var(--cyan);
+  background: var(--cyan);
 
-  box-shadow:
-    0 0 16px rgba(34, 211, 238, 0.65);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.65);
 }
-
 
 /* ============================================================
    37. ICONO DEL RECONOCIMIENTO
    ============================================================ */
 
 .prediction-icon {
-  width:
-    62px;
+  width: 62px;
 
-  height:
-    62px;
+  height: 62px;
 
   display: grid;
 
@@ -1708,24 +1380,20 @@ html.low-power-device .player-registration-screen::after {
 
   flex-shrink: 0;
 
-  font-size:
-    2.3rem;
+  font-size: 2.3rem;
 
-  background:
-    radial-gradient(circle,
-      rgba(34, 211, 238, 0.13),
-      rgba(34, 211, 238, 0.025));
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.13),
+    rgba(34, 211, 238, 0.025)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.20);
+  border: 1px solid rgba(34, 211, 238, 0.2);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  filter:
-    drop-shadow(0 0 12px rgba(34, 211, 238, 0.12));
+  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.12));
 }
-
 
 /* ============================================================
    38. INFORMACIÓN DEL GESTO
@@ -1740,69 +1408,49 @@ html.low-power-device .player-registration-screen::after {
 
   align-items: flex-start;
 
-  gap:
-    4px;
+  gap: 4px;
 }
-
 
 .prediction-eyebrow {
-  color:
-    var(--cyan);
+  color: var(--cyan);
 
-  font-size:
-    0.61rem;
+  font-size: 0.61rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.18em;
+  letter-spacing: 0.18em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 #prediction-name {
-  color:
-    #f8fafc;
+  color: #f8fafc;
 
-  font-size:
-    clamp(1rem, 3vw, 1.35rem);
+  font-size: clamp(1rem, 3vw, 1.35rem);
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  line-height:
-    1.15;
+  line-height: 1.15;
 
-  letter-spacing:
-    0.01em;
+  letter-spacing: 0.01em;
 }
-
 
 #prediction-action {
-  color:
-    var(--cyan-light);
+  color: var(--cyan-light);
 
-  font-size:
-    0.82rem;
+  font-size: 0.82rem;
 
-  font-weight:
-    650;
+  font-weight: 650;
 
-  line-height:
-    1.4;
+  line-height: 1.4;
 }
-
 
 /* ============================================================
    39. CONFIANZA DE LA PREDICCIÓN
    ============================================================ */
 
 .prediction-confidence {
-  min-width:
-    95px;
+  min-width: 95px;
 
   display: flex;
 
@@ -1812,388 +1460,287 @@ html.low-power-device .player-registration-screen::after {
 
   justify-content: center;
 
-  gap:
-    5px;
+  gap: 5px;
 }
-
 
 .prediction-confidence span {
-  color:
-    #94a3b8;
+  color: #94a3b8;
 
-  font-size:
-    0.60rem;
+  font-size: 0.6rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.12em;
+  letter-spacing: 0.12em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 #prediction-confidence {
-  color:
-    var(--cyan-light);
+  color: var(--cyan-light);
 
-  font-size:
-    1.25rem;
+  font-size: 1.25rem;
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  font-variant-numeric:
-    tabular-nums;
+  font-variant-numeric: tabular-nums;
 }
-
 
 /* ============================================================
    40. ESTADO: ATAQUE
    ============================================================ */
 
 .prediction-panel.attack {
-  border-color:
-    rgba(248, 113, 113, 0.56);
+  border-color: rgba(248, 113, 113, 0.56);
 
-  background:
-    linear-gradient(135deg,
-      rgba(55, 12, 22, 0.58),
-      rgba(5, 11, 28, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(55, 12, 22, 0.58),
+    rgba(5, 11, 28, 0.98)
+  );
 
-  box-shadow:
-    0 0 28px rgba(239, 68, 68, 0.08);
+  box-shadow: 0 0 28px rgba(239, 68, 68, 0.08);
 }
-
 
 .prediction-panel.attack::before {
-  background:
-    #fb7185;
+  background: #fb7185;
 
-  box-shadow:
-    0 0 18px rgba(251, 113, 133, 0.75);
+  box-shadow: 0 0 18px rgba(251, 113, 133, 0.75);
 }
-
 
 .prediction-panel.attack .prediction-icon {
-  background:
-    radial-gradient(circle,
-      rgba(239, 68, 68, 0.19),
-      rgba(239, 68, 68, 0.03));
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.19),
+    rgba(239, 68, 68, 0.03)
+  );
 
-  border-color:
-    rgba(248, 113, 113, 0.40);
+  border-color: rgba(248, 113, 113, 0.4);
 }
-
 
 .prediction-panel.attack .prediction-eyebrow,
 .prediction-panel.attack #prediction-action,
 .prediction-panel.attack #prediction-confidence {
-  color:
-    #fda4af;
+  color: #fda4af;
 }
-
 
 /* ============================================================
    41. ESTADO: ESCUDO
    ============================================================ */
 
 .prediction-panel.shield {
-  border-color:
-    rgba(56, 189, 248, 0.56);
+  border-color: rgba(56, 189, 248, 0.56);
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 47, 73, 0.58),
-      rgba(5, 11, 28, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 47, 73, 0.58),
+    rgba(5, 11, 28, 0.98)
+  );
 
-  box-shadow:
-    0 0 28px rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.08);
 }
-
 
 .prediction-panel.shield::before {
-  background:
-    #38bdf8;
+  background: #38bdf8;
 
-  box-shadow:
-    0 0 18px rgba(56, 189, 248, 0.75);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.75);
 }
-
 
 .prediction-panel.shield .prediction-icon {
-  background:
-    radial-gradient(circle,
-      rgba(56, 189, 248, 0.19),
-      rgba(56, 189, 248, 0.03));
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.19),
+    rgba(56, 189, 248, 0.03)
+  );
 
-  border-color:
-    rgba(56, 189, 248, 0.40);
+  border-color: rgba(56, 189, 248, 0.4);
 }
-
 
 .prediction-panel.shield .prediction-eyebrow,
 .prediction-panel.shield #prediction-action,
 .prediction-panel.shield #prediction-confidence {
-  color:
-    #7dd3fc;
+  color: #7dd3fc;
 }
-
 
 /* ============================================================
    42. ESTADO: PODER
    ============================================================ */
 
 .prediction-panel.power {
-  border-color:
-    rgba(192, 132, 252, 0.60);
+  border-color: rgba(192, 132, 252, 0.6);
 
-  background:
-    linear-gradient(135deg,
-      rgba(59, 20, 95, 0.60),
-      rgba(5, 11, 28, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 20, 95, 0.6),
+    rgba(5, 11, 28, 0.98)
+  );
 
-  box-shadow:
-    0 0 30px rgba(168, 85, 247, 0.10);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
 }
-
 
 .prediction-panel.power::before {
-  background:
-    #c084fc;
+  background: #c084fc;
 
-  box-shadow:
-    0 0 20px rgba(192, 132, 252, 0.80);
+  box-shadow: 0 0 20px rgba(192, 132, 252, 0.8);
 }
-
 
 .prediction-panel.power .prediction-icon {
-  background:
-    radial-gradient(circle,
-      rgba(168, 85, 247, 0.20),
-      rgba(168, 85, 247, 0.03));
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.2),
+    rgba(168, 85, 247, 0.03)
+  );
 
-  border-color:
-    rgba(192, 132, 252, 0.42);
+  border-color: rgba(192, 132, 252, 0.42);
 }
-
 
 .prediction-panel.power .prediction-eyebrow,
 .prediction-panel.power #prediction-action,
 .prediction-panel.power #prediction-confidence {
-  color:
-    #d8b4fe;
+  color: #d8b4fe;
 }
-
 
 /* ============================================================
    43. TABLET
    ============================================================ */
 
 @media (max-width: 768px) {
-
   .camera-panel {
-    padding:
-      20px;
+    padding: 20px;
 
-    border-radius:
-      18px;
+    border-radius: 18px;
   }
-
 
   .camera-stage {
-    border-radius:
-      14px;
+    border-radius: 14px;
   }
-
 
   .camera-controls {
-    align-items:
-      stretch;
+    align-items: stretch;
 
-    flex-direction:
-      column;
+    flex-direction: column;
   }
-
 
   #start-camera {
-    width:
-      100%;
+    width: 100%;
   }
-
 
   .prediction-panel {
-    grid-template-columns:
-      auto 1fr;
+    grid-template-columns: auto 1fr;
 
-    padding:
-      16px;
+    padding: 16px;
   }
-
 
   .prediction-confidence {
-    grid-column:
-      1 / -1;
+    grid-column: 1 / -1;
 
-    width:
-      100%;
+    width: 100%;
 
-    padding-top:
-      10px;
+    padding-top: 10px;
 
-    flex-direction:
-      row;
+    flex-direction: row;
 
-    align-items:
-      center;
+    align-items: center;
 
-    justify-content:
-      space-between;
+    justify-content: space-between;
 
-    border-top:
-      1px solid rgba(148, 163, 184, 0.12);
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
   }
-
 }
-
 
 /* ============================================================
    44. MÓVIL
    ============================================================ */
 
 @media (max-width: 480px) {
-
   .camera-panel {
-    padding:
-      13px;
+    padding: 13px;
 
-    border-radius:
-      15px;
+    border-radius: 15px;
   }
-
 
   .camera-stage {
-    aspect-ratio:
-      4 / 3;
+    aspect-ratio: 4 / 3;
 
-    border-radius:
-      12px;
+    border-radius: 12px;
   }
-
 
   #camera-placeholder span {
-    font-size:
-      2.7rem;
+    font-size: 2.7rem;
   }
-
 
   #camera-placeholder p {
-    font-size:
-      0.75rem;
+    font-size: 0.75rem;
   }
-
 
   #camera-status {
-    font-size:
-      0.72rem;
+    font-size: 0.72rem;
   }
-
 
   #start-camera {
-    min-height:
-      46px;
+    min-height: 46px;
 
-    font-size:
-      0.69rem;
+    font-size: 0.69rem;
   }
-
 
   .prediction-panel {
-    min-height:
-      96px;
+    min-height: 96px;
 
-    gap:
-      13px;
+    gap: 13px;
 
-    border-radius:
-      13px;
+    border-radius: 13px;
   }
-
 
   .prediction-icon {
-    width:
-      52px;
+    width: 52px;
 
-    height:
-      52px;
+    height: 52px;
 
-    font-size:
-      1.9rem;
+    font-size: 1.9rem;
   }
-
 
   .prediction-eyebrow {
-    font-size:
-      0.54rem;
+    font-size: 0.54rem;
   }
-
 
   #prediction-name {
-    font-size:
-      0.95rem;
+    font-size: 0.95rem;
   }
-
 
   #prediction-action {
-    font-size:
-      0.72rem;
+    font-size: 0.72rem;
   }
-
 
   #prediction-confidence {
-    font-size:
-      1rem;
+    font-size: 1rem;
   }
-
 }
-
 
 /* ============================================================
    45. OPTIMIZACIÓN PARA DISPOSITIVOS DE BAJO RENDIMIENTO
    ============================================================ */
 
 html.low-power-device .camera-panel {
-  box-shadow:
-    0 15px 38px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 15px 38px rgba(0, 0, 0, 0.28);
 }
-
 
 html.low-power-device .prediction-panel {
-  box-shadow:
-    none;
+  box-shadow: none;
 }
-
 
 html.low-power-device .prediction-icon {
-  filter:
-    none;
+  filter: none;
 }
-
 
 /* ============================================================
    FIN PARTE 3
    CÁMARA + NEURAL VISION + RECONOCIMIENTO IA
    ============================================================ */
 
-
 /* ============================================================
    HANDVERSE
    PARTE 4
    ENTRENAMIENTO DE LA INTELIGENCIA ARTIFICIAL
    ============================================================ */
-
 
 /* ============================================================
    46. PANEL PRINCIPAL DE ENTRENAMIENTO
@@ -2206,13 +1753,13 @@ html.low-power-device .prediction-icon {
 
   padding: 30px;
 
-  background:
-    linear-gradient(145deg,
-      rgba(5, 15, 32, 0.97),
-      rgba(3, 9, 25, 0.98));
+  background: linear-gradient(
+    145deg,
+    rgba(5, 15, 32, 0.97),
+    rgba(3, 9, 25, 0.98)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.20);
+  border: 1px solid rgba(34, 211, 238, 0.2);
 
   border-radius: 22px;
 
@@ -2222,7 +1769,6 @@ html.low-power-device .prediction-icon {
 
   overflow: hidden;
 }
-
 
 /* ============================================================
    47. CABECERA DEL ENTRENAMIENTO
@@ -2236,7 +1782,6 @@ html.low-power-device .prediction-icon {
   text-align: center;
 }
 
-
 .training-eyebrow {
   margin: 0 0 8px;
 
@@ -2246,19 +1791,17 @@ html.low-power-device .prediction-icon {
 
   font-weight: 900;
 
-  letter-spacing: 0.20em;
+  letter-spacing: 0.2em;
 
   text-transform: uppercase;
 }
-
 
 .training-header h2 {
   margin: 0;
 
   color: #f8fafc;
 
-  font-size:
-    clamp(1.7rem, 4vw, 2.35rem);
+  font-size: clamp(1.7rem, 4vw, 2.35rem);
 
   font-weight: 950;
 
@@ -2267,8 +1810,7 @@ html.low-power-device .prediction-icon {
   letter-spacing: -0.025em;
 }
 
-
-.training-header>p:last-child {
+.training-header > p:last-child {
   margin: 10px 0 0;
 
   color: var(--text-secondary);
@@ -2277,7 +1819,6 @@ html.low-power-device .prediction-icon {
 
   line-height: 1.5;
 }
-
 
 /* ============================================================
    48. ESTADO GENERAL DEL ENTRENAMIENTO
@@ -2298,17 +1839,16 @@ html.low-power-device .prediction-icon {
 
   gap: 14px;
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 47, 73, 0.34),
-      rgba(7, 16, 35, 0.92));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 47, 73, 0.34),
+    rgba(7, 16, 35, 0.92)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.24);
+  border: 1px solid rgba(34, 211, 238, 0.24);
 
   border-radius: 14px;
 }
-
 
 .training-status-icon {
   width: 42px;
@@ -2322,15 +1862,12 @@ html.low-power-device .prediction-icon {
 
   font-size: 1.7rem;
 
-  background:
-    rgba(34, 211, 238, 0.07);
+  background: rgba(34, 211, 238, 0.07);
 
-  border:
-    1px solid rgba(34, 211, 238, 0.16);
+  border: 1px solid rgba(34, 211, 238, 0.16);
 
   border-radius: 12px;
 }
-
 
 #training-status {
   margin: 0;
@@ -2344,7 +1881,6 @@ html.low-power-device .prediction-icon {
   line-height: 1.5;
 }
 
-
 /* ============================================================
    49. GRID DE LOS TRES GESTOS
    ============================================================ */
@@ -2354,12 +1890,10 @@ html.low-power-device .prediction-icon {
 
   display: grid;
 
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 18px;
 }
-
 
 /* ============================================================
    50. TARJETA DE GESTO
@@ -2378,13 +1912,13 @@ html.low-power-device .prediction-icon {
 
   align-items: center;
 
-  background:
-    linear-gradient(160deg,
-      rgba(9, 24, 48, 0.95),
-      rgba(4, 12, 29, 0.98));
+  background: linear-gradient(
+    160deg,
+    rgba(9, 24, 48, 0.95),
+    rgba(4, 12, 29, 0.98)
+  );
 
-  border:
-    1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.14);
 
   border-radius: 17px;
 
@@ -2396,18 +1930,13 @@ html.low-power-device .prediction-icon {
     box-shadow 0.22s ease;
 }
 
-
 .gesture-training-card:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 
-  border-color:
-    rgba(34, 211, 238, 0.30);
+  border-color: rgba(34, 211, 238, 0.3);
 
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.24);
 }
-
 
 /* ============================================================
    51. LÍNEA SUPERIOR DE CADA GESTO
@@ -2426,13 +1955,10 @@ html.low-power-device .prediction-icon {
 
   border-radius: 999px;
 
-  background:
-    rgba(34, 211, 238, 0.45);
+  background: rgba(34, 211, 238, 0.45);
 
-  box-shadow:
-    0 0 12px rgba(34, 211, 238, 0.30);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
 }
-
 
 /* ============================================================
    52. COLORES POR GESTO
@@ -2441,50 +1967,38 @@ html.low-power-device .prediction-icon {
 /* ESCUDO */
 
 .gesture-training-card[data-gesture="open_hand"] {
-  border-color:
-    rgba(56, 189, 248, 0.23);
+  border-color: rgba(56, 189, 248, 0.23);
 }
-
 
 .gesture-training-card[data-gesture="open_hand"]::before {
   background: #38bdf8;
 
-  box-shadow:
-    0 0 13px rgba(56, 189, 248, 0.55);
+  box-shadow: 0 0 13px rgba(56, 189, 248, 0.55);
 }
-
 
 /* ATAQUE */
 
 .gesture-training-card[data-gesture="fist"] {
-  border-color:
-    rgba(248, 113, 113, 0.22);
+  border-color: rgba(248, 113, 113, 0.22);
 }
-
 
 .gesture-training-card[data-gesture="fist"]::before {
   background: #fb7185;
 
-  box-shadow:
-    0 0 13px rgba(251, 113, 133, 0.50);
+  box-shadow: 0 0 13px rgba(251, 113, 133, 0.5);
 }
-
 
 /* PODER */
 
 .gesture-training-card[data-gesture="thumbs_up"] {
-  border-color:
-    rgba(192, 132, 252, 0.24);
+  border-color: rgba(192, 132, 252, 0.24);
 }
-
 
 .gesture-training-card[data-gesture="thumbs_up"]::before {
   background: #c084fc;
 
-  box-shadow:
-    0 0 13px rgba(192, 132, 252, 0.55);
+  box-shadow: 0 0 13px rgba(192, 132, 252, 0.55);
 }
-
 
 /* ============================================================
    53. ICONO DEL GESTO
@@ -2502,17 +2016,16 @@ html.low-power-device .prediction-icon {
 
   font-size: 2.8rem;
 
-  background:
-    radial-gradient(circle,
-      rgba(34, 211, 238, 0.11),
-      rgba(34, 211, 238, 0.015));
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.11),
+    rgba(34, 211, 238, 0.015)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.14);
+  border: 1px solid rgba(34, 211, 238, 0.14);
 
   border-radius: 50%;
 }
-
 
 /* ============================================================
    54. NOMBRE DEL GESTO
@@ -2532,7 +2045,6 @@ html.low-power-device .prediction-icon {
   text-align: center;
 }
 
-
 /* ============================================================
    55. ACCIÓN: ATAQUE / ESCUDO / PODER
    ============================================================ */
@@ -2551,21 +2063,17 @@ html.low-power-device .prediction-icon {
   text-transform: uppercase;
 }
 
-
 .gesture-training-card[data-gesture="fist"] .gesture-action {
   color: #fda4af;
 }
-
 
 .gesture-training-card[data-gesture="open_hand"] .gesture-action {
   color: #7dd3fc;
 }
 
-
 .gesture-training-card[data-gesture="thumbs_up"] .gesture-action {
   color: #d8b4fe;
 }
-
 
 /* ============================================================
    56. ÁREA DE PROGRESO
@@ -2578,7 +2086,6 @@ html.low-power-device .prediction-icon {
 
   margin-bottom: 18px;
 }
-
 
 .progress-info {
   width: 100%;
@@ -2594,7 +2101,6 @@ html.low-power-device .prediction-icon {
   gap: 10px;
 }
 
-
 .progress-info span {
   color: #64748b;
 
@@ -2607,7 +2113,6 @@ html.low-power-device .prediction-icon {
   text-transform: uppercase;
 }
 
-
 .sample-count {
   color: #cbd5e1;
 
@@ -2615,10 +2120,8 @@ html.low-power-device .prediction-icon {
 
   font-weight: 850;
 
-  font-variant-numeric:
-    tabular-nums;
+  font-variant-numeric: tabular-nums;
 }
-
 
 /* ============================================================
    57. BARRA DE PROGRESO
@@ -2632,15 +2135,12 @@ html.low-power-device .prediction-icon {
 
   overflow: hidden;
 
-  background:
-    rgba(15, 23, 42, 0.96);
+  background: rgba(15, 23, 42, 0.96);
 
-  border:
-    1px solid rgba(148, 163, 184, 0.10);
+  border: 1px solid rgba(148, 163, 184, 0.1);
 
   border-radius: 999px;
 }
-
 
 .progress-fill {
   width: 0%;
@@ -2648,48 +2148,30 @@ html.low-power-device .prediction-icon {
 
   border-radius: inherit;
 
-  background:
-    linear-gradient(90deg,
-      #0891b2,
-      #22d3ee);
+  background: linear-gradient(90deg, #0891b2, #22d3ee);
 
-  box-shadow:
-    0 0 12px rgba(34, 211, 238, 0.40);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
 
-  transition:
-    width 0.22s ease;
+  transition: width 0.22s ease;
 }
-
 
 /* ESCUDO */
 
 .gesture-training-card[data-gesture="open_hand"] .progress-fill {
-  background:
-    linear-gradient(90deg,
-      #0284c7,
-      #38bdf8);
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
 }
-
 
 /* ATAQUE */
 
 .gesture-training-card[data-gesture="fist"] .progress-fill {
-  background:
-    linear-gradient(90deg,
-      #e11d48,
-      #fb7185);
+  background: linear-gradient(90deg, #e11d48, #fb7185);
 }
-
 
 /* PODER */
 
 .gesture-training-card[data-gesture="thumbs_up"] .progress-fill {
-  background:
-    linear-gradient(90deg,
-      #7e22ce,
-      #c084fc);
+  background: linear-gradient(90deg, #7e22ce, #c084fc);
 }
-
 
 /* ============================================================
    58. BOTÓN ENTRENAR GESTO
@@ -2700,18 +2182,17 @@ html.low-power-device .prediction-icon {
 
   min-height: 43px;
 
-  padding:
-    10px 14px;
+  padding: 10px 14px;
 
   color: #e2e8f0;
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 145, 178, 0.16),
-      rgba(37, 99, 235, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.16),
+    rgba(37, 99, 235, 0.15)
+  );
 
-  border:
-    1px solid rgba(34, 211, 238, 0.28);
+  border: 1px solid rgba(34, 211, 238, 0.28);
 
   border-radius: 10px;
 
@@ -2728,25 +2209,21 @@ html.low-power-device .prediction-icon {
     box-shadow var(--transition-fast);
 }
 
-
 .train-button:hover:not(:disabled) {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
   color: #ffffff;
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 145, 178, 0.32),
-      rgba(37, 99, 235, 0.30));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.32),
+    rgba(37, 99, 235, 0.3)
+  );
 
-  border-color:
-    rgba(103, 232, 249, 0.60);
+  border-color: rgba(103, 232, 249, 0.6);
 
-  box-shadow:
-    0 8px 20px rgba(34, 211, 238, 0.10);
+  box-shadow: 0 8px 20px rgba(34, 211, 238, 0.1);
 }
-
 
 .train-button:disabled {
   opacity: 0.42;
@@ -2758,35 +2235,27 @@ html.low-power-device .prediction-icon {
   box-shadow: none;
 }
 
-
 /* ============================================================
    59. GESTO COMPLETADO 30 / 30
    ============================================================ */
 
 .gesture-training-card.gesture-complete {
-  border-color:
-    rgba(74, 222, 128, 0.42);
+  border-color: rgba(74, 222, 128, 0.42);
 
   box-shadow:
     inset 0 0 28px rgba(34, 197, 94, 0.035),
     0 0 24px rgba(34, 197, 94, 0.05);
 }
 
-
 .gesture-training-card.gesture-complete::before {
-  background:
-    #4ade80;
+  background: #4ade80;
 
-  box-shadow:
-    0 0 15px rgba(74, 222, 128, 0.60);
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
 }
-
 
 .gesture-training-card.gesture-complete .sample-count {
-  color:
-    #86efac;
+  color: #86efac;
 }
-
 
 /* ============================================================
    60. ESTADO DEL DATASET
@@ -2805,13 +2274,13 @@ html.low-power-device .prediction-icon {
 
   gap: 16px;
 
-  background:
-    linear-gradient(135deg,
-      rgba(15, 23, 42, 0.92),
-      rgba(4, 12, 28, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.92),
+    rgba(4, 12, 28, 0.98)
+  );
 
-  border:
-    1px solid rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.16);
 
   border-radius: 15px;
 
@@ -2821,8 +2290,7 @@ html.low-power-device .prediction-icon {
     box-shadow 0.25s ease;
 }
 
-
-.dataset-ready>span {
+.dataset-ready > span {
   width: 48px;
   height: 48px;
 
@@ -2834,23 +2302,19 @@ html.low-power-device .prediction-icon {
 
   font-size: 1.8rem;
 
-  background:
-    rgba(34, 211, 238, 0.07);
+  background: rgba(34, 211, 238, 0.07);
 
-  border:
-    1px solid rgba(34, 211, 238, 0.14);
+  border: 1px solid rgba(34, 211, 238, 0.14);
 
   border-radius: 12px;
 }
 
-
-.dataset-ready>div,
+.dataset-ready > div,
 .dataset-ready-content {
   min-width: 0;
 
   flex: 1;
 }
-
 
 .dataset-ready strong {
   display: block;
@@ -2864,7 +2328,6 @@ html.low-power-device .prediction-icon {
   letter-spacing: 0.06em;
 }
 
-
 .dataset-ready p {
   margin: 5px 0 0;
 
@@ -2875,39 +2338,31 @@ html.low-power-device .prediction-icon {
   line-height: 1.45;
 }
 
-
 /* ============================================================
    61. DATASET COMPLETO
    ============================================================ */
 
 .dataset-ready.ready {
-  background:
-    linear-gradient(135deg,
-      rgba(5, 46, 36, 0.72),
-      rgba(4, 17, 30, 0.98));
+  background: linear-gradient(
+    135deg,
+    rgba(5, 46, 36, 0.72),
+    rgba(4, 17, 30, 0.98)
+  );
 
-  border-color:
-    rgba(74, 222, 128, 0.38);
+  border-color: rgba(74, 222, 128, 0.38);
 
-  box-shadow:
-    0 0 28px rgba(34, 197, 94, 0.055);
+  box-shadow: 0 0 28px rgba(34, 197, 94, 0.055);
 }
 
+.dataset-ready.ready > span {
+  background: rgba(34, 197, 94, 0.11);
 
-.dataset-ready.ready>span {
-  background:
-    rgba(34, 197, 94, 0.11);
-
-  border-color:
-    rgba(74, 222, 128, 0.30);
+  border-color: rgba(74, 222, 128, 0.3);
 }
-
 
 .dataset-ready.ready strong {
-  color:
-    #86efac;
+  color: #86efac;
 }
-
 
 /* ============================================================
    62. BOTÓN ENTRENAR MODELO DE IA
@@ -2920,35 +2375,23 @@ html.low-power-device .prediction-icon {
 
   margin-top: 15px;
 
-  padding:
-    12px 18px;
+  padding: 12px 18px;
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  background:
-    linear-gradient(135deg,
-      #0891b2,
-      #2563eb,
-      #7c3aed);
+  background: linear-gradient(135deg, #0891b2, #2563eb, #7c3aed);
 
-  border:
-    1px solid rgba(103, 232, 249, 0.54);
+  border: 1px solid rgba(103, 232, 249, 0.54);
 
-  border-radius:
-    11px;
+  border-radius: 11px;
 
-  font-size:
-    0.73rem;
+  font-size: 0.73rem;
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  letter-spacing:
-    0.075em;
+  letter-spacing: 0.075em;
 
-  box-shadow:
-    0 9px 26px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 9px 26px rgba(37, 99, 235, 0.18);
 
   transition:
     transform var(--transition-fast),
@@ -2956,194 +2399,133 @@ html.low-power-device .prediction-icon {
     filter var(--transition-fast);
 }
 
-
 .train-model-button:hover:not(:disabled) {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
-  box-shadow:
-    0 13px 34px rgba(37, 99, 235, 0.28);
+  box-shadow: 0 13px 34px rgba(37, 99, 235, 0.28);
 
-  filter:
-    brightness(1.08);
+  filter: brightness(1.08);
 }
-
 
 .train-model-button:active:not(:disabled) {
-  transform:
-    translateY(0);
+  transform: translateY(0);
 }
-
 
 .train-model-button:disabled {
-  opacity:
-    0.65;
+  opacity: 0.65;
 
-  cursor:
-    default;
+  cursor: default;
 
-  transform:
-    none;
+  transform: none;
 
-  filter:
-    saturate(0.75);
+  filter: saturate(0.75);
 }
-
 
 /* ============================================================
    63. ESTADO DEL ENTRENAMIENTO DEL MODELO
    ============================================================ */
 
 .model-training-status {
-  margin-top:
-    10px !important;
+  margin-top: 10px !important;
 
-  color:
-    var(--cyan-light) !important;
+  color: var(--cyan-light) !important;
 
-  font-size:
-    0.70rem !important;
+  font-size: 0.7rem !important;
 
-  font-weight:
-    700;
+  font-weight: 700;
 
-  line-height:
-    1.5;
+  line-height: 1.5;
 }
-
 
 /* ============================================================
    64. TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .training-grid {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    gap:
-      15px;
+    gap: 15px;
   }
-
 }
-
 
 /* ============================================================
    65. MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   .training-panel {
-    padding:
-      18px 14px;
+    padding: 18px 14px;
 
-    border-radius:
-      16px;
+    border-radius: 16px;
   }
-
 
   .training-header {
-    margin-bottom:
-      18px;
+    margin-bottom: 18px;
   }
-
 
   .training-header h2 {
-    font-size:
-      1.65rem;
+    font-size: 1.65rem;
   }
-
 
   .training-status-box {
-    min-height:
-      62px;
+    min-height: 62px;
 
-    padding:
-      13px 14px;
+    padding: 13px 14px;
 
-    gap:
-      11px;
+    gap: 11px;
 
-    border-radius:
-      12px;
+    border-radius: 12px;
   }
-
 
   .training-status-icon {
-    width:
-      38px;
+    width: 38px;
 
-    height:
-      38px;
+    height: 38px;
 
-    font-size:
-      1.45rem;
+    font-size: 1.45rem;
   }
-
 
   #training-status {
-    font-size:
-      0.72rem;
+    font-size: 0.72rem;
   }
-
 
   .gesture-training-card {
-    padding:
-      19px 15px;
+    padding: 19px 15px;
 
-    border-radius:
-      14px;
+    border-radius: 14px;
   }
-
 
   .gesture-training-icon {
-    width:
-      62px;
+    width: 62px;
 
-    height:
-      62px;
+    height: 62px;
 
-    font-size:
-      2.35rem;
+    font-size: 2.35rem;
   }
-
 
   .dataset-ready {
-    padding:
-      15px;
+    padding: 15px;
 
-    align-items:
-      flex-start;
+    align-items: flex-start;
 
-    border-radius:
-      13px;
+    border-radius: 13px;
   }
 
+  .dataset-ready > span {
+    width: 42px;
 
-  .dataset-ready>span {
-    width:
-      42px;
+    height: 42px;
 
-    height:
-      42px;
-
-    font-size:
-      1.55rem;
+    font-size: 1.55rem;
   }
-
 
   .train-model-button {
-    min-height:
-      46px;
+    min-height: 46px;
 
-    font-size:
-      0.68rem;
+    font-size: 0.68rem;
   }
-
 }
-
 
 /* ============================================================
    66. DISPOSITIVOS DE BAJO RENDIMIENTO
@@ -3152,28 +2534,22 @@ html.low-power-device .prediction-icon {
 html.low-power-device .gesture-training-card,
 html.low-power-device .training-panel,
 html.low-power-device .dataset-ready {
-  box-shadow:
-    none;
+  box-shadow: none;
 }
-
 
 html.low-power-device .gesture-training-card:hover {
-  transform:
-    none;
+  transform: none;
 }
-
 
 /* ============================================================
    FIN PARTE 4
    ENTRENAMIENTO DE LA INTELIGENCIA ARTIFICIAL
    ============================================================ */
 
-
 /* ============================================================
    PARTE 5
    ARENA DE BATALLA
    ============================================================ */
-
 
 /* ============================================================
    1. CONTENEDOR PRINCIPAL DE BATALLA
@@ -3184,345 +2560,245 @@ html.low-power-device .gesture-training-card:hover {
 
   width: min(1180px, calc(100% - 32px));
 
-  margin:
-    40px auto;
+  margin: 40px auto;
 
-  padding:
-    32px;
+  padding: 32px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border:
-    1px solid rgba(34, 211, 238, 0.22);
+  border: 1px solid rgba(34, 211, 238, 0.22);
 
-  border-radius:
-    26px;
+  border-radius: 26px;
 
-  background:
-    linear-gradient(145deg,
-      rgba(5, 14, 32, 0.96),
-      rgba(7, 10, 30, 0.97));
+  background: linear-gradient(
+    145deg,
+    rgba(5, 14, 32, 0.96),
+    rgba(7, 10, 30, 0.97)
+  );
 
   box-shadow:
     0 28px 80px rgba(0, 0, 0, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-  isolation:
-    isolate;
+  isolation: isolate;
 }
-
 
 /* Luz ambiental */
 
 .battle-section::before {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  width:
-    420px;
+  width: 420px;
 
-  height:
-    420px;
+  height: 420px;
 
-  top:
-    -220px;
+  top: -220px;
 
-  left:
-    -170px;
+  left: -170px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    radial-gradient(circle,
-      rgba(34, 211, 238, 0.14),
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.14),
+    transparent 68%
+  );
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  z-index:
-    -1;
+  z-index: -1;
 }
-
 
 /* Luz morada */
 
 .battle-section::after {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  width:
-    420px;
+  width: 420px;
 
-  height:
-    420px;
+  height: 420px;
 
-  right:
-    -180px;
+  right: -180px;
 
-  bottom:
-    -230px;
+  bottom: -230px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    radial-gradient(circle,
-      rgba(139, 92, 246, 0.14),
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.14),
+    transparent 68%
+  );
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  z-index:
-    -1;
+  z-index: -1;
 }
-
 
 /* ============================================================
    2. CABECERA DE BATALLA
    ============================================================ */
 
 .battle-header {
-  position:
-    relative;
+  position: relative;
 
-  z-index:
-    2;
+  z-index: 2;
 
-  text-align:
-    center;
+  text-align: center;
 
-  margin-bottom:
-    28px;
+  margin-bottom: 28px;
 }
-
 
 .battle-eyebrow {
-  display:
-    inline-block;
+  display: inline-block;
 
-  margin-bottom:
-    8px;
+  margin-bottom: 8px;
 
-  color:
-    #22d3ee;
+  color: #22d3ee;
 
-  font-size:
-    0.72rem;
+  font-size: 0.72rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.22em;
+  letter-spacing: 0.22em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 .battle-header h2 {
-  margin:
-    0;
+  margin: 0;
 
-  font-size:
-    clamp(2rem, 5vw, 3.4rem);
+  font-size: clamp(2rem, 5vw, 3.4rem);
 
-  line-height:
-    1;
+  line-height: 1;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    -0.04em;
+  letter-spacing: -0.04em;
 
-  color:
-    #f8fafc;
+  color: #f8fafc;
 
-  text-shadow:
-    0 0 30px rgba(34, 211, 238, 0.10);
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
 }
-
 
 #battle-message {
-  max-width:
-    760px;
+  max-width: 760px;
 
-  margin:
-    14px auto 0;
+  margin: 14px auto 0;
 
-  color:
-    #94a3b8;
+  color: #94a3b8;
 
-  font-size:
-    0.96rem;
+  font-size: 0.96rem;
 
-  line-height:
-    1.6;
+  line-height: 1.6;
 }
-
 
 /* ============================================================
    3. BATALLA BLOQUEADA
    ============================================================ */
 
 .battle-section.battle-locked {
-  opacity:
-    0.88;
+  opacity: 0.88;
 }
-
 
 .battle-section.battle-locked .battle-arena {
-  filter:
-    saturate(0.55);
+  filter: saturate(0.55);
 
-  opacity:
-    0.72;
+  opacity: 0.72;
 }
-
 
 /* ============================================================
    4. CUENTA REGRESIVA
    ============================================================ */
 
 .battle-countdown {
-  position:
-    relative;
+  position: relative;
 
-  display:
-    flex;
+  display: flex;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  align-items:
-    center;
+  align-items: center;
 
-  min-height:
-    0;
+  min-height: 0;
 
-  text-align:
-    center;
+  text-align: center;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  z-index:
-    20;
+  z-index: 20;
 }
 
-
 .battle-countdown-text {
-  display:
-    inline-flex;
+  display: inline-flex;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  align-items:
-    center;
+  align-items: center;
 
-  min-width:
-    0;
+  min-width: 0;
 
-  min-height:
-    0;
+  min-height: 0;
 
-  font-size:
-    clamp(3rem, 8vw, 6.5rem);
+  font-size: clamp(3rem, 8vw, 6.5rem);
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  letter-spacing:
-    -0.05em;
+  letter-spacing: -0.05em;
 
-  color:
-    #22d3ee;
+  color: #22d3ee;
 
   text-shadow:
     0 0 12px rgba(34, 211, 238, 0.75),
-    0 0 30px rgba(34, 211, 238, 0.50),
-    0 0 60px rgba(139, 92, 246, 0.30);
+    0 0 30px rgba(34, 211, 238, 0.5),
+    0 0 60px rgba(139, 92, 246, 0.3);
 }
-
-
-/* Cuando no tiene texto no ocupa espacio */
-
-.battle-countdown-text:empty {
-  display:
-    none;
-}
-
 
 /* ============================================================
    5. ARENA
    ============================================================ */
 
 .battle-arena {
-  position:
-    relative;
+  position: relative;
 
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  gap:
-    22px;
+  gap: 22px;
 
-  padding:
-    24px;
+  padding: 24px;
 
-  border:
-    1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.14);
 
-  border-radius:
-    22px;
+  border-radius: 22px;
 
-  background:
-    rgba(2, 8, 23, 0.56);
+  background: rgba(2, 8, 23, 0.56);
 
-  -webkit-backdrop-filter:
-    blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
-  backdrop-filter:
-    blur(14px);
+  backdrop-filter: blur(14px);
 }
-
 
 /* ============================================================
    6. HUD / JUGADOR VS IA
    ============================================================ */
 
 .battle-hud {
-  display:
-    grid;
+  display: grid;
 
-  grid-template-columns:
-    minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 
-  align-items:
-    center;
+  align-items: center;
 
-  gap:
-    20px;
+  gap: 20px;
 }
-
 
 /* ============================================================
    7. TARJETAS DE COMBATIENTES
@@ -3531,26 +2807,19 @@ html.low-power-device .gesture-training-card:hover {
 .player-battle-card,
 .ai-battle-card,
 .battle-player-card {
-  position:
-    relative;
+  position: relative;
 
-  min-width:
-    0;
+  min-width: 0;
 
-  padding:
-    22px;
+  padding: 22px;
 
-  border-radius:
-    20px;
+  border-radius: 20px;
 
-  background:
-    rgba(15, 23, 42, 0.72);
+  background: rgba(15, 23, 42, 0.72);
 
-  border:
-    1px solid rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
 
   transition:
     transform 180ms ease,
@@ -3558,24 +2827,19 @@ html.low-power-device .gesture-training-card:hover {
     box-shadow 180ms ease;
 }
 
-
 /* Jugador */
 
 .player-battle-card,
 .battle-player-card.player {
-  border-left:
-    3px solid #22d3ee;
+  border-left: 3px solid #22d3ee;
 }
-
 
 /* IA */
 
 .ai-battle-card,
 .battle-player-card.ai {
-  border-right:
-    3px solid #a855f7;
+  border-right: 3px solid #a855f7;
 }
-
 
 /* ============================================================
    8. NOMBRE DE COMBATIENTES
@@ -3584,25 +2848,18 @@ html.low-power-device .gesture-training-card:hover {
 .player-name,
 .ai-name,
 .battle-player-name {
-  margin:
-    0 0 8px;
+  margin: 0 0 8px;
 
-  font-size:
-    clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1rem, 2vw, 1.2rem);
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.02em;
+  letter-spacing: 0.02em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 
-  color:
-    #e2e8f0;
+  color: #e2e8f0;
 }
-
 
 /* ============================================================
    9. VIDA
@@ -3610,151 +2867,102 @@ html.low-power-device .gesture-training-card:hover {
 
 .health-label,
 .battle-health-label {
-  display:
-    flex;
+  display: flex;
 
-  justify-content:
-    space-between;
+  justify-content: space-between;
 
-  gap:
-    12px;
+  gap: 12px;
 
-  margin-bottom:
-    7px;
+  margin-bottom: 7px;
 
-  color:
-    #94a3b8;
+  color: #94a3b8;
 
-  font-size:
-    0.72rem;
+  font-size: 0.72rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.08em;
+  letter-spacing: 0.08em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 .health-bar,
 .battle-health-bar {
-  position:
-    relative;
+  position: relative;
 
-  width:
-    100%;
+  width: 100%;
 
-  height:
-    10px;
+  height: 10px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
-  background:
-    rgba(15, 23, 42, 0.95);
+  background: rgba(15, 23, 42, 0.95);
 
-  box-shadow:
-    inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
 }
-
 
 #player-health-bar,
 #ai-health-bar {
-  height:
-    100%;
+  height: 100%;
 
-  width:
-    100%;
+  width: 100%;
 
-  border-radius:
-    inherit;
+  border-radius: inherit;
 
-  transition:
-    width 420ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 420ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 
 /* Jugador */
 
 #player-health-bar {
-  background:
-    linear-gradient(90deg,
-      #0891b2,
-      #22d3ee,
-      #67e8f9);
+  background: linear-gradient(90deg, #0891b2, #22d3ee, #67e8f9);
 
-  box-shadow:
-    0 0 18px rgba(34, 211, 238, 0.34);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.34);
 }
-
 
 /* IA */
 
 #ai-health-bar {
-  background:
-    linear-gradient(90deg,
-      #7c3aed,
-      #a855f7,
-      #c084fc);
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #c084fc);
 
-  box-shadow:
-    0 0 18px rgba(168, 85, 247, 0.34);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.34);
 }
-
 
 #player-health-text,
 #ai-health-text {
-  font-variant-numeric:
-    tabular-nums;
+  font-variant-numeric: tabular-nums;
 }
-
 
 /* ============================================================
    10. PODER ESPECIAL
    ============================================================ */
 
 .power-status {
-  display:
-    inline-flex;
+  display: inline-flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  gap:
-    7px;
+  gap: 7px;
 
-  margin-top:
-    14px;
+  margin-top: 14px;
 
-  padding:
-    7px 12px;
+  padding: 7px 12px;
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
-  font-size:
-    0.69rem;
+  font-size: 0.69rem;
 
-  font-weight:
-    850;
+  font-weight: 850;
 
-  letter-spacing:
-    0.05em;
+  letter-spacing: 0.05em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 
   transition:
     opacity 180ms ease,
@@ -3762,36 +2970,25 @@ html.low-power-device .gesture-training-card:hover {
     background 180ms ease;
 }
 
-
 .power-available {
-  color:
-    #fde68a;
+  color: #fde68a;
 
-  border:
-    1px solid rgba(250, 204, 21, 0.30);
+  border: 1px solid rgba(250, 204, 21, 0.3);
 
-  background:
-    rgba(250, 204, 21, 0.08);
+  background: rgba(250, 204, 21, 0.08);
 
-  box-shadow:
-    0 0 18px rgba(250, 204, 21, 0.08);
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.08);
 }
-
 
 .power-exhausted {
-  color:
-    #64748b;
+  color: #64748b;
 
-  border:
-    1px solid rgba(100, 116, 139, 0.20);
+  border: 1px solid rgba(100, 116, 139, 0.2);
 
-  background:
-    rgba(51, 65, 85, 0.18);
+  background: rgba(51, 65, 85, 0.18);
 
-  opacity:
-    0.72;
+  opacity: 0.72;
 }
-
 
 /* ============================================================
    11. CENTRO: RONDA / VS
@@ -3799,201 +2996,139 @@ html.low-power-device .gesture-training-card:hover {
 
 .battle-center,
 .battle-vs {
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  align-items:
-    center;
+  align-items: center;
 
-  gap:
-    8px;
+  gap: 8px;
 
-  text-align:
-    center;
+  text-align: center;
 }
-
 
 .battle-vs {
-  min-width:
-    72px;
+  min-width: 72px;
 
-  color:
-    #cbd5e1;
+  color: #cbd5e1;
 
-  font-size:
-    1.25rem;
+  font-size: 1.25rem;
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  letter-spacing:
-    0.06em;
+  letter-spacing: 0.06em;
 
-  text-shadow:
-    0 0 18px rgba(255, 255, 255, 0.16);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.16);
 }
-
 
 /* ============================================================
    12. INDICADOR DE DAÑO
    ============================================================ */
 
 .damage-indicator {
-  position:
-    absolute;
+  position: absolute;
 
-  top:
-    12px;
+  top: 12px;
 
-  right:
-    16px;
+  right: 16px;
 
-  min-width:
-    42px;
+  min-width: 42px;
 
-  text-align:
-    center;
+  text-align: center;
 
-  color:
-    #fb7185;
+  color: #fb7185;
 
-  font-size:
-    1.1rem;
+  font-size: 1.1rem;
 
-  font-weight:
-    950;
+  font-weight: 950;
 
-  opacity:
-    0;
+  opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  text-shadow:
-    0 0 16px rgba(244, 63, 94, 0.55);
+  text-shadow: 0 0 16px rgba(244, 63, 94, 0.55);
 }
-
 
 /* ============================================================
    13. RESPONSIVE TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .battle-section {
-    width:
-      min(100% - 22px, 760px);
+    width: min(100% - 22px, 760px);
 
-    padding:
-      22px;
+    padding: 22px;
   }
-
 
   .battle-hud {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
-
 
   .battle-vs,
   .battle-center {
-    min-height:
-      42px;
+    min-height: 42px;
   }
-
 
   .battle-arena {
-    padding:
-      18px;
+    padding: 18px;
   }
-
 }
-
 
 /* ============================================================
    14. RESPONSIVE MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   .battle-section {
-    width:
-      calc(100% - 16px);
+    width: calc(100% - 16px);
 
-    margin:
-      24px auto;
+    margin: 24px auto;
 
-    padding:
-      16px;
+    padding: 16px;
 
-    border-radius:
-      20px;
+    border-radius: 20px;
   }
-
 
   .battle-header {
-    margin-bottom:
-      20px;
+    margin-bottom: 20px;
   }
-
 
   .battle-header h2 {
-    font-size:
-      clamp(1.75rem, 9vw, 2.4rem);
+    font-size: clamp(1.75rem, 9vw, 2.4rem);
   }
-
 
   #battle-message {
-    font-size:
-      0.86rem;
+    font-size: 0.86rem;
   }
-
 
   .battle-arena {
-    gap:
-      15px;
+    gap: 15px;
 
-    padding:
-      14px;
+    padding: 14px;
 
-    border-radius:
-      17px;
+    border-radius: 17px;
   }
-
 
   .player-battle-card,
   .ai-battle-card,
   .battle-player-card {
-    padding:
-      17px;
+    padding: 17px;
   }
-
 
   .power-status {
-    width:
-      100%;
+    width: 100%;
 
-    white-space:
-      normal;
+    white-space: normal;
 
-    text-align:
-      center;
+    text-align: center;
   }
-
 
   .battle-countdown-text {
-    font-size:
-      clamp(3rem, 19vw, 5rem);
+    font-size: clamp(3rem, 19vw, 5rem);
   }
-
 }
-
 
 /* ============================================================
    15. DISPOSITIVOS DE BAJO RENDIMIENTO
@@ -4001,91 +3136,70 @@ html.low-power-device .gesture-training-card:hover {
 
 html.low-power-device .battle-section::before,
 html.low-power-device .battle-section::after {
-  display:
-    none;
+  display: none;
 }
-
 
 html.low-power-device .battle-section,
 html.low-power-device .battle-arena {
-  -webkit-backdrop-filter:
-    none;
+  -webkit-backdrop-filter: none;
 
-  backdrop-filter:
-    none;
+  backdrop-filter: none;
 }
-
 
 /* ============================================================
    FIN PARTE 5
    ARENA DE BATALLA — ESTRUCTURA + HUD
    ============================================================ */
 
-
 /* ============================================================
    PARTE 6
    MOVIMIENTOS + DAÑO + IMPACTOS + PODER ESPECIAL
    ============================================================ */
-
 
 /* ============================================================
    1. ZONA DE MOVIMIENTOS
    ============================================================ */
 
 .battle-actions {
-  display:
-    grid;
+  display: grid;
 
-  grid-template-columns:
-    minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 
-  align-items:
-    stretch;
+  align-items: stretch;
 
-  gap:
-    18px;
+  gap: 18px;
 }
-
 
 /* ============================================================
    2. TARJETAS DE MOVIMIENTO
    ============================================================ */
 
 .battle-action-card {
-  position:
-    relative;
+  position: relative;
 
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  min-height:
-    170px;
+  min-height: 170px;
 
-  padding:
-    22px 18px;
+  padding: 22px 18px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border:
-    1px solid rgba(34, 211, 238, 0.18);
+  border: 1px solid rgba(34, 211, 238, 0.18);
 
-  border-radius:
-    20px;
+  border-radius: 20px;
 
-  background:
-    linear-gradient(145deg,
-      rgba(7, 18, 38, 0.92),
-      rgba(4, 11, 26, 0.96));
+  background: linear-gradient(
+    145deg,
+    rgba(7, 18, 38, 0.92),
+    rgba(4, 11, 26, 0.96)
+  );
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.025),
@@ -4097,188 +3211,136 @@ html.low-power-device .battle-arena {
     transform 0.25s ease;
 }
 
-
 .battle-action-card:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
-  border-color:
-    rgba(34, 211, 238, 0.34);
+  border-color: rgba(34, 211, 238, 0.34);
 
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.30),
+    0 20px 50px rgba(0, 0, 0, 0.3),
     0 0 22px rgba(34, 211, 238, 0.07);
 }
-
 
 /* ============================================================
    3. TÍTULO DE LA TARJETA
    ============================================================ */
 
-.battle-action-card>span {
-  margin-bottom:
-    14px;
+.battle-action-card > span {
+  margin-bottom: 14px;
 
-  font-size:
-    0.68rem;
+  font-size: 0.68rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.18em;
+  letter-spacing: 0.18em;
 
-  color:
-    #94a3b8;
+  color: #94a3b8;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    4. EMOJI DEL MOVIMIENTO
    ============================================================ */
 
-.battle-action-card>strong {
-  display:
-    flex;
+.battle-action-card > strong {
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  min-height:
-    68px;
+  min-height: 68px;
 
-  font-size:
-    clamp(2.8rem, 5vw, 4rem);
+  font-size: clamp(2.8rem, 5vw, 4rem);
 
-  line-height:
-    1;
+  line-height: 1;
 
-  filter:
-    drop-shadow(0 0 16px rgba(34, 211, 238, 0.18));
+  filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.18));
 
   transition:
     transform 0.25s ease,
     filter 0.25s ease;
 }
 
-
 /* ============================================================
    5. NOMBRE DEL MOVIMIENTO
    ============================================================ */
 
-.battle-action-card>p {
-  margin:
-    12px 0 0;
+.battle-action-card > p {
+  margin: 12px 0 0;
 
-  font-size:
-    0.86rem;
+  font-size: 0.86rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.08em;
+  letter-spacing: 0.08em;
 
-  color:
-    #e2e8f0;
+  color: #e2e8f0;
 
-  text-align:
-    center;
+  text-align: center;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    6. VS CENTRAL
    ============================================================ */
 
 .battle-action-versus {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  min-width:
-    48px;
+  min-width: 48px;
 
-  font-size:
-    1rem;
+  font-size: 1rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.12em;
+  letter-spacing: 0.12em;
 
-  color:
-    #64748b;
+  color: #64748b;
 
-  text-shadow:
-    0 0 14px rgba(148, 163, 184, 0.18);
+  text-shadow: 0 0 14px rgba(148, 163, 184, 0.18);
 }
-
 
 /* ============================================================
    7. RESULTADO DEL TURNO
    ============================================================ */
 
 .battle-result {
-  position:
-    relative;
+  position: relative;
 
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  min-height:
-    58px;
+  min-height: 58px;
 
-  padding:
-    14px 20px;
+  padding: 14px 20px;
 
-  border:
-    1px solid rgba(148, 163, 184, 0.13);
+  border: 1px solid rgba(148, 163, 184, 0.13);
 
-  border-radius:
-    16px;
+  border-radius: 16px;
 
-  background:
-    rgba(2, 8, 23, 0.72);
+  background: rgba(2, 8, 23, 0.72);
 
-  font-size:
-    clamp(0.82rem, 2vw, 1rem);
+  font-size: clamp(0.82rem, 2vw, 1rem);
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.055em;
+  letter-spacing: 0.055em;
 
-  line-height:
-    1.45;
+  line-height: 1.45;
 
-  color:
-    #cbd5e1;
+  color: #cbd5e1;
 
-  text-align:
-    center;
+  text-align: center;
 
   transition:
     border-color 0.25s ease,
@@ -4287,62 +3349,45 @@ html.low-power-device .battle-arena {
     box-shadow 0.25s ease;
 }
 
-
 /* ============================================================
    8. INDICADOR VISUAL DE DAÑO
    ============================================================ */
 
 .damage-indicator {
-  display:
-    block;
+  display: block;
 
-  min-height:
-    22px;
+  min-height: 22px;
 
-  margin-top:
-    4px;
+  margin-top: 4px;
 
-  margin-bottom:
-    2px;
+  margin-bottom: 2px;
 
-  font-size:
-    0.88rem;
+  font-size: 0.88rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.08em;
+  letter-spacing: 0.08em;
 
-  color:
-    #fb7185;
+  color: #fb7185;
 
-  opacity:
-    0;
+  opacity: 0;
 
-  transform:
-    translateY(8px) scale(0.86);
+  transform: translateY(8px) scale(0.86);
 
   transition:
     opacity 0.18s ease,
     transform 0.25s ease;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
-
 
 .damage-indicator.damage-visible {
-  opacity:
-    1;
+  opacity: 1;
 
-  transform:
-    translateY(0) scale(1);
+  transform: translateY(0) scale(1);
 
-  text-shadow:
-    0 0 14px rgba(251, 113, 133, 0.65);
+  text-shadow: 0 0 14px rgba(251, 113, 133, 0.65);
 }
-
 
 /* ============================================================
    9. TRANSICIÓN DE LAS BARRAS DE VIDA
@@ -4355,545 +3400,271 @@ html.low-power-device .battle-arena {
     transform 0.25s ease;
 }
 
-
 /* ============================================================
    10. IMPACTO — ESTUDIANTE
    ============================================================ */
 
 .battle-player.battle-hit-player {
-  animation:
-    handverse-player-hit 0.45s ease;
+  animation: handverse-player-hit 0.45s ease;
 }
-
 
 /* ============================================================
    11. IMPACTO — HANDVERSE IA
    ============================================================ */
 
 .battle-player.battle-hit-ai {
-  animation:
-    handverse-ai-hit 0.45s ease;
+  animation: handverse-ai-hit 0.45s ease;
 }
-
 
 /* ============================================================
    12. ANIMACIÓN DE IMPACTO DEL ESTUDIANTE
    ============================================================ */
 
 @keyframes handverse-player-hit {
-
   0% {
-    transform:
-      translateX(0) scale(1);
+    transform: translateX(0) scale(1);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 
   20% {
-    transform:
-      translateX(-8px) scale(0.98);
+    transform: translateX(-8px) scale(0.98);
 
-    filter:
-      brightness(1.45);
+    filter: brightness(1.45);
   }
 
   40% {
-    transform:
-      translateX(7px) scale(1.01);
+    transform: translateX(7px) scale(1.01);
   }
 
   60% {
-    transform:
-      translateX(-4px);
+    transform: translateX(-4px);
   }
 
   80% {
-    transform:
-      translateX(3px);
+    transform: translateX(3px);
   }
 
   100% {
-    transform:
-      translateX(0) scale(1);
+    transform: translateX(0) scale(1);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 }
-
 
 /* ============================================================
    13. ANIMACIÓN DE IMPACTO DE HANDVERSE IA
    ============================================================ */
 
 @keyframes handverse-ai-hit {
-
   0% {
-    transform:
-      translateX(0) scale(1);
+    transform: translateX(0) scale(1);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 
   20% {
-    transform:
-      translateX(8px) scale(0.98);
+    transform: translateX(8px) scale(0.98);
 
-    filter:
-      brightness(1.45);
+    filter: brightness(1.45);
   }
 
   40% {
-    transform:
-      translateX(-7px) scale(1.01);
+    transform: translateX(-7px) scale(1.01);
   }
 
   60% {
-    transform:
-      translateX(4px);
+    transform: translateX(4px);
   }
 
   80% {
-    transform:
-      translateX(-3px);
+    transform: translateX(-3px);
   }
 
   100% {
-    transform:
-      translateX(0) scale(1);
+    transform: translateX(0) scale(1);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 }
-
 
 /* ============================================================
    14. PODER ESPECIAL DEL ESTUDIANTE
    ============================================================ */
 
 .player-power-effect {
-  animation:
-    player-special-power 0.85s ease-out;
+  animation: player-special-power 0.85s ease-out;
 }
-
 
 /* ============================================================
    15. PODER ESPECIAL DE HANDVERSE IA
    ============================================================ */
 
 .ai-power-effect {
-  animation:
-    ai-special-power 0.85s ease-out;
+  animation: ai-special-power 0.85s ease-out;
 }
-
 
 /* ============================================================
    16. ANIMACIÓN PODER — ESTUDIANTE
    ============================================================ */
 
 @keyframes player-special-power {
-
   0% {
-    transform:
-      scale(1) translateY(0);
+    transform: scale(1) translateY(0);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 
   25% {
-    transform:
-      scale(1.12) translateY(-5px);
+    transform: scale(1.12) translateY(-5px);
 
-    filter:
-      brightness(1.8) drop-shadow(0 0 22px rgba(34, 211, 238, 0.8));
+    filter: brightness(1.8) drop-shadow(0 0 22px rgba(34, 211, 238, 0.8));
   }
 
   50% {
-    transform:
-      scale(1.18) translateY(-7px);
+    transform: scale(1.18) translateY(-7px);
 
-    filter:
-      brightness(2) drop-shadow(0 0 32px rgba(34, 211, 238, 0.95));
+    filter: brightness(2) drop-shadow(0 0 32px rgba(34, 211, 238, 0.95));
   }
 
   75% {
-    transform:
-      scale(1.08) translateY(-3px);
+    transform: scale(1.08) translateY(-3px);
 
-    filter:
-      brightness(1.5);
+    filter: brightness(1.5);
   }
 
   100% {
-    transform:
-      scale(1) translateY(0);
+    transform: scale(1) translateY(0);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 }
-
 
 /* ============================================================
    17. ANIMACIÓN PODER — HANDVERSE IA
    ============================================================ */
 
 @keyframes ai-special-power {
-
   0% {
-    transform:
-      scale(1) translateY(0);
+    transform: scale(1) translateY(0);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 
   25% {
-    transform:
-      scale(1.12) translateY(-5px);
+    transform: scale(1.12) translateY(-5px);
 
-    filter:
-      brightness(1.8) drop-shadow(0 0 22px rgba(168, 85, 247, 0.8));
+    filter: brightness(1.8) drop-shadow(0 0 22px rgba(168, 85, 247, 0.8));
   }
 
   50% {
-    transform:
-      scale(1.18) translateY(-7px);
+    transform: scale(1.18) translateY(-7px);
 
-    filter:
-      brightness(2) drop-shadow(0 0 32px rgba(168, 85, 247, 0.95));
+    filter: brightness(2) drop-shadow(0 0 32px rgba(168, 85, 247, 0.95));
   }
 
   75% {
-    transform:
-      scale(1.08) translateY(-3px);
+    transform: scale(1.08) translateY(-3px);
 
-    filter:
-      brightness(1.5);
+    filter: brightness(1.5);
   }
 
   100% {
-    transform:
-      scale(1) translateY(0);
+    transform: scale(1) translateY(0);
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 }
-
 
 /* ============================================================
    18. TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .battle-actions {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .battle-action-versus {
-    min-height:
-      30px;
+    min-height: 30px;
   }
 
   .battle-action-card {
-    min-height:
-      145px;
+    min-height: 145px;
   }
 }
-
 
 /* ============================================================
    19. MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   .battle-actions {
-    gap:
-      12px;
+    gap: 12px;
   }
 
   .battle-action-card {
-    min-height:
-      130px;
+    min-height: 130px;
 
-    padding:
-      18px 14px;
+    padding: 18px 14px;
   }
 
-  .battle-action-card>strong {
-    min-height:
-      56px;
+  .battle-action-card > strong {
+    min-height: 56px;
 
-    font-size:
-      2.8rem;
+    font-size: 2.8rem;
   }
 
   .battle-result {
-    padding:
-      12px 14px;
+    padding: 12px 14px;
   }
 }
-
 
 /* ============================================================
    20. DISPOSITIVOS DE MENOR POTENCIA
    ============================================================ */
 
 html.low-power-device .battle-action-card:hover {
-  transform:
-    none;
+  transform: none;
 }
-
 
 html.low-power-device .battle-player.battle-hit-player,
 html.low-power-device .battle-player.battle-hit-ai {
-  animation-duration:
-    0.25s;
+  animation-duration: 0.25s;
 }
-
 
 /* ============================================================
    FIN PARTE 6
    MOVIMIENTOS + DAÑO + IMPACTOS + PODER ESPECIAL
    ============================================================ */
 
-
 /* ============================================================
    PARTE 7
    CUENTA REGRESIVA + TEMPORIZADOR DE TURNO
    ============================================================ */
-
-
-/* ============================================================
-   1. CUENTA REGRESIVA GLOBAL
-   ============================================================ */
-
-.battle-countdown {
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9999;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  padding:
-    24px;
-
-  background:
-    rgba(2, 6, 23, 0.88);
-
-  color:
-    #22d3ee;
-
-  font-size:
-    clamp(5rem, 16vw, 11rem);
-
-  font-weight:
-    1000;
-
-  line-height:
-    1;
-
-  letter-spacing:
-    -0.04em;
-
-  text-align:
-    center;
-
-  text-shadow:
-    0 0 20px rgba(34, 211, 238, 0.80),
-    0 0 55px rgba(34, 211, 238, 0.45);
-
-  opacity:
-    0;
-
-  visibility:
-    hidden;
-
-  pointer-events:
-    none;
-
-  transform:
-    scale(0.9);
-
-  transition:
-    opacity 0.18s ease,
-    visibility 0.18s ease;
-}
-
-
-/* ============================================================
-   2. COUNTDOWN VISIBLE
-   ============================================================ */
-
-.battle-countdown.countdown-visible {
-  opacity:
-    1;
-
-  visibility:
-    visible;
-}
-
-
-/* ============================================================
-   3. ANIMACIÓN DEL 3, 2 Y 1
-   ============================================================ */
-
-.battle-countdown.countdown-pop {
-  animation:
-    handverse-countdown-pop 0.68s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-
-@keyframes handverse-countdown-pop {
-
-  0% {
-    opacity:
-      0;
-
-    transform:
-      scale(1.55);
-
-    filter:
-      brightness(2);
-  }
-
-  25% {
-    opacity:
-      1;
-  }
-
-  55% {
-    transform:
-      scale(0.92);
-  }
-
-  75% {
-    transform:
-      scale(1.05);
-  }
-
-  100% {
-    opacity:
-      1;
-
-    transform:
-      scale(1);
-
-    filter:
-      brightness(1);
-  }
-}
-
-
-/* ============================================================
-   4. MENSAJE ¡COMBATE!
-   ============================================================ */
-
-.battle-countdown.countdown-combat {
-  color:
-    #67e8f9;
-
-  font-size:
-    clamp(3rem, 10vw, 7rem);
-
-  letter-spacing:
-    0.02em;
-
-  text-shadow:
-    0 0 18px rgba(34, 211, 238, 0.95),
-    0 0 42px rgba(34, 211, 238, 0.70),
-    0 0 90px rgba(99, 102, 241, 0.45);
-
-  animation:
-    handverse-combat-start 0.68s ease-out;
-}
-
-
-@keyframes handverse-combat-start {
-
-  0% {
-    opacity:
-      0;
-
-    transform:
-      scale(0.65);
-
-    filter:
-      brightness(2);
-  }
-
-  40% {
-    opacity:
-      1;
-
-    transform:
-      scale(1.12);
-  }
-
-  70% {
-    transform:
-      scale(0.97);
-  }
-
-  100% {
-    transform:
-      scale(1);
-
-    filter:
-      brightness(1);
-  }
-}
-
 
 /* ============================================================
    5. TEMPORIZADOR DE TURNO
    ============================================================ */
 
 .turn-timer {
-  width:
-    112px;
+  width: 112px;
 
-  margin:
-    12px auto 4px;
+  margin: 12px auto 4px;
 
-  padding:
-    10px 12px;
+  padding: 10px 12px;
 
-  border:
-    1px solid rgba(34, 211, 238, 0.22);
+  border: 1px solid rgba(34, 211, 238, 0.22);
 
-  border-radius:
-    14px;
+  border-radius: 14px;
 
-  background:
-    rgba(3, 12, 28, 0.88);
+  background: rgba(3, 12, 28, 0.88);
 
   box-shadow:
     0 10px 28px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.025);
 
-  text-align:
-    center;
+  text-align: center;
 
   transition:
     border-color 0.25s ease,
@@ -4901,69 +3672,50 @@ html.low-power-device .battle-player.battle-hit-ai {
     background 0.25s ease;
 }
 
-
 /* ============================================================
    6. ETIQUETA TIEMPO
    ============================================================ */
 
 .turn-timer-label {
-  display:
-    block;
+  display: block;
 
-  margin-bottom:
-    3px;
+  margin-bottom: 3px;
 
-  font-size:
-    0.55rem;
+  font-size: 0.55rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.18em;
+  letter-spacing: 0.18em;
 
-  color:
-    #64748b;
+  color: #64748b;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    7. NÚMERO DEL TEMPORIZADOR
    ============================================================ */
 
 .turn-timer-number-row {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    baseline;
+  align-items: baseline;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  gap:
-    3px;
+  gap: 3px;
 }
 
-
 #turn-timer-value {
-  font-size:
-    1.7rem;
+  font-size: 1.7rem;
 
-  font-weight:
-    1000;
+  font-weight: 1000;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
-  text-shadow:
-    0 0 12px rgba(34, 211, 238, 0.35);
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.35);
 
   transition:
     color 0.2s ease,
@@ -4971,78 +3723,54 @@ html.low-power-device .battle-player.battle-hit-ai {
     transform 0.2s ease;
 }
 
-
 .turn-timer-unit {
-  font-size:
-    0.65rem;
+  font-size: 0.65rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  color:
-    #64748b;
+  color: #64748b;
 }
-
 
 /* ============================================================
    8. PISTA DEL TEMPORIZADOR
    ============================================================ */
 
 .turn-timer-track {
-  position:
-    relative;
+  position: relative;
 
-  width:
-    100%;
+  width: 100%;
 
-  height:
-    5px;
+  height: 5px;
 
-  margin-top:
-    8px;
+  margin-top: 8px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
-  background:
-    rgba(148, 163, 184, 0.14);
+  background: rgba(148, 163, 184, 0.14);
 }
-
 
 /* ============================================================
    9. BARRA DEL TEMPORIZADOR
    ============================================================ */
 
 .turn-timer-fill {
-  display:
-    block;
+  display: block;
 
-  width:
-    100%;
+  width: 100%;
 
-  height:
-    100%;
+  height: 100%;
 
-  border-radius:
-    inherit;
+  border-radius: inherit;
 
-  background:
-    linear-gradient(90deg,
-      #06b6d4,
-      #22d3ee,
-      #67e8f9);
+  background: linear-gradient(90deg, #06b6d4, #22d3ee, #67e8f9);
 
-  box-shadow:
-    0 0 10px rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.55);
 
-  transform:
-    scaleX(0);
+  transform: scaleX(0);
 
-  transform-origin:
-    left center;
+  transform-origin: left center;
 
   transition:
     transform 0.09s linear,
@@ -5050,293 +3778,215 @@ html.low-power-device .battle-player.battle-hit-ai {
     box-shadow 0.2s ease;
 }
 
-
 /* ============================================================
    10. ESTADO DE ADVERTENCIA — 2 SEGUNDOS
    ============================================================ */
 
 .turn-timer.turn-timer-warning {
-  border-color:
-    rgba(250, 204, 21, 0.48);
+  border-color: rgba(250, 204, 21, 0.48);
 
-  box-shadow:
-    0 0 20px rgba(250, 204, 21, 0.10);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.1);
 }
-
 
 .turn-timer-warning #turn-timer-value {
-  color:
-    #fde047;
+  color: #fde047;
 
-  text-shadow:
-    0 0 14px rgba(250, 204, 21, 0.55);
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.55);
 }
-
 
 .turn-timer-warning .turn-timer-fill {
-  background:
-    linear-gradient(90deg,
-      #f59e0b,
-      #facc15,
-      #fde047);
+  background: linear-gradient(90deg, #f59e0b, #facc15, #fde047);
 
-  box-shadow:
-    0 0 12px rgba(250, 204, 21, 0.65);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.65);
 }
-
 
 /* ============================================================
    11. ESTADO DE PELIGRO — ÚLTIMO SEGUNDO
    ============================================================ */
 
 .turn-timer.turn-timer-danger {
-  border-color:
-    rgba(244, 63, 94, 0.62);
+  border-color: rgba(244, 63, 94, 0.62);
 
-  background:
-    rgba(40, 5, 18, 0.86);
+  background: rgba(40, 5, 18, 0.86);
 
-  animation:
-    handverse-timer-danger 0.45s ease-in-out infinite alternate;
+  animation: handverse-timer-danger 0.45s ease-in-out infinite alternate;
 }
-
 
 .turn-timer-danger #turn-timer-value {
-  color:
-    #fb7185;
+  color: #fb7185;
 
-  text-shadow:
-    0 0 16px rgba(244, 63, 94, 0.75);
+  text-shadow: 0 0 16px rgba(244, 63, 94, 0.75);
 }
-
 
 .turn-timer-danger .turn-timer-fill {
-  background:
-    linear-gradient(90deg,
-      #e11d48,
-      #f43f5e,
-      #fb7185);
+  background: linear-gradient(90deg, #e11d48, #f43f5e, #fb7185);
 
-  box-shadow:
-    0 0 14px rgba(244, 63, 94, 0.75);
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.75);
 }
 
-
 @keyframes handverse-timer-danger {
-
   from {
-    transform:
-      scale(1);
+    transform: scale(1);
   }
 
   to {
-    transform:
-      scale(1.04);
+    transform: scale(1.04);
 
-    box-shadow:
-      0 0 28px rgba(244, 63, 94, 0.25);
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.25);
   }
 }
-
 
 /* ============================================================
    12. TEMPORIZADOR PAUSADO
    ============================================================ */
 
 .turn-timer.turn-timer-paused {
-  border-color:
-    rgba(100, 116, 139, 0.18);
+  border-color: rgba(100, 116, 139, 0.18);
 
-  background:
-    rgba(5, 12, 25, 0.72);
+  background: rgba(5, 12, 25, 0.72);
 }
-
 
 .turn-timer-paused #turn-timer-value {
-  color:
-    #64748b;
+  color: #64748b;
 
-  text-shadow:
-    none;
+  text-shadow: none;
 }
-
 
 .turn-timer-paused .turn-timer-fill {
-  background:
-    #334155;
+  background: #334155;
 
-  box-shadow:
-    none;
+  box-shadow: none;
 }
-
 
 /* ============================================================
    13. TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .turn-timer {
-    width:
-      102px;
+    width: 102px;
   }
 
   #turn-timer-value {
-    font-size:
-      1.55rem;
+    font-size: 1.55rem;
   }
 }
-
 
 /* ============================================================
    14. MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   .battle-countdown {
-    padding:
-      18px;
+    padding: 18px;
 
-    font-size:
-      clamp(4.5rem, 25vw, 8rem);
+    font-size: clamp(4.5rem, 25vw, 8rem);
   }
 
   .battle-countdown.countdown-combat {
-    font-size:
-      clamp(2.4rem, 13vw, 4.5rem);
+    font-size: clamp(2.4rem, 13vw, 4.5rem);
   }
 
   .turn-timer {
-    width:
-      96px;
+    width: 96px;
 
-    padding:
-      8px 10px;
+    padding: 8px 10px;
   }
 
   #turn-timer-value {
-    font-size:
-      1.4rem;
+    font-size: 1.4rem;
   }
 }
-
 
 /* ============================================================
    15. DISPOSITIVOS DE MENOR POTENCIA
    ============================================================ */
 
 html.low-power-device .battle-countdown {
-  text-shadow:
-    0 0 20px rgba(34, 211, 238, 0.50);
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
 }
-
 
 html.low-power-device .turn-timer-danger {
-  animation:
-    none;
+  animation: none;
 }
-
 
 /* ============================================================
    FIN PARTE 7
    CUENTA REGRESIVA + TEMPORIZADOR DE TURNO
    ============================================================ */
 
-
 /* ============================================================
    PARTE 8
    FINAL DE BATALLA + GANADOR + NUEVA PARTIDA
    ============================================================ */
-
 
 /* ============================================================
    1. ESTADO GENERAL DE BATALLA FINALIZADA
    ============================================================ */
 
 .battle-section.battle-finished {
-  position:
-    relative;
+  position: relative;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border-color:
-    rgba(34, 211, 238, 0.42);
+  border-color: rgba(34, 211, 238, 0.42);
 
   box-shadow:
     0 0 0 1px rgba(34, 211, 238, 0.06),
-    0 25px 70px rgba(0, 0, 0, 0.40),
+    0 25px 70px rgba(0, 0, 0, 0.4),
     0 0 55px rgba(34, 211, 238, 0.08);
 }
-
 
 /* ============================================================
    2. RESPLANDOR DEL FINAL
    ============================================================ */
 
 .battle-section.battle-finished::before {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    -35%;
+  inset: -35%;
 
-  z-index:
-    0;
+  z-index: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  background:
-    radial-gradient(circle at center,
-      rgba(34, 211, 238, 0.13),
-      transparent 42%);
+  background: radial-gradient(
+    circle at center,
+    rgba(34, 211, 238, 0.13),
+    transparent 42%
+  );
 
-  animation:
-    handverse-final-glow 3s ease-in-out infinite alternate;
+  animation: handverse-final-glow 3s ease-in-out infinite alternate;
 }
 
+.battle-section.battle-finished > * {
+  position: relative;
 
-.battle-section.battle-finished>* {
-  position:
-    relative;
-
-  z-index:
-    1;
+  z-index: 1;
 }
-
 
 @keyframes handverse-final-glow {
-
   from {
-    opacity:
-      0.45;
+    opacity: 0.45;
 
-    transform:
-      scale(0.92);
+    transform: scale(0.92);
   }
 
   to {
-    opacity:
-      1;
+    opacity: 1;
 
-    transform:
-      scale(1.08);
+    transform: scale(1.08);
   }
 }
-
 
 /* ============================================================
    3. JUGADOR GANADOR
    ============================================================ */
 
 .battle-section.battle-winner-player {
-  border-color:
-    rgba(34, 211, 238, 0.58);
+  border-color: rgba(34, 211, 238, 0.58);
 
   box-shadow:
     0 0 0 1px rgba(34, 211, 238, 0.08),
@@ -5344,22 +3994,20 @@ html.low-power-device .turn-timer-danger {
     0 0 65px rgba(34, 211, 238, 0.13);
 }
 
-
 .battle-section.battle-winner-player::before {
-  background:
-    radial-gradient(circle at 35% 30%,
-      rgba(34, 211, 238, 0.18),
-      transparent 42%);
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgba(34, 211, 238, 0.18),
+    transparent 42%
+  );
 }
-
 
 /* ============================================================
    4. IA GANADORA
    ============================================================ */
 
 .battle-section.battle-winner-ai {
-  border-color:
-    rgba(168, 85, 247, 0.58);
+  border-color: rgba(168, 85, 247, 0.58);
 
   box-shadow:
     0 0 0 1px rgba(168, 85, 247, 0.08),
@@ -5367,123 +4015,93 @@ html.low-power-device .turn-timer-danger {
     0 0 65px rgba(168, 85, 247, 0.14);
 }
 
-
 .battle-section.battle-winner-ai::before {
-  background:
-    radial-gradient(circle at 65% 30%,
-      rgba(168, 85, 247, 0.20),
-      transparent 42%);
+  background: radial-gradient(
+    circle at 65% 30%,
+    rgba(168, 85, 247, 0.2),
+    transparent 42%
+  );
 }
-
 
 /* ============================================================
    5. RESULTADO FINAL
    ============================================================ */
 
 .battle-finished .battle-result {
-  border-color:
-    rgba(34, 211, 238, 0.30);
+  border-color: rgba(34, 211, 238, 0.3);
 
-  background:
-    linear-gradient(135deg,
-      rgba(8, 47, 73, 0.36),
-      rgba(30, 27, 75, 0.38));
+  background: linear-gradient(
+    135deg,
+    rgba(8, 47, 73, 0.36),
+    rgba(30, 27, 75, 0.38)
+  );
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
     0 14px 32px rgba(0, 0, 0, 0.22);
 
-  font-size:
-    clamp(0.9rem, 2vw, 1.2rem);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
 
-  animation:
-    handverse-result-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: handverse-result-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 .battle-winner-player .battle-result {
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
-  border-color:
-    rgba(34, 211, 238, 0.40);
+  border-color: rgba(34, 211, 238, 0.4);
 }
-
 
 .battle-winner-ai .battle-result {
-  color:
-    #c084fc;
+  color: #c084fc;
 
-  border-color:
-    rgba(168, 85, 247, 0.42);
+  border-color: rgba(168, 85, 247, 0.42);
 }
 
-
 @keyframes handverse-result-enter {
-
   from {
-    opacity:
-      0;
+    opacity: 0;
 
-    transform:
-      translateY(18px) scale(0.96);
+    transform: translateY(18px) scale(0.96);
   }
 
   to {
-    opacity:
-      1;
+    opacity: 1;
 
-    transform:
-      translateY(0) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
-
 
 /* ============================================================
    6. IDENTIDAD DEL GANADOR
    ============================================================ */
 
 .battle-winner-identity {
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  gap:
-    5px;
+  gap: 5px;
 
-  width:
-    min(100%, 680px);
+  width: min(100%, 680px);
 
-  margin:
-    22px auto 0;
+  margin: 22px auto 0;
 
-  padding:
-    16px 20px;
+  padding: 16px 20px;
 
-  border:
-    1px solid rgba(34, 211, 238, 0.20);
+  border: 1px solid rgba(34, 211, 238, 0.2);
 
-  border-radius:
-    16px;
+  border-radius: 16px;
 
-  background:
-    rgba(2, 8, 23, 0.68);
+  background: rgba(2, 8, 23, 0.68);
 
-  text-align:
-    center;
+  text-align: center;
 
-  animation:
-    handverse-winner-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: handverse-winner-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 /* Cuando todavía no existe un ganador,
    queda visualmente vacío. */
@@ -5497,221 +4115,157 @@ html.low-power-device .turn-timer-danger {
 }
 
 .battle-winner-identity:has(.battle-winner-name:not(:empty)) {
-  display: block;
+  display: flex;
 }
 
-
 @keyframes handverse-winner-enter {
-
   0% {
-    opacity:
-      0;
+    opacity: 0;
 
-    transform:
-      translateY(18px) scale(0.94);
+    transform: translateY(18px) scale(0.94);
   }
 
   100% {
-    opacity:
-      1;
+    opacity: 1;
 
-    transform:
-      translateY(0) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
-
 
 /* ============================================================
    7. NOMBRE DEL GANADOR
    ============================================================ */
 
 .battle-winner-name {
-  display:
-    block;
+  display: block;
 
-  font-size:
-    clamp(1rem, 2vw, 1.35rem);
+  font-size: clamp(1rem, 2vw, 1.35rem);
 
-  font-weight:
-    1000;
+  font-weight: 1000;
 
-  letter-spacing:
-    0.04em;
+  letter-spacing: 0.04em;
 
-  color:
-    #f8fafc;
+  color: #f8fafc;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    8. INSTITUCIÓN DEL GANADOR
    ============================================================ */
 
 .battle-winner-institution {
-  display:
-    block;
+  display: block;
 
-  font-size:
-    0.78rem;
+  font-size: 0.78rem;
 
-  font-weight:
-    700;
+  font-weight: 700;
 
-  letter-spacing:
-    0.04em;
+  letter-spacing: 0.04em;
 
-  color:
-    #94a3b8;
+  color: #94a3b8;
 }
-
 
 /* ============================================================
    9. COLOR DEL GANADOR JUGADOR
    ============================================================ */
 
 .battle-winner-player .battle-winner-identity {
-  border-color:
-    rgba(34, 211, 238, 0.34);
+  border-color: rgba(34, 211, 238, 0.34);
 
-  box-shadow:
-    0 0 24px rgba(34, 211, 238, 0.08);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.08);
 }
-
 
 .battle-winner-player .battle-winner-name {
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
-  text-shadow:
-    0 0 14px rgba(34, 211, 238, 0.35);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
 }
-
 
 /* ============================================================
    10. COLOR DEL GANADOR IA
    ============================================================ */
 
 .battle-winner-ai .battle-winner-identity {
-  border-color:
-    rgba(168, 85, 247, 0.34);
+  border-color: rgba(168, 85, 247, 0.34);
 
-  box-shadow:
-    0 0 24px rgba(168, 85, 247, 0.10);
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.1);
 }
-
 
 .battle-winner-ai .battle-winner-name {
-  color:
-    #c084fc;
+  color: #c084fc;
 
-  text-shadow:
-    0 0 14px rgba(168, 85, 247, 0.38);
+  text-shadow: 0 0 14px rgba(168, 85, 247, 0.38);
 }
-
 
 /* ============================================================
    11. CONTENEDOR DE BOTONES FINALES
    ============================================================ */
 
 .new-battle-container {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  flex-wrap:
-    wrap;
+  flex-wrap: wrap;
 
-  gap:
-    14px;
+  gap: 14px;
 
-  width:
-    100%;
+  width: 100%;
 
-  margin-top:
-    22px;
+  margin-top: 22px;
 
-  animation:
-    handverse-buttons-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: handverse-buttons-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 .new-battle-container[hidden] {
-  display:
-    none !important;
+  display: none !important;
 }
 
-
 @keyframes handverse-buttons-enter {
-
   from {
-    opacity:
-      0;
+    opacity: 0;
 
-    transform:
-      translateY(20px);
+    transform: translateY(20px);
   }
 
   to {
-    opacity:
-      1;
+    opacity: 1;
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
-
 
 /* ============================================================
    12. BOTÓN GENERAR OTRA PARTIDA
    ============================================================ */
 
 .new-battle-button {
-  min-width:
-    260px;
+  min-width: 260px;
 
-  min-height:
-    54px;
+  min-height: 54px;
 
-  padding:
-    14px 24px;
+  padding: 14px 24px;
 
-  border:
-    1px solid rgba(103, 232, 249, 0.50);
+  border: 1px solid rgba(103, 232, 249, 0.5);
 
-  border-radius:
-    14px;
+  border-radius: 14px;
 
-  background:
-    linear-gradient(135deg,
-      #0891b2,
-      #2563eb 52%,
-      #7c3aed);
+  background: linear-gradient(135deg, #0891b2, #2563eb 52%, #7c3aed);
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  font:
-    inherit;
+  font: inherit;
 
-  font-size:
-    0.84rem;
+  font-size: 0.84rem;
 
-  font-weight:
-    1000;
+  font-weight: 1000;
 
-  letter-spacing:
-    0.05em;
+  letter-spacing: 0.05em;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
   box-shadow:
     0 12px 30px rgba(37, 99, 235, 0.18),
@@ -5723,69 +4277,50 @@ html.low-power-device .turn-timer-danger {
     filter 0.2s ease;
 }
 
-
 .new-battle-button:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 
-  filter:
-    brightness(1.10);
+  filter: brightness(1.1);
 
   box-shadow:
     0 17px 38px rgba(37, 99, 235, 0.28),
     0 0 22px rgba(34, 211, 238, 0.16);
 }
 
-
 .new-battle-button:active {
-  transform:
-    translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
-
 
 /* ============================================================
    13. BOTÓN NUEVO ESTUDIANTE
    ============================================================ */
 
 .new-student-button {
-  min-width:
-    220px;
+  min-width: 220px;
 
-  min-height:
-    54px;
+  min-height: 54px;
 
-  padding:
-    14px 22px;
+  padding: 14px 22px;
 
-  border:
-    1px solid rgba(34, 211, 238, 0.38);
+  border: 1px solid rgba(34, 211, 238, 0.38);
 
-  border-radius:
-    14px;
+  border-radius: 14px;
 
-  background:
-    rgba(5, 15, 35, 0.88);
+  background: rgba(5, 15, 35, 0.88);
 
-  color:
-    #e2e8f0;
+  color: #e2e8f0;
 
-  font:
-    inherit;
+  font: inherit;
 
-  font-size:
-    0.84rem;
+  font-size: 0.84rem;
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  letter-spacing:
-    0.05em;
+  letter-spacing: 0.05em;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
   transition:
     transform 0.2s ease,
@@ -5795,31 +4330,23 @@ html.low-power-device .turn-timer-danger {
     box-shadow 0.2s ease;
 }
 
-
 .new-student-button:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 
-  border-color:
-    rgba(34, 211, 238, 0.70);
+  border-color: rgba(34, 211, 238, 0.7);
 
-  background:
-    rgba(8, 47, 73, 0.50);
+  background: rgba(8, 47, 73, 0.5);
 
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
   box-shadow:
-    0 12px 26px rgba(0, 0, 0, 0.20),
-    0 0 18px rgba(34, 211, 238, 0.10);
+    0 12px 26px rgba(0, 0, 0, 0.2),
+    0 0 18px rgba(34, 211, 238, 0.1);
 }
-
 
 .new-student-button:active {
-  transform:
-    translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
-
 
 /* ============================================================
    14. ACCESIBILIDAD DE BOTONES
@@ -5827,126 +4354,96 @@ html.low-power-device .turn-timer-danger {
 
 .new-battle-button:focus-visible,
 .new-student-button:focus-visible {
-  outline:
-    3px solid rgba(103, 232, 249, 0.38);
+  outline: 3px solid rgba(103, 232, 249, 0.38);
 
-  outline-offset:
-    4px;
+  outline-offset: 4px;
 }
-
 
 /* ============================================================
    15. EFECTO VISUAL DEL HUD GANADOR
    ============================================================ */
 
 .battle-winner-player .battle-player:not(.battle-ai) {
-  border-color:
-    rgba(34, 211, 238, 0.50);
+  border-color: rgba(34, 211, 238, 0.5);
 
-  box-shadow:
-    0 0 28px rgba(34, 211, 238, 0.12);
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.12);
 }
-
 
 .battle-winner-ai .battle-ai {
-  border-color:
-    rgba(168, 85, 247, 0.52);
+  border-color: rgba(168, 85, 247, 0.52);
 
-  box-shadow:
-    0 0 28px rgba(168, 85, 247, 0.14);
+  box-shadow: 0 0 28px rgba(168, 85, 247, 0.14);
 }
-
 
 /* ============================================================
    16. TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .new-battle-button {
-    min-width:
-      230px;
+    min-width: 230px;
   }
 
   .new-student-button {
-    min-width:
-      200px;
+    min-width: 200px;
   }
 }
-
 
 /* ============================================================
    17. MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   .battle-winner-identity {
-    padding:
-      14px 12px;
+    padding: 14px 12px;
   }
 
   .new-battle-container {
-    flex-direction:
-      column;
+    flex-direction: column;
 
-    gap:
-      10px;
+    gap: 10px;
 
-    margin-top:
-      18px;
+    margin-top: 18px;
   }
 
   .new-battle-button,
   .new-student-button {
-    width:
-      100%;
+    width: 100%;
 
-    min-width:
-      0;
+    min-width: 0;
 
-    min-height:
-      52px;
+    min-height: 52px;
   }
 }
-
 
 /* ============================================================
    18. DISPOSITIVOS DE MENOR POTENCIA
    ============================================================ */
 
 html.low-power-device .battle-section.battle-finished::before {
-  animation:
-    none;
+  animation: none;
 }
-
 
 html.low-power-device .battle-finished .battle-result,
 html.low-power-device .battle-winner-identity,
 html.low-power-device .new-battle-container {
-  animation:
-    none;
+  animation: none;
 }
-
 
 html.low-power-device .new-battle-button:hover,
 html.low-power-device .new-student-button:hover {
-  transform:
-    none;
+  transform: none;
 }
-
 
 /* ============================================================
    FIN PARTE 8
    FINAL DE BATALLA + GANADOR + NUEVA PARTIDA
    ============================================================ */
 
-
 /* ============================================================
    PARTE 9
    RESPONSIVE GENERAL + OPTIMIZACIÓN FINAL
    ============================================================ */
-
 
 /* ============================================================
    1. PROTECCIÓN GENERAL CONTRA DESBORDAMIENTOS
@@ -5954,463 +4451,326 @@ html.low-power-device .new-student-button:hover {
 
 html,
 body {
-  width:
-    100%;
+  width: 100%;
 
-  max-width:
-    100%;
+  max-width: 100%;
 
-  overflow-x:
-    hidden;
+  overflow-x: hidden;
 }
-
 
 img,
 video,
 canvas {
-  max-width:
-    100%;
+  max-width: 100%;
 }
-
 
 button,
 input {
-  max-width:
-    100%;
+  max-width: 100%;
 }
-
 
 /* ============================================================
    2. TABLETS Y LAPTOPS PEQUEÑAS
    ============================================================ */
 
 @media (max-width: 1200px) {
-
   .battle-section,
   .training-section,
   .vision-section {
-    width:
-      calc(100% - 32px);
+    width: calc(100% - 32px);
 
-    margin-left:
-      auto;
+    margin-left: auto;
 
-    margin-right:
-      auto;
+    margin-right: auto;
   }
 
   .battle-arena {
-    padding:
-      20px;
+    padding: 20px;
   }
 
   .battle-hud {
-    gap:
-      16px;
+    gap: 16px;
   }
 
   .battle-player {
-    min-width:
-      0;
+    min-width: 0;
   }
 }
-
 
 /* ============================================================
    3. TABLET
    ============================================================ */
 
 @media (max-width: 900px) {
-
   .player-registration-card {
-    width:
-      min(92vw, 620px);
+    width: min(92vw, 620px);
   }
-
 
   .training-grid {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
-
 
   .battle-hud {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
-
 
   .battle-player,
   .battle-ai {
-    width:
-      100%;
+    width: 100%;
   }
-
 
   .battle-vs {
-    margin:
-      4px 0;
+    margin: 4px 0;
   }
-
 
   .battle-actions {
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
-    gap:
-      14px;
+    gap: 14px;
   }
-
 
   .battle-arena {
-    padding:
-      18px;
+    padding: 18px;
   }
-
 
   .battle-countdown-text {
-    font-size:
-      clamp(3rem, 12vw, 6rem);
+    font-size: clamp(3rem, 12vw, 6rem);
   }
 }
-
 
 /* ============================================================
    4. MÓVIL
    ============================================================ */
 
 @media (max-width: 600px) {
-
   body {
-    font-size:
-      14px;
+    font-size: 14px;
   }
-
 
   .player-registration-screen {
-    padding:
-      18px 12px;
+    padding: 18px 12px;
   }
-
 
   .player-registration-card {
-    width:
-      100%;
+    width: 100%;
 
-    padding:
-      24px 18px;
+    padding: 24px 18px;
 
-    border-radius:
-      20px;
+    border-radius: 20px;
   }
-
 
   .player-registration-card h1 {
-    font-size:
-      clamp(2rem, 10vw, 3rem);
+    font-size: clamp(2rem, 10vw, 3rem);
   }
-
 
   .player-registration-field input {
-    min-height:
-      50px;
+    min-height: 50px;
 
-    font-size:
-      16px;
+    font-size: 16px;
   }
-
 
   .player-registration-submit {
-    min-height:
-      52px;
+    min-height: 52px;
   }
-
 
   .gesture-legend {
-    flex-direction:
-      column;
+    flex-direction: column;
 
-    align-items:
-      stretch;
+    align-items: stretch;
 
-    width:
-      100%;
+    width: 100%;
   }
 
-
-  .gesture-legend>* {
-    width:
-      100%;
+  .gesture-legend > * {
+    width: 100%;
   }
-
 
   .vision-section,
   .training-section,
   .battle-section {
-    width:
-      calc(100% - 20px);
+    width: calc(100% - 20px);
 
-    margin-left:
-      auto;
+    margin-left: auto;
 
-    margin-right:
-      auto;
+    margin-right: auto;
   }
-
 
   .vision-container {
-    padding:
-      14px;
+    padding: 14px;
   }
-
 
   .camera-container {
-    border-radius:
-      16px;
+    border-radius: 16px;
   }
-
 
   .prediction-panel {
-    padding:
-      16px;
+    padding: 16px;
   }
-
 
   .training-grid {
-    gap:
-      12px;
+    gap: 12px;
   }
-
 
   .gesture-training-card {
-    padding:
-      18px 14px;
+    padding: 18px 14px;
   }
-
 
   .battle-section {
-    border-radius:
-      20px;
+    border-radius: 20px;
   }
-
 
   .battle-arena {
-    padding:
-      14px;
+    padding: 14px;
   }
-
 
   .battle-header {
-    padding-left:
-      12px;
+    padding-left: 12px;
 
-    padding-right:
-      12px;
+    padding-right: 12px;
   }
-
 
   .battle-header h2 {
-    font-size:
-      clamp(1.5rem, 8vw, 2.3rem);
+    font-size: clamp(1.5rem, 8vw, 2.3rem);
   }
-
 
   .battle-hud {
-    gap:
-      12px;
+    gap: 12px;
   }
-
 
   .battle-player {
-    padding:
-      14px;
+    padding: 14px;
   }
-
 
   .battle-actions {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    gap:
-      12px;
+    gap: 12px;
   }
-
 
   .battle-action-card {
-    min-height:
-      120px;
+    min-height: 120px;
   }
-
 
   .battle-countdown {
-    padding:
-      16px;
+    padding: 16px;
   }
-
 
   .battle-countdown-text {
-    font-size:
-      clamp(3rem, 18vw, 5rem);
+    font-size: clamp(3rem, 18vw, 5rem);
   }
-
 
   .turn-timer {
-    transform:
-      scale(0.92);
+    transform: scale(0.92);
   }
-
 
   .new-battle-container {
-    width:
-      100%;
+    width: 100%;
   }
-
 
   .new-battle-button,
   .new-student-button {
-    width:
-      100%;
+    width: 100%;
 
-    min-width:
-      0;
+    min-width: 0;
   }
 }
-
 
 /* ============================================================
    5. MÓVILES MUY PEQUEÑOS
    ============================================================ */
 
 @media (max-width: 420px) {
-
   .player-registration-card {
-    padding:
-      20px 14px;
+    padding: 20px 14px;
   }
-
 
   .battle-arena {
-    padding:
-      10px;
+    padding: 10px;
   }
-
 
   .battle-player {
-    padding:
-      12px;
+    padding: 12px;
   }
-
 
   .battle-player-name {
-    font-size:
-      0.88rem;
+    font-size: 0.88rem;
   }
-
 
   .battle-player-institution {
-    font-size:
-      0.68rem;
+    font-size: 0.68rem;
   }
-
 
   .power-status {
-    font-size:
-      0.68rem;
+    font-size: 0.68rem;
   }
-
 
   .battle-action-card {
-    padding:
-      12px;
+    padding: 12px;
   }
-
 
   .battle-countdown-text {
-    font-size:
-      clamp(2.8rem, 20vw, 4.5rem);
+    font-size: clamp(2.8rem, 20vw, 4.5rem);
   }
 }
-
 
 /* ============================================================
    6. PANTALLAS BAJAS / PROYECTORES
    ============================================================ */
 
 @media (max-height: 700px) and (min-width: 700px) {
-
   .player-registration-screen {
-    padding-top:
-      24px;
+    padding-top: 24px;
 
-    padding-bottom:
-      24px;
+    padding-bottom: 24px;
   }
-
 
   .player-registration-card {
-    padding-top:
-      22px;
+    padding-top: 22px;
 
-    padding-bottom:
-      22px;
+    padding-bottom: 22px;
   }
-
 
   .battle-section {
-    margin-top:
-      24px;
+    margin-top: 24px;
 
-    margin-bottom:
-      24px;
+    margin-bottom: 24px;
   }
 }
-
 
 /* ============================================================
    7. DISPOSITIVOS TÁCTILES
    ============================================================ */
 
 @media (hover: none) and (pointer: coarse) {
-
   button {
-    min-height:
-      48px;
+    min-height: 48px;
   }
-
 
   .gesture-training-card:hover,
   .battle-action-card:hover,
   .new-battle-button:hover,
   .new-student-button:hover {
-    transform:
-      none;
+    transform: none;
   }
 }
-
 
 /* ============================================================
    8. REDUCIR ANIMACIONES SI EL SISTEMA LO SOLICITA
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
-    scroll-behavior:
-      auto !important;
+    scroll-behavior: auto !important;
 
-    animation-duration:
-      0.01ms !important;
+    animation-duration: 0.01ms !important;
 
-    animation-iteration-count:
-      1 !important;
+    animation-iteration-count: 1 !important;
 
-    transition-duration:
-      0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
-
 
 /* ============================================================
    9. OPTIMIZACIÓN PARA DISPOSITIVOS DE MENOR POTENCIA
@@ -6419,28 +4779,22 @@ input {
 html.low-power-device *,
 html.low-power-device *::before,
 html.low-power-device *::after {
-  text-shadow:
-    none;
+  text-shadow: none;
 }
-
 
 html.low-power-device .battle-section,
 html.low-power-device .battle-arena,
 html.low-power-device .vision-section,
 html.low-power-device .training-section,
 html.low-power-device .player-registration-card {
-  box-shadow:
-    none;
+  box-shadow: none;
 }
-
 
 html.low-power-device .battle-player,
 html.low-power-device .battle-action-card,
 html.low-power-device .gesture-training-card {
-  transition:
-    none;
+  transition: none;
 }
-
 
 /* ============================================================
    10. ESTADOS DE FOCO ACCESIBLES
@@ -6448,13 +4802,10 @@ html.low-power-device .gesture-training-card {
 
 button:focus-visible,
 input:focus-visible {
-  outline:
-    3px solid rgba(34, 211, 238, 0.45);
+  outline: 3px solid rgba(34, 211, 238, 0.45);
 
-  outline-offset:
-    3px;
+  outline-offset: 3px;
 }
-
 
 /* ============================================================
    11. EVITAR SELECCIÓN ACCIDENTAL EN ELEMENTOS DE JUEGO
@@ -6466,11 +4817,9 @@ input:focus-visible {
 .battle-countdown,
 .turn-timer,
 .power-status {
-  -webkit-user-select:
-    none;
+  -webkit-user-select: none;
 
-  user-select:
-    none;
+  user-select: none;
 }
 
 /* ============================================================
@@ -6478,22 +4827,17 @@ input:focus-visible {
    ============================================================ */
 
 body {
-  -webkit-font-smoothing:
-    antialiased;
+  -webkit-font-smoothing: antialiased;
 
-  -moz-osx-font-smoothing:
-    grayscale;
+  -moz-osx-font-smoothing: grayscale;
 
-  text-rendering:
-    optimizeLegibility;
+  text-rendering: optimizeLegibility;
 }
-
 
 /* ============================================================
    FIN PARTE 9
    RESPONSIVE GENERAL + OPTIMIZACIÓN FINAL
    ============================================================ */
-
 
 /* ==========================================================
    PARTE 10
@@ -6501,77 +4845,53 @@ body {
    ========================================================== */
 
 .handverse-system-status {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  flex-wrap:
-    wrap;
+  flex-wrap: wrap;
 
-  gap:
-    10px;
+  gap: 10px;
 
-  width:
-    100%;
+  width: 100%;
 
-  max-width:
-    720px;
+  max-width: 720px;
 
-  margin:
-    22px auto 0;
+  margin: 22px auto 0;
 
-  padding:
-    0 16px;
+  padding: 0 16px;
 }
 
-
 .system-status-item {
-  display:
-    inline-flex;
+  display: inline-flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  gap:
-    8px;
+  gap: 8px;
 
-  min-height:
-    34px;
+  min-height: 34px;
 
-  padding:
-    8px 14px;
+  padding: 8px 14px;
 
-  border:
-    1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.14);
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
-  background:
-    rgba(2, 8, 23, 0.72);
+  background: rgba(2, 8, 23, 0.72);
 
-  font-size:
-    0.68rem;
+  font-size: 0.68rem;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    0.09em;
+  letter-spacing: 0.09em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 
   transition:
     border-color 0.25s ease,
@@ -6580,293 +4900,145 @@ body {
     transform 0.25s ease;
 }
 
-
 .system-status-dot {
-  width:
-    8px;
+  width: 8px;
 
-  height:
-    8px;
+  height: 8px;
 
-  flex:
-    0 0 8px;
+  flex: 0 0 8px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    #64748b;
+  background: #64748b;
 }
-
 
 /* ==========================================================
    ESTADO LISTO
    ========================================================== */
 
 .system-status-ready {
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
-  border-color:
-    rgba(34, 211, 238, 0.22);
+  border-color: rgba(34, 211, 238, 0.22);
 
-  background:
-    rgba(8, 47, 73, 0.22);
+  background: rgba(8, 47, 73, 0.22);
 }
 
-
 .system-status-ready .system-status-dot {
-  background:
-    #22d3ee;
+  background: #22d3ee;
 
   box-shadow:
     0 0 5px rgba(34, 211, 238, 0.9),
     0 0 12px rgba(34, 211, 238, 0.45);
 }
 
-
 /* ==========================================================
    ESTADO EN ESPERA
    ========================================================== */
 
 .system-status-waiting {
-  color:
-    #94a3b8;
+  color: #94a3b8;
 }
-
 
 .system-status-waiting .system-status-dot {
-  background:
-    #64748b;
+  background: #64748b;
 }
-
 
 /* ==========================================================
    ESTADO ACTIVO
    ========================================================== */
 
 .system-status-active {
-  color:
-    #86efac;
+  color: #86efac;
 
-  border-color:
-    rgba(74, 222, 128, 0.28);
+  border-color: rgba(74, 222, 128, 0.28);
 
-  background:
-    rgba(20, 83, 45, 0.20);
+  background: rgba(20, 83, 45, 0.2);
 }
 
-
 .system-status-active .system-status-dot {
-  background:
-    #4ade80;
+  background: #4ade80;
 
   box-shadow:
     0 0 6px rgba(74, 222, 128, 0.95),
     0 0 14px rgba(74, 222, 128, 0.48);
 
-  animation:
-    handverse-status-pulse 1.8s ease-in-out infinite;
+  animation: handverse-status-pulse 1.8s ease-in-out infinite;
 }
-
 
 /* ==========================================================
    ESTADO DE ERROR
    ========================================================== */
 
 .system-status-error {
-  color:
-    #fda4af;
+  color: #fda4af;
 
-  border-color:
-    rgba(244, 63, 94, 0.32);
+  border-color: rgba(244, 63, 94, 0.32);
 
-  background:
-    rgba(127, 29, 29, 0.20);
+  background: rgba(127, 29, 29, 0.2);
 }
-
 
 .system-status-error .system-status-dot {
-  background:
-    #fb7185;
+  background: #fb7185;
 
-  box-shadow:
-    0 0 6px rgba(251, 113, 133, 0.9);
+  box-shadow: 0 0 6px rgba(251, 113, 133, 0.9);
 }
-
 
 /* ==========================================================
    ANIMACIÓN
    ========================================================== */
 
 @keyframes handverse-status-pulse {
-
   0%,
   100% {
-    transform:
-      scale(1);
+    transform: scale(1);
 
-    opacity:
-      1;
+    opacity: 1;
   }
 
   50% {
-    transform:
-      scale(1.35);
+    transform: scale(1.35);
 
-    opacity:
-      0.65;
+    opacity: 0.65;
   }
-
 }
-
 
 /* ==========================================================
    RESPONSIVE
    ========================================================== */
 
 @media (max-width: 600px) {
-
   .handverse-system-status {
-    gap:
-      7px;
+    gap: 7px;
 
-    margin-top:
-      18px;
+    margin-top: 18px;
 
-    padding:
-      0 10px;
+    padding: 0 10px;
   }
-
 
   .system-status-item {
-    min-height:
-      31px;
+    min-height: 31px;
 
-    padding:
-      7px 10px;
+    padding: 7px 10px;
 
-    font-size:
-      0.58rem;
+    font-size: 0.58rem;
 
-    letter-spacing:
-      0.06em;
+    letter-spacing: 0.06em;
   }
-
 }
-
 
 /* ==========================================================
    DISPOSITIVOS DE BAJO RENDIMIENTO
    ========================================================== */
 
 html.low-power-device .system-status-active .system-status-dot {
-  animation:
-    none;
+  animation: none;
 }
-
 
 /* ==========================================================
    FIN PARTE 10
    PANEL DE ESTADO DEL SISTEMA HANDVERSE
    ========================================================== */
-
-
-/* ==========================================================
-   CUENTA REGRESIVA DE BATALLA
-   ========================================================== */
-
-/* Por defecto NO existe visualmente */
-#battle-countdown {
-  display: none;
-
-  width: min(100%, 760px);
-
-  margin:
-    20px auto 24px;
-
-  min-height:
-    0;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  text-align:
-    center;
-}
-
-/* JavaScript activa esta clase durante 3-2-1-COMBATE */
-#battle-countdown.battle-countdown-visible {
-  display: flex;
-
-  min-height:
-    110px;
-}
-
-/* Texto */
-#battle-countdown-text {
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  min-width:
-    150px;
-
-  padding:
-    16px 28px;
-
-  border:
-    1px solid rgba(34, 211, 238, 0.30);
-
-  border-radius:
-    18px;
-
-  background:
-    rgba(2, 8, 23, 0.92);
-
-  color:
-    #67e8f9;
-
-  font-size:
-    clamp(2.4rem, 6vw, 5rem);
-
-  font-weight:
-    900;
-
-  line-height:
-    1;
-
-  letter-spacing:
-    0.04em;
-
-  text-shadow:
-    0 0 12px rgba(34, 211, 238, 0.80),
-    0 0 28px rgba(34, 211, 238, 0.40);
-
-  box-shadow:
-    0 0 35px rgba(34, 211, 238, 0.10);
-}
-
-/* COMBATE puede ser más ancho que los números */
-#battle-countdown-text.battle-countdown-combat {
-  min-width:
-    300px;
-
-  font-size:
-    clamp(1.8rem, 4vw, 3.4rem);
-
-  color:
-    #ffffff;
-}
-
 
 /* ==========================================================
    ESPACIADO DEL ESTADO DE BATALLA
@@ -6897,25 +5069,30 @@ html.low-power-device .system-status-active .system-status-dot {
   align-items: center !important;
   justify-content: center !important;
 
-  background:
-    radial-gradient(circle at center,
-      rgba(8, 47, 73, 0.55) 0%,
-      rgba(2, 8, 23, 0.88) 45%,
-      rgba(2, 6, 23, 0.96) 100%) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(8, 47, 73, 0.55) 0%,
+    rgba(2, 8, 23, 0.88) 45%,
+    rgba(2, 6, 23, 0.96) 100%
+  ) !important;
 
   z-index: 999999 !important;
 
   pointer-events: none !important;
 }
 
-
-/* JavaScript coloca esta clase
-   cuando empieza el countdown */
+/* JavaScript activa esta clase durante
+   3 → 2 → 1 → COMBATE */
 
 #battle-countdown.battle-countdown-visible {
   display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
 }
-
 
 /* ==========================================================
    TEXTO 3 / 2 / 1
@@ -6932,101 +5109,105 @@ html.low-power-device .system-status-active .system-status-dot {
 
   padding: 30px 45px;
 
-  border:
-    2px solid rgba(34, 211, 238, 0.55);
+  border: 2px solid rgba(34, 211, 238, 0.55);
 
-  border-radius:
-    40px;
+  border-radius: 40px;
 
-  background:
-    rgba(2, 8, 23, 0.88);
+  background: rgba(2, 8, 23, 0.88);
 
-  color:
-    #67e8f9;
+  color: #67e8f9;
 
-  font-size:
-    clamp(6rem,
-      15vw,
-      12rem);
+  font-size: clamp(6rem, 15vw, 12rem);
 
-  font-weight:
-    900;
+  font-weight: 900;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  text-align:
-    center;
+  text-align: center;
 
   text-shadow:
     0 0 15px rgba(34, 211, 238, 1),
-    0 0 35px rgba(34, 211, 238, 0.80),
+    0 0 35px rgba(34, 211, 238, 0.8),
     0 0 80px rgba(34, 211, 238, 0.45);
 
   box-shadow:
     0 0 30px rgba(34, 211, 238, 0.15),
     0 0 90px rgba(34, 211, 238, 0.15);
 
-  animation:
-    handverse-countdown-impact 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: handverse-countdown-impact 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 /* ==========================================================
    COMBATE
    ========================================================== */
 
 #battle-countdown-text.battle-countdown-combat {
-  min-width:
-    min(760px, 86vw);
+  min-width: min(760px, 86vw);
 
-  min-height:
-    200px;
+  min-height: 200px;
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  font-size:
-    clamp(3rem,
-      8vw,
-      7rem);
+  font-size: clamp(3rem, 8vw, 7rem);
 
   text-shadow:
-    0 0 15px rgba(255, 255, 255, 0.80),
-    0 0 30px rgba(34, 211, 238, 0.90),
+    0 0 15px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(34, 211, 238, 0.9),
     0 0 70px rgba(124, 58, 237, 0.75);
 
-  border-color:
-    rgba(124, 58, 237, 0.75);
+  border-color: rgba(124, 58, 237, 0.75);
 
   box-shadow:
     0 0 50px rgba(34, 211, 238, 0.18),
     0 0 110px rgba(124, 58, 237, 0.25);
 }
 
-
 /* ==========================================================
-   ANIMACIÓN
+   ANIMACIÓN DEL COUNTDOWN
    ========================================================== */
 
 @keyframes handverse-countdown-impact {
-
   0% {
     opacity: 0;
-    transform:
-      scale(1.8);
+
+    transform: scale(1.8);
   }
 
   55% {
     opacity: 1;
-    transform:
-      scale(0.92);
+
+    transform: scale(0.92);
   }
 
   100% {
     opacity: 1;
-    transform:
-      scale(1);
+
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================
+   COUNTDOWN EN MÓVIL
+   ========================================================== */
+
+@media (max-width: 600px) {
+  #battle-countdown-text {
+    min-width: 145px;
+    min-height: 145px;
+
+    padding: 22px;
+
+    border-radius: 26px;
+
+    font-size: clamp(4rem, 22vw, 7rem);
   }
 
+  #battle-countdown-text.battle-countdown-combat {
+    min-width: 88vw;
+    min-height: 140px;
+
+    padding: 24px 20px;
+
+    font-size: clamp(2.3rem, 12vw, 4.5rem);
+  }
 }
