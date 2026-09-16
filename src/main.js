@@ -775,11 +775,6 @@ app.innerHTML = `
 
         </div>
 
-
-      <span class="battle-vs">
-        VS
-      </span>
-
     </div>
 
 
