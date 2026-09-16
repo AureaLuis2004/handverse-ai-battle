@@ -5847,3 +5847,140 @@ html.low-power-device .system-status-active .system-status-dot {
     justify-content: flex-start;
   }
 }
+
+/* ==========================================================
+   AJUSTE FINAL HUD DE BATALLA - ESCRITORIO
+   Alineación jugador / HANDVERSE IA / vida / poder
+   ========================================================== */
+
+@media (min-width: 769px) {
+  /* --------------------------------------------------------
+     1. IDENTIDAD DEL JUGADOR
+     Nombre arriba - institución debajo
+     -------------------------------------------------------- */
+
+  .battle-player-identity {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+
+    min-height: 58px !important;
+
+    gap: 4px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .battle-player-name {
+    display: block !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 1.3rem !important;
+    font-weight: 900 !important;
+    line-height: 1.15 !important;
+
+    color: #f8fafc !important;
+  }
+
+  .battle-player-institution {
+    display: block !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+
+    color: #cbd5e1 !important;
+
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* --------------------------------------------------------
+     2. HANDVERSE IA
+     Misma altura inicial que el nombre del estudiante
+     -------------------------------------------------------- */
+
+  .battle-ai .battle-label {
+    display: flex !important;
+
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+
+    min-height: 58px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 1.3rem !important;
+    font-weight: 900 !important;
+    line-height: 1.15 !important;
+
+    color: #f8fafc !important;
+  }
+
+  /* --------------------------------------------------------
+     3. VIDA
+     Ambas líneas exactamente con la misma estructura
+     -------------------------------------------------------- */
+
+  .battle-player .health-info,
+  .battle-ai .health-info {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    gap: 6px !important;
+
+    min-height: 24px !important;
+
+    margin: 4px 0 0 !important;
+    padding: 0 !important;
+
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* --------------------------------------------------------
+     4. BARRAS DE VIDA
+     -------------------------------------------------------- */
+
+  .battle-player .health-bar,
+  .battle-ai .health-bar {
+    width: 100% !important;
+
+    margin-top: 7px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* --------------------------------------------------------
+     5. PODER ESPECIAL
+     Separación moderada respecto a la barra
+     -------------------------------------------------------- */
+
+  .battle-player .power-status,
+  .battle-ai .power-status {
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* --------------------------------------------------------
+     6. SEPARACIÓN ENTRE EL HUD Y LAS CAJAS DE MOVIMIENTO
+     Evita que PODER ESPECIAL quede pegado
+     -------------------------------------------------------- */
+
+  .battle-hud {
+    margin-bottom: 0 !important;
+  }
+
+  .battle-actions {
+    margin-top: 24px !important;
+  }
+}
