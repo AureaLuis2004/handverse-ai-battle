@@ -862,7 +862,7 @@ app.innerHTML = `
 
 
         <div class="battle-action-versus">
-          VS
+          <span>VS</span>
         </div>
 
 
