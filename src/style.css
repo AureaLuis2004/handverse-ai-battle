@@ -6183,3 +6183,219 @@ html.low-power-device .system-status-active .system-status-dot {
     box-sizing: border-box;
   }
 }
+
+/* ==========================================================
+   AJUSTE FINAL
+   TARJETAS DE MOVIMIENTO HANDVERSE
+   PC · LAPTOP · MONITOR · TV · TABLET · MÓVIL
+   ========================================================== */
+
+/* ==========================================================
+   CONTENEDOR GENERAL
+   ========================================================== */
+
+#battle-section .battle-actions {
+  width: 100% !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    clamp(42px, 5vw, 70px)
+    minmax(0, 1fr) !important;
+
+  align-items: stretch !important;
+
+  column-gap: clamp(12px, 1.5vw, 24px) !important;
+
+  row-gap: 16px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* ==========================================================
+   TARJETAS JUGADOR / IA
+   ========================================================== */
+
+#battle-section .battle-action-card {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  min-height: clamp(170px, 15vw, 215px) !important;
+
+  box-sizing: border-box !important;
+
+  padding: clamp(20px, 2vw, 30px) !important;
+
+  margin: 0 !important;
+
+  display: grid !important;
+
+  grid-template-rows:
+    auto
+    1fr
+    auto !important;
+
+  align-items: center !important;
+
+  justify-items: center !important;
+
+  gap: clamp(10px, 1vw, 16px) !important;
+
+  overflow: hidden !important;
+}
+
+/* ==========================================================
+   TÍTULOS
+   ========================================================== */
+
+#battle-section .battle-action-card > span {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  text-align: center !important;
+
+  align-self: start !important;
+
+  line-height: 1.2 !important;
+}
+
+/* ==========================================================
+   EMOJIS / GESTOS
+   ========================================================== */
+
+#player-battle-emoji,
+#ai-battle-emoji {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  align-self: center !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  line-height: 1 !important;
+
+  font-size: clamp(3.4rem, 5vw, 5.2rem) !important;
+}
+
+/* ==========================================================
+   TEXTO DEL MOVIMIENTO
+   ========================================================== */
+
+#player-battle-action,
+#ai-battle-action {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  align-self: end !important;
+
+  text-align: center !important;
+
+  line-height: 1.25 !important;
+}
+
+/* ==========================================================
+   VS CENTRAL
+   ========================================================== */
+
+#battle-section .battle-action-versus {
+  width: 100% !important;
+
+  height: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  align-self: stretch !important;
+}
+
+#battle-section .battle-action-versus span {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  margin: 0 !important;
+
+  line-height: 1 !important;
+}
+
+/* ==========================================================
+   TABLETS Y PANTALLAS INTERMEDIAS
+   ========================================================== */
+
+@media (max-width: 900px) {
+  #battle-section .battle-actions {
+    grid-template-columns:
+      minmax(0, 1fr)
+      42px
+      minmax(0, 1fr) !important;
+
+    column-gap: 10px !important;
+  }
+
+  #battle-section .battle-action-card {
+    min-height: 170px !important;
+
+    padding: 18px !important;
+  }
+}
+
+/* ==========================================================
+   MÓVIL
+   ========================================================== */
+
+@media (max-width: 650px) {
+  #battle-section .battle-actions {
+    grid-template-columns: minmax(0, 1fr) !important;
+
+    gap: 14px !important;
+  }
+
+  #battle-section .battle-action-card {
+    width: 100% !important;
+
+    min-height: 165px !important;
+
+    padding: 18px 16px !important;
+  }
+
+  #battle-section .battle-action-versus {
+    height: auto !important;
+
+    min-height: 28px !important;
+  }
+
+  #player-battle-emoji,
+  #ai-battle-emoji {
+    font-size: clamp(3.2rem, 16vw, 4.5rem) !important;
+  }
+}
+
+/* ==========================================================
+   TVs Y PANTALLAS GRANDES
+   ========================================================== */
+
+@media (min-width: 1600px) {
+  #battle-section .battle-action-card {
+    min-height: 210px !important;
+  }
+}
