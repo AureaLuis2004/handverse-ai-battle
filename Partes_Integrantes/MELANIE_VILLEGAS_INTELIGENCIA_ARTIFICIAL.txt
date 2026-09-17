@@ -1,0 +1,160 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: MELANIE VILLEGAS
+PARTE PRINCIPAL: INTELIGENCIA ARTIFICIAL Y MACHINE LEARNING
+ARCHIVOS RELACIONADOS:
+- src/ai/features.js
+- src/ai/dataset.js
+- src/ai/model.js
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Melanie Villegas participa en el componente de inteligencia artificial de
+HANDVERSE. Su trabajo comprende la preparación de los datos, normalización
+de landmarks, construcción del dataset, creación de la red neuronal,
+entrenamiento con TensorFlow.js y reconocimiento de los tres gestos.
+
+Gestos del modelo:
+
+0 → MANO ABIERTA / ESCUDO
+1 → PUÑO CERRADO / ATAQUE
+2 → PULGAR ARRIBA / PODER
+
+2. EXTRACCIÓN DE CARACTERÍSTICAS — features.js
+
+Cada mano detectada contiene 21 landmarks y cada landmark posee tres
+coordenadas:
+
+X, Y, Z
+
+Por tanto:
+
+21 landmarks × 3 coordenadas = 63 características
+
+La normalización utiliza la muñeca (landmark 0) como origen y calcula una
+escala de referencia utilizando la distancia entre la muñeca y la base del
+dedo medio (landmark 9).
+
+Flujo:
+
+21 LANDMARKS
+   ↓
+VALIDACIÓN
+   ↓
+TRASLACIÓN RESPECTO A LA MUÑECA
+   ↓
+NORMALIZACIÓN DE ESCALA
+   ↓
+VECTOR DE 63 VALORES
+
+La función landmarksToFeatureVector() genera el vector final que será
+utilizado por el dataset y el modelo.
+
+3. DATASET — dataset.js
+
+El proyecto establece:
+
+TARGET_SAMPLES_PER_CLASS = 30
+
+Por tanto:
+
+30 mano abierta
+30 puño cerrado
+30 pulgar arriba
+-----------------
+90 muestras totales
+
+El dataset mantiene tres arreglos:
+
+open_hand
+fist
+thumbs_up
+
+La función addSample() valida la clase, convierte landmarks a un vector de
+63 características, comprueba que el vector sea válido y lo almacena en la
+categoría correspondiente.
+
+También se incluyen funciones para:
+
+- contar muestras;
+- consultar el total;
+- comprobar si una clase está completa;
+- comprobar si las tres clases están listas;
+- preparar inputs y labels;
+- borrar muestras de una clase;
+- reiniciar el dataset;
+- obtener una copia del dataset.
+
+4. MODELO TENSORFLOW.JS — model.js
+
+Configuración principal:
+
+INPUT_SIZE = 63
+OUTPUT_SIZE = 3
+EPOCHS = 50
+BATCH_SIZE = 16
+
+Arquitectura actual:
+
+Entrada de 63 valores
+   ↓
+Dense 48 · ReLU
+   ↓
+Dropout 0.15
+   ↓
+Dense 24 · ReLU
+   ↓
+Dense 3 · Softmax
+
+Compilación:
+
+optimizer:
+  Adam(0.001)
+
+loss:
+  categoricalCrossentropy
+
+metrics:
+  accuracy
+
+El entrenamiento utiliza además:
+
+- shuffle = true;
+- validationSplit = 0.2;
+- callbacks por época;
+- liberación de tensores después del entrenamiento;
+- optimización para dispositivos móviles.
+
+5. PREDICCIÓN
+
+Después del entrenamiento, el modelo devuelve probabilidades para las tres
+clases.
+
+La clase con la probabilidad más alta se convierte en:
+
+- key;
+- name;
+- emoji;
+- confidence;
+- confidencePercent.
+
+El resultado se envía a main.js y posteriormente al motor de batalla.
+
+6. APORTE FINAL
+
+APORTE DE MELANIE VILLEGAS:
+
+"Desarrollo del componente de inteligencia artificial de HANDVERSE:
+normalización de los 21 landmarks, generación de vectores de 63
+características, construcción del dataset de 90 muestras, entrenamiento
+de una red neuronal con TensorFlow.js y reconocimiento en tiempo real de
+mano abierta, puño cerrado y pulgar arriba."
+
+============================================================
+FIN — MELANIE VILLEGAS
+HANDVERSE: AI BATTLE
+============================================================

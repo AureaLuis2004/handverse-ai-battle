@@ -22,8 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-Partes_Integrantes/
-
 .env
 .env.local
 .env.*.local

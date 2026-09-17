@@ -1,0 +1,149 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: SURY COBOS
+PARTE PRINCIPAL: MOTOR Y MODO DE BATALLA
+ARCHIVOS RELACIONADOS:
+- src/game/battleEngine.js
+- src/main.js
+- src/style.css
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Sury Cobos participa en el módulo Battle Mode de HANDVERSE.
+Este componente transforma la predicción de la inteligencia artificial
+en una acción de videojuego y administra las reglas del combate.
+
+Flujo:
+
+PREDICCIÓN DEL GESTO
+   ↓
+ACCIÓN DEL JUGADOR
+   ↓
+MOVIMIENTO DE HANDVERSE IA
+   ↓
+COMPARACIÓN
+   ↓
+DAÑO / EMPATE
+   ↓
+VIDA
+   ↓
+RONDA
+   ↓
+GANADOR FINAL
+
+2. CONFIGURACIÓN PRINCIPAL
+
+El motor utiliza una configuración equivalente a:
+
+INITIAL_HEALTH = 100
+DAMAGE_PER_TURN = 20
+ROUNDS_TO_WIN = 2
+MAX_POWER_USES_PER_ROUND = 3
+ROUND_TRANSITION_DELAY_MS = 1800
+
+La partida se juega al mejor de tres rondas.
+El primer participante que consigue dos rondas gana la batalla.
+
+3. CONVERSIÓN DE GESTOS A ACCIONES
+
+fist
+→ ATAQUE
+
+open_hand
+→ ESCUDO
+
+thumbs_up
+→ PODER
+
+4. REGLAS DEL COMBATE
+
+Sistema cíclico:
+
+ATAQUE vence a PODER
+PODER vence a ESCUDO
+ESCUDO vence a ATAQUE
+
+Si ambos realizan el mismo movimiento:
+
+EMPATE
+
+Ninguno recibe daño.
+
+5. VIDA Y DAÑO
+
+Cada participante inicia una ronda con:
+
+100 HP
+
+Cada intercambio perdido provoca:
+
+-20 HP
+
+El sistema impide que la vida sea menor que cero.
+
+6. PODER ESPECIAL
+
+Cada participante dispone de tres usos de PODER por ronda.
+
+Cuando un jugador consume los tres usos:
+
+0 / 3
+
+El poder deja de estar disponible durante esa ronda.
+
+Al comenzar una nueva ronda se restauran:
+
+- vida del jugador a 100;
+- vida de HANDVERSE IA a 100;
+- poder del jugador a 3/3;
+- poder de HANDVERSE IA a 3/3.
+
+7. TEMPORIZADOR
+
+Si el estudiante no realiza un gesto dentro del tiempo permitido,
+HANDVERSE obtiene un ataque automático.
+
+Resultado del timeout:
+
+- el estudiante pierde 20 HP;
+- HANDVERSE gana el intercambio;
+- no se consume PODER de ninguno de los participantes.
+
+8. FIN DE RONDA Y PARTIDA
+
+Cuando una vida llega a cero:
+
+- se define roundWinner;
+- se incrementa el marcador;
+- se muestra el resultado de la ronda;
+- se prepara la siguiente ronda si la partida continúa.
+
+Cuando alguien alcanza dos rondas ganadas:
+
+battleFinished = true
+
+y se establece:
+
+winner = 'player'
+
+o:
+
+winner = 'ai'
+
+9. APORTE FINAL
+
+APORTE DE SURY COBOS:
+
+"Desarrollo e integración del modo de batalla de HANDVERSE, encargado de
+convertir los gestos reconocidos en acciones de combate, administrar las
+reglas ATAQUE-ESCUDO-PODER, controlar vida, daño, temporizador, rondas,
+poder especial y determinar al ganador final."
+
+============================================================
+FIN — SURY COBOS
+HANDVERSE: AI BATTLE
+============================================================

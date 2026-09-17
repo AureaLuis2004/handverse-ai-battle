@@ -1,0 +1,171 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: HÉCTOR ROMÁN
+PARTE PRINCIPAL: VALIDACIÓN DE GESTOS DURANTE LA CAPTURA
+ARCHIVOS RELACIONADOS:
+- src/main.js
+- src/style.css
+- src/ai/dataset.js
+- src/ai/features.js
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Héctor Román participa en la validación previa de los gestos durante la
+fase "ENTRENA TU IA".
+
+El objetivo de este módulo es evitar que una muestra sea guardada en una
+categoría incorrecta.
+
+Ejemplo:
+
+Si el sistema está capturando:
+
+MANO ABIERTA
+
+no debe aceptar:
+
+PUÑO CERRADO
+
+ni:
+
+PULGAR ARRIBA
+
+El contador solamente debe aumentar cuando la pose mostrada corresponde a
+la categoría seleccionada.
+
+2. PROBLEMA QUE RESUELVE
+
+Sin validación previa puede ocurrir:
+
+Usuario selecciona MANO ABIERTA
+   ↓
+muestra un PUÑO
+   ↓
+el sistema guarda ese vector como open_hand
+   ↓
+dataset mal etiquetado
+   ↓
+modelo aprende información incorrecta
+
+La validación evita esta situación.
+
+3. RELACIÓN CON features.js
+
+features.js recibe los 21 landmarks y permite trabajar con la geometría de
+la mano.
+
+Las clases válidas del proyecto son:
+
+open_hand
+fist
+thumbs_up
+
+La validación puede analizar relaciones geométricas entre landmarks para
+comprobar qué dedos se encuentran extendidos o flexionados antes de
+autorizar la muestra.
+
+4. RELACIÓN CON dataset.js
+
+dataset.js posee la función:
+
+addSample(
+  gestureKey,
+  landmarks
+)
+
+Esta función almacena la muestra en la categoría indicada después de
+convertir los 21 landmarks en 63 características válidas.
+
+La validación de Héctor debe actuar ANTES de addSample():
+
+currentLandmarks
+      ↓
+VALIDACIÓN DE LA POSE
+      ↓
+¿coincide con gestureKey?
+   ↙             ↘
+ SÍ               NO
+ ↓                 ↓
+addSample()      no guardar
+ ↓                 ↓
+contador +1      contador igual
+
+5. INTEGRACIÓN CON main.js
+
+Durante la captura de 30 muestras:
+
+while (
+  getSampleCount(gestureKey) <
+  TARGET_SAMPLES_PER_CLASS
+) {
+
+  // 1. comprobar que existe una mano
+
+  // 2. validar que el gesto mostrado
+  //    coincide con gestureKey
+
+  // 3. si es correcto:
+  //    addSample(...)
+
+  // 4. si es incorrecto:
+  //    mostrar advertencia y continuar
+}
+
+6. RETROALIMENTACIÓN VISUAL
+
+La interfaz debe mostrar mensajes claros.
+
+Ejemplo:
+
+Prepárate para MANO ABIERTA
+
+3
+2
+1
+
+Si la pose es incorrecta:
+
+❌ GESTO INCORRECTO
+Muestra una MANO ABIERTA
+
+0 / 30
+
+Si la pose es correcta:
+
+✅ MUESTRA VÁLIDA
+
+1 / 30
+
+El proceso continúa hasta:
+
+30 / 30
+
+7. BENEFICIO PARA EL MODELO
+
+La validación ayuda a evitar:
+
+- muestras mal etiquetadas;
+- mezcla entre clases;
+- confusión de los estudiantes;
+- pérdida de precisión;
+- datasets inconsistentes.
+
+Además, convierte el entrenamiento en una experiencia guiada.
+
+8. APORTE FINAL
+
+APORTE DE HÉCTOR ROMÁN:
+
+"Desarrollo de la validación previa de gestos durante la captura de
+muestras de entrenamiento, comprobando que la pose mostrada corresponda
+a la categoría seleccionada antes de permitir su almacenamiento en el
+dataset, junto con retroalimentación visual para orientar al estudiante."
+
+============================================================
+FIN — HÉCTOR ROMÁN
+HANDVERSE: AI BATTLE
+============================================================

@@ -1,0 +1,130 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: EMILY AYANA
+PARTE PRINCIPAL: DISEÑO UI/UX Y ADAPTACIÓN RESPONSIVE
+ARCHIVOS RELACIONADOS:
+- src/style.css
+- src/main.js
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Emily Ayana participa en el diseño visual y experiencia de usuario de
+HANDVERSE: AI BATTLE.
+
+Su trabajo se refleja principalmente en style.css y en la estructura de
+interfaz generada desde main.js.
+
+El objetivo es que el proyecto mantenga una identidad visual consistente,
+legible y funcional durante todo el recorrido del usuario.
+
+2. IDENTIDAD VISUAL
+
+La interfaz utiliza una estética tecnológica basada en:
+
+- fondo oscuro;
+- tonos cyan;
+- azul;
+- morado;
+- indicadores verdes para estados correctos;
+- rojo/rosado para acciones de ataque;
+- amarillo para poder especial y temporizador;
+- bordes luminosos;
+- paneles con contraste;
+- efectos de glow.
+
+3. PANTALLAS Y COMPONENTES
+
+El diseño cubre:
+
+- encabezado de HANDVERSE;
+- indicadores del sistema;
+- cámara web;
+- panel de reconocimiento;
+- sección "ENTRENA TU IA";
+- tarjetas de los tres gestos;
+- barras de progreso;
+- estado del dataset;
+- botón de entrenamiento;
+- Arena de Batalla;
+- HUD del jugador y HANDVERSE IA;
+- barras de vida;
+- contador de poder;
+- temporizador;
+- tarjetas de movimientos;
+- mensajes de ronda;
+- pantalla de victoria final;
+- botones "GENERAR OTRA PARTIDA" y "NUEVO ESTUDIANTE".
+
+4. DISEÑO RESPONSIVE
+
+El proyecto utiliza reglas responsive para adaptarse a diferentes anchos
+de pantalla.
+
+En resoluciones amplias:
+
+- las tarjetas se muestran en columnas;
+- jugador e IA se presentan a ambos lados;
+- el centro conserva ronda y temporizador.
+
+En tablets:
+
+- se reducen tamaños y espacios;
+- se conserva la jerarquía visual.
+
+En móviles:
+
+- los elementos se reorganizan verticalmente;
+- las tarjetas ocupan el ancho disponible;
+- se evita el desbordamiento horizontal;
+- los textos y botones mantienen legibilidad;
+- la Arena de Batalla conserva la separación entre jugador e IA.
+
+5. EXPERIENCIA DE USUARIO
+
+La interfaz comunica visualmente el estado del sistema:
+
+CÁMARA EN ESPERA
+IA PREPARADA
+SISTEMA LISTO
+BUSCANDO UNA MANO
+ESPERANDO GESTO
+DATASET COMPLETO
+IA ENTRENADA
+BATALLA BLOQUEADA
+RONDA
+VICTORIA FINAL
+
+Esto permite que el estudiante comprenda qué está ocurriendo sin necesidad
+de observar la consola del navegador.
+
+6. EFECTOS DE BATALLA
+
+La interfaz también incluye efectos asociados con:
+
+- daño;
+- golpe recibido;
+- poder especial;
+- cuenta regresiva 3-2-1;
+- COMBATE;
+- victoria final;
+- ganador resaltado;
+- transición entre estados.
+
+7. APORTE FINAL
+
+APORTE DE EMILY AYANA:
+
+"Diseño y mejora de la experiencia visual de HANDVERSE mediante style.css
+y la estructura de interfaz de main.js, incorporando identidad gráfica,
+HUD de batalla, paneles de entrenamiento, animaciones y adaptación
+responsive para computadoras, laptops, tablets, móviles y pantallas de
+diferentes dimensiones."
+
+============================================================
+FIN — EMILY AYANA
+HANDVERSE: AI BATTLE
+============================================================

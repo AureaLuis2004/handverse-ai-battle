@@ -1,0 +1,128 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: EDWIN CRUZ
+PARTE PRINCIPAL: VISIÓN ARTIFICIAL Y DETECCIÓN DE MANOS
+ARCHIVOS RELACIONADOS:
+- src/vision/handTracker.js
+- src/main.js
+- public/models/hand_landmarker.task
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Edwin Cruz participa en el módulo de visión artificial de HANDVERSE.
+Su responsabilidad se relaciona con la activación de la cámara web, la
+detección de una mano y la obtención de los 21 puntos de referencia
+(landmarks) utilizados posteriormente por el sistema de inteligencia
+artificial.
+
+La visión artificial constituye el primer paso técnico después de activar
+la cámara, porque sin landmarks válidos no existe información que pueda
+transformarse en muestras de entrenamiento o predicciones.
+
+2. MEDIAPIPE HAND LANDMARKER
+
+El proyecto utiliza MediaPipe Tasks Vision y Hand Landmarker.
+
+Conceptualmente, la inicialización sigue esta estructura:
+
+const vision =
+  await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm'
+  )
+
+handLandmarker =
+  await HandLandmarker.createFromOptions(
+    vision,
+    {
+      baseOptions: {
+        modelAssetPath:
+          '/models/hand_landmarker.task'
+      },
+      runningMode: 'VIDEO',
+      numHands: 1
+    }
+  )
+
+La configuración permite:
+
+- trabajar en modo VIDEO;
+- detectar una mano;
+- utilizar el modelo hand_landmarker.task;
+- procesar continuamente frames de la webcam.
+
+3. DETECCIÓN DE LA MANO
+
+La función de detección recibe:
+
+- el elemento de video;
+- el timestamp actual.
+
+La operación principal es equivalente a:
+
+return handLandmarker.detectForVideo(
+  video,
+  timestamp
+)
+
+El resultado proporciona los landmarks de la mano detectada.
+
+4. LOS 21 LANDMARKS
+
+MediaPipe identifica 21 puntos distribuidos entre:
+
+- muñeca;
+- pulgar;
+- índice;
+- dedo medio;
+- anular;
+- meñique.
+
+Cada punto contiene coordenadas:
+
+x
+y
+z
+
+Estos datos se entregan al módulo de características para transformarlos
+en un vector numérico utilizado por TensorFlow.js.
+
+5. RELACIÓN CON main.js
+
+main.js recibe continuamente el resultado de MediaPipe y mantiene los
+landmarks actuales de la mano.
+
+Flujo:
+
+CÁMARA
+   ↓
+FRAME DE VIDEO
+   ↓
+MEDIAPIPE HAND LANDMARKER
+   ↓
+21 LANDMARKS
+   ↓
+main.js
+   ↓
+CAPTURA / PREDICCIÓN
+
+La interfaz además muestra el estado de detección para orientar al usuario,
+por ejemplo cuando el sistema está buscando una mano o cuando la mano ya
+ha sido localizada.
+
+6. APORTE FINAL
+
+APORTE DE EDWIN CRUZ:
+
+"Implementación y apoyo en el módulo de visión artificial de HANDVERSE,
+utilizando MediaPipe Hand Landmarker para detectar una mano en tiempo real
+y obtener los 21 landmarks que alimentan el proceso de entrenamiento y
+reconocimiento de gestos."
+
+============================================================
+FIN — EDWIN CRUZ
+HANDVERSE: AI BATTLE
+============================================================

@@ -1,0 +1,137 @@
+HANDVERSE: AI BATTLE
+ECOTEC · SISTEMAS INTELIGENTES
+DOCUMENTO DE PARTICIPACIÓN TÉCNICA
+
+============================================================
+INTEGRANTE: LUIS AUREA
+PARTE PRINCIPAL: INTEGRACIÓN GENERAL DEL PROYECTO
+ARCHIVOS RELACIONADOS:
+- src/main.js
+- src/lib/supabaseClient.js
+- index.html
+- package.json
+- .gitignore
+- README.md
+============================================================
+
+1. PARTICIPACIÓN EN EL PROYECTO
+
+Luis Aurea se encarga de la integración general de HANDVERSE: AI BATTLE.
+Su participación conecta los distintos módulos desarrollados por el equipo
+para que funcionen como una sola aplicación web: cámara, MediaPipe,
+entrenamiento de la IA, lógica de batalla, interfaz, registro del estudiante
+y almacenamiento de resultados.
+
+La función principal de esta participación es evitar que los módulos queden
+aislados. El archivo src/main.js actúa como coordinador de la experiencia:
+inicializa los componentes, consulta el estado de la cámara, recibe landmarks,
+actualiza la interfaz, inicia el entrenamiento, procesa predicciones y enlaza
+el motor de batalla con el HUD.
+
+2. INTEGRACIÓN EN main.js
+
+Dentro de main.js se concentran tareas como:
+
+- Registro e identificación del estudiante.
+- Activación de la cámara.
+- Inicialización del seguimiento de mano.
+- Lectura de los 21 landmarks.
+- Captura de las muestras de entrenamiento.
+- Actualización visual del dataset.
+- Inicio del entrenamiento con TensorFlow.js.
+- Lectura de la predicción del gesto.
+- Inicio de la cuenta regresiva de batalla.
+- Control del temporizador de cada intercambio.
+- Actualización de vidas y barras de HP.
+- Actualización de usos del poder especial.
+- Cambio de ronda y marcador.
+- Presentación de victoria o derrota.
+- Inicio de una nueva partida o un nuevo estudiante.
+
+Flujo integrado:
+
+REGISTRO
+   ↓
+CÁMARA
+   ↓
+MEDIAPIPE
+   ↓
+21 LANDMARKS
+   ↓
+DATASET
+   ↓
+TENSORFLOW.JS
+   ↓
+PREDICCIÓN DEL GESTO
+   ↓
+BATTLE ENGINE
+   ↓
+INTERFAZ DE BATALLA
+   ↓
+RESULTADO FINAL
+   ↓
+SUPABASE
+
+3. SUPABASE Y PERSISTENCIA
+
+La integración general también contempla la conexión del proyecto con
+Supabase/PostgreSQL mediante src/lib/supabaseClient.js.
+
+El sistema almacena información del participante y el resultado final de la
+partida. La configuración sensible/local se mantiene separada del repositorio
+mediante variables de entorno y archivos .local ignorados por Git.
+
+No deben incluirse contraseñas ni claves privadas dentro de este documento ni
+dentro de archivos versionados públicamente.
+
+4. GITHUB Y VERCEL
+
+Luis Aurea también coordina el versionamiento del proyecto en GitHub y el
+despliegue de la aplicación en Vercel.
+
+Flujo de publicación utilizado:
+
+git add .
+git commit -m "Descripción del cambio"
+git push origin main
+
+Después del push a la rama main, Vercel actualiza el despliegue conectado al
+repositorio.
+
+5. INTEGRACIÓN DE MÓDULOS
+
+Módulos integrados desde main.js:
+
+src/vision/handTracker.js
+→ detección y seguimiento de la mano.
+
+src/ai/features.js
+→ conversión de landmarks a características.
+
+src/ai/dataset.js
+→ almacenamiento de muestras por clase.
+
+src/ai/model.js
+→ creación, entrenamiento y predicción del modelo.
+
+src/game/battleEngine.js
+→ reglas, vida, daño, rondas, poder y ganador.
+
+src/style.css
+→ presentación visual, animaciones y adaptación responsive.
+
+src/lib/supabaseClient.js
+→ persistencia de participantes y resultados.
+
+6. APORTE FINAL
+
+APORTE DE LUIS AUREA:
+
+"Coordinación e integración completa de HANDVERSE: AI BATTLE, conectando
+visión artificial, dataset, modelo TensorFlow.js, motor de batalla, interfaz
+web, Supabase, GitHub y Vercel dentro de un flujo funcional de principio a fin."
+
+============================================================
+FIN — LUIS AUREA
+HANDVERSE: AI BATTLE
+============================================================
