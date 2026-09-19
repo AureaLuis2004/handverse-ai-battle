@@ -30,6 +30,11 @@ import {
 } from "./ai/model.js";
 
 import {
+  validateTrainingGesture,
+  getTrainingGestureName
+} from './ai/gestureValidator.js'
+
+import {
   startBattle,
   startNextRound,
   playBattleTurn,
@@ -1819,11 +1824,10 @@ function updateTrainingUI() {
           class="model-training-status"
         >
 
-          ${
-            modelAlreadyTrained
-              ? "✅ IA entrenada correctamente. HANDVERSE está lista."
-              : "Esperando entrenamiento..."
-          }
+          ${modelAlreadyTrained
+        ? "✅ IA entrenada correctamente. HANDVERSE está lista."
+        : "Esperando entrenamiento..."
+      }
 
         </p>
 
@@ -2115,6 +2119,57 @@ async function captureGesture(gestureKey) {
         await sleep(150);
 
         continue;
+      }
+
+      // ======================================================
+      // VALIDAR QUE EL ESTUDIANTE HAGA EL GESTO CORRECTO
+      // ======================================================
+
+      const validation =
+        validateTrainingGesture(
+          gestureKey,
+          currentLandmarks
+        )
+
+
+      // ------------------------------------------------------
+      // Si el gesto NO corresponde,
+      // no se guarda ninguna muestra.
+      // ------------------------------------------------------
+
+      if (!validation.valid) {
+
+        const expectedGesture =
+          getTrainingGestureName(
+            gestureKey
+          )
+
+
+        // Si HANDVERSE reconoció otro gesto concreto
+        if (validation.detectedGesture) {
+
+          const detectedGesture =
+            getTrainingGestureName(
+              validation.detectedGesture
+            )
+
+          trainingStatus.textContent =
+            `⚠️ Estás mostrando ${detectedGesture}. Debes hacer ${expectedGesture}.`
+
+        } else {
+
+          // Mano visible, pero postura ambigua
+          trainingStatus.textContent =
+            `⚠️ No reconozco claramente el gesto. Haz ${expectedGesture}.`
+
+        }
+
+
+        // Esperamos un poco antes de volver a comprobar.
+        // NO aumenta el contador.
+        await sleep(180)
+
+        continue
       }
 
       const added = addSample(gestureKey, currentLandmarks);
