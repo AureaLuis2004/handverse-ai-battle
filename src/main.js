@@ -1631,8 +1631,7 @@ function resizeOverlay() {
 
 function getCanvasPoint(landmark) {
   return {
-    x: (1 - landmark.x) * canvas.width,
-
+    x: landmark.x * canvas.width,
     y: landmark.y * canvas.height,
   };
 }
