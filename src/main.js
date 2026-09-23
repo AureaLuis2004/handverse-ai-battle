@@ -3535,6 +3535,30 @@ function animateFighterHit(fighter, delay = 260) {
 }
 
 // ============================================================
+// RESALTAR AL GANADOR DE UN INTERCAMBIO
+// ============================================================
+
+function animateFighterWinner(fighter) {
+  if (!fighter) {
+    return;
+  }
+
+  // Evitar que quede una animación anterior activa.
+  fighter.classList.remove("fighter-turn-winner");
+
+  // Forzar reinicio de la animación CSS.
+  void fighter.offsetWidth;
+
+  // Activar efecto visual de ganador.
+  fighter.classList.add("fighter-turn-winner");
+
+  // Regresar al estado normal.
+  window.setTimeout(() => {
+    fighter.classList.remove("fighter-turn-winner");
+  }, 750);
+}
+
+// ============================================================
 // 16. ACTUALIZAR INTERFAZ DE BATALLA
 // ============================================================
 
@@ -3973,6 +3997,7 @@ function updateBattleUI(state) {
     // ----------------------------------------------------------
 
     if (state.turnWinner === "player") {
+      animateFighterWinner(playerFighter);
       animateFighterHit(aiFighter);
     }
 
@@ -3981,6 +4006,7 @@ function updateBattleUI(state) {
     // ----------------------------------------------------------
 
     else if (state.turnWinner === "ai") {
+      animateFighterWinner(aiFighter);
       animateFighterHit(playerFighter);
     }
 

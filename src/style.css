@@ -8693,3 +8693,88 @@ html.low-power-device .system-status-active .system-status-dot {
     right: calc(22% - 95px);
   }
 }
+
+/* ==========================================================
+   HANDVERSE - EFECTO GANADOR DE INTERCAMBIO
+   ========================================================== */
+
+/*
+  Importante:
+  El efecto se aplica a elementos internos del personaje
+  para no interferir con las animaciones de:
+  ATAQUE, ESCUDO y PODER.
+*/
+
+.battle-fighter.fighter-turn-winner .fighter-energy-ring {
+  animation: fighterWinnerRing 0.75s ease-out;
+}
+
+.battle-fighter.fighter-turn-winner .fighter-action-badge {
+  animation: fighterWinnerBadge 0.75s ease-out;
+}
+
+/* ==========================================================
+   COLOR DEL GANADOR - ESTUDIANTE
+   ========================================================== */
+
+.battle-fighter-player.fighter-turn-winner .fighter-energy-ring {
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.95),
+    0 0 38px rgba(34, 211, 238, 0.55),
+    0 0 65px rgba(34, 211, 238, 0.25);
+}
+
+/* ==========================================================
+   COLOR DEL GANADOR - HANDVERSE IA
+   ========================================================== */
+
+.battle-fighter-ai.fighter-turn-winner .fighter-energy-ring {
+  box-shadow:
+    0 0 18px rgba(168, 85, 247, 0.95),
+    0 0 38px rgba(168, 85, 247, 0.55),
+    0 0 65px rgba(168, 85, 247, 0.25);
+}
+
+/* ==========================================================
+   ANIMACIÓN DEL ANILLO
+   ========================================================== */
+
+@keyframes fighterWinnerRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  35% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+
+  65% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+}
+
+/* ==========================================================
+   ANIMACIÓN DEL TEXTO INFERIOR
+   ========================================================== */
+
+@keyframes fighterWinnerBadge {
+  0% {
+    filter: brightness(1);
+  }
+
+  40% {
+    filter: brightness(1.8);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
