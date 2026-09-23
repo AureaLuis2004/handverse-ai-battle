@@ -31,8 +31,8 @@ import {
 
 import {
   validateTrainingGesture,
-  getTrainingGestureName
-} from './ai/gestureValidator.js'
+  getTrainingGestureName,
+} from "./ai/gestureValidator.js";
 
 import {
   startBattle,
@@ -43,6 +43,11 @@ import {
   isBattleActive,
   resetBattle,
 } from "./game/battleEngine.js";
+
+import {
+  DEFAULT_DIFFICULTY_KEY,
+  DIFFICULTY_LEVELS,
+} from "./game/difficultyConfig.js";
 
 // ============================================================
 // 1. INTERFAZ PRINCIPAL
@@ -378,9 +383,54 @@ app.innerHTML = `
 
 
     <!-- ================================================== -->
-    <!-- ENTRENAMIENTO -->
+    <!-- DIFICULTAD DE BATALLA -->
     <!-- ================================================== -->
 
+    <fieldset
+      id="difficulty-selector"
+      class="difficulty-panel"
+      aria-describedby="difficulty-help"
+    >
+      <legend>ELIGE LA DIFICULTAD</legend>
+
+      <p id="difficulty-help" class="difficulty-help">
+        El daño se aplica al ganar un turno.
+        El nivel se mantiene durante toda la partida.
+      </p>
+
+      <div class="difficulty-options">
+        ${Object.values(DIFFICULTY_LEVELS)
+    .map((level) => `
+            <label class="difficulty-option">
+              <input
+                class="difficulty-input"
+                type="radio"
+                name="battle-difficulty"
+                value="${level.key}"
+                ${level.key === DEFAULT_DIFFICULTY_KEY ? "checked" : ""}
+              >
+
+              <span class="difficulty-card">
+                <strong>${level.name}</strong>
+
+                <span class="difficulty-description">
+                  ${level.description}
+                </span>
+
+                <span class="difficulty-damage">
+                  Tu daño: <b>${level.playerDamage}</b> ·
+                  Daño de la IA: <b>${level.aiDamage}</b>
+                </span>
+              </span>
+            </label>
+          `)
+    .join("")}
+      </div>
+    </fieldset>
+
+    <!-- ================================================== -->
+    <!-- ENTRENAMIENTO -->
+    <!-- ================================================== -->
     <section class="training-panel">
 
       <div class="training-header">
@@ -650,192 +700,392 @@ app.innerHTML = `
 
       </div>
 
-
       <!-- ================================================= -->
-      <!-- HUD DE VIDA -->
+      <!-- ESCENARIO VISUAL DE COMBATE -->
       <!-- ================================================= -->
 
-      <div class="battle-hud">
+            <div id="battle-stage" class="battle-stage">
+
+        <!-- ================================================= -->
+        <!-- AMBIENTE DEL ESCENARIO -->
+        <!-- ================================================= -->
+
+        <div class="battle-stage-sky"></div>
+
+        <div
+          class="battle-stage-light battle-stage-light-player"
+        ></div>
+
+        <div
+          class="battle-stage-light battle-stage-light-ai"
+        ></div>
+
+        <div class="battle-stage-floor"></div>
 
 
-        <!-- JUGADOR -->
+        <!-- ================================================= -->
+        <!-- HUD SUPERIOR DE LA ARENA -->
+        <!-- ================================================= -->
 
-        <div class="battle-player">
-
-          <span class="battle-character">
-            👤
-          </span>
-
-          <div>
-
-            <!-- ====================================================== -->
-            <!-- IDENTIDAD DEL JUGADOR -->
-            <!-- ====================================================== -->
-
-            <div class="battle-player-identity">
-
-              <strong
-                id="battle-player-name"
-                class="battle-player-name"
-              >
-                JUGADOR
-              </strong>
-
-              <span
-                id="battle-player-institution"
-                class="battle-player-institution"
-              >
-                INSTITUCIÓN EDUCATIVA
-              </span>
-
-            </div>
-
-            <div class="health-info">
-
-              <span>
-                VIDA
-              </span>
-
-              <span id="player-health-text">
-                100 / 100
-              </span>
-
-            </div>
-
-            <span
-              id="player-damage-indicator"
-              class="damage-indicator"
-            ></span>
-
-            <div class="health-bar">
-
-              <div
-                id="player-health-bar"
-                class="health-fill player-health"
-              ></div>
-
-            </div>
-
-
-            <!-- ESTADO DEL PODER ESPECIAL DEL JUGADOR -->
-
-            <div
-              id="player-power-status"
-              class="power-status power-available"
-            >
-              ⚡ PODER ESPECIAL · 3/3
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- CENTRO -->
-
-        <div class="battle-center">
-
-          <span class="round-label">
-            RONDA
-          </span>
-
-          <strong id="battle-round">
-            0
-          </strong>
+        <div class="battle-stage-hud">
 
 
           <!-- =============================================== -->
-          <!-- TEMPORIZADOR DEL TURNO -->
+          <!-- HUD DEL ESTUDIANTE -->
           <!-- =============================================== -->
 
           <div
-            id="turn-timer"
-            class="turn-timer turn-timer-paused"
+            class="battle-player battle-stage-player-panel"
           >
 
-            <span class="turn-timer-label">
-              TIEMPO
+            <span class="battle-character">
+              👤
             </span>
 
-          <div class="turn-timer-number-row">
+            <div class="battle-hud-content">
 
-            <strong id="turn-timer-value">
-             --
-            </strong>
+              <div class="battle-player-identity">
 
-            <span class="turn-timer-unit">
-             s
-            </span>
+                <strong
+                  id="battle-player-name"
+                  class="battle-player-name"
+                >
+                  JUGADOR
+                </strong>
 
-          </div>
+                <span
+                  id="battle-player-institution"
+                  class="battle-player-institution"
+                >
+                  INSTITUCIÓN EDUCATIVA
+                </span>
 
-          <div class="turn-timer-track">
-
-            <span
-              id="turn-timer-fill"
-              class="turn-timer-fill"
-            ></span>
-
-          </div>
-
-        </div>
-
-    </div>
+              </div>
 
 
-        <!-- IA -->
+              <!-- VIDA DEL ESTUDIANTE -->
 
-        <div class="battle-player battle-ai">
+              <div class="health-info">
 
-          <span class="battle-character">
-            🤖
-          </span>
+                <span>
+                  VIDA
+                </span>
 
-          <div>
+                <span id="player-health-text">
+                  100 / 100
+                </span>
 
-            <span class="battle-label">
-              HANDVERSE IA
-            </span>
+              </div>
 
-            <div class="health-info">
 
-              <span>
-                VIDA
-              </span>
+              <span
+                id="player-damage-indicator"
+                class="damage-indicator"
+              ></span>
 
-              <span id="ai-health-text">
-                100 / 100
-              </span>
 
-            </div>
+              <div class="health-bar">
 
-            <span
-              id="ai-damage-indicator"
-              class="damage-indicator"
-            ></span>
+                <div
+                  id="player-health-bar"
+                  class="health-fill player-health"
+                ></div>
 
-            <div class="health-bar">
+              </div>
+
+
+              <!-- PODER ESPECIAL DEL ESTUDIANTE -->
 
               <div
-                id="ai-health-bar"
-                class="health-fill ai-health"
-              ></div>
+                id="player-power-status"
+                class="power-status power-available"
+              >
+                ⚡ PODER ESPECIAL · 3/3
+              </div>
 
             </div>
 
+          </div>
 
-            <!-- ESTADO DEL PODER ESPECIAL DE HANDVERSE IA -->
+
+          <!-- =============================================== -->
+          <!-- CENTRO: RONDA + TIEMPO -->
+          <!-- =============================================== -->
+
+          <div class="battle-center">
+
+            <span class="round-label">
+              RONDA
+            </span>
+
+            <strong id="battle-round">
+              0
+            </strong>
+
 
             <div
-              id="ai-power-status"
-              class="power-status power-available"
+              id="turn-timer"
+              class="turn-timer turn-timer-paused"
             >
-              ⚡ PODER ESPECIAL · 3/3
+
+              <span class="turn-timer-label">
+                TIEMPO
+              </span>
+
+
+              <div class="turn-timer-number-row">
+
+                <strong id="turn-timer-value">
+                  --
+                </strong>
+
+                <span class="turn-timer-unit">
+                  s
+                </span>
+
+              </div>
+
+
+              <div class="turn-timer-track">
+
+                <span
+                  id="turn-timer-fill"
+                  class="turn-timer-fill"
+                ></span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =============================================== -->
+          <!-- HUD DE HANDVERSE IA -->
+          <!-- =============================================== -->
+
+          <div
+            class="battle-player battle-ai battle-stage-ai-panel"
+          >
+
+            <span class="battle-character">
+              🤖
+            </span>
+
+            <div class="battle-hud-content">
+
+              <div class="battle-player-identity">
+
+                <strong
+                  class="battle-label battle-player-name"
+                >
+                  HANDVERSE IA
+                </strong>
+
+              </div>
+
+
+              <!-- VIDA DE HANDVERSE IA -->
+
+              <div class="health-info">
+
+                <span>
+                  VIDA
+                </span>
+
+                <span id="ai-health-text">
+                  100 / 100
+                </span>
+
+              </div>
+
+
+              <span
+                id="ai-damage-indicator"
+                class="damage-indicator"
+              ></span>
+
+
+              <div class="health-bar">
+
+                <div
+                  id="ai-health-bar"
+                  class="health-fill ai-health"
+                ></div>
+
+              </div>
+
+
+              <!-- PODER ESPECIAL DE HANDVERSE IA -->
+
+              <div
+                id="ai-power-status"
+                class="power-status power-available"
+              >
+                ⚡ PODER ESPECIAL · 3/3
+              </div>
+
             </div>
 
           </div>
 
         </div>
+
+
+        <!-- ================================================= -->
+        <!-- PERSONAJE DEL ESTUDIANTE -->
+        <!-- ================================================= -->
+
+        <div
+          id="player-fighter"
+          class="battle-fighter battle-fighter-player fighter-idle"
+        >
+
+          <div class="fighter-energy-ring"></div>
+
+
+          <div class="fighter-character">
+
+            <div class="fighter-head">
+
+              <span class="fighter-face">
+                ● ●
+              </span>
+
+            </div>
+
+
+            <div class="fighter-body">
+
+              <span
+                class="fighter-arm fighter-arm-left"
+              ></span>
+
+              <span
+                class="fighter-torso"
+              ></span>
+
+              <span
+                class="fighter-arm fighter-arm-right"
+              ></span>
+
+            </div>
+
+
+            <div class="fighter-legs">
+
+              <span></span>
+
+              <span></span>
+
+            </div>
+
+          </div>
+
+
+          <div class="fighter-shadow"></div>
+
+
+          <div
+            id="player-stage-action"
+            class="fighter-action-badge"
+          >
+            LISTO
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- VS CENTRAL -->
+        <!-- ================================================= -->
+
+        <div class="battle-stage-center">
+
+          <span class="battle-stage-vs">
+            VS
+          </span>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- PERSONAJE HANDVERSE IA -->
+        <!-- ================================================= -->
+
+        <div
+          id="ai-fighter"
+          class="battle-fighter battle-fighter-ai fighter-idle"
+        >
+
+          <div class="fighter-energy-ring"></div>
+
+
+          <div
+            class="fighter-character fighter-character-ai"
+          >
+
+            <div
+              class="fighter-head fighter-head-ai"
+            >
+
+              <span
+                class="fighter-ai-eye"
+              ></span>
+
+            </div>
+
+
+            <div class="fighter-body">
+
+              <span
+                class="fighter-arm fighter-arm-left"
+              ></span>
+
+              <span
+                class="fighter-torso"
+              ></span>
+
+              <span
+                class="fighter-arm fighter-arm-right"
+              ></span>
+
+            </div>
+
+
+            <div class="fighter-legs">
+
+              <span></span>
+
+              <span></span>
+
+            </div>
+
+          </div>
+
+
+          <div class="fighter-shadow"></div>
+
+
+          <div
+            id="ai-stage-action"
+            class="fighter-action-badge fighter-action-badge-ai"
+          >
+            LISTO
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- EFECTOS DE COMBATE -->
+        <!-- ================================================= -->
+
+        <div
+          id="battle-impact-effect"
+          class="battle-impact-effect"
+          aria-hidden="true"
+        ></div>
 
       </div>
 
@@ -1044,6 +1294,27 @@ const battlePlayerInstitution = document.getElementById(
   "battle-player-institution",
 );
 
+const difficultyInputs = document.querySelectorAll(
+  'input[name="battle-difficulty"]'
+);
+
+// ============================================================
+// PERSONAJES DEL ESCENARIO DE BATALLA
+// ============================================================
+
+const playerFighter = document.getElementById("player-fighter");
+
+const aiFighter = document.getElementById("ai-fighter");
+
+const playerStageAction = document.getElementById(
+  "player-stage-action",
+);
+
+const aiStageAction = document.getElementById(
+  "ai-stage-action",
+);
+
+
 // ============================================================
 // 3. ESTADO GENERAL
 // ============================================================
@@ -1051,6 +1322,27 @@ const battlePlayerInstitution = document.getElementById(
 let handTrackerReady = false;
 
 let detectionRunning = false;
+
+// ===================================================
+// DIFICULTAD DE BATALLA
+// ===================================================
+
+let selectedDifficultyKey = DEFAULT_DIFFICULTY_KEY;
+
+let activeBattleDifficultyKey = null;
+
+difficultyInputs.forEach((input) => {
+  input.addEventListener("change", () => {
+    if (!input.checked) return;
+
+    selectedDifficultyKey = input.value;
+
+    console.log(
+      "[HANDVERSE] Dificultad seleccionada:",
+      selectedDifficultyKey
+    );
+  });
+});
 
 // ======================================================
 // CONTROL DE RENDIMIENTO DURANTE ENTRENAMIENTO
@@ -1983,7 +2275,67 @@ async function handleTrainModel() {
     // INICIAR MOTOR DE BATALLA
     // ======================================================
 
-    const initialBattleState = startBattle();
+    // Fijar la dificultad seleccionada para toda la partida.
+    activeBattleDifficultyKey = selectedDifficultyKey;
+
+    // Bloquear el selector mientras la batalla está activa.
+    difficultyInputs.forEach((input) => {
+      input.disabled = true;
+    });
+
+    console.log(
+      "[HANDVERSE] Dificultad bloqueada para la batalla:",
+      activeBattleDifficultyKey
+    );
+
+    const activeDifficultyConfig =
+      Object.values(DIFFICULTY_LEVELS).find(
+        (level) => level.key === activeBattleDifficultyKey
+      );
+
+
+    // ==================================================
+    // GUARDAR DIFICULTAD AL INICIAR LA BATALLA
+    // ==================================================
+
+    if (registeredPlayerSupabaseId && activeDifficultyConfig) {
+      const { data: difficultyData, error: difficultyError } = await supabase
+        .from("handverse_participants")
+        .update({
+          difficulty: activeDifficultyConfig.name
+        })
+        .eq("id", registeredPlayerSupabaseId)
+        .select("id, difficulty")
+        .single();
+
+      if (difficultyError) {
+        console.error(
+          "❌ ERROR AL GUARDAR DIFICULTAD EN SUPABASE:",
+          difficultyError
+        );
+      } else {
+        console.log(
+          "✅ DIFICULTAD GUARDADA AL INICIAR BATALLA:",
+          difficultyData
+        );
+      }
+    } else {
+      console.warn(
+        "⚠️ No se pudo guardar la dificultad antes de iniciar la batalla."
+      );
+    }
+
+
+    const initialBattleState = startBattle({
+      difficultyKey: activeDifficultyConfig.key,
+      playerDamage: activeDifficultyConfig.playerDamage,
+      aiDamage: activeDifficultyConfig.aiDamage
+    });
+
+    console.log(
+      "[HANDVERSE] Configuración enviada al motor:",
+      activeDifficultyConfig
+    );
 
     // ======================================================
     // ACTUALIZAR INTERFAZ
@@ -2124,12 +2476,7 @@ async function captureGesture(gestureKey) {
       // VALIDAR QUE EL ESTUDIANTE HAGA EL GESTO CORRECTO
       // ======================================================
 
-      const validation =
-        validateTrainingGesture(
-          gestureKey,
-          currentLandmarks
-        )
-
+      const validation = validateTrainingGesture(gestureKey, currentLandmarks);
 
       // ------------------------------------------------------
       // Si el gesto NO corresponde,
@@ -2137,38 +2484,25 @@ async function captureGesture(gestureKey) {
       // ------------------------------------------------------
 
       if (!validation.valid) {
-
-        const expectedGesture =
-          getTrainingGestureName(
-            gestureKey
-          )
-
+        const expectedGesture = getTrainingGestureName(gestureKey);
 
         // Si HANDVERSE reconoció otro gesto concreto
         if (validation.detectedGesture) {
+          const detectedGesture = getTrainingGestureName(
+            validation.detectedGesture,
+          );
 
-          const detectedGesture =
-            getTrainingGestureName(
-              validation.detectedGesture
-            )
-
-          trainingStatus.textContent =
-            `⚠️ Estás mostrando ${detectedGesture}. Debes hacer ${expectedGesture}.`
-
+          trainingStatus.textContent = `⚠️ Estás mostrando ${detectedGesture}. Debes hacer ${expectedGesture}.`;
         } else {
-
           // Mano visible, pero postura ambigua
-          trainingStatus.textContent =
-            `⚠️ No reconozco claramente el gesto. Haz ${expectedGesture}.`
-
+          trainingStatus.textContent = `⚠️ No reconozco claramente el gesto. Haz ${expectedGesture}.`;
         }
-
 
         // Esperamos un poco antes de volver a comprobar.
         // NO aumenta el contador.
-        await sleep(180)
+        await sleep(180);
 
-        continue
+        continue;
       }
 
       const added = addSample(gestureKey, currentLandmarks);
@@ -2322,13 +2656,6 @@ function processBattlePrediction(prediction) {
   if (battleCountdownActive) {
     resetBattleGestureControl();
 
-    return;
-  }
-
-  // Durante transición de ronda
-  // no aceptamos otro ataque.
-
-  if (roundTransitionActive) {
     return;
   }
 
@@ -2522,6 +2849,13 @@ async function startNewBattle() {
 
   lastAiPowerAnimation = null;
 
+  lastFighterAnimationId = null;
+
+  lastFighterHitAnimationId = null;
+
+  resetFighterVisual(playerFighter);
+  resetFighterVisual(aiFighter);
+
   const currentState = getBattleState();
 
   if (!currentState || !currentState.battleFinished) {
@@ -2559,11 +2893,39 @@ async function startNewBattle() {
 
   resetBattleGestureControl();
 
+
+  // ================================================
+  // CONSERVAR DIFICULTAD DE LA SESIÓN
+  // ================================================
+
+  const newBattleDifficultyConfig =
+    Object.values(DIFFICULTY_LEVELS).find(
+      (level) => level.key === activeBattleDifficultyKey
+    );
+
+  if (!newBattleDifficultyConfig) {
+    console.error(
+      "❌ No se pudo generar otra partida: la dificultad activa no es válida.",
+      activeBattleDifficultyKey
+    );
+
+    return;
+  }
+
   // ==========================================================
   // INICIAR NUEVA PARTIDA EN EL MOTOR
   // ==========================================================
 
-  const newBattleState = startBattle();
+  const newBattleState = startBattle({
+    difficultyKey: newBattleDifficultyConfig.key,
+    playerDamage: newBattleDifficultyConfig.playerDamage,
+    aiDamage: newBattleDifficultyConfig.aiDamage
+  });
+
+  console.log(
+    "[HANDVERSE] Nueva partida conserva dificultad:",
+    newBattleDifficultyConfig
+  );
 
   // ==========================================================
   // ACTUALIZAR INTERFAZ
@@ -2746,11 +3108,6 @@ let lastAiPowerAnimation = null;
 // CONTROL DE CUENTA REGRESIVA DE BATALLA
 // ============================================================
 
-// Elementos visuales de la cuenta regresiva.
-const battleCountdown = document.getElementById("battle-countdown");
-
-const battleCountdownText = document.getElementById("battle-countdown-text");
-
 // Indica si actualmente existe una cuenta regresiva activa.
 let battleCountdownActive = false;
 
@@ -2875,36 +3232,6 @@ function resetBattleAudio() {
   victoryMusic.currentTime = 0;
 
   console.log("🔄 Sistema de audio HANDVERSE reiniciado");
-}
-
-// ============================================================
-// EJECUTAR CUENTA REGRESIVA DE BATALLA
-// ============================================================
-
-function waitBattleCountdown(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-// ============================================================
-// LIMPIAR CUENTA REGRESIVA
-// ============================================================
-
-function clearBattleCountdown() {
-  const countdownContainer = document.getElementById("battle-countdown");
-
-  const countdownText = document.getElementById("battle-countdown-text");
-
-  if (countdownText) {
-    countdownText.textContent = "";
-
-    countdownText.classList.remove("battle-countdown-combat");
-  }
-
-  if (countdownContainer) {
-    countdownContainer.classList.remove("battle-countdown-visible");
-
-    countdownContainer.setAttribute("aria-hidden", "true");
-  }
 }
 
 // ============================================================
@@ -3117,6 +3444,96 @@ async function startBattleCountdown() {
   console.log("⚔️ HANDVERSE: combate habilitado");
 }
 
+
+// ============================================================
+// ANIMACIONES VISUALES DE LOS COMBATIENTES
+// ============================================================
+
+let lastFighterAnimationId = null;
+
+let lastFighterHitAnimationId = null;
+
+const fighterActionClasses = [
+  "fighter-attack",
+  "fighter-shield",
+  "fighter-power",
+  "fighter-hit",
+];
+
+function resetFighterVisual(fighter) {
+  if (!fighter) {
+    return;
+  }
+
+  fighter.classList.remove(...fighterActionClasses);
+
+  fighter.classList.add("fighter-idle");
+}
+
+function animateFighterAction(fighter, actionKey) {
+  if (!fighter) {
+    return;
+  }
+
+  fighter.classList.remove(
+    "fighter-idle",
+    ...fighterActionClasses,
+  );
+
+  // Reiniciar animación CSS.
+  void fighter.offsetWidth;
+
+  switch (actionKey) {
+    case "attack":
+      fighter.classList.add("fighter-attack");
+      break;
+
+    case "shield":
+      fighter.classList.add("fighter-shield");
+      break;
+
+    case "power":
+      fighter.classList.add("fighter-power");
+      break;
+
+    default:
+      fighter.classList.add("fighter-idle");
+      return;
+  }
+
+  // Después de la acción vuelve a posición de combate.
+  window.setTimeout(() => {
+    fighter.classList.remove(...fighterActionClasses);
+    fighter.classList.add("fighter-idle");
+  }, 700);
+}
+
+// ============================================================
+// REACCIÓN VISUAL AL RECIBIR DAÑO
+// ============================================================
+
+function animateFighterHit(fighter, delay = 260) {
+  if (!fighter) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    // Quitar por si todavía quedó de una animación anterior.
+    fighter.classList.remove("fighter-hit");
+
+    // Forzar al navegador a reiniciar la animación CSS.
+    void fighter.offsetWidth;
+
+    // Ejecutar impacto.
+    fighter.classList.add("fighter-hit");
+
+    // Limpiar después de terminar la animación.
+    window.setTimeout(() => {
+      fighter.classList.remove("fighter-hit");
+    }, 600);
+  }, delay);
+}
+
 // ============================================================
 // 16. ACTUALIZAR INTERFAZ DE BATALLA
 // ============================================================
@@ -3183,6 +3600,10 @@ function updateBattleUI(state) {
   const aiActionIcon = document.getElementById("ai-battle-emoji");
 
   const aiActionName = document.getElementById("ai-battle-action");
+
+  // ========================================================
+  // MARCADOR DE RONDAS
+  // ========================================================
 
   const playerRoundsWon = Number(state.playerRoundsWon ?? 0);
 
@@ -3258,6 +3679,19 @@ function updateBattleUI(state) {
 
       aiPowerStatus.classList.add("power-available");
     }
+
+    if (playerStageAction) {
+      playerStageAction.textContent = "LISTO";
+    }
+
+    if (aiStageAction) {
+      aiStageAction.textContent = "LISTO";
+    }
+
+    resetFighterVisual(playerFighter);
+    resetFighterVisual(aiFighter);
+
+    lastFighterAnimationId = null;
 
     return;
   }
@@ -3427,11 +3861,18 @@ function updateBattleUI(state) {
 
   if (state.playerAction) {
     if (playerActionIcon) {
-      playerActionIcon.textContent = state.playerAction.emoji ?? "❔";
+      playerActionIcon.textContent =
+        state.playerAction.emoji ?? "❔";
     }
 
     if (playerActionName) {
-      playerActionName.textContent = state.playerAction.name ?? "ESPERANDO";
+      playerActionName.textContent =
+        state.playerAction.name ?? "ESPERANDO";
+    }
+
+    if (playerStageAction) {
+      playerStageAction.textContent =
+        state.playerAction.name ?? "LISTO";
     }
   } else {
     if (playerActionIcon) {
@@ -3441,6 +3882,10 @@ function updateBattleUI(state) {
     if (playerActionName) {
       playerActionName.textContent = "ESPERANDO";
     }
+
+    if (playerStageAction) {
+      playerStageAction.textContent = "LISTO";
+    }
   }
 
   // ========================================================
@@ -3449,11 +3894,18 @@ function updateBattleUI(state) {
 
   if (state.aiAction) {
     if (aiActionIcon) {
-      aiActionIcon.textContent = state.aiAction.emoji ?? "🤖";
+      aiActionIcon.textContent =
+        state.aiAction.emoji ?? "🤖";
     }
 
     if (aiActionName) {
-      aiActionName.textContent = state.aiAction.name ?? "ESPERANDO";
+      aiActionName.textContent =
+        state.aiAction.name ?? "ESPERANDO";
+    }
+
+    if (aiStageAction) {
+      aiStageAction.textContent =
+        state.aiAction.name ?? "LISTO";
     }
   } else {
     if (aiActionIcon) {
@@ -3463,6 +3915,10 @@ function updateBattleUI(state) {
     if (aiActionName) {
       aiActionName.textContent = "ESPERANDO";
     }
+
+    if (aiStageAction) {
+      aiStageAction.textContent = "LISTO";
+    }
   }
 
   // ============================================================
@@ -3470,6 +3926,66 @@ function updateBattleUI(state) {
   // ============================================================
 
   const currentBattleActionId = `${state.round}-${state.turn}`;
+
+  // ============================================================
+  // ANIMAR PERSONAJES SEGÚN EL MOVIMIENTO REAL DEL TURNO
+  // ============================================================
+
+  const fighterAnimationId =
+    `${state.round}-${state.turn}-` +
+    `${state.playerAction?.key ?? "none"}-` +
+    `${state.aiAction?.key ?? "none"}`;
+
+  if (fighterAnimationId !== lastFighterAnimationId) {
+    if (state.playerAction?.key) {
+      animateFighterAction(
+        playerFighter,
+        state.playerAction.key,
+      );
+    }
+
+    if (state.aiAction?.key) {
+      animateFighterAction(
+        aiFighter,
+        state.aiAction.key,
+      );
+    }
+
+    lastFighterAnimationId = fighterAnimationId;
+  }
+
+  // ============================================================
+  // REACCIÓN DEL PERSONAJE QUE RECIBIÓ DAÑO
+  // ============================================================
+
+  const fighterHitAnimationId =
+    `${state.round}-${state.turn}-` +
+    `${state.turnWinner ?? "none"}-` +
+    `${state.playerHealth}-${state.aiHealth}`;
+
+  if (
+    fighterHitAnimationId !== lastFighterHitAnimationId &&
+    state.turnWinner
+  ) {
+
+    // ----------------------------------------------------------
+    // GANÓ EL ESTUDIANTE → HANDVERSE recibe el impacto
+    // ----------------------------------------------------------
+
+    if (state.turnWinner === "player") {
+      animateFighterHit(aiFighter);
+    }
+
+    // ----------------------------------------------------------
+    // GANÓ HANDVERSE → ESTUDIANTE recibe el impacto
+    // ----------------------------------------------------------
+
+    else if (state.turnWinner === "ai") {
+      animateFighterHit(playerFighter);
+    }
+
+    lastFighterHitAnimationId = fighterHitAnimationId;
+  }
 
   // ============================================================
   // PODER ESPECIAL DEL ESTUDIANTE
@@ -3643,7 +4159,7 @@ function updateBattleUI(state) {
   } else if (state.turnWinner === "ai") {
     if (state.timeout) {
       battleResult.textContent =
-        "⏱️ TIEMPO AGOTADO · HANDVERSE GANA EL INTERCAMBIO · -20 HP";
+        `⏱️ TIEMPO AGOTADO · HANDVERSE GANA EL INTERCAMBIO · -${state.aiDamage} HP`;
     } else {
       battleResult.textContent =
         "🤖 HANDVERSE GANÓ EL INTERCAMBIO · LA RONDA CONTINÚA";
@@ -4291,6 +4807,11 @@ async function saveBattleResultToSupabase(state) {
 
   const result = state.winner === "player" ? "GANADOR" : "DERROTA";
 
+  const difficultyName =
+    Object.values(DIFFICULTY_LEVELS).find(
+      (level) => level.key === state.difficultyKey
+    )?.name ?? "SIN DEFINIR";
+
   // Evitar actualizaciones duplicadas
   battleResultSaved = true;
 
@@ -4299,13 +4820,12 @@ async function saveBattleResultToSupabase(state) {
       .from("handverse_participants")
       .update({
         result: result,
-
         player_score: playerScore,
-
         ai_score: aiScore,
+        difficulty: difficultyName,
       })
       .eq("id", registeredPlayerSupabaseId)
-      .select("id, result, player_score, ai_score")
+      .select("id, result, player_score, ai_score, difficulty")
       .single();
 
     if (error) {
@@ -4330,6 +4850,8 @@ async function saveBattleResultToSupabase(state) {
       institucion: registeredPlayer.institution,
 
       resultado: result,
+
+      dificultad: difficultyName,
 
       marcador: `${playerScore} - ${aiScore}`,
     });

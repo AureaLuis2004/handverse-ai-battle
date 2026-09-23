@@ -64,7 +64,7 @@ export const BATTLE_ACTIONS = {
 // 3. CREAR ESTADO INICIAL
 // ============================================================
 
-function createInitialBattleState() {
+function createInitialBattleState(config = {}) {
 
   return {
 
@@ -77,6 +77,20 @@ function createInitialBattleState() {
 
     aiHealth:
       BATTLE_CONFIG.INITIAL_HEALTH,
+
+
+    // --------------------------------------------------------
+    // CONFIGURACIÓN DE DIFICULTAD
+    // --------------------------------------------------------
+
+    difficultyKey:
+      config.difficultyKey ?? null,
+
+    playerDamage:
+      config.playerDamage ?? BATTLE_CONFIG.DAMAGE_PER_TURN,
+
+    aiDamage:
+      config.aiDamage ?? BATTLE_CONFIG.DAMAGE_PER_TURN,
 
 
     // --------------------------------------------------------
@@ -186,10 +200,10 @@ let battleState =
 // 5. REINICIAR TODA LA PARTIDA
 // ============================================================
 
-export function resetBattle() {
+export function resetBattle(config = {}) {
 
   battleState =
-    createInitialBattleState()
+    createInitialBattleState(config)
 
   console.log(
     '⚔️ Batalla HANDVERSE reiniciada'
@@ -203,10 +217,10 @@ export function resetBattle() {
 // 6. INICIAR PARTIDA
 // ============================================================
 
-export function startBattle() {
+export function startBattle(config = {}) {
 
   // Reiniciamos absolutamente todo.
-  resetBattle()
+  resetBattle(config)
 
   // Activamos la batalla.
   battleState.battleStarted = true
@@ -725,7 +739,7 @@ export function playBattleTurn(
 
   // ----------------------------------------------------------
   // GANA EL ESTUDIANTE
-  // HANDVERSE PIERDE 20 DE VIDA
+  // HANDVERSE PIERDE EL DAÑO DEL ESTUDIANTE
   // ----------------------------------------------------------
 
   if (
@@ -735,15 +749,13 @@ export function playBattleTurn(
   ) {
 
     battleState.aiHealth -=
-
-      BATTLE_CONFIG
-        .DAMAGE_PER_TURN
+      battleState.playerDamage
   }
 
 
   // ----------------------------------------------------------
   // GANA HANDVERSE
-  // EL ESTUDIANTE PIERDE 20 DE VIDA
+  // EL ESTUDIANTE RECIBE EL DAÑO DE LA IA
   // ----------------------------------------------------------
 
   else if (
@@ -753,9 +765,7 @@ export function playBattleTurn(
   ) {
 
     battleState.playerHealth -=
-
-      BATTLE_CONFIG
-        .DAMAGE_PER_TURN
+      battleState.aiDamage
   }
 
 
@@ -865,7 +875,7 @@ export function playBattleTurn(
 // de los 5 segundos disponibles:
 //
 // - HANDVERSE gana automáticamente el intercambio.
-// - El estudiante pierde 20 HP.
+// - El estudiante recibe el daño definido por la dificultad.
 // - No se consume PODER de ningún participante.
 // - Se conserva el sistema normal de rondas.
 // ============================================================
@@ -981,8 +991,7 @@ export function playTimeoutTurn() {
   // ==========================================================
 
   battleState.playerHealth -=
-    BATTLE_CONFIG
-      .DAMAGE_PER_TURN
+    battleState.aiDamage
 
 
   battleState.playerHealth =
