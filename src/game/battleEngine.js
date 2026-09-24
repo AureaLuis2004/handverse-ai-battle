@@ -3,6 +3,9 @@
 // Motor principal de batalla
 // ============================================================
 
+import {
+  getDifficultyConfig
+} from "./difficultyConfig.js";
 
 // ============================================================
 // 1. CONFIGURACIÓN GENERAL
@@ -139,6 +142,23 @@ function createInitialBattleState(config = {}) {
 
     aiAction: null,
 
+    // --------------------------------------------------------
+    // HISTORIAL DE MOVIMIENTOS DEL ESTUDIANTE
+    // --------------------------------------------------------
+    //
+    // HANDVERSE utilizará únicamente movimientos
+    // de turnos ANTERIORES para intentar detectar
+    // patrones según el nivel de dificultad.
+    //
+    // El movimiento del turno actual NO se agrega
+    // hasta después de que HANDVERSE haya elegido
+    // su propio movimiento.
+    //
+    // Esto evita que la IA haga trampa.
+    // --------------------------------------------------------
+
+    playerActionHistory: [],
+
 
     // --------------------------------------------------------
     // GANADOR DEL ÚLTIMO TURNO
@@ -264,12 +284,171 @@ export function gestureToBattleAction(
   }
 }
 
+// ============================================================
+// MOVIMIENTO QUE CONTRARRESTA UNA ACCIÓN
+// ============================================================
+//
+// Reglas de HANDVERSE:
+//
+// ESCUDO vence a ATAQUE.
+// PODER vence a ESCUDO.
+// ATAQUE vence a PODER.
+//
+// Esta función NO conoce el movimiento actual del estudiante.
+// Más adelante recibirá únicamente una predicción basada
+// en movimientos ANTERIORES.
+// ============================================================
+
+function getCounterAction(actionKey) {
+
+  switch (actionKey) {
+
+    case 'attack':
+
+      return BATTLE_ACTIONS.SHIELD
+
+
+    case 'shield':
+
+      return BATTLE_ACTIONS.POWER
+
+
+    case 'power':
+
+      return BATTLE_ACTIONS.ATTACK
+
+
+    default:
+
+      return null
+  }
+}
+
+// ============================================================
+// ANALIZAR HISTORIAL DEL ESTUDIANTE
+// ============================================================
+//
+// HANDVERSE analiza solamente movimientos ANTERIORES.
+//
+// historySize indica cuántos movimientos recientes
+// puede estudiar según la dificultad.
+//
+// Si varios movimientos aparecen la misma cantidad
+// de veces, se elige aleatoriamente entre ellos.
+//
+// Esta función devuelve solamente una PREDICCIÓN:
+// 'attack', 'shield', 'power' o null.
+// ============================================================
+
+function predictPlayerActionFromHistory(historySize) {
+
+  // ----------------------------------------------------------
+  // SEGURIDAD
+  // ----------------------------------------------------------
+
+  if (
+    !Array.isArray(battleState.playerActionHistory) ||
+    battleState.playerActionHistory.length === 0 ||
+    historySize <= 0
+  ) {
+
+    return null
+  }
+
+
+  // ----------------------------------------------------------
+  // TOMAR SOLO LOS MOVIMIENTOS MÁS RECIENTES
+  // ----------------------------------------------------------
+
+  const recentHistory =
+    battleState.playerActionHistory.slice(
+      -historySize
+    )
+
+
+  // ----------------------------------------------------------
+  // CONTAR CADA TIPO DE MOVIMIENTO
+  // ----------------------------------------------------------
+
+  const counts = {
+
+    attack: 0,
+
+    shield: 0,
+
+    power: 0
+
+  }
+
+
+  recentHistory.forEach((actionKey) => {
+
+    if (
+      Object.prototype.hasOwnProperty.call(
+        counts,
+        actionKey
+      )
+    ) {
+
+      counts[actionKey]++
+    }
+  })
+
+
+  // ----------------------------------------------------------
+  // OBTENER LA MAYOR FRECUENCIA
+  // ----------------------------------------------------------
+
+  const highestCount =
+    Math.max(
+      counts.attack,
+      counts.shield,
+      counts.power
+    )
+
+
+  if (highestCount <= 0) {
+
+    return null
+  }
+
+
+  // ----------------------------------------------------------
+  // BUSCAR MOVIMIENTOS EMPATADOS COMO MÁS FRECUENTES
+  // ----------------------------------------------------------
+
+  const mostFrequentActions =
+
+    Object.keys(counts).filter(
+      (actionKey) =>
+        counts[actionKey] === highestCount
+    )
+
+
+  // ----------------------------------------------------------
+  // SI HAY EMPATE, ELEGIR UNO AL AZAR
+  // ----------------------------------------------------------
+
+  const randomIndex =
+
+    Math.floor(
+      Math.random() *
+      mostFrequentActions.length
+    )
+
+
+  return mostFrequentActions[randomIndex]
+}
 
 // ============================================================
 // 8. GENERAR MOVIMIENTO DE HANDVERSE IA
 // ============================================================
 
 export function generateAIAction() {
+
+  // ==========================================================
+  // MOVIMIENTOS DISPONIBLES
+  // ==========================================================
 
   // ATAQUE y ESCUDO siempre están disponibles.
 
@@ -278,19 +457,16 @@ export function generateAIAction() {
     BATTLE_ACTIONS.ATTACK,
 
     BATTLE_ACTIONS.SHIELD
+
   ]
 
 
   // ----------------------------------------------------------
-  // PODER ESPECIAL DE HANDVERSE
+  // PODER ESPECIAL
   // ----------------------------------------------------------
   //
-  // HANDVERSE puede utilizar PODER
-  // máximo 3 veces durante la ronda.
-  //
-  // Cuando llega al máximo,
-  // PODER deja de formar parte
-  // de sus movimientos disponibles.
+  // PODER solamente puede formar parte de las opciones
+  // mientras HANDVERSE tenga usos disponibles.
   // ----------------------------------------------------------
 
   if (
@@ -308,20 +484,229 @@ export function generateAIAction() {
   }
 
 
-  // HANDVERSE selecciona aleatoriamente
-  // uno de los movimientos disponibles.
+  // ==========================================================
+  // ELECCIÓN ALEATORIA SEGURA
+  // ==========================================================
 
-  const randomIndex =
+  const getRandomAvailableAction = () => {
 
-    Math.floor(
+    const randomIndex =
 
-      Math.random() *
-      actions.length
+      Math.floor(
+
+        Math.random() *
+        actions.length
+
+      )
+
+
+    return actions[randomIndex]
+  }
+
+
+  // ==========================================================
+  // OBTENER CONFIGURACIÓN DE DIFICULTAD
+  // ==========================================================
+
+  const difficultyConfig =
+
+    getDifficultyConfig(
+      battleState.difficultyKey
+    )
+
+
+  // ----------------------------------------------------------
+  // SEGURIDAD
+  // ----------------------------------------------------------
+  //
+  // Si por alguna razón no existe una dificultad válida,
+  // HANDVERSE vuelve al comportamiento aleatorio.
+  // ----------------------------------------------------------
+
+  if (!difficultyConfig) {
+
+    console.warn(
+      "⚠️ HANDVERSE no encontró una dificultad válida. Se utilizará movimiento aleatorio."
+    )
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // PARÁMETROS ESTRATÉGICOS
+  // ==========================================================
+
+  const strategyChance =
+
+    difficultyConfig
+      .aiStrategyChance ?? 0
+
+
+  const historySize =
+
+    difficultyConfig
+      .historySize ?? 0
+
+
+  // ==========================================================
+  // FÁCIL O SIN HISTORIAL
+  // ==========================================================
+  //
+  // FÁCIL tiene strategyChance = 0.
+  //
+  // Además, aunque estemos en INTERMEDIO o DIFÍCIL,
+  // si todavía no existen movimientos anteriores,
+  // HANDVERSE necesariamente debe jugar al azar.
+  // ==========================================================
+
+  if (
+
+    strategyChance <= 0 ||
+
+    historySize <= 0 ||
+
+    battleState
+      .playerActionHistory
+      .length === 0
+
+  ) {
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // DECIDIR SI HANDVERSE UTILIZA ESTRATEGIA
+  // ==========================================================
+  //
+  // INTERMEDIO:
+  // aproximadamente 45 % de probabilidad.
+  //
+  // DIFÍCIL:
+  // aproximadamente 70 % de probabilidad.
+  //
+  // El resto de las veces mantiene comportamiento aleatorio.
+  // ==========================================================
+
+  const shouldUseStrategy =
+
+    Math.random() <
+    strategyChance
+
+
+  if (!shouldUseStrategy) {
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // PREDECIR MOVIMIENTO DEL ESTUDIANTE
+  // ==========================================================
+  //
+  // IMPORTANTE:
+  //
+  // Esta predicción utiliza únicamente movimientos
+  // ANTERIORES guardados en playerActionHistory.
+  //
+  // Nunca recibe el movimiento actual del estudiante.
+  // ==========================================================
+
+  const predictedPlayerAction =
+
+    predictPlayerActionFromHistory(
+      historySize
+    )
+
+
+  if (!predictedPlayerAction) {
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // BUSCAR RESPUESTA ESTRATÉGICA
+  // ==========================================================
+
+  const counterAction =
+
+    getCounterAction(
+      predictedPlayerAction
+    )
+
+
+  if (!counterAction) {
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // COMPROBAR QUE LA RESPUESTA ESTÉ DISPONIBLE
+  // ==========================================================
+  //
+  // Ejemplo:
+  //
+  // Si HANDVERSE predice ESCUDO,
+  // la respuesta ideal sería PODER.
+  //
+  // Pero si ya utilizó los 3 PODERES de la ronda,
+  // no puede inventarse otro uso.
+  //
+  // En ese caso vuelve a una decisión aleatoria
+  // entre las acciones que todavía están disponibles.
+  // ==========================================================
+
+  const counterIsAvailable =
+
+    actions.some(
+
+      (action) =>
+        action.key === counterAction.key
 
     )
 
 
-  return actions[randomIndex]
+  if (!counterIsAvailable) {
+
+    return getRandomAvailableAction()
+  }
+
+
+  // ==========================================================
+  // INFORMACIÓN DE DEPURACIÓN
+  // ==========================================================
+
+  console.log(
+    "🧠 ESTRATEGIA HANDVERSE:",
+    {
+      difficulty:
+        difficultyConfig.key,
+
+      strategyChance,
+
+      historySize,
+
+      recentHistory:
+        battleState
+          .playerActionHistory
+          .slice(-historySize),
+
+      predictedPlayerAction,
+
+      selectedCounter:
+        counterAction.key
+    }
+  )
+
+
+  // ==========================================================
+  // MOVIMIENTO ESTRATÉGICO
+  // ==========================================================
+
+  return counterAction
 }
 
 
@@ -658,6 +1043,27 @@ export function playBattleTurn(
 
   const aiAction =
     generateAIAction()
+
+
+  // ==========================================================
+  // GUARDAR MOVIMIENTO ACTUAL EN EL HISTORIAL
+  // ==========================================================
+  //
+  // IMPORTANTE:
+  //
+  // HANDVERSE ya eligió su movimiento antes de que
+  // guardemos la acción actual del estudiante.
+  //
+  // De esta manera, la IA solamente podrá analizar
+  // este movimiento a partir del SIGUIENTE turno.
+  //
+  // Esto evita que HANDVERSE conozca anticipadamente
+  // el movimiento actual del estudiante.
+  // ==========================================================
+
+  battleState.playerActionHistory.push(
+    playerAction.key
+  )
 
 
   // ==========================================================
