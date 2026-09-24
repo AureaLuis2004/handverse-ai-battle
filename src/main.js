@@ -2822,16 +2822,8 @@ function processBattlePrediction(prediction) {
 
 async function startNewBattle() {
   // ==========================================================
-  // LIMPIAR GANADOR ANTERIOR
+  // 1. VALIDAR QUE LA IA ESTÉ ENTRENADA
   // ==========================================================
-
-  hideRegisteredPlayerVictory();
-
-  // ======================================================
-  // PERMITIR GUARDAR EL RESULTADO DE LA NUEVA PARTIDA
-  // ======================================================
-
-  battleResultSaved = false;
 
   if (!isModelTrained()) {
     console.warn(
@@ -2841,8 +2833,58 @@ async function startNewBattle() {
     return;
   }
 
+
   // ==========================================================
-  // REINICIAR CONTROL DE EFECTOS DE LA NUEVA PARTIDA
+  // 2. VALIDAR QUE LA PARTIDA ACTUAL HAYA TERMINADO
+  // ==========================================================
+
+  const currentState = getBattleState();
+
+  if (!currentState || !currentState.battleFinished) {
+    console.warn(
+      "La partida actual todavía no ha terminado.",
+    );
+
+    return;
+  }
+
+
+  // ==========================================================
+  // 3. OBTENER Y VALIDAR LA DIFICULTAD ACTUAL
+  // ==========================================================
+
+  const newBattleDifficultyConfig =
+    Object.values(DIFFICULTY_LEVELS).find(
+      (level) =>
+        level.key === activeBattleDifficultyKey,
+    );
+
+  if (!newBattleDifficultyConfig) {
+    console.error(
+      "❌ No se pudo generar otra partida: la dificultad activa no es válida.",
+      activeBattleDifficultyKey,
+    );
+
+    return;
+  }
+
+
+  // ==========================================================
+  // 4. LIMPIAR GANADOR ANTERIOR
+  // ==========================================================
+
+  hideRegisteredPlayerVictory();
+
+
+  // ==========================================================
+  // 5. PERMITIR GUARDAR EL RESULTADO DE LA NUEVA PARTIDA
+  // ==========================================================
+
+  battleResultSaved = false;
+
+
+  // ==========================================================
+  // 6. REINICIAR CONTROL DE EFECTOS VISUALES
   // ==========================================================
 
   lastPlayerPowerAnimation = null;
@@ -2853,103 +2895,122 @@ async function startNewBattle() {
 
   lastFighterHitAnimationId = null;
 
+
+  // ==========================================================
+  // 7. REINICIAR VISUALMENTE LOS COMBATIENTES
+  // ==========================================================
+
   resetFighterVisual(playerFighter);
+
   resetFighterVisual(aiFighter);
 
-  const currentState = getBattleState();
-
-  if (!currentState || !currentState.battleFinished) {
-    console.warn("La partida actual todavía no ha terminado.");
-
-    return;
-  }
 
   // ==========================================================
-  // REINICIAR AUDIO PARA LA NUEVA PARTIDA
+  // 8. REINICIAR AUDIO DE LA BATALLA
   // ==========================================================
   //
-  // 1. Detiene victoria-total.mp3.
-  // 2. Detiene combate-feroz.mp3.
-  // 3. Devuelve ambos audios al segundo 0.
-  // 4. Vuelve victoryMusicPlayed a false.
+  // - Detiene victoria-total.mp3
+  // - Detiene combate-feroz.mp3
+  // - Devuelve los audios al segundo 0
+  // - Permite volver a reproducir la música de victoria
   //
-  // Esto permite que la música de victoria vuelva a
-  // reproducirse en la partida 2, 3, 4, 5, etc.
   // ==========================================================
 
   resetBattleAudio();
 
+
   // ==========================================================
-  // CANCELAR TRANSICIÓN ANTERIOR
+  // 9. CANCELAR TRANSICIONES Y TEMPORIZADORES ANTERIORES
   // ==========================================================
 
   cancelRoundTransition();
 
   stopTurnTimer(true);
 
+  cancelBattleCountdown();
+
+
   // ==========================================================
-  // REINICIAR CONTROL TEMPORAL DE GESTOS
+  // 10. REINICIAR CONTROL TEMPORAL DE GESTOS
   // ==========================================================
 
   resetBattleGestureControl();
 
 
-  // ================================================
-  // CONSERVAR DIFICULTAD DE LA SESIÓN
-  // ================================================
-
-  const newBattleDifficultyConfig =
-    Object.values(DIFFICULTY_LEVELS).find(
-      (level) => level.key === activeBattleDifficultyKey
-    );
-
-  if (!newBattleDifficultyConfig) {
-    console.error(
-      "❌ No se pudo generar otra partida: la dificultad activa no es válida.",
-      activeBattleDifficultyKey
-    );
-
-    return;
-  }
-
   // ==========================================================
-  // INICIAR NUEVA PARTIDA EN EL MOTOR
+  // 11. INICIAR UNA NUEVA PARTIDA
+  // ==========================================================
+  //
+  // Se conserva:
+  //
+  // - estudiante
+  // - institución
+  // - modelo IA entrenado
+  // - dataset
+  // - dificultad seleccionada
+  //
+  // El Battle Engine reinicia:
+  //
+  // - vida
+  // - ronda
+  // - marcador
+  // - turnos
+  // - poder especial
+  // - movimientos
+  // - ganadores anteriores
+  //
   // ==========================================================
 
   const newBattleState = startBattle({
-    difficultyKey: newBattleDifficultyConfig.key,
-    playerDamage: newBattleDifficultyConfig.playerDamage,
-    aiDamage: newBattleDifficultyConfig.aiDamage
+    difficultyKey:
+      newBattleDifficultyConfig.key,
+
+    playerDamage:
+      newBattleDifficultyConfig.playerDamage,
+
+    aiDamage:
+      newBattleDifficultyConfig.aiDamage,
   });
+
 
   console.log(
     "[HANDVERSE] Nueva partida conserva dificultad:",
-    newBattleDifficultyConfig
+    newBattleDifficultyConfig,
   );
 
+
   // ==========================================================
-  // ACTUALIZAR INTERFAZ
+  // 12. ACTUALIZAR INTERFAZ CON EL NUEVO ESTADO
   // ==========================================================
 
   updateBattleUI(newBattleState);
 
-  // ==========================================================
-  // PREPARAR NUEVA CUENTA REGRESIVA
-  // ==========================================================
-
-  cancelBattleCountdown();
 
   // ==========================================================
-  // 3 → 2 → 1 → COMBATE
+  // 13. INICIAR CUENTA REGRESIVA
   // ==========================================================
   //
-  // startBattleCountdown() será quien active
-  // combate-feroz.mp3 al llegar a COMBATE.
+  // 3
+  // 2
+  // 1
+  // COMBATE
+  //
+  // startBattleCountdown() activará combate-feroz.mp3
+  // cuando llegue a COMBATE.
+  //
   // ==========================================================
 
   await startBattleCountdown();
 
-  console.log("🎮 NUEVA PARTIDA HANDVERSE INICIADA:", newBattleState);
+
+  // ==========================================================
+  // 14. CONFIRMACIÓN DE DEPURACIÓN
+  // ==========================================================
+
+  console.log(
+    "🎮 NUEVA PARTIDA HANDVERSE INICIADA:",
+    newBattleState,
+  );
 }
 
 // ============================================================
