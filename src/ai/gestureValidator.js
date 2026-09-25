@@ -42,6 +42,101 @@ function distance3D(pointA, pointB) {
   )
 }
 
+// ======================================================
+// VECTOR 3D ENTRE DOS LANDMARKS
+// ======================================================
+//
+// Nos permite conocer hacia qué dirección
+// apunta una parte de la mano.
+// ======================================================
+
+function vector3D(fromPoint, toPoint) {
+
+  return {
+
+    x:
+      toPoint.x -
+      fromPoint.x,
+
+    y:
+      toPoint.y -
+      fromPoint.y,
+
+    z:
+      toPoint.z -
+      fromPoint.z
+
+  }
+}
+
+
+// ======================================================
+// SIMILITUD DE DIRECCIÓN ENTRE DOS VECTORES
+// ======================================================
+//
+// Resultado aproximado:
+//
+//  1  = misma dirección
+//  0  = direcciones perpendiculares
+// -1  = direcciones opuestas
+//
+// Esto nos ayudará después a distinguir:
+//
+// ✊ pulgar lateral / sobre los dedos
+//
+// de
+//
+// 👍 pulgar realmente levantado.
+// ======================================================
+
+function cosineSimilarity3D(
+  vectorA,
+  vectorB
+) {
+
+  const dotProduct =
+
+    vectorA.x * vectorB.x +
+    vectorA.y * vectorB.y +
+    vectorA.z * vectorB.z
+
+
+  const lengthA =
+
+    Math.sqrt(
+
+      vectorA.x * vectorA.x +
+      vectorA.y * vectorA.y +
+      vectorA.z * vectorA.z
+
+    )
+
+
+  const lengthB =
+
+    Math.sqrt(
+
+      vectorB.x * vectorB.x +
+      vectorB.y * vectorB.y +
+      vectorB.z * vectorB.z
+
+    )
+
+
+  if (
+    lengthA < 0.000001 ||
+    lengthB < 0.000001
+  ) {
+
+    return 0
+  }
+
+
+  return (
+    dotProduct /
+    (lengthA * lengthB)
+  )
+}
 
 // ======================================================
 // 2. VALIDAR LANDMARKS DE MEDIAPIPE
@@ -218,6 +313,91 @@ function isThumbExtended(landmarks) {
 
 
 // ======================================================
+// DETECTAR SI EL PULGAR APUNTA COMO 👍
+// ======================================================
+//
+// isThumbExtended() solamente comprueba si el pulgar
+// está extendido y separado.
+//
+// Esta segunda comprobación analiza su DIRECCIÓN.
+//
+// Comparamos:
+//
+// muñeca (0) → base del dedo medio (9)
+//          con
+// MCP del pulgar (2) → punta del pulgar (4)
+//
+// Así intentamos diferenciar:
+//
+// ✊ pulgar atravesado / encima de los dedos
+//
+// de:
+//
+// 👍 pulgar claramente levantado.
+//
+// La comparación es relativa a la propia mano,
+// no a la pantalla.
+// ======================================================
+
+function isThumbPointingUpRelativeToHand(
+  landmarks
+) {
+
+  const wrist =
+    landmarks[0]
+
+  const middleMcp =
+    landmarks[9]
+
+  const thumbMcp =
+    landmarks[2]
+
+  const thumbTip =
+    landmarks[4]
+
+
+  // Dirección principal de la mano.
+
+  const palmDirection =
+
+    vector3D(
+      wrist,
+      middleMcp
+    )
+
+
+  // Dirección del pulgar.
+
+  const thumbDirection =
+
+    vector3D(
+      thumbMcp,
+      thumbTip
+    )
+
+
+  // Comparar ambas direcciones.
+
+  const alignment =
+
+    cosineSimilarity3D(
+      thumbDirection,
+      palmDirection
+    )
+
+
+  // Cuanto más cerca de 1,
+  // más apunta el pulgar en la misma dirección
+  // principal de la mano.
+  //
+  // 0.45 deja cierto margen natural
+  // de inclinación.
+
+  return alignment >= 0.45
+}
+
+
+// ======================================================
 // 5. ANALIZAR ESTADO DE LOS CINCO DEDOS
 // ======================================================
 
@@ -225,6 +405,14 @@ function analyzeFingers(landmarks) {
 
   const thumb =
     isThumbExtended(
+      landmarks
+    )
+
+  const thumbUp =
+
+    thumb &&
+
+    isThumbPointingUpRelativeToHand(
       landmarks
     )
 
@@ -271,6 +459,7 @@ function analyzeFingers(landmarks) {
 
   return {
     thumb,
+    thumbUp,
     index,
     middle,
     ring,
@@ -330,8 +519,11 @@ export function detectTrainingGesture(
   // ----------------------------------------------------
 
   if (
-    fingers.thumb &&
+
+    fingers.thumbUp &&
+
     fingers.fourFingerCount === 0
+
   ) {
 
     return 'thumbs_up'
