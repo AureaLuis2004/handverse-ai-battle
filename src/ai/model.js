@@ -227,6 +227,187 @@ export function createGestureModel() {
 
 }
 
+// ======================================================
+// 5.1. DIVISIÓN ESTRATIFICADA DEL DATASET
+// ======================================================
+//
+// Separa entrenamiento y validación manteniendo
+// representación de los tres gestos.
+//
+// Con 30 muestras por gesto y validationRatio = 0.2:
+//
+// 24 → entrenamiento
+// 6  → validación
+//
+// por cada gesto.
+//
+// De esta manera la validación no queda formada
+// solamente por una clase.
+// ======================================================
+
+function createStratifiedSplit(
+  inputs,
+  labels,
+  validationRatio = 0.2
+) {
+
+  const samplesByClass = new Map()
+
+
+  // ----------------------------------------------------
+  // AGRUPAR MUESTRAS SEGÚN SU CLASE
+  // ----------------------------------------------------
+
+  for (
+    let index = 0;
+    index < inputs.length;
+    index++
+  ) {
+
+    const label =
+      labels[index]
+
+
+    if (
+      !samplesByClass.has(
+        label
+      )
+    ) {
+
+      samplesByClass.set(
+        label,
+        []
+      )
+
+    }
+
+
+    samplesByClass
+      .get(label)
+      .push({
+
+        input:
+          inputs[index],
+
+        label
+
+      })
+
+  }
+
+
+  const trainingSamples = []
+
+  const validationSamples = []
+
+
+  // ----------------------------------------------------
+  // SEPARAR CADA CLASE INDIVIDUALMENTE
+  // ----------------------------------------------------
+
+  for (
+    const samples
+    of samplesByClass.values()
+  ) {
+
+    const shuffledSamples =
+      [...samples]
+
+
+    tf.util.shuffle(
+      shuffledSamples
+    )
+
+
+    const validationCount =
+
+      Math.min(
+
+        shuffledSamples.length - 1,
+
+        Math.max(
+
+          1,
+
+          Math.round(
+            shuffledSamples.length *
+            validationRatio
+          )
+
+        )
+
+      )
+
+
+    validationSamples.push(
+
+      ...shuffledSamples.slice(
+        0,
+        validationCount
+      )
+
+    )
+
+
+    trainingSamples.push(
+
+      ...shuffledSamples.slice(
+        validationCount
+      )
+
+    )
+
+  }
+
+
+  // ----------------------------------------------------
+  // MEZCLAR ENTRENAMIENTO Y VALIDACIÓN
+  // SIN PERDER LA RELACIÓN INPUT ↔ LABEL
+  // ----------------------------------------------------
+
+  tf.util.shuffle(
+    trainingSamples
+  )
+
+
+  tf.util.shuffle(
+    validationSamples
+  )
+
+
+  // ----------------------------------------------------
+  // DEVOLVER ARRAYS
+  // ----------------------------------------------------
+
+  return {
+
+    trainingInputs:
+      trainingSamples.map(
+        sample =>
+          sample.input
+      ),
+
+    trainingLabels:
+      trainingSamples.map(
+        sample =>
+          sample.label
+      ),
+
+    validationInputs:
+      validationSamples.map(
+        sample =>
+          sample.input
+      ),
+
+    validationLabels:
+      validationSamples.map(
+        sample =>
+          sample.label
+      )
+
+  }
+
+}
 
 // ======================================================
 // 6. ENTRENAR MODELO
@@ -308,6 +489,34 @@ export async function trainGestureModel(
 
   }
 
+  // ----------------------------------------------------
+  // DIVIDIR DATASET DE FORMA EQUILIBRADA
+  // ----------------------------------------------------
+
+  const {
+
+    trainingInputs,
+    trainingLabels,
+    validationInputs,
+    validationLabels
+
+  } = createStratifiedSplit(
+    inputs,
+    labels,
+    0.2
+  )
+
+
+  console.log(
+    '🧠 División del dataset HANDVERSE:',
+    {
+      entrenamiento:
+        trainingInputs.length,
+
+      validacion:
+        validationInputs.length
+    }
+  )
 
   // ----------------------------------------------------
   // Crear nuevo modelo
@@ -327,6 +536,13 @@ export async function trainGestureModel(
   let ys = null
 
 
+  let validationXs = null
+
+  let validationLabelTensor = null
+
+  let validationYs = null
+
+
   try {
 
     // --------------------------------------------------
@@ -335,9 +551,9 @@ export async function trainGestureModel(
 
     xs =
       tf.tensor2d(
-        inputs,
+        trainingInputs,
         [
-          inputs.length,
+          trainingInputs.length,
           INPUT_SIZE
         ],
         'float32'
@@ -346,7 +562,7 @@ export async function trainGestureModel(
 
     labelTensor =
       tf.tensor1d(
-        labels,
+        trainingLabels,
         'int32'
       )
 
@@ -360,6 +576,34 @@ export async function trainGestureModel(
     ys =
       tf.oneHot(
         labelTensor,
+        OUTPUT_SIZE
+      )
+
+    // ----------------------------------------------------
+    // CREAR TENSORES DE VALIDACIÓN
+    // ----------------------------------------------------
+
+    validationXs =
+      tf.tensor2d(
+        validationInputs,
+        [
+          validationInputs.length,
+          INPUT_SIZE
+        ],
+        'float32'
+      )
+
+
+    validationLabelTensor =
+      tf.tensor1d(
+        validationLabels,
+        'int32'
+      )
+
+
+    validationYs =
+      tf.oneHot(
+        validationLabelTensor,
         OUTPUT_SIZE
       )
 
@@ -398,8 +642,10 @@ export async function trainGestureModel(
           shuffle:
             true,
 
-          validationSplit:
-            0.2,
+          validationData: [
+            validationXs,
+            validationYs
+          ],
 
           callbacks: {
 
@@ -554,6 +800,18 @@ export async function trainGestureModel(
 
     if (ys) {
       ys.dispose()
+    }
+
+    if (validationXs) {
+      validationXs.dispose()
+    }
+
+    if (validationLabelTensor) {
+      validationLabelTensor.dispose()
+    }
+
+    if (validationYs) {
+      validationYs.dispose()
     }
 
 

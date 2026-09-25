@@ -32,6 +32,65 @@ export const TARGET_SAMPLES_PER_CLASS = 30
 
 export const MAX_SAMPLES_PER_CLASS = 100
 
+// ======================================================
+// DISTANCIA ENTRE DOS VECTORES DE CARACTERÍSTICAS
+// ======================================================
+//
+// Calculamos la distancia RMS entre dos muestras.
+//
+// Cuanto más cerca de 0:
+//
+// → más parecidas son las dos posiciones de la mano.
+//
+// Cuanto mayor sea el resultado:
+//
+// → más diferente es la postura.
+//
+// Por ahora SOLO la utilizaremos para analizar
+// la diversidad de las muestras.
+// Todavía NO rechazaremos ninguna.
+// ======================================================
+
+function calculateFeatureDistance(
+  featuresA,
+  featuresB
+) {
+
+  if (
+    !Array.isArray(featuresA) ||
+    !Array.isArray(featuresB) ||
+    featuresA.length !== featuresB.length ||
+    featuresA.length === 0
+  ) {
+
+    return Infinity
+  }
+
+
+  let squaredDifferenceSum = 0
+
+
+  for (
+    let index = 0;
+    index < featuresA.length;
+    index++
+  ) {
+
+    const difference =
+      featuresA[index] -
+      featuresB[index]
+
+
+    squaredDifferenceSum +=
+      difference * difference
+  }
+
+
+  return Math.sqrt(
+    squaredDifferenceSum /
+    featuresA.length
+  )
+}
 
 // ======================================================
 // 2. CREAR ESTRUCTURA DEL DATASET
@@ -174,6 +233,66 @@ export function addSample(
 
   }
 
+  // ----------------------------------------------------
+  // ANALIZAR DIVERSIDAD DE LA NUEVA MUESTRA
+  // ----------------------------------------------------
+  //
+  // Todavía NO bloqueamos muestras.
+  //
+  // Primero observaremos qué distancias produce
+  // la cámara en condiciones reales.
+  // ----------------------------------------------------
+
+  const previousSamples =
+    dataset[gestureKey]
+
+
+  if (
+    previousSamples.length > 0
+  ) {
+
+    const previousSample =
+
+      previousSamples[
+      previousSamples.length - 1
+      ]
+
+
+    const sampleDistance =
+
+      calculateFeatureDistance(
+        features,
+        previousSample
+      )
+
+
+    console.log(
+      `📐 Diversidad ${gestureKey}:`,
+      sampleDistance.toFixed(5)
+    )
+
+    // ----------------------------------------------------
+    // RECHAZAR MUESTRAS CASI IDÉNTICAS
+    // ----------------------------------------------------
+    //
+    // Evitamos llenar el dataset con varios frames
+    // prácticamente iguales.
+    //
+    // Basado en las pruebas reales de HANDVERSE,
+    // distancias inferiores a 0.01 aportan muy poca
+    // variación al entrenamiento.
+    // ----------------------------------------------------
+
+    if (sampleDistance < 0.01) {
+
+      console.log(
+        `⏭️ Muestra demasiado parecida ${gestureKey}:`,
+        sampleDistance.toFixed(5)
+      )
+
+      return false
+    }
+  }
 
   // ----------------------------------------------------
   // Guardar muestra
