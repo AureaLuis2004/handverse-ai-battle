@@ -3942,10 +3942,23 @@ function animateFighterAction(fighter, actionKey) {
       return;
   }
 
+  // Ocultar temporalmente el VS mientras ocurre la acción.
+  const battleVs = document.querySelector(
+    "#battle-stage .battle-stage-vs"
+  );
+
+  if (battleVs) {
+    battleVs.classList.add("battle-stage-vs-hidden");
+  }
+
   // Después de la acción vuelve a posición de combate.
   window.setTimeout(() => {
     fighter.classList.remove(...fighterActionClasses);
     fighter.classList.add("fighter-idle");
+
+    if (battleVs) {
+      battleVs.classList.remove("battle-stage-vs-hidden");
+    }
   }, 700);
 }
 
