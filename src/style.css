@@ -7646,24 +7646,48 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-player.fighter-attack {
-  animation: playerFighterAttack 0.7s ease;
+  animation: playerFighterAttack 0.82s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes playerFighterAttack {
+  /* Postura inicial */
   0% {
-    transform: translateX(0) scale(1);
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 
-  35% {
-    transform: translateX(85px) scale(1.08);
+  /* Anticipación: retrocede ligeramente antes de atacar */
+  12% {
+    transform: translateX(-10px) translateY(2px) rotate(-1.5deg) scale(0.985);
   }
 
-  55% {
-    transform: translateX(95px) scale(1.12);
+  /* Comienza el impulso */
+  30% {
+    transform: translateX(38px) translateY(-2px) rotate(1deg) scale(1.015);
   }
 
+  /* Avance rápido hacia el rival */
+  48% {
+    transform: translateX(78px) translateY(-4px) rotate(2.4deg) scale(1.045);
+  }
+
+  /* Momento de contacto */
+  56% {
+    transform: translateX(92px) translateY(-2px) rotate(3deg) scale(1.065);
+  }
+
+  /* Pequeño rebote después del golpe */
+  67% {
+    transform: translateX(68px) translateY(1px) rotate(1deg) scale(1.025);
+  }
+
+  /* Recuperación */
+  82% {
+    transform: translateX(18px) translateY(0) rotate(-0.5deg) scale(0.995);
+  }
+
+  /* Regresa a posición de combate */
   100% {
-    transform: translateX(0) scale(1);
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 }
 
@@ -7672,24 +7696,48 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-ai.fighter-attack {
-  animation: aiFighterAttack 0.7s ease;
+  animation: aiFighterAttack 0.82s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes aiFighterAttack {
+  /* Postura inicial */
   0% {
-    transform: translateX(0) scale(1);
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 
-  35% {
-    transform: translateX(-85px) scale(1.08);
+  /* Anticipación */
+  12% {
+    transform: translateX(10px) translateY(2px) rotate(1.5deg) scale(0.985);
   }
 
-  55% {
-    transform: translateX(-95px) scale(1.12);
+  /* Comienza el impulso */
+  30% {
+    transform: translateX(-38px) translateY(-2px) rotate(-1deg) scale(1.015);
   }
 
+  /* Avance rápido hacia el jugador */
+  48% {
+    transform: translateX(-78px) translateY(-4px) rotate(-2.4deg) scale(1.045);
+  }
+
+  /* Momento de contacto */
+  56% {
+    transform: translateX(-92px) translateY(-2px) rotate(-3deg) scale(1.065);
+  }
+
+  /* Rebote */
+  67% {
+    transform: translateX(-68px) translateY(1px) rotate(-1deg) scale(1.025);
+  }
+
+  /* Recuperación */
+  82% {
+    transform: translateX(-18px) translateY(0) rotate(0.5deg) scale(0.995);
+  }
+
+  /* Regreso */
   100% {
-    transform: translateX(0) scale(1);
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 }
 
@@ -7938,13 +7986,32 @@ html.low-power-device .system-status-active .system-status-dot {
 }
 
 @keyframes playerShieldLeftArm {
-  0%,
-  100% {
-    transform: rotate(0deg);
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 
-  50% {
-    transform: translateX(8px) translateY(-10px) rotate(-65deg);
+  /* El brazo comienza a subir */
+  18% {
+    transform: translateX(3px) translateY(-5px) rotate(-35deg) scale(1.01);
+  }
+
+  /* Entrada rápida a posición defensiva */
+  38% {
+    transform: translateX(7px) translateY(-11px) rotate(-68deg) scale(1.035);
+  }
+
+  /* Mantiene brevemente la guardia */
+  58% {
+    transform: translateX(8px) translateY(-10px) rotate(-65deg) scale(1.025);
+  }
+
+  /* Comienza a bajar el brazo */
+  78% {
+    transform: translateX(4px) translateY(-5px) rotate(-30deg) scale(1.01);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
   }
 }
 
