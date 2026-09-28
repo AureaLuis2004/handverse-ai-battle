@@ -1141,6 +1141,15 @@ app.innerHTML = `
 
       </div>
 
+      <!-- ================================================= -->
+      <!-- RECONOCIMIENTO IA DURANTE LA BATALLA -->
+      <!-- ================================================= -->
+
+      <div
+        id="battle-prediction-slot"
+        class="battle-prediction-slot"
+      ></div>
+
     </section>
 
       <!-- ====================================================== -->
@@ -1236,6 +1245,10 @@ const cameraStatus = document.querySelector("#camera-status");
 const cameraPlaceholder = document.querySelector("#camera-placeholder");
 
 const predictionPanel = document.querySelector("#prediction-panel");
+
+const battlePredictionSlot = document.querySelector(
+  "#battle-prediction-slot"
+);
 
 const predictionName = document.querySelector("#prediction-name");
 
@@ -1606,6 +1619,22 @@ function sleep(milliseconds) {
   return new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
   });
+}
+
+// ============================================================
+// MOVER RECONOCIMIENTO IA A LA ARENA DE BATALLA
+// ============================================================
+
+function movePredictionPanelToBattle() {
+  if (!predictionPanel || !battlePredictionSlot) {
+    return;
+  }
+
+  // appendChild NO duplica el panel.
+  // Lo mueve físicamente desde la cámara hasta la arena.
+  if (predictionPanel.parentElement !== battlePredictionSlot) {
+    battlePredictionSlot.appendChild(predictionPanel);
+  }
 }
 
 // ============================================================
@@ -2355,6 +2384,29 @@ async function handleTrainModel() {
     updateBattleUI(initialBattleState);
 
     console.log("🔥 BATALLA HANDVERSE INICIADA:", initialBattleState);
+
+    // ======================================================
+    // MOVER RECONOCIMIENTO IA AL HUD DE BATALLA
+    // ======================================================
+
+    movePredictionPanelToBattle();
+
+    // ======================================================
+    // LLEVAR AL JUGADOR AUTOMÁTICAMENTE A LA ARENA
+    // ======================================================
+
+    const battleSection = document.querySelector(".battle-section");
+
+    if (battleSection) {
+      battleSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      // Esperar a que termine visualmente el desplazamiento
+      // antes de mostrar 3, 2, 1, COMBATE.
+      await sleep(650);
+    }
 
     // ======================================================
     // INICIAR CUENTA REGRESIVA DE LA PRIMERA BATALLA
