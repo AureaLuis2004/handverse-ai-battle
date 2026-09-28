@@ -7746,7 +7746,7 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-player.fighter-shield {
-  animation: playerFighterShield 0.7s ease;
+  animation: playerFighterShield 0.58s ease;
 }
 
 @keyframes playerFighterShield {
@@ -7764,7 +7764,7 @@ html.low-power-device .system-status-active .system-status-dot {
 }
 
 .battle-fighter-ai.fighter-shield {
-  animation: aiFighterShield 0.7s ease;
+  animation: aiFighterShield 0.58s ease;
 }
 
 @keyframes aiFighterShield {
@@ -7786,7 +7786,7 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-player.fighter-power {
-  animation: playerFighterPower 0.7s ease;
+  animation: playerFighterPower 0.58s ease;
 }
 
 @keyframes playerFighterPower {
@@ -7809,7 +7809,7 @@ html.low-power-device .system-status-active .system-status-dot {
 }
 
 .battle-fighter-ai.fighter-power {
-  animation: aiFighterPower 0.7s ease;
+  animation: aiFighterPower 0.58s ease;
 }
 
 @keyframes aiFighterPower {
@@ -7974,15 +7974,15 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-player.fighter-shield .fighter-arm-left {
-  animation: playerShieldLeftArm 0.7s ease;
+  animation: playerShieldLeftArm 0.58s ease;
 }
 
 .battle-fighter-player.fighter-shield .fighter-arm-right {
-  animation: playerShieldRightArm 0.7s ease;
+  animation: playerShieldRightArm 0.58s ease;
 }
 
 .battle-fighter-player.fighter-shield .fighter-torso {
-  animation: fighterShieldTorso 0.7s ease;
+  animation: fighterShieldTorso 0.58s ease;
 }
 
 @keyframes playerShieldLeftArm {
@@ -8042,11 +8042,11 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-ai.fighter-shield .fighter-arm-left {
-  animation: aiShieldLeftArm 0.7s ease;
+  animation: aiShieldLeftArm 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-shield .fighter-arm-right {
-  animation: aiShieldRightArm 0.7s ease;
+  animation: aiShieldRightArm 0.58s ease;
 }
 
 @keyframes aiShieldLeftArm {
@@ -8076,19 +8076,19 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-player.fighter-power .fighter-arm-left {
-  animation: playerPowerLeftArm 0.7s ease;
+  animation: playerPowerLeftArm 0.58s ease;
 }
 
 .battle-fighter-player.fighter-power .fighter-arm-right {
-  animation: playerPowerRightArm 0.7s ease;
+  animation: playerPowerRightArm 0.58s ease;
 }
 
 .battle-fighter-player.fighter-power .fighter-head {
-  animation: fighterPowerHead 0.7s ease;
+  animation: fighterPowerHead 0.58s ease;
 }
 
 .battle-fighter-player.fighter-power .fighter-torso {
-  animation: fighterPowerTorso 0.7s ease;
+  animation: fighterPowerTorso 0.58s ease;
 }
 
 @keyframes playerPowerLeftArm {
@@ -8140,19 +8140,19 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-ai.fighter-power .fighter-arm-left {
-  animation: aiPowerLeftArm 0.7s ease;
+  animation: aiPowerLeftArm 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-power .fighter-arm-right {
-  animation: aiPowerRightArm 0.7s ease;
+  animation: aiPowerRightArm 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-power .fighter-head {
-  animation: fighterPowerHead 0.7s ease;
+  animation: fighterPowerHead 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-power .fighter-torso {
-  animation: fighterPowerTorso 0.7s ease;
+  animation: fighterPowerTorso 0.58s ease;
 }
 
 @keyframes aiPowerLeftArm {

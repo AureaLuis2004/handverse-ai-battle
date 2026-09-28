@@ -3970,7 +3970,7 @@ function animateFighterAction(fighter, actionKey) {
     if (battleVs) {
       battleVs.classList.remove("battle-stage-vs-hidden");
     }
-  }, 700);
+  }, 580);
 }
 
 // ============================================================
