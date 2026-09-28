@@ -7646,7 +7646,7 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-player.fighter-attack {
-  animation: playerFighterAttack 0.82s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: playerFighterAttack 0.58s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes playerFighterAttack {
@@ -7696,7 +7696,7 @@ html.low-power-device .system-status-active .system-status-dot {
    ============================================================ */
 
 .battle-fighter-ai.fighter-attack {
-  animation: aiFighterAttack 0.82s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: aiFighterAttack 0.58s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes aiFighterAttack {
@@ -7854,15 +7854,15 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-player.fighter-attack .fighter-arm-right {
-  animation: playerArmAttack 0.7s ease;
+  animation: playerArmAttack 0.58s ease;
 }
 
 .battle-fighter-player.fighter-attack .fighter-torso {
-  animation: playerTorsoAttack 0.7s ease;
+  animation: playerTorsoAttack 0.58s ease;
 }
 
 .battle-fighter-player.fighter-attack .fighter-head {
-  animation: playerHeadAttack 0.7s ease;
+  animation: playerHeadAttack 0.58s ease;
 }
 
 @keyframes playerArmAttack {
@@ -7914,15 +7914,15 @@ html.low-power-device .system-status-active .system-status-dot {
    ========================================================== */
 
 .battle-fighter-ai.fighter-attack .fighter-arm-left {
-  animation: aiArmAttack 0.7s ease;
+  animation: aiArmAttack 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-attack .fighter-torso {
-  animation: aiTorsoAttack 0.7s ease;
+  animation: aiTorsoAttack 0.58s ease;
 }
 
 .battle-fighter-ai.fighter-attack .fighter-head {
-  animation: aiHeadAttack 0.7s ease;
+  animation: aiHeadAttack 0.58s ease;
 }
 
 @keyframes aiArmAttack {
@@ -9094,4 +9094,432 @@ body {
   box-shadow:
     inset 3px 2px 5px rgba(255, 255, 255, 0.035),
     inset -4px -6px 8px rgba(0, 0, 0, 0.34);
+}
+
+/* =========================================================
+   HANDVERSE - PANTALLA FINAL CINEMATOGRÁFICA
+   ========================================================= */
+
+.battle-section {
+  position: relative;
+}
+
+/* ---------------------------------------------------------
+   PANTALLA FINAL
+   Oculta durante la batalla
+   --------------------------------------------------------- */
+
+.battle-final-screen {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  padding: clamp(26px, 5vw, 60px);
+
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(34, 211, 238, 0.12),
+      transparent 35%
+    ),
+    linear-gradient(180deg, rgba(2, 8, 23, 0.76), rgba(2, 6, 23, 0.97));
+
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: scale(1.04);
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.35s ease;
+
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   ACTIVACIÓN AL TERMINAR LA BATALLA
+   --------------------------------------------------------- */
+
+.battle-section.battle-finished + .battle-final-screen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform: scale(1);
+
+  animation: handverse-final-screen-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------------------------------------------------------
+   RESPLANDOR CENTRAL
+   --------------------------------------------------------- */
+
+.battle-final-screen::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(103, 232, 249, 0.11),
+    transparent 38%
+  );
+
+  opacity: 0;
+
+  animation: handverse-final-glow 1.4s ease-out 0.15s both;
+}
+
+/* ---------------------------------------------------------
+   FLASH CINEMATOGRÁFICO DE VICTORIA
+   --------------------------------------------------------- */
+
+.battle-final-screen::after {
+  content: "";
+
+  position: absolute;
+  inset: -20%;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(103, 232, 249, 0.72) 5%,
+      rgba(37, 99, 235, 0.32) 14%,
+      rgba(139, 92, 246, 0.18) 25%,
+      transparent 45%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(34, 211, 238, 0.12) 46%,
+      rgba(255, 255, 255, 0.85) 50%,
+      rgba(192, 132, 252, 0.14) 54%,
+      transparent 62%,
+      transparent 100%
+    );
+
+  transform: scale(0.3);
+
+  filter: blur(10px);
+}
+
+.battle-section.battle-finished + .battle-final-screen::after {
+  animation: handverse-final-flash 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.05s
+    both;
+}
+
+@keyframes handverse-final-flash {
+  0% {
+    opacity: 0;
+
+    transform: scale(0.25);
+
+    filter: blur(12px);
+  }
+
+  22% {
+    opacity: 1;
+
+    transform: scale(0.72);
+
+    filter: blur(1px);
+  }
+
+  48% {
+    opacity: 0.92;
+
+    transform: scale(1.05);
+
+    filter: blur(0);
+  }
+
+  72% {
+    opacity: 0.38;
+
+    transform: scale(1.28);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: scale(1.55);
+
+    filter: blur(4px);
+  }
+}
+
+/* ============================================================
+   TÍTULO CINEMATOGRÁFICO DEL RESULTADO FINAL
+   ============================================================ */
+
+.battle-final-screen .battle-result {
+  position: relative;
+  z-index: 3;
+
+  width: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
+
+  color: #67e8f9;
+
+  font-size: clamp(2.8rem, 8vw, 6.8rem);
+  font-weight: 950;
+  line-height: 0.95;
+
+  letter-spacing: 0.045em;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 12px rgba(103, 232, 249, 0.75),
+    0 0 32px rgba(34, 211, 238, 0.38),
+    0 0 70px rgba(34, 211, 238, 0.18);
+
+  opacity: 0;
+
+  transform: scale(1.65) translateY(15px);
+
+  filter: blur(12px);
+}
+
+.battle-section.battle-finished + .battle-final-screen .battle-result {
+  animation: handverse-cinematic-result 1.05s cubic-bezier(0.16, 1, 0.3, 1)
+    0.48s both;
+}
+
+@keyframes handverse-cinematic-result {
+  0% {
+    opacity: 0;
+
+    transform: scale(1.65) translateY(15px);
+
+    filter: blur(12px);
+  }
+
+  38% {
+    opacity: 1;
+
+    transform: scale(0.92) translateY(0);
+
+    filter: blur(0);
+  }
+
+  60% {
+    transform: scale(1.06) translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1) translateY(0);
+
+    filter: blur(0);
+  }
+}
+
+/* GANADOR ESTUDIANTE */
+
+.battle-winner-player .battle-final-screen .battle-result {
+  color: #67e8f9;
+
+  text-shadow:
+    0 0 14px rgba(34, 211, 238, 0.55),
+    0 0 34px rgba(34, 211, 238, 0.32),
+    0 0 70px rgba(34, 211, 238, 0.18);
+}
+
+/* GANADOR IA */
+
+.battle-winner-ai .battle-final-screen .battle-result {
+  color: #c084fc;
+
+  text-shadow:
+    0 0 14px rgba(168, 85, 247, 0.55),
+    0 0 34px rgba(168, 85, 247, 0.32),
+    0 0 70px rgba(168, 85, 247, 0.18);
+}
+
+/* ---------------------------------------------------------
+   IDENTIDAD DEL GANADOR
+   --------------------------------------------------------- */
+
+.battle-final-screen .battle-winner-identity {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(92%, 760px);
+
+  margin: 0;
+
+  padding: 10px 20px;
+
+  border: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  gap: 7px;
+
+  animation: handverse-final-winner 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.7s
+    both;
+}
+
+.battle-final-screen .battle-winner-name {
+  font-size: clamp(1.7rem, 4vw, 3.3rem);
+
+  font-weight: 950;
+
+  letter-spacing: 0.035em;
+
+  line-height: 1;
+
+  text-transform: uppercase;
+}
+
+.battle-final-screen .battle-winner-institution {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   BOTONES FINALES
+   --------------------------------------------------------- */
+
+.battle-final-screen .new-battle-container {
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 18px;
+
+  justify-content: center;
+
+  animation: handverse-final-buttons 0.65s cubic-bezier(0.16, 1, 0.3, 1) 1.15s
+    both;
+}
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+@keyframes handverse-final-screen-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes handverse-final-title {
+  0% {
+    opacity: 0;
+
+    transform: scale(1.8) translateY(12px);
+
+    filter: blur(10px);
+  }
+
+  55% {
+    opacity: 1;
+
+    transform: scale(0.94) translateY(0);
+
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1) translateY(0);
+
+    filter: blur(0);
+  }
+}
+
+@keyframes handverse-final-winner {
+  0% {
+    opacity: 0;
+
+    transform: translateY(22px) scale(0.94);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes handverse-final-buttons {
+  0% {
+    opacity: 0;
+
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes handverse-final-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.45;
+    transform: scale(1.15);
+  }
 }

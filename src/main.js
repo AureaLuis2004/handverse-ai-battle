@@ -1141,6 +1141,16 @@ app.innerHTML = `
 
       </div>
 
+    </section>
+
+      <!-- ====================================================== -->
+      <!-- PANTALLA CINEMATOGRÁFICA DE RESULTADO FINAL -->
+      <!-- ====================================================== -->
+
+      <div
+        id="battle-final-screen"
+        class="battle-final-screen"
+      >
 
       <!-- ================================================= -->
       <!-- RESULTADO -->
@@ -1203,7 +1213,8 @@ app.innerHTML = `
 
       </div>
 
-    </section>
+      </div>
+      <!-- FIN PANTALLA CINEMATOGRÁFICA -->
 
   </main>
 `;
