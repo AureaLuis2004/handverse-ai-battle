@@ -2916,7 +2916,7 @@ async function startNewBattle() {
   //
   // ==========================================================
 
-  resetBattleAudio();
+  await transitionVictoryToBattleMusic();
 
 
   // ==========================================================
@@ -3017,7 +3017,33 @@ async function startNewBattle() {
 // INICIAR SESIÓN DE UN NUEVO ESTUDIANTE
 // ============================================================
 
-function startNewStudentSession() {
+async function startNewStudentSession() {
+  // ========================================================
+  // TRANSICIÓN: RESULTADO FINAL → INTRODUCCIÓN
+  // ========================================================
+  //
+  // Música 3 (victoria) baja suavemente.
+  // Música 1 (introducción) entra suavemente.
+  //
+  // Esperamos a que termine el crossfade antes
+  // de reiniciar la sesión del estudiante.
+  // ========================================================
+
+  await transitionVictoryToIntroMusic();
+
+  // Indicamos que después de recargar
+  // HANDVERSE debe intentar continuar con la música de intro.
+  sessionStorage.setItem(
+    "handverse-start-intro-after-reload",
+    "true"
+  );
+
+  // Reiniciar completamente la experiencia:
+  // - nuevo estudiante
+  // - nuevo dataset
+  // - nuevo modelo
+  // - nuevo registro
+  // - nueva batalla
   window.location.reload();
 }
 
@@ -3184,6 +3210,11 @@ const BATTLE_COUNTDOWN_DELAY = 800;
 // AUDIO DEL SISTEMA DE BATALLA
 // ======================================================
 
+// Música de introducción.
+// Se reproduce durante la preparación del jugador
+// antes de comenzar el combate.
+const introMusic = new Audio("/audio/handverse_intro_fusion_definitiva.wav");
+
 // Música que sonará durante el combate.
 const battleMusic = new Audio("/audio/combate-feroz.mp3");
 
@@ -3191,49 +3222,274 @@ const battleMusic = new Audio("/audio/combate-feroz.mp3");
 const victoryMusic = new Audio("/audio/victoria-total.mp3");
 
 // ======================================================
+// PRECARGA PRIORITARIA DE LA MÚSICA DE INTRODUCCIÓN
+// ======================================================
+
+// Solamente la música inicial se prepara inmediatamente.
+// Las otras músicas respetan su secuencia:
+// Intro → Batalla → Victoria.
+introMusic.preload = "auto";
+introMusic.load();
+
+// ======================================================
 // CONFIGURACIÓN DE AUDIO
 // ======================================================
+
+// La música de introducción permanece activa
+// durante toda la preparación previa a la batalla.
+introMusic.loop = true;
 
 // La música de combate se repite
 // mientras dure toda la partida.
 battleMusic.loop = true;
 
-// La música de victoria solamente
-// se reproduce una vez.
-victoryMusic.loop = false;
+// La música de victoria se repite
+// mientras permanezca la pantalla final.
+victoryMusic.loop = true;
 
 // Volumen
+introMusic.volume = 0.35;
 battleMusic.volume = 0.35;
 victoryMusic.volume = 0.55;
+
+// ==================================================
+// TRANSICIONES SUAVES ENTRE MÚSICAS
+// ==================================================
+
+const AUDIO_FADE_DURATION = 1200;
+
+function fadeAudio(
+  audio,
+  targetVolume,
+  duration = AUDIO_FADE_DURATION
+) {
+  return new Promise((resolve) => {
+    // El volumen de HTMLAudio solamente admite valores entre 0 y 1.
+    const safeTargetVolume = Math.min(
+      1,
+      Math.max(0, targetVolume)
+    );
+
+    const startVolume = Math.min(
+      1,
+      Math.max(0, audio.volume)
+    );
+
+    const volumeDifference =
+      safeTargetVolume - startVolume;
+
+    const startTime = performance.now();
+
+    function updateVolume(currentTime) {
+      const elapsed =
+        currentTime - startTime;
+
+      // Evitamos que requestAnimationFrame genere
+      // valores ligeramente menores de 0 o mayores de 1.
+      const progress = Math.min(
+        1,
+        Math.max(0, elapsed / duration)
+      );
+
+      const nextVolume =
+        startVolume +
+        volumeDifference * progress;
+
+      // Protección definitiva del rango HTMLMediaElement.
+      audio.volume = Math.min(
+        1,
+        Math.max(0, nextVolume)
+      );
+
+      if (progress < 1) {
+        requestAnimationFrame(updateVolume);
+        return;
+      }
+
+      audio.volume = safeTargetVolume;
+
+      resolve();
+    }
+
+    requestAnimationFrame(updateVolume);
+  });
+}
 
 // Evita que la música de victoria
 // se ejecute varias veces cuando
 // updateBattleUI se actualiza.
 let victoryMusicPlayed = false;
 
+// ===============================================
+// MÚSICA DE INTRODUCCIÓN HANDVERSE
+// ===============================================
+
+function startIntroMusic() {
+
+  // Evitar reiniciarla si ya está sonando.
+  if (!introMusic.paused) {
+    return;
+  }
+
+  introMusic
+    .play()
+    .then(() => {
+      console.log(
+        "🎵 Música de introducción HANDVERSE iniciada"
+      );
+    })
+    .catch((error) => {
+      console.warn(
+        "🔇 La música de introducción espera interacción del usuario:",
+        error
+      );
+    });
+
+}
+
+
+// ===============================================
+// DETENER MÚSICA DE INTRODUCCIÓN
+// ===============================================
+
+function stopIntroMusic() {
+
+  introMusic.pause();
+
+  introMusic.currentTime = 0;
+
+}
+
+
+// ===============================================
+// ACTIVAR INTRO CON LA PRIMERA INTERACCIÓN
+// ===============================================
+
+// Los navegadores no permiten iniciar audio
+// automáticamente sin interacción del usuario.
+//
+// Por eso HANDVERSE comenzará la música
+// con el primer clic o toque del estudiante.
+
+function unlockIntroMusic() {
+
+  startIntroMusic();
+
+  document.removeEventListener(
+    "pointerdown",
+    unlockIntroMusic
+  );
+
+  document.removeEventListener(
+    "keydown",
+    unlockIntroMusic
+  );
+
+}
+
+
+document.addEventListener(
+  "pointerdown",
+  unlockIntroMusic
+);
+
+document.addEventListener(
+  "keydown",
+  unlockIntroMusic
+);
+
+// ==================================================
+// INICIO INMEDIATO DE LA MÚSICA DE INTRODUCCIÓN
+// ==================================================
+
+// Limpiamos una posible marca de reinicio anterior.
+// Ya no dependemos de ella para iniciar la música.
+sessionStorage.removeItem(
+  "handverse-start-intro-after-reload"
+);
+
+// Cada carga o recarga de HANDVERSE comienza
+// intentando reproducir exclusivamente la Música 1.
+startIntroMusic();
+
+
 // ======================================================
 // INICIAR MÚSICA DE COMBATE
 // ======================================================
 
-function startBattleMusic() {
-  // Si ya está sonando, no volver a comenzarla.
+async function startBattleMusic() {
+  // Si la música de batalla ya está sonando,
+  // no volver a iniciarla.
   if (!battleMusic.paused) {
     return;
   }
 
-  // Detener posible música de victoria.
+  // Asegurarnos de que la música de victoria
+  // no esté reproduciéndose.
   victoryMusic.pause();
-
   victoryMusic.currentTime = 0;
 
-  battleMusic
-    .play()
-    .then(() => {
-      console.log("🎵 Música de combate HANDVERSE iniciada");
-    })
-    .catch((error) => {
-      console.warn("🔇 El navegador bloqueó la música:", error);
-    });
+  // Guardamos los volúmenes actuales.
+  // Así no dependemos de números escritos manualmente.
+  const introOriginalVolume = introMusic.volume;
+  const battleOriginalVolume = battleMusic.volume;
+
+  // La batalla comienza desde silencio.
+  battleMusic.volume = 0;
+
+  try {
+    // Comenzar la música de combate.
+    await battleMusic.play();
+
+    // Crear las transiciones.
+    const transitions = [
+      fadeAudio(
+        battleMusic,
+        battleOriginalVolume
+      )
+    ];
+
+    // Si la intro todavía está sonando,
+    // bajarla progresivamente.
+    if (!introMusic.paused) {
+      transitions.push(
+        fadeAudio(
+          introMusic,
+          0
+        )
+      );
+    }
+
+    // Ambas transiciones ocurren al mismo tiempo:
+    //
+    // INTRO    ↓↓↓
+    // BATALLA  ↑↑↑
+    await Promise.all(transitions);
+
+    // Cuando la intro ya llegó a volumen 0,
+    // ahora sí la detenemos.
+    introMusic.pause();
+    introMusic.currentTime = 0;
+
+    // Restauramos su volumen original para
+    // una futura partida o nuevo estudiante.
+    introMusic.volume =
+      introOriginalVolume;
+
+    console.log(
+      "🎵 Música de combate HANDVERSE iniciada con transición"
+    );
+  } catch (error) {
+    // Si el navegador rechaza el audio,
+    // restauramos el volumen de batalla.
+    battleMusic.volume =
+      battleOriginalVolume;
+
+    console.warn(
+      "🔇 El navegador bloqueó la música:",
+      error
+    );
+  }
 }
 
 // ======================================================
@@ -3250,29 +3506,153 @@ function stopBattleMusic() {
 // REPRODUCIR MÚSICA DE VICTORIA
 // ======================================================
 
-function playVictoryMusic() {
-  // Evitar ejecutarla varias veces.
+async function playVictoryMusic() {
+  // Evitar que se ejecute varias veces
+  // cuando updateBattleUI se actualiza repetidamente.
   if (victoryMusicPlayed) {
     return;
   }
 
   victoryMusicPlayed = true;
 
-  // Primero detener música de combate.
-  stopBattleMusic();
+  try {
+    // ==================================================
+    // PREPARAR MÚSICA FINAL
+    // ==================================================
 
-  victoryMusic.pause();
+    victoryMusic.pause();
+    victoryMusic.currentTime = 0;
 
-  victoryMusic.currentTime = 0;
+    // Empieza completamente silenciosa.
+    victoryMusic.volume = 0;
 
-  victoryMusic
-    .play()
-    .then(() => {
-      console.log("🏆 Música de victoria HANDVERSE iniciada");
-    })
-    .catch((error) => {
-      console.warn("🔇 No se pudo reproducir música de victoria:", error);
-    });
+    // Comenzamos la música final antes de apagar
+    // completamente la música de combate.
+    await victoryMusic.play();
+
+    // ==================================================
+    // TRANSICIÓN COMBATE → FINAL
+    // ==================================================
+
+    await Promise.all([
+      // Música de combate baja progresivamente.
+      fadeAudio(
+        battleMusic,
+        0
+      ),
+
+      // Música final sube progresivamente.
+      fadeAudio(
+        victoryMusic,
+        0.55
+      )
+    ]);
+
+    // Cuando terminó el fade,
+    // ahora sí detenemos completamente el combate.
+    battleMusic.pause();
+    battleMusic.currentTime = 0;
+
+    // Dejamos preparado su volumen original
+    // para una futura partida.
+    battleMusic.volume = 0.35;
+
+    console.log(
+      "🏆 Música final HANDVERSE iniciada con transición"
+    );
+  } catch (error) {
+    console.warn(
+      "🔇 No se pudo realizar la transición hacia la música final:",
+      error
+    );
+  }
+}
+
+// ==================================================
+// TRANSICIÓN: RESULTADO → NUEVA BATALLA
+// ==================================================
+
+async function transitionVictoryToBattleMusic() {
+  try {
+    // La siguiente victoria debe poder reproducirse.
+    victoryMusicPlayed = false;
+
+    // Preparar música de combate en silencio.
+    battleMusic.pause();
+    battleMusic.currentTime = 0;
+    battleMusic.volume = 0;
+
+    await battleMusic.play();
+
+    // Crossfade:
+    // música final baja mientras combate sube.
+    await Promise.all([
+      fadeAudio(victoryMusic, 0),
+      fadeAudio(battleMusic, 0.35)
+    ]);
+
+    // Limpiar música final.
+    victoryMusic.pause();
+    victoryMusic.currentTime = 0;
+    victoryMusic.volume = 0.55;
+
+    // Asegurarnos de que intro no interfiera.
+    introMusic.pause();
+    introMusic.currentTime = 0;
+
+    console.log(
+      "🎮 Nueva partida: transición resultado → combate completada"
+    );
+  } catch (error) {
+    console.warn(
+      "🔇 No se pudo realizar transición hacia nueva partida:",
+      error
+    );
+  }
+}
+
+// ==================================================
+// TRANSICIÓN: RESULTADO → NUEVO ESTUDIANTE
+// ==================================================
+
+async function transitionVictoryToIntroMusic() {
+  try {
+    // Permitir música de victoria en la futura partida.
+    victoryMusicPlayed = false;
+
+    // Asegurarnos de que combate esté detenido.
+    battleMusic.pause();
+    battleMusic.currentTime = 0;
+    battleMusic.volume = 0.35;
+
+    // Preparar introducción desde cero y en silencio.
+    introMusic.pause();
+    introMusic.currentTime = 0;
+    introMusic.volume = 0;
+
+    await introMusic.play();
+
+    // Crossfade:
+    // resultado baja mientras introducción sube.
+    await Promise.all([
+      fadeAudio(victoryMusic, 0),
+      fadeAudio(introMusic, 0.35)
+    ]);
+
+    // Limpiar música final.
+    victoryMusic.pause();
+    victoryMusic.currentTime = 0;
+    victoryMusic.volume = 0.55;
+
+    console.log(
+      "👤 Nuevo estudiante: transición resultado → introducción completada"
+    );
+  } catch (error) {
+    console.warn(
+      "🔇 No se pudo realizar transición hacia introducción:",
+      error
+    );
+  }
 }
 
 // ======================================================

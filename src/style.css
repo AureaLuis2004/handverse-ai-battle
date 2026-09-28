@@ -581,7 +581,8 @@ input:focus-visible {
       rgba(139, 92, 246, 0.13),
       transparent 32%
     ),
-    linear-gradient(145deg, #020617, #030819);
+    linear-gradient(rgba(2, 8, 23, 0.72), rgba(2, 6, 23, 0.82)),
+    url("/backgrounds/handverse-bg.png") center / cover no-repeat;
 }
 
 /* ============================================================
@@ -8776,5 +8777,40 @@ html.low-power-device .system-status-active .system-status-dot {
 
   100% {
     filter: brightness(1);
+  }
+}
+
+/* ======================================================
+   HANDVERSE - FONDO GLOBAL FUTURISTA
+   ====================================================== */
+
+body {
+  background-color: #020617;
+
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(2, 6, 23, 0.72) 0%,
+      rgba(2, 6, 23, 0.58) 35%,
+      rgba(2, 6, 23, 0.68) 70%,
+      rgba(2, 6, 23, 0.82) 100%
+    ),
+    url("/backgrounds/handverse-bg.png");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ======================================================
+   AJUSTE PARA TELÉFONOS Y TABLETS
+   Evita problemas de rendimiento con background fixed.
+   ====================================================== */
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+    background-position: center top;
   }
 }
