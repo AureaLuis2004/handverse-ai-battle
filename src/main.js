@@ -375,6 +375,13 @@ app.innerHTML = `
             -- %
           </strong>
 
+          <small
+            id="prediction-confidence-status"
+            class="prediction-confidence-status"
+          >
+            ESPERANDO
+          </small>
+
         </div>
 
       </div>
@@ -1168,9 +1175,7 @@ app.innerHTML = `
       <div
         id="battle-result"
         class="battle-result"
-      >
-        🔒 BATALLA BLOQUEADA
-      </div>
+      ></div>
 
       <!-- ====================================================== -->
       <!-- IDENTIDAD DEL GANADOR -->
@@ -1255,6 +1260,10 @@ const predictionName = document.querySelector("#prediction-name");
 const predictionAction = document.querySelector("#prediction-action");
 
 const predictionConfidence = document.querySelector("#prediction-confidence");
+
+const predictionConfidenceStatus = document.querySelector(
+  "#prediction-confidence-status"
+);
 
 const predictionIcon = document.querySelector(".prediction-icon");
 
@@ -2621,6 +2630,12 @@ function updatePredictionUI(prediction) {
 
     predictionConfidence.textContent = "-- %";
 
+    if (predictionConfidenceStatus) {
+      predictionConfidenceStatus.textContent = "ESPERANDO";
+      predictionConfidenceStatus.className =
+        "prediction-confidence-status";
+    }
+
     predictionPanel.className = "prediction-panel";
 
     return;
@@ -2641,6 +2656,20 @@ function updatePredictionUI(prediction) {
   predictionAction.textContent = gesture.action;
 
   predictionConfidence.textContent = `${confidence} %`;
+
+  if (predictionConfidenceStatus) {
+    if ((prediction.confidence ?? 0) >= BATTLE_MIN_CONFIDENCE) {
+      predictionConfidenceStatus.textContent = "✓ GESTO VÁLIDO";
+
+      predictionConfidenceStatus.className =
+        "prediction-confidence-status confidence-valid";
+    } else {
+      predictionConfidenceStatus.textContent = "⚠ AJUSTA EL GESTO";
+
+      predictionConfidenceStatus.className =
+        "prediction-confidence-status confidence-low";
+    }
+  }
 
   predictionPanel.className = `prediction-panel ${gesture.className}`;
 }
@@ -3047,6 +3076,23 @@ async function startNewBattle() {
   // ==========================================================
 
   updateBattleUI(newBattleState);
+
+  // ==========================================================
+  // LLEVAR AUTOMÁTICAMENTE AL JUGADOR A LA ARENA
+  // ==========================================================
+
+  const battleSection = document.getElementById("battle-section");
+
+  if (battleSection) {
+    battleSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    // Esperamos a que termine visualmente el desplazamiento
+    // antes de iniciar 3, 2, 1, COMBATE.
+    await sleep(650);
+  }
 
 
   // ==========================================================
@@ -4182,7 +4228,7 @@ function updateBattleUI(state) {
     }
 
     if (battleResult) {
-      battleResult.textContent = "🔒 BATALLA BLOQUEADA";
+      battleResult.textContent = "";
     }
 
     if (playerActionIcon) {

@@ -9523,3 +9523,329 @@ body {
     transform: scale(1.15);
   }
 }
+
+/* ==========================================================
+   HANDVERSE
+   HUD DE RECONOCIMIENTO IA DENTRO DE LA BATALLA
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   CONTENEDOR DEL SENSOR DE GESTO
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot {
+  width: 100%;
+
+  margin-top: clamp(14px, 1.5vw, 20px);
+
+  box-sizing: border-box;
+}
+
+/* Si todavía no se ha movido el panel,
+   el espacio no ocupa altura. */
+
+#battle-prediction-slot:empty {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   PANEL IA EN MODO BATALLA
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-panel {
+  width: 100%;
+
+  min-height: 86px;
+
+  margin: 0;
+
+  padding: 14px 18px;
+
+  grid-template-columns:
+    52px
+    minmax(0, 1fr)
+    minmax(108px, auto);
+
+  align-items: center;
+
+  gap: 14px;
+
+  border-radius: 15px;
+
+  animation: handverse-battle-prediction-in 0.35s cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+/* ----------------------------------------------------------
+   LÍNEA LUMINOSA LATERAL
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-panel::before {
+  top: 12%;
+
+  bottom: 12%;
+
+  width: 3px;
+}
+
+/* ----------------------------------------------------------
+   CAPA TECNOLÓGICA MUY SUAVE
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-panel::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.025),
+    transparent 35%,
+    transparent 68%,
+    rgba(34, 211, 238, 0.018)
+  );
+}
+
+/* ----------------------------------------------------------
+   ICONO DEL GESTO
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-icon {
+  width: 48px;
+
+  height: 48px;
+
+  font-size: 1.75rem;
+}
+
+/* ----------------------------------------------------------
+   INFORMACIÓN DEL GESTO
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-information {
+  min-width: 0;
+
+  gap: 2px;
+}
+
+#battle-prediction-slot .prediction-eyebrow {
+  font-size: 0.55rem;
+
+  letter-spacing: 0.16em;
+}
+
+#battle-prediction-slot #prediction-name {
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+
+  line-height: 1.08;
+}
+
+#battle-prediction-slot #prediction-action {
+  font-size: 0.72rem;
+
+  line-height: 1.25;
+}
+
+/* ----------------------------------------------------------
+   CONFIANZA IA
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-confidence {
+  min-width: 108px;
+
+  padding-left: 16px;
+
+  gap: 3px;
+
+  border-left: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+#battle-prediction-slot .prediction-confidence span {
+  font-size: 0.55rem;
+
+  letter-spacing: 0.12em;
+}
+
+#battle-prediction-slot #prediction-confidence {
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------
+   ESTADO DE CONFIANZA DEL GESTO
+   ---------------------------------------------------------- */
+
+#battle-prediction-slot .prediction-confidence-status {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 0.52rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.08em;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.18s ease,
+    text-shadow 0.18s ease;
+}
+
+/* GESTO CON 80 % O MÁS */
+
+#battle-prediction-slot .prediction-confidence-status.confidence-valid {
+  color: #86efac;
+
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+}
+
+/* GESTO CON MENOS DEL 80 % */
+
+#battle-prediction-slot .prediction-confidence-status.confidence-low {
+  color: #facc15;
+
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.18);
+}
+
+/* ----------------------------------------------------------
+   ENTRADA DEL HUD
+   ---------------------------------------------------------- */
+
+@keyframes handverse-battle-prediction-in {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================
+   TABLET / MÓVIL
+   ========================================================== */
+
+@media (max-width: 650px) {
+  #battle-prediction-slot {
+    margin-top: 14px;
+  }
+
+  #battle-prediction-slot .prediction-panel {
+    min-height: 0;
+
+    padding: 13px 14px;
+
+    grid-template-columns:
+      46px
+      minmax(0, 1fr);
+
+    gap: 11px;
+
+    border-radius: 14px;
+  }
+
+  #battle-prediction-slot .prediction-icon {
+    width: 44px;
+
+    height: 44px;
+
+    font-size: 1.55rem;
+  }
+
+  #battle-prediction-slot .prediction-eyebrow {
+    font-size: 0.52rem;
+  }
+
+  #battle-prediction-slot #prediction-name {
+    font-size: 0.92rem;
+  }
+
+  #battle-prediction-slot #prediction-action {
+    font-size: 0.68rem;
+  }
+
+  #battle-prediction-slot .prediction-confidence {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 9px 0 0;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-left: 0;
+
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  #battle-prediction-slot #prediction-confidence {
+    font-size: 1.1rem;
+  }
+
+  #battle-prediction-slot .prediction-confidence-status {
+    margin-top: 0;
+
+    margin-left: auto;
+
+    font-size: 0.48rem;
+  }
+}
+
+/* ==========================================================
+   DISPOSITIVOS DE MENOR POTENCIA
+   ========================================================== */
+
+html.low-power-device #battle-prediction-slot .prediction-panel {
+  animation: none;
+
+  box-shadow: none;
+}
+
+html.low-power-device #battle-prediction-slot .prediction-panel::after {
+  display: none;
+}
+
+/* ==========================================================
+   RECONOCIMIENTO IA SOLO DENTRO DE LA BATALLA
+   ========================================================== */
+
+/* Mientras el panel siga dentro de la zona de cámara,
+   permanece completamente oculto. */
+
+.camera-panel > #prediction-panel {
+  display: none;
+}
+
+/* Cuando JavaScript lo mueve al HUD de batalla,
+   vuelve a mostrarse como panel completo. */
+
+#battle-prediction-slot > #prediction-panel {
+  display: grid;
+}
+
+/* La confianza sí se muestra dentro del HUD de batalla. */
+
+#battle-prediction-slot .prediction-confidence {
+  display: flex;
+}
