@@ -1511,6 +1511,18 @@ let lastPredictionProcessTime = 0;
 let handWasDetected = false;
 
 // ============================================================
+// SUAVIZADO TEMPORAL DE LA CONFIANZA IA
+// ============================================================
+
+let smoothedGestureKey = null;
+
+let smoothedGestureConfidence = 0;
+
+// 0.35 = responde rápido sin hacer que el porcentaje
+// salte exageradamente entre fotogramas.
+const CONFIDENCE_SMOOTHING_ALPHA = 0.35;
+
+// ============================================================
 // CLASES DE RENDIMIENTO PARA CSS
 // ============================================================
 
@@ -1754,6 +1766,54 @@ function getHybridGesturePrediction(
         combinedConfidence
       )
     ),
+  };
+}
+
+// ============================================================
+// SUAVIZAR CONFIANZA ENTRE FOTOGRAMAS
+// ============================================================
+
+function smoothGesturePrediction(prediction) {
+  if (!prediction) {
+    smoothedGestureKey = null;
+    smoothedGestureConfidence = 0;
+
+    return prediction;
+  }
+
+  const currentConfidence = Math.max(
+    0,
+    Math.min(
+      1,
+      Number(prediction.confidence ?? 0)
+    )
+  );
+
+  // Si HANDVERSE detecta otro gesto,
+  // comenzamos una nueva medición.
+  if (prediction.key !== smoothedGestureKey) {
+    smoothedGestureKey = prediction.key;
+
+    smoothedGestureConfidence =
+      currentConfidence;
+  } else {
+    // Media móvil exponencial:
+    // evita cambios bruscos entre frames.
+    smoothedGestureConfidence =
+      CONFIDENCE_SMOOTHING_ALPHA *
+      currentConfidence +
+      (1 - CONFIDENCE_SMOOTHING_ALPHA) *
+      smoothedGestureConfidence;
+  }
+
+  return {
+    ...prediction,
+
+    instantaneousConfidence:
+      currentConfidence,
+
+    confidence:
+      smoothedGestureConfidence,
   };
 }
 
@@ -5021,10 +5081,15 @@ function startHandDetection() {
               currentLandmarks
             );
 
-          const prediction =
+          const hybridPrediction =
             getHybridGesturePrediction(
               rawPrediction,
               currentLandmarks
+            );
+
+          const prediction =
+            smoothGesturePrediction(
+              hybridPrediction
             );
 
           if (prediction) {
