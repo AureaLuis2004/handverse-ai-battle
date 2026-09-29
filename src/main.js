@@ -32,6 +32,7 @@ import {
 import {
   validateTrainingGesture,
   getTrainingGestureName,
+  getGestureGeometryConfidence,
 } from "./ai/gestureValidator.js";
 
 import {
@@ -1495,9 +1496,9 @@ const CAPTURE_SAMPLE_DELAY_MS = IS_TOUCH_DEVICE ? 90 : 120;
 // CONSOLA
 // ============================================================
 
-// FALSE para la versión de feria.
-// Evitamos imprimir predicciones constantemente.
-const DEBUG_PREDICTIONS = false;
+// TRUE para la versión de feria.
+// Activa temporalmente el diagnóstico
+const DEBUG_PREDICTIONS = true;
 
 // ============================================================
 // CONTROL INTERNO
@@ -1652,6 +1653,108 @@ function movePredictionPanelToBattle() {
 
 function clampHealth(value) {
   return Math.max(0, Math.min(100, Number(value ?? 100)));
+}
+
+// ============================================================
+// CONFIANZA HÍBRIDA DE RECONOCIMIENTO
+// ============================================================
+//
+// HANDVERSE combina:
+//
+// 1. Confianza de la red neuronal.
+// 2. Calidad geométrica real de la mano.
+//
+// Usamos una media armónica porque penaliza cuando
+// una de las dos señales es claramente baja.
+//
+// Ejemplo:
+//
+// IA neuronal:     98 %
+// Geometría:       95 %
+// Resultado:       ~96 %
+//
+// IA neuronal:     98 %
+// Geometría:       40 %
+// Resultado:       ~57 %
+//
+// ============================================================
+
+function getHybridGesturePrediction(
+  prediction,
+  landmarks
+) {
+  if (!prediction || !landmarks) {
+    return prediction;
+  }
+
+  // ========================================================
+  // CONFIANZA DEL MODELO NEURONAL
+  // ========================================================
+
+  const neuralConfidence = Math.max(
+    0,
+    Math.min(
+      1,
+      Number(prediction.confidence ?? 0)
+    )
+  );
+
+  // ========================================================
+  // CONFIANZA GEOMÉTRICA
+  // ========================================================
+
+  const geometryConfidence = Math.max(
+    0,
+    Math.min(
+      1,
+      Number(
+        getGestureGeometryConfidence(
+          prediction.key,
+          landmarks
+        ) ?? 0
+      )
+    )
+  );
+
+  // ========================================================
+  // COMBINAR AMBAS SEÑALES
+  // ========================================================
+
+  let combinedConfidence = 0;
+
+  if (
+    neuralConfidence > 0 &&
+    geometryConfidence > 0
+  ) {
+    combinedConfidence =
+      (2 *
+        neuralConfidence *
+        geometryConfidence) /
+      (
+        neuralConfidence +
+        geometryConfidence
+      );
+  }
+
+  // ========================================================
+  // DEVOLVER PREDICCIÓN ENRIQUECIDA
+  // ========================================================
+
+  return {
+    ...prediction,
+
+    neuralConfidence,
+
+    geometryConfidence,
+
+    confidence: Math.max(
+      0,
+      Math.min(
+        1,
+        combinedConfidence
+      )
+    ),
+  };
 }
 
 // ============================================================
@@ -2689,23 +2792,51 @@ function updateBattleGesturePreview(prediction) {
     return;
   }
 
-  const action = GESTURE_VIEW[prediction.key];
+  const playerActionIcon = document.getElementById(
+    "player-battle-emoji"
+  );
 
-  if (!action) {
-    return;
-  }
-
-  const playerActionIcon = document.getElementById("player-battle-emoji");
-
-  const playerActionName = document.getElementById("player-battle-action");
+  const playerActionName = document.getElementById(
+    "player-battle-action"
+  );
 
   if (!playerActionIcon || !playerActionName) {
     return;
   }
 
   // ========================================================
-  // VISTA PREVIA INMEDIATA
+  // CONFIANZA ACTUAL DEL GESTO
   // ========================================================
+
+  const confidence = Number(
+    prediction.confidence ?? 0
+  );
+
+  // ========================================================
+  // GESTO TODAVÍA NO ACEPTADO
+  // ========================================================
+
+  if (confidence < BATTLE_MIN_CONFIDENCE) {
+    playerActionIcon.textContent = "❔";
+
+    playerActionName.textContent = "AJUSTA EL GESTO";
+
+    return;
+  }
+
+  // ========================================================
+  // GESTO CON CONFIANZA SUFICIENTE
+  // ========================================================
+
+  const action = GESTURE_VIEW[prediction.key];
+
+  if (!action) {
+    playerActionIcon.textContent = "❔";
+
+    playerActionName.textContent = "ESPERANDO";
+
+    return;
+  }
 
   playerActionIcon.textContent = action.icon;
 
@@ -4885,7 +5016,16 @@ function startHandDetection() {
         ) {
           lastPredictionProcessTime = timestamp;
 
-          const prediction = predictGesture(currentLandmarks);
+          const rawPrediction =
+            predictGesture(
+              currentLandmarks
+            );
+
+          const prediction =
+            getHybridGesturePrediction(
+              rawPrediction,
+              currentLandmarks
+            );
 
           if (prediction) {
             // ================================================
