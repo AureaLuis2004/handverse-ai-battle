@@ -1556,9 +1556,9 @@ const CAPTURE_SAMPLE_DELAY_MS = IS_TOUCH_DEVICE ? 90 : 120;
 // CONSOLA
 // ============================================================
 
-// TRUE para la versión de feria.
-// Activa temporalmente el diagnóstico
-const DEBUG_PREDICTIONS = true;
+// FALSE para la versión de feria.
+// Desactiva temporalmente el diagnóstico
+const DEBUG_PREDICTIONS = false;
 
 // ============================================================
 // CONTROL INTERNO
@@ -5054,22 +5054,6 @@ function startHandDetection() {
     if (modelTrainingInProgress) {
       return;
     }
-
-    // ==================================================
-    // LIMITAR FRECUENCIA DE DETECCIÓN
-    // ==================================================
-
-    const now = timestamp ?? performance.now();
-
-    const detectionInterval = window.matchMedia("(max-width: 768px)").matches
-      ? 66
-      : 33;
-
-    if (now - lastHandDetectionTime < detectionInterval) {
-      return;
-    }
-
-    lastHandDetectionTime = now;
 
     // ========================================================
     // VALIDACIONES
