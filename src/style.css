@@ -14366,3 +14366,282 @@ body,
     box-sizing: border-box;
   }
 }
+
+/* ============================================================
+   HANDVERSE — HUD BATALLA MEDIANO / DESKTOP / TV
+   Ajusta únicamente pantallas desde 901px
+   NO modifica teléfonos ni tablets pequeñas
+   ============================================================ */
+
+@media (min-width: 901px) {
+  /* ----------------------------------------------------------
+     1. Las dos tarjetas del HUD deben tener la misma altura
+     ---------------------------------------------------------- */
+  #battle-section .battle-stage-hud {
+    align-items: stretch;
+  }
+
+  #battle-section .battle-stage-hud > .battle-player {
+    align-self: stretch;
+    min-height: 185px;
+
+    display: flex;
+    align-items: stretch;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. El contenido interno ocupa toda la altura disponible
+     ---------------------------------------------------------- */
+  #battle-section .battle-stage-hud > .battle-player .battle-hud-content {
+    flex: 1 1 auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     3. Nombre e institución permanecen arriba
+     ---------------------------------------------------------- */
+  #battle-section .battle-stage-hud > .battle-player .battle-player-identity {
+    flex: 0 0 auto;
+  }
+
+  /* ----------------------------------------------------------
+     4. Información de vida permanece debajo del jugador
+     ---------------------------------------------------------- */
+  #battle-section .battle-stage-hud > .battle-player .health-info {
+    flex: 0 0 auto;
+  }
+
+  #battle-section .battle-stage-hud > .battle-player .health-bar {
+    flex: 0 0 auto;
+  }
+
+  /* ----------------------------------------------------------
+     5. PODER ESPECIAL baja hasta la parte inferior
+     ---------------------------------------------------------- */
+  #battle-section .battle-stage-hud > .battle-player .power-status {
+    margin-top: auto;
+    margin-bottom: 4px;
+
+    flex: 0 0 auto;
+    align-self: flex-start;
+  }
+}
+
+
+/* ============================================================
+   HANDVERSE — HUD SUPERIOR DE BATALLA
+   ALINEACIÓN DEFINITIVA · PANTALLAS MEDIANAS / GRANDES
+   Laptop · Monitor · Proyector · TV
+   NO MODIFICA TABLET PEQUEÑA NI MÓVIL
+   ============================================================ */
+
+@media (min-width: 901px) {
+
+  /* =========================================================
+     1. CONTENIDO INTERNO DE AMBAS TARJETAS
+     JUGADOR + HANDVERSE IA
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .battle-hud-content {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* =========================================================
+     2. ZONA DE IDENTIDAD
+     Reserva EXACTAMENTE la misma altura para ambos lados.
+
+     JUGADOR:
+     Nombre
+     Institución
+
+     HANDVERSE:
+     HANDVERSE IA
+     espacio reservado
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .battle-player-identity {
+    width: 100% !important;
+
+    flex: 0 0 72px !important;
+
+    height: 72px !important;
+    min-height: 72px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+
+    gap: 4px !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* =========================================================
+     3. NOMBRE
+     Misma posición vertical en ambas tarjetas
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .battle-player-name {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 1.15 !important;
+
+    box-sizing: border-box !important;
+
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+
+
+  /* =========================================================
+     4. INSTITUCIÓN DEL ESTUDIANTE
+     Mantiene una fila propia debajo del nombre
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-stage-player-panel
+    .battle-player-institution {
+    width: 100% !important;
+
+    min-height: 18px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 1.2 !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* =========================================================
+     5. ESPACIO EQUIVALENTE EN HANDVERSE IA
+
+     La IA no tiene institución.
+     Creamos solamente espacio visual invisible para que VIDA
+     empiece exactamente a la misma altura que en el jugador.
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-stage-ai-panel
+    .battle-player-identity::after {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 18px;
+    min-height: 18px;
+
+    flex: 0 0 18px;
+
+    visibility: hidden;
+  }
+
+
+  /* =========================================================
+     6. TEXTO VIDA
+     Exactamente misma posición para jugador e IA
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .health-info {
+    width: 100% !important;
+    min-height: 24px !important;
+
+    margin: 0 0 7px 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    gap: 8px !important;
+
+    flex: 0 0 auto !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* =========================================================
+     7. BARRA DE VIDA
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .health-bar {
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    flex: 0 0 auto !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* =========================================================
+     8. PODER ESPECIAL
+     Se mantiene cerca de la parte inferior de ambas tarjetas
+     ========================================================= */
+
+  #battle-stage
+    > .battle-stage-hud
+    > .battle-player
+    .power-status {
+    width: fit-content !important;
+    max-width: 100% !important;
+
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+
+    flex: 0 0 auto !important;
+
+    box-sizing: border-box !important;
+  }
+}
