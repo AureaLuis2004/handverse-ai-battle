@@ -4,7 +4,64 @@
 // TensorFlow.js
 // ======================================================
 
-import * as tf from '@tensorflow/tfjs'
+// ======================================================
+// TENSORFLOW.JS — LAZY LOADING
+// Se carga únicamente cuando HANDVERSE necesita
+// entrenar realmente el modelo neuronal.
+// ======================================================
+
+let tf = null
+
+let tensorFlowReadyPromise = null
+
+
+async function loadTensorFlow() {
+
+  if (!tensorFlowReadyPromise) {
+
+    tensorFlowReadyPromise =
+      (async () => {
+
+        console.log(
+          '📦 Cargando TensorFlow.js bajo demanda...'
+        )
+
+
+        tf =
+          await import('@tensorflow/tfjs')
+
+
+        await tf.ready()
+
+
+        console.log(
+          'TensorFlow.js listo ✅'
+        )
+
+
+        console.log(
+          'Backend:',
+          tf.getBackend()
+        )
+
+
+        return true
+      })()
+        .catch((error) => {
+
+          // Permitimos reintentar si hubo un fallo
+          // durante la descarga o inicialización.
+          tensorFlowReadyPromise = null
+
+          tf = null
+
+          throw error
+        })
+  }
+
+
+  return tensorFlowReadyPromise
+}
 
 import {
   getTrainingData
@@ -65,19 +122,9 @@ const CLASS_BY_ID = {
 
 export async function initializeAI() {
 
-  await tf.ready()
-
-  console.log(
-    'TensorFlow.js listo ✅'
-  )
-
-  console.log(
-    'Backend:',
-    tf.getBackend()
-  )
+  await loadTensorFlow()
 
   return true
-
 }
 
 
@@ -416,6 +463,11 @@ function createStratifiedSplit(
 export async function trainGestureModel(
   onEpoch = null
 ) {
+
+  // TensorFlow se descarga/inicializa aquí
+  // solamente cuando realmente vamos a entrenar.
+  await initializeAI()
+
 
   if (
     trainingInProgress
@@ -1100,7 +1152,9 @@ export function getModelInfo() {
       trainingInProgress,
 
     backend:
-      tf.getBackend()
+      tf
+        ? tf.getBackend()
+        : null
 
   }
 

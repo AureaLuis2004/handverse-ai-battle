@@ -1,0 +1,41 @@
+============================================================
+HANDVERSE: BATALLA DE IA
+APORTE INDIVIDUAL DEL INTEGRANTE
+============================================================
+
+INTEGRANTE:
+Gabriel Villacis
+
+ÁREA DE APORTE:
+Audio e identidad sonora del videojuego.
+
+APORTE REALIZADO:
+Participación en la incorporación del audio de introducción futurista
+utilizado en HANDVERSE antes del inicio de la batalla.
+
+ARCHIVO RELACIONADO:
+public/audio/handverse_intro_fusion_definitiva.wav
+
+FUNCIÓN DENTRO DE HANDVERSE:
+La música de introducción acompaña las etapas iniciales del videojuego,
+incluyendo el registro del participante, preparación de la cámara,
+selección de dificultad y entrenamiento de la Inteligencia Artificial.
+
+COMPORTAMIENTO IMPLEMENTADO:
+- Reproducción del audio de introducción durante la fase previa al combate.
+- Integración con las restricciones modernas de reproducción automática
+  de los navegadores.
+- Inicio del audio después de una interacción válida del usuario cuando
+  el navegador lo requiere.
+- Transición de la música de introducción hacia el audio correspondiente
+  a la fase de combate.
+- Integración con el sistema general de audio de HANDVERSE.
+
+OBJETIVO DEL APORTE:
+Mejorar la ambientación, inmersión y experiencia audiovisual del usuario,
+aportando una identidad sonora coherente con la temática tecnológica y
+futurista de HANDVERSE.
+
+============================================================
+FIN DEL APORTE
+============================================================

@@ -21,7 +21,6 @@ import {
 import { GESTURE_CLASSES } from "./ai/features.js";
 
 import {
-  initializeAI,
   trainGestureModel,
   predictGesture,
   isModelTrained,
@@ -175,7 +174,7 @@ app.innerHTML = `
 
         <button
           type="submit"
-          class="registration-submit-button"
+          class="registration-submit-button hv-btn-primary hv-btn-block"
         >
           ⚔️ ENTRAR A HANDVERSE
         </button>
@@ -329,6 +328,7 @@ app.innerHTML = `
 
         <button
           id="start-camera"
+          class="hv-btn-primary"
           type="button"
         >
           ACTIVAR CÁMARA
@@ -394,47 +394,106 @@ app.innerHTML = `
     <!-- DIFICULTAD DE BATALLA -->
     <!-- ================================================== -->
 
-    <fieldset
-      id="difficulty-selector"
-      class="difficulty-panel"
-      aria-describedby="difficulty-help"
-    >
-      <legend>ELIGE LA DIFICULTAD</legend>
+<fieldset
+  id="difficulty-selector"
+  class="difficulty-panel"
+  aria-describedby="difficulty-help"
+>
+  <legend>ELIGE LA DIFICULTAD</legend>
 
-      <p id="difficulty-help" class="difficulty-help">
-        El daño se aplica al ganar un turno.
-        El nivel se mantiene durante toda la partida.
-      </p>
+  <p id="difficulty-help" class="difficulty-help">
+    El daño se aplica al ganar un turno.
+    El nivel se mantiene durante toda la partida.
+  </p>
 
-      <div class="difficulty-options">
-        ${Object.values(DIFFICULTY_LEVELS)
-    .map((level) => `
-            <label class="difficulty-option">
-              <input
-                class="difficulty-input"
-                type="radio"
-                name="battle-difficulty"
-                value="${level.key}"
-                ${level.key === DEFAULT_DIFFICULTY_KEY ? "checked" : ""}
+  <div class="difficulty-options">
+    ${Object.values(DIFFICULTY_LEVELS)
+    .map(
+      (level) => `
+          <label
+            class="difficulty-option"
+            data-difficulty="${level.key}"
+          >
+            <input
+              class="difficulty-input"
+              type="radio"
+              name="battle-difficulty"
+              value="${level.key}"
+              ${level.key === DEFAULT_DIFFICULTY_KEY ? "checked" : ""}
+            >
+
+            <span class="difficulty-card">
+              <strong>${level.name}</strong>
+
+              <span class="difficulty-description">
+                ${level.description}
+              </span>
+
+              <span
+                class="difficulty-intensity"
+                aria-hidden="true"
               >
-
-              <span class="difficulty-card">
-                <strong>${level.name}</strong>
-
-                <span class="difficulty-description">
-                  ${level.description}
+                <span class="difficulty-intensity-label">
+                  INTENSIDAD
                 </span>
 
-                <span class="difficulty-damage">
-                  Tu daño: <b>${level.playerDamage}</b> ·
-                  Daño de la IA: <b>${level.aiDamage}</b>
+                <span class="difficulty-intensity-bars">
+                  <i></i>
+                  <i></i>
+                  <i></i>
                 </span>
               </span>
-            </label>
-          `)
+
+              <span class="difficulty-damage">
+                Tu daño: <b>${level.playerDamage}</b> ·
+                Daño de la IA: <b>${level.aiDamage}</b>
+              </span>
+
+              <span
+                class="difficulty-damage-visual"
+                aria-hidden="true"
+              >
+                <span
+                  class="difficulty-damage-row difficulty-damage-player"
+                >
+                  <span class="difficulty-damage-label">
+                    TÚ
+                  </span>
+
+                  <span class="difficulty-damage-track">
+                    <span
+                      class="difficulty-damage-fill"
+                      style="--damage-level: ${level.playerDamage / 20}"
+                    ></span>
+                  </span>
+
+                  <strong>${level.playerDamage}</strong>
+                </span>
+
+                <span
+                  class="difficulty-damage-row difficulty-damage-ai"
+                >
+                  <span class="difficulty-damage-label">
+                    IA
+                  </span>
+
+                  <span class="difficulty-damage-track">
+                    <span
+                      class="difficulty-damage-fill"
+                      style="--damage-level: ${level.aiDamage / 20}"
+                    ></span>
+                  </span>
+
+                  <strong>${level.aiDamage}</strong>
+                </span>
+              </span>
+            </span>
+          </label>
+        `,
+    )
     .join("")}
-      </div>
-    </fieldset>
+  </div>
+</fieldset>
 
     <!-- ================================================== -->
     <!-- ENTRENAMIENTO -->
@@ -523,8 +582,9 @@ app.innerHTML = `
 
 
           <button
-            class="train-button"
+            class="train-button hv-btn-secondary"
             data-gesture="open_hand"
+            type="button"
             disabled
           >
             ENTRENAR
@@ -582,8 +642,9 @@ app.innerHTML = `
 
 
           <button
-            class="train-button"
+            class="train-button hv-btn-secondary"
             data-gesture="fist"
+            type="button"
             disabled
           >
             ENTRENAR
@@ -641,8 +702,9 @@ app.innerHTML = `
 
 
           <button
-            class="train-button"
+            class="train-button hv-btn-secondary"
             data-gesture="thumbs_up"
+            type="button"
             disabled
           >
             ENTRENAR
@@ -1209,10 +1271,9 @@ app.innerHTML = `
         class="new-battle-container"
         hidden
       >
-
         <button
           id="new-battle-button"
-          class="new-battle-button"
+          class="new-battle-button hv-btn-primary"
           type="button"
         >
           🎮 GENERAR OTRA PARTIDA
@@ -1220,12 +1281,11 @@ app.innerHTML = `
 
         <button
           id="new-student-button"
-          class="new-student-button"
+          class="new-student-button hv-btn-secondary"
           type="button"
         >
           👤 NUEVO ESTUDIANTE
         </button>
-
       </div>
 
       </div>
@@ -2313,13 +2373,14 @@ function updateTrainingUI() {
 
         <button
           id="train-model-button"
-          class="train-model-button"
+          class="train-model-button hv-btn-special hv-btn-block"
           type="button"
           ${modelAlreadyTrained ? "disabled" : ""}
         >
-
-          ${modelAlreadyTrained ? "✅ IA ENTRENADA" : "🧠 ENTRENAR MODELO IA"}
-
+          ${modelAlreadyTrained
+        ? "✅ IA ENTRENADA"
+        : "🧠 ENTRENAR MODELO IA"
+      }
         </button>
 
         <p
@@ -3639,10 +3700,18 @@ function startIntroMusic() {
       );
     })
     .catch((error) => {
-      console.warn(
-        "🔇 La música de introducción espera interacción del usuario:",
+
+      // NotAllowedError es una política normal del navegador:
+      // no lo tratamos como error de HANDVERSE.
+      if (error?.name === "NotAllowedError") {
+        return;
+      }
+
+      console.error(
+        "Error real al reproducir la música de introducción:",
         error
       );
+
     });
 
 }
@@ -3710,7 +3779,6 @@ sessionStorage.removeItem(
 
 // Cada carga o recarga de HANDVERSE comienza
 // intentando reproducir exclusivamente la Música 1.
-startIntroMusic();
 
 
 // ======================================================
@@ -5953,21 +6021,3 @@ document.addEventListener("click", async (event) => {
 updateTrainingUI();
 
 updateBattleUI(getBattleState());
-
-// ============================================================
-// 21. INICIALIZACIÓN DE TENSORFLOW / IA
-// ============================================================
-
-async function initializeHandverseAI() {
-  try {
-    console.log("🧠 Inicializando motor neuronal de HANDVERSE...");
-
-    await initializeAI();
-
-    console.log("✅ Motor de Inteligencia Artificial preparado");
-  } catch (error) {
-    console.error("❌ Error inicializando la IA de HANDVERSE:", error);
-  }
-}
-
-initializeHandverseAI();

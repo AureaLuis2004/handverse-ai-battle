@@ -556,6 +556,199 @@ export function detectTrainingGesture(
   return null
 }
 
+// ======================================================
+// CONFIANZA GEOMÉTRICA DEL GESTO
+// ======================================================
+//
+// Esta función NO reemplaza la confianza de la IA.
+//
+// Evalúa qué tan correctamente está colocada
+// físicamente la mano para el gesto predicho.
+//
+// Resultado:
+//
+// 1.00 = postura geométrica excelente
+// 0.80 = postura bastante correcta
+// 0.50 = postura dudosa
+// 0.00 = postura incompatible
+//
+// Después MAIN.JS combinará:
+//
+// confianza neuronal + confianza geométrica
+//
+// ======================================================
+
+export function getGestureGeometryConfidence(
+  gestureKey,
+  landmarks
+) {
+
+  // ----------------------------------------------------
+  // LANDMARKS INVÁLIDOS
+  // ----------------------------------------------------
+
+  if (!hasValidLandmarks(landmarks)) {
+    return 0
+  }
+
+
+  // ----------------------------------------------------
+  // ANALIZAR LOS CINCO DEDOS
+  // ----------------------------------------------------
+
+  const fingers =
+    analyzeFingers(
+      landmarks
+    )
+
+
+  const extendedFingerCount =
+    fingers.fourFingerCount
+
+
+  const closedFingerCount =
+    4 - extendedFingerCount
+
+
+  let geometryScore = 0
+
+
+  // ----------------------------------------------------
+  // 🖐️ MANO ABIERTA / ESCUDO
+  // ----------------------------------------------------
+
+  if (gestureKey === 'open_hand') {
+
+    // Cuantos más dedos principales estén abiertos,
+    // mayor será la calidad geométrica.
+
+    geometryScore =
+      extendedFingerCount / 4
+
+
+    // Si el pulgar también está separado,
+    // damos una pequeña bonificación.
+
+    if (fingers.thumb) {
+
+      geometryScore =
+        Math.min(
+          1,
+          geometryScore + 0.08
+        )
+
+    }
+
+  }
+
+
+  // ----------------------------------------------------
+  // ✊ PUÑO CERRADO / ATAQUE
+  // ----------------------------------------------------
+
+  else if (gestureKey === 'fist') {
+
+    // Cuantos más dedos estén cerrados,
+    // mejor formado está el puño.
+
+    geometryScore =
+      closedFingerCount / 4
+
+
+    // Si realmente parece pulgar arriba,
+    // penalizamos fuertemente el puño.
+
+    if (fingers.thumbUp) {
+
+      geometryScore *= 0.35
+
+    }
+
+  }
+
+
+  // ----------------------------------------------------
+  // 👍 PULGAR ARRIBA / PODER
+  // ----------------------------------------------------
+
+  else if (gestureKey === 'thumbs_up') {
+
+    // Los cuatro dedos cerrados representan
+    // el 65 % de la calidad.
+
+    const closedScore =
+      closedFingerCount / 4
+
+
+    // La orientación correcta del pulgar
+    // representa el otro 35 %.
+
+    const thumbScore =
+      fingers.thumbUp
+        ? 1
+        : 0
+
+
+    geometryScore =
+      closedScore * 0.65 +
+      thumbScore * 0.35
+
+  }
+
+
+  // ----------------------------------------------------
+  // GESTO DESCONOCIDO
+  // ----------------------------------------------------
+
+  else {
+
+    return 0
+
+  }
+
+
+  // ----------------------------------------------------
+  // COMPARAR CON EL CLASIFICADOR GEOMÉTRICO
+  // ----------------------------------------------------
+
+  const geometricGesture =
+    detectTrainingGesture(
+      landmarks
+    )
+
+
+  // La geometría no reconoce claramente la postura.
+
+  if (!geometricGesture) {
+
+    geometryScore *= 0.5
+
+  }
+
+
+  // La geometría reconoce OTRO gesto.
+
+  else if (
+    geometricGesture !== gestureKey
+  ) {
+
+    geometryScore *= 0.35
+
+  }
+
+
+  // ----------------------------------------------------
+  // GARANTIZAR RANGO 0 → 1
+  // ----------------------------------------------------
+
+  return Math.max(
+    0,
+    Math.min(
+      1,
+      geometryScore
+    )
+  )
+}
 
 // ======================================================
 // 7. VALIDAR EL GESTO SOLICITADO

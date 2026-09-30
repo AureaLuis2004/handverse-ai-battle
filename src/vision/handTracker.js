@@ -1,10 +1,48 @@
-import {
-  FilesetResolver,
-  HandLandmarker
-} from '@mediapipe/tasks-vision'
+// ============================================================
+// HANDVERSE — MEDIAPIPE LAZY LOADING
+// MediaPipe se descarga únicamente al activar la cámara.
+// ============================================================
 
+let FilesetResolver = null
+let HandLandmarker = null
+
+let mediaPipeModulePromise = null
 
 let handLandmarker = null
+
+
+async function loadMediaPipeVision() {
+
+  if (!mediaPipeModulePromise) {
+
+    mediaPipeModulePromise =
+      import('@mediapipe/tasks-vision')
+        .then((module) => {
+
+          FilesetResolver =
+            module.FilesetResolver
+
+          HandLandmarker =
+            module.HandLandmarker
+
+          console.log(
+            '📦 MediaPipe cargado bajo demanda ✅'
+          )
+
+          return module
+        })
+        .catch((error) => {
+
+          // Permite volver a intentarlo si la carga falla.
+          mediaPipeModulePromise = null
+
+          throw error
+        })
+  }
+
+
+  return mediaPipeModulePromise
+}
 
 
 export async function initializeHandTracker() {
@@ -12,6 +50,9 @@ export async function initializeHandTracker() {
   console.log(
     'Inicializando MediaPipe Hand Landmarker...'
   )
+
+
+  await loadMediaPipeVision()
 
 
   const vision =

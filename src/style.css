@@ -3055,85 +3055,6 @@ html.low-power-device .gesture-training-card:hover {
 }
 
 /* ============================================================
-   13. RESPONSIVE TABLET
-   ============================================================ */
-
-@media (max-width: 900px) {
-  .battle-section {
-    width: min(100% - 22px, 760px);
-
-    padding: 22px;
-  }
-
-  .battle-hud {
-    grid-template-columns: 1fr;
-  }
-
-  .battle-vs,
-  .battle-center {
-    min-height: 42px;
-  }
-
-  .battle-arena {
-    padding: 18px;
-  }
-}
-
-/* ============================================================
-   14. RESPONSIVE MÓVIL
-   ============================================================ */
-
-@media (max-width: 600px) {
-  .battle-section {
-    width: calc(100% - 16px);
-
-    margin: 24px auto;
-
-    padding: 16px;
-
-    border-radius: 20px;
-  }
-
-  .battle-header {
-    margin-bottom: 20px;
-  }
-
-  .battle-header h2 {
-    font-size: clamp(1.75rem, 9vw, 2.4rem);
-  }
-
-  #battle-message {
-    font-size: 0.86rem;
-  }
-
-  .battle-arena {
-    gap: 15px;
-
-    padding: 14px;
-
-    border-radius: 17px;
-  }
-
-  .player-battle-card,
-  .ai-battle-card,
-  .battle-player-card {
-    padding: 17px;
-  }
-
-  .power-status {
-    width: 100%;
-
-    white-space: normal;
-
-    text-align: center;
-  }
-
-  .battle-countdown-text {
-    font-size: clamp(3rem, 19vw, 5rem);
-  }
-}
-
-/* ============================================================
    15. DISPOSITIVOS DE BAJO RENDIMIENTO
    ============================================================ */
 
@@ -4536,250 +4457,6 @@ input {
 }
 
 /* ============================================================
-   2. TABLETS Y LAPTOPS PEQUEÑAS
-   ============================================================ */
-
-@media (max-width: 1200px) {
-  .battle-section,
-  .training-section,
-  .vision-section {
-    width: calc(100% - 32px);
-
-    margin-left: auto;
-
-    margin-right: auto;
-  }
-
-  .battle-arena {
-    padding: 20px;
-  }
-
-  .battle-hud {
-    gap: 16px;
-  }
-
-  .battle-player {
-    min-width: 0;
-  }
-}
-
-/* ============================================================
-   3. TABLET
-   ============================================================ */
-
-@media (max-width: 900px) {
-  .player-registration-card {
-    width: min(92vw, 620px);
-  }
-
-  .training-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .battle-hud {
-    grid-template-columns: 1fr;
-  }
-
-  .battle-player,
-  .battle-ai {
-    width: 100%;
-  }
-
-  .battle-vs {
-    margin: 4px 0;
-  }
-
-  .battle-actions {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 14px;
-  }
-
-  .battle-arena {
-    padding: 18px;
-  }
-
-  .battle-countdown-text {
-    font-size: clamp(3rem, 12vw, 6rem);
-  }
-}
-
-/* ============================================================
-   4. MÓVIL
-   ============================================================ */
-
-@media (max-width: 600px) {
-  body {
-    font-size: 14px;
-  }
-
-  .player-registration-screen {
-    padding: 18px 12px;
-  }
-
-  .player-registration-card {
-    width: 100%;
-
-    padding: 24px 18px;
-
-    border-radius: 20px;
-  }
-
-  .player-registration-card h1 {
-    font-size: clamp(2rem, 10vw, 3rem);
-  }
-
-  .player-registration-field input {
-    min-height: 50px;
-
-    font-size: 16px;
-  }
-
-  .player-registration-submit {
-    min-height: 52px;
-  }
-
-  .gesture-legend {
-    flex-direction: column;
-
-    align-items: stretch;
-
-    width: 100%;
-  }
-
-  .gesture-legend > * {
-    width: 100%;
-  }
-
-  .vision-section,
-  .training-section,
-  .battle-section {
-    width: calc(100% - 20px);
-
-    margin-left: auto;
-
-    margin-right: auto;
-  }
-
-  .vision-container {
-    padding: 14px;
-  }
-
-  .camera-container {
-    border-radius: 16px;
-  }
-
-  .prediction-panel {
-    padding: 16px;
-  }
-
-  .training-grid {
-    gap: 12px;
-  }
-
-  .gesture-training-card {
-    padding: 18px 14px;
-  }
-
-  .battle-section {
-    border-radius: 20px;
-  }
-
-  .battle-arena {
-    padding: 14px;
-  }
-
-  .battle-header {
-    padding-left: 12px;
-
-    padding-right: 12px;
-  }
-
-  .battle-header h2 {
-    font-size: clamp(1.5rem, 8vw, 2.3rem);
-  }
-
-  .battle-hud {
-    gap: 12px;
-  }
-
-  .battle-player {
-    padding: 14px;
-  }
-
-  .battle-actions {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
-  }
-
-  .battle-action-card {
-    min-height: 120px;
-  }
-
-  .battle-countdown {
-    padding: 16px;
-  }
-
-  .battle-countdown-text {
-    font-size: clamp(3rem, 18vw, 5rem);
-  }
-
-  .turn-timer {
-    transform: scale(0.92);
-  }
-
-  .new-battle-container {
-    width: 100%;
-  }
-
-  .new-battle-button,
-  .new-student-button {
-    width: 100%;
-
-    min-width: 0;
-  }
-}
-
-/* ============================================================
-   5. MÓVILES MUY PEQUEÑOS
-   ============================================================ */
-
-@media (max-width: 420px) {
-  .player-registration-card {
-    padding: 20px 14px;
-  }
-
-  .battle-arena {
-    padding: 10px;
-  }
-
-  .battle-player {
-    padding: 12px;
-  }
-
-  .battle-player-name {
-    font-size: 0.88rem;
-  }
-
-  .battle-player-institution {
-    font-size: 0.68rem;
-  }
-
-  .power-status {
-    font-size: 0.68rem;
-  }
-
-  .battle-action-card {
-    padding: 12px;
-  }
-
-  .battle-countdown-text {
-    font-size: clamp(2.8rem, 20vw, 4.5rem);
-  }
-}
-
-/* ============================================================
    6. PANTALLAS BAJAS / PROYECTORES
    ============================================================ */
 
@@ -5279,779 +4956,6 @@ html.low-power-device .system-status-active .system-status-dot {
 }
 
 /* ==========================================================
-   HANDVERSE
-   PULIDO RESPONSIVE FINAL - MÓVIL
-   ========================================================== */
-
-@media (max-width: 600px) {
-  /* ========================================================
-     1. CONTENEDOR GENERAL
-     ======================================================== */
-
-  .app-shell {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* ========================================================
-     2. SECCIONES GENERALES
-     ======================================================== */
-
-  .battle-section {
-    width: 100%;
-
-    padding: 24px 16px 28px;
-
-    border-radius: 20px;
-  }
-
-  /* ========================================================
-     3. CABECERA DE BATALLA
-     ======================================================== */
-
-  .battle-header {
-    margin-bottom: 22px;
-
-    text-align: center;
-  }
-
-  .battle-header h2 {
-    font-size: clamp(2rem, 10vw, 3rem);
-
-    line-height: 0.96;
-
-    margin-bottom: 12px;
-  }
-
-  .battle-header p {
-    font-size: 0.95rem;
-
-    line-height: 1.4;
-  }
-
-  /* ========================================================
-     4. HUD EN UNA SOLA COLUMNA
-     ======================================================== */
-
-  .battle-hud {
-    grid-template-columns: minmax(0, 1fr);
-
-    width: 100%;
-
-    gap: 16px;
-
-    margin-top: 20px;
-
-    margin-bottom: 20px;
-  }
-
-  /* ========================================================
-     5. JUGADOR / IA
-     ======================================================== */
-
-  .battle-player {
-    width: 100%;
-
-    min-width: 0;
-
-    margin: 0;
-  }
-
-  /* ========================================================
-     6. ACCIONES
-     ======================================================== */
-
-  .battle-actions {
-    grid-template-columns: minmax(0, 1fr);
-
-    width: 100%;
-
-    gap: 14px;
-
-    margin-top: 18px;
-
-    margin-bottom: 18px;
-  }
-
-  .battle-action-card {
-    width: 100%;
-
-    min-height: 150px;
-
-    padding: 20px 16px;
-
-    border-radius: 18px;
-  }
-
-  /* ========================================================
-     7. RESULTADO DE BATALLA
-     ======================================================== */
-
-  #battle-result {
-    width: 100%;
-
-    margin-top: 18px;
-
-    margin-bottom: 0;
-
-    padding: 15px 16px;
-
-    border-radius: 16px;
-
-    font-size: 1rem;
-
-    line-height: 1.35;
-
-    text-align: center;
-  }
-
-  /* ========================================================
-     8. GANADOR
-     ======================================================== */
-
-  #battle-winner-identity {
-    width: 100% !important;
-
-    margin-top: 16px !important;
-
-    padding: 16px 14px !important;
-
-    border-radius: 16px;
-  }
-
-  /* ========================================================
-     9. BOTONES FINALES
-     ======================================================== */
-
-  .new-battle-button,
-  .new-student-button {
-    width: 100%;
-
-    min-height: 58px;
-
-    margin: 0;
-  }
-
-  /* ========================================================
-     10. TARJETAS DE ENTRENAMIENTO
-     ======================================================== */
-
-  .training-grid {
-    grid-template-columns: minmax(0, 1fr);
-
-    gap: 14px;
-  }
-
-  .gesture-training-card {
-    width: 100%;
-
-    padding: 22px 16px;
-
-    border-radius: 18px;
-  }
-
-  /* ========================================================
-     11. CÁMARA
-     ======================================================== */
-
-  .camera-container,
-  .camera-stage {
-    width: 100%;
-
-    border-radius: 18px;
-  }
-
-  /* ========================================================
-     12. COUNTDOWN
-     NO CAMBIAMOS SU OVERLAY
-     ======================================================== */
-
-  #battle-countdown-text {
-    max-width: calc(100vw - 40px);
-
-    padding: 18px 24px;
-  }
-
-  #battle-countdown-text.battle-countdown-combat {
-    min-width: 0;
-
-    width: min(90vw, 340px);
-
-    font-size: clamp(2rem, 10vw, 3rem);
-  }
-}
-
-/* ==========================================================
-   RESPONSIVE FINAL — ARENA DE BATALLA
-   MÓVILES HASTA 600px
-   ========================================================== */
-
-@media (max-width: 600px) {
-  /* ========================================================
-     CONTENEDOR GENERAL DE LA ARENA
-     ======================================================== */
-
-  .battle-section {
-    padding: 22px 14px;
-
-    border-radius: 22px;
-  }
-
-  /* ========================================================
-     HUD PRINCIPAL
-     JUGADOR → CENTRO → IA
-     ======================================================== */
-
-  .battle-hud {
-    display: grid;
-
-    grid-template-columns: minmax(0, 1fr);
-
-    width: 100%;
-
-    gap: 14px;
-
-    align-items: stretch;
-  }
-
-  /* ========================================================
-     JUGADOR E IA
-     ======================================================== */
-
-  .battle-player {
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 14px 12px;
-
-    margin: 0;
-
-    box-sizing: border-box;
-  }
-
-  /* El contenido interno ocupa todo el ancho */
-
-  .battle-player > div {
-    width: 100%;
-
-    min-width: 0;
-  }
-
-  /* ========================================================
-     IDENTIDAD DEL JUGADOR
-     ======================================================== */
-
-  .battle-player-identity {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    align-items: baseline;
-
-    column-gap: 7px;
-
-    row-gap: 3px;
-
-    margin-bottom: 7px;
-  }
-
-  .battle-player-name {
-    font-size: 1.05rem;
-
-    line-height: 1.15;
-  }
-
-  .battle-player-institution {
-    font-size: 0.78rem;
-
-    line-height: 1.25;
-
-    overflow-wrap: anywhere;
-  }
-
-  /* ========================================================
-     INFORMACIÓN DE VIDA
-     ======================================================== */
-
-  .health-info {
-    display: flex;
-
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    gap: 4px;
-
-    margin: 0;
-  }
-
-  .health-bar {
-    width: 100%;
-
-    margin-top: 5px;
-  }
-
-  /* ========================================================
-     PODER ESPECIAL
-     ======================================================== */
-
-  .power-status {
-    width: 100%;
-
-    min-height: 36px;
-
-    margin-top: 10px;
-
-    padding: 7px 10px;
-
-    box-sizing: border-box;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    font-size: 0.78rem;
-
-    line-height: 1.15;
-  }
-
-  /* ========================================================
-     CENTRO:
-     RONDA + TIEMPO + VS
-     ======================================================== */
-
-  .battle-center {
-    width: 100%;
-
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 7px;
-
-    margin: 0;
-
-    padding: 4px 0;
-  }
-
-  .round-label {
-    margin: 0;
-
-    font-size: 0.76rem;
-
-    line-height: 1;
-  }
-
-  #battle-round {
-    margin: 0;
-
-    font-size: 1.1rem;
-
-    line-height: 1;
-  }
-
-  /* ========================================================
-     TEMPORIZADOR
-     ======================================================== */
-
-  .turn-timer {
-    width: 104px;
-
-    min-height: 66px;
-
-    margin: 4px auto;
-
-    padding: 8px 10px;
-
-    box-sizing: border-box;
-  }
-
-  .turn-timer-label {
-    font-size: 0.62rem;
-  }
-
-  .turn-timer-number-row {
-    margin: 3px 0;
-  }
-
-  /* ========================================================
-     VS CENTRAL
-     ======================================================== */
-
-  .battle-vs {
-    margin: 2px 0 0;
-
-    font-size: 1.35rem;
-
-    line-height: 1;
-  }
-}
-
-/* ==========================================================
-   DESKTOP / LAPTOP / TV
-   HUD FINAL ALINEADO
-   ========================================================== */
-
-@media (min-width: 769px) {
-  /* ========================================================
-     ESTRUCTURA PRINCIPAL
-
-     JUGADOR | CENTRO | HANDVERSE IA
-     ======================================================== */
-
-  .battle-hud {
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      120px
-      minmax(0, 1fr);
-
-    column-gap: 28px;
-
-    align-items: start;
-
-    width: 100%;
-  }
-
-  /* ========================================================
-     JUGADOR E IA
-     ======================================================== */
-
-  .battle-player {
-    width: 100%;
-
-    min-width: 0;
-
-    align-self: start;
-  }
-
-  .battle-player > div {
-    width: 100%;
-
-    min-width: 0;
-  }
-
-  /* ========================================================
-     IDENTIDAD DEL ESTUDIANTE
-
-     NOMBRE
-     INSTITUCIÓN
-
-     Nunca deben compartir línea.
-     ======================================================== */
-
-  .battle-player-identity {
-    display: flex;
-
-    flex-direction: column;
-
-    flex-wrap: nowrap;
-
-    align-items: flex-start;
-
-    justify-content: flex-end;
-
-    width: 100%;
-
-    height: 78px;
-
-    gap: 4px;
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-  }
-
-  /* ========================================================
-     NOMBRE DEL ESTUDIANTE
-     ======================================================== */
-
-  .battle-player-name {
-    display: block;
-
-    width: 100%;
-
-    margin: 0;
-
-    padding: 0;
-
-    line-height: 1.1;
-
-    white-space: normal;
-
-    overflow-wrap: break-word;
-  }
-
-  /* ========================================================
-     INSTITUCIÓN
-
-     Siempre debajo del nombre.
-     ======================================================== */
-
-  .battle-player-institution {
-    display: block;
-
-    width: 100%;
-
-    margin: 0;
-
-    padding: 0;
-
-    line-height: 1.2;
-
-    white-space: normal;
-
-    overflow-wrap: break-word;
-  }
-
-  /* ========================================================
-     HANDVERSE IA
-
-     Reservamos exactamente la misma altura que
-     nombre + institución del estudiante.
-
-     Así VIDA queda a la misma altura.
-     ======================================================== */
-
-  .battle-ai .battle-label {
-    display: flex;
-
-    align-items: flex-end;
-
-    width: 100%;
-
-    height: 78px;
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    line-height: 1.1;
-  }
-
-  /* ========================================================
-     TEXTO VIDA
-     ======================================================== */
-
-  .health-info {
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    height: 24px;
-
-    min-height: 24px;
-
-    margin: 0;
-
-    padding: 0;
-
-    line-height: 24px;
-
-    box-sizing: border-box;
-  }
-
-  /* ========================================================
-     BARRAS DE VIDA
-     ======================================================== */
-
-  .health-bar {
-    display: block;
-
-    width: 100%;
-
-    margin-top: 6px;
-
-    margin-bottom: 0;
-  }
-
-  /* ========================================================
-     PODER ESPECIAL
-     ======================================================== */
-
-  .power-status {
-    margin-top: 14px;
-  }
-
-  /* ========================================================
-     CENTRO
-
-     Ronda + temporizador + VS
-     ======================================================== */
-
-  .battle-center {
-    width: 120px;
-
-    min-width: 120px;
-
-    align-self: start;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: flex-start;
-  }
-}
-
-/* ==========================================================
-   AJUSTE FINAL HUD DE BATALLA - ESCRITORIO
-   Alineación jugador / HANDVERSE IA / vida / poder
-   ========================================================== */
-
-@media (min-width: 769px) {
-  /* --------------------------------------------------------
-     1. IDENTIDAD DEL JUGADOR
-     Nombre arriba - institución debajo
-     -------------------------------------------------------- */
-
-  .battle-player-identity {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-
-    min-height: 58px !important;
-
-    gap: 4px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .battle-player-name {
-    display: block !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    font-size: 1.3rem !important;
-    font-weight: 900 !important;
-    line-height: 1.15 !important;
-
-    color: #f8fafc !important;
-  }
-
-  .battle-player-institution {
-    display: block !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    font-size: 1rem !important;
-    font-weight: 500 !important;
-    line-height: 1.2 !important;
-
-    color: #cbd5e1 !important;
-
-    white-space: normal !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* --------------------------------------------------------
-     2. HANDVERSE IA
-     Misma altura inicial que el nombre del estudiante
-     -------------------------------------------------------- */
-
-  .battle-ai .battle-label {
-    display: flex !important;
-
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-
-    min-height: 58px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    font-size: 1.3rem !important;
-    font-weight: 900 !important;
-    line-height: 1.15 !important;
-
-    color: #f8fafc !important;
-  }
-
-  /* --------------------------------------------------------
-     3. VIDA
-     Ambas líneas exactamente con la misma estructura
-     -------------------------------------------------------- */
-
-  .battle-player .health-info,
-  .battle-ai .health-info {
-    display: flex !important;
-
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    gap: 6px !important;
-
-    min-height: 24px !important;
-
-    margin: 4px 0 0 !important;
-    padding: 0 !important;
-
-    font-size: 1rem !important;
-    line-height: 1.2 !important;
-  }
-
-  /* --------------------------------------------------------
-     4. BARRAS DE VIDA
-     -------------------------------------------------------- */
-
-  .battle-player .health-bar,
-  .battle-ai .health-bar {
-    width: 100% !important;
-
-    margin-top: 7px !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* --------------------------------------------------------
-     5. PODER ESPECIAL
-     Separación moderada respecto a la barra
-     -------------------------------------------------------- */
-
-  .battle-player .power-status,
-  .battle-ai .power-status {
-    margin-top: 16px !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* --------------------------------------------------------
-     6. SEPARACIÓN ENTRE EL HUD Y LAS CAJAS DE MOVIMIENTO
-     Evita que PODER ESPECIAL quede pegado
-     -------------------------------------------------------- */
-
-  .battle-hud {
-    margin-bottom: 0 !important;
-  }
-
-  .battle-actions {
-    margin-top: 24px !important;
-  }
-}
-
-/* ==========================================================
    HANDVERSE - AJUSTE ESTABLE DEL HUD
    NO MODIFICA LA LÓGICA NI ROMPE EL RESPONSIVE EXISTENTE
    ========================================================== */
@@ -6069,170 +4973,6 @@ html.low-power-device .system-status-active .system-status-dot {
   margin-right: auto;
 
   box-sizing: border-box;
-}
-
-/* ==========================================================
-   ESCRITORIO · LAPTOP · MONITOR · TV
-   ========================================================== */
-
-@media (min-width: 901px) {
-  /* --------------------------------------------------------
-     HUD:
-     JUGADOR | CENTRO | HANDVERSE IA
-     -------------------------------------------------------- */
-
-  #battle-section .battle-hud {
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      120px
-      minmax(0, 1fr);
-
-    column-gap: clamp(28px, 3vw, 52px);
-
-    align-items: end;
-
-    width: 100%;
-
-    box-sizing: border-box;
-  }
-
-  /* --------------------------------------------------------
-     COLUMNAS LATERALES
-     -------------------------------------------------------- */
-
-  #battle-section .battle-player,
-  #battle-section .battle-ai {
-    width: 100%;
-    min-width: 0;
-  }
-
-  /* --------------------------------------------------------
-     NOMBRE DEL ESTUDIANTE
-     -------------------------------------------------------- */
-
-  #battle-section .battle-player-identity {
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 6px;
-
-    margin: 0 0 14px 0;
-
-    padding: 0;
-  }
-
-  #battle-section .battle-player-name {
-    display: block;
-
-    width: 100%;
-
-    margin: 0;
-
-    line-height: 1.1;
-
-    font-weight: 900;
-
-    white-space: normal;
-
-    overflow-wrap: anywhere;
-  }
-
-  /* --------------------------------------------------------
-     INSTITUCIÓN SIEMPRE DEBAJO DEL NOMBRE
-     -------------------------------------------------------- */
-
-  #battle-section .battle-player-institution {
-    display: block;
-
-    width: 100%;
-
-    margin: 0;
-
-    line-height: 1.25;
-
-    white-space: normal;
-
-    overflow-wrap: anywhere;
-  }
-
-  /* --------------------------------------------------------
-     HANDVERSE IA
-     -------------------------------------------------------- */
-
-  #battle-section .battle-ai .battle-label {
-    display: block;
-
-    margin: 0 0 14px 0;
-
-    padding: 0;
-
-    font-weight: 900;
-
-    line-height: 1.1;
-  }
-
-  /* --------------------------------------------------------
-     TEXTO VIDA
-     -------------------------------------------------------- */
-
-  #battle-section .health-info {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-start;
-
-    gap: 6px;
-
-    margin: 0 0 8px 0;
-
-    padding: 0;
-  }
-
-  /* --------------------------------------------------------
-     BARRAS DE VIDA
-     -------------------------------------------------------- */
-
-  #battle-section .health-bar {
-    width: 100%;
-
-    margin: 0;
-
-    box-sizing: border-box;
-  }
-
-  /* --------------------------------------------------------
-     PODER ESPECIAL
-     -------------------------------------------------------- */
-
-  #battle-section .power-status {
-    width: fit-content;
-
-    max-width: 100%;
-
-    margin-top: 16px;
-
-    margin-bottom: 0;
-  }
-
-  /* --------------------------------------------------------
-     COLUMNA CENTRAL
-     -------------------------------------------------------- */
-
-  #battle-section .battle-center {
-    width: 120px;
-
-    justify-self: center;
-
-    align-self: end;
-
-    text-align: center;
-  }
 }
 
 /* ==========================================================
@@ -6711,6 +5451,63 @@ html.low-power-device .system-status-active .system-status-dot {
 .difficulty-input:focus-visible + .difficulty-card {
   outline: 2px solid var(--difficulty-accent);
   outline-offset: 4px;
+}
+
+/* ==========================================================
+   DIFICULTAD BLOQUEADA DURANTE LA BATALLA
+   ========================================================== */
+
+/* Una opción no seleccionada queda visualmente desactivada */
+
+.difficulty-input:disabled:not(:checked) + .difficulty-card {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+
+  filter: saturate(0.55);
+
+  transform: none;
+}
+
+/* Evitamos que una dificultad bloqueada parezca pulsable */
+
+.difficulty-option:hover
+  .difficulty-input:disabled:not(:checked)
+  + .difficulty-card {
+  transform: none;
+
+  border-color: rgba(255, 255, 255, 0.12);
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.018)
+  );
+
+  box-shadow: none;
+}
+
+/* La dificultad elegida permanece destacada aunque esté bloqueada */
+
+.difficulty-input:checked:disabled + .difficulty-card {
+  cursor: default;
+
+  opacity: 1;
+
+  filter: none;
+
+  border-color: var(--difficulty-accent);
+
+  background: linear-gradient(
+    145deg,
+    rgba(0, 229, 255, 0.14),
+    rgba(0, 229, 255, 0.035)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(0, 229, 255, 0.12),
+    0 12px 30px rgba(0, 0, 0, 0.28),
+    0 0 25px rgba(0, 229, 255, 0.08);
 }
 
 /* ==========================================================
@@ -7552,85 +6349,6 @@ html.low-power-device .system-status-active .system-status-dot {
     0 0 35px #22d3ee,
     0 0 75px #8b5cf6;
 }
-
-/* ============================================================
-   18. RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 800px) {
-  #battle-stage {
-    min-height: 680px;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      62px
-      minmax(0, 1fr);
-
-    padding: 28px 12px 30px;
-
-    gap: 4px;
-  }
-
-  .fighter-character {
-    width: 120px;
-
-    height: 205px;
-
-    transform: scale(0.87);
-
-    transform-origin: bottom center;
-  }
-
-  .battle-fighter {
-    min-height: 300px;
-  }
-
-  .fighter-energy-ring {
-    width: 170px;
-
-    height: 170px;
-  }
-
-  #battle-stage .battle-stage-vs {
-    width: 52px;
-
-    height: 52px;
-
-    font-size: 0.92rem;
-  }
-}
-
-@media (max-width: 520px) {
-  #battle-stage {
-    min-height: 610px;
-
-    padding-left: 7px;
-
-    padding-right: 7px;
-  }
-
-  .fighter-character {
-    transform: scale(0.73);
-  }
-
-  .fighter-energy-ring {
-    width: 140px;
-
-    height: 140px;
-  }
-
-  .fighter-action-badge {
-    min-width: 90px;
-
-    padding: 7px 9px;
-
-    font-size: 0.56rem;
-  }
-}
-
-/* ============================================================
-   HANDVERSE - FIN ESCENARIO DE VIDEOJUEGO V1
-   ============================================================ */
 
 /* ============================================================
    HANDVERSE - ANIMACIONES DE LOS COMBATIENTES
@@ -8815,57 +7533,184 @@ html.low-power-device .system-status-active .system-status-dot {
   border-radius: 999px;
 }
 
-/* ==========================================================
-   12. RESPONSIVE TABLET
-   ========================================================== */
+/* ============================================================
+   HANDVERSE — RESPONSIVE DEFINITIVO
+   PASO 7.6D.4A
+   TABLET / PANTALLA INTERMEDIA
+   521px → 1024px
+   ============================================================ */
 
-@media (max-width: 900px) {
+@media (min-width: 521px) and (max-width: 1024px) {
+  /* ----------------------------------------------------------
+     1. ESCENARIO
+     Crece progresivamente según el ancho disponible.
+     ---------------------------------------------------------- */
+
   #battle-stage.battle-stage {
-    height: 540px;
-    min-height: 540px;
+    width: 100%;
+
+    height: clamp(540px, 60vw, 620px);
+    min-height: clamp(540px, 60vw, 620px);
+
+    margin-top: 24px;
+    margin-bottom: 28px;
+
+    border-radius: clamp(18px, 2.5vw, 24px);
   }
 
+  /* ----------------------------------------------------------
+     2. HUD SUPERIOR
+     JUGADOR | RONDA/TIEMPO | IA
+     ---------------------------------------------------------- */
+
   #battle-stage > .battle-stage-hud {
-    left: 14px;
-    right: 14px;
+    top: clamp(14px, 2vw, 20px);
+
+    left: clamp(14px, 2.4vw, 24px);
+    right: clamp(14px, 2.4vw, 24px);
 
     grid-template-columns:
       minmax(0, 1fr)
-      90px
+      clamp(76px, 10vw, 108px)
       minmax(0, 1fr);
 
-    column-gap: 10px;
+    column-gap: clamp(8px, 1.5vw, 18px);
   }
+
+  /* ----------------------------------------------------------
+     3. TARJETAS DEL JUGADOR Y HANDVERSE
+     ---------------------------------------------------------- */
 
   #battle-stage > .battle-stage-hud > .battle-player {
-    height: 140px;
+    height: clamp(140px, 18vw, 164px);
+    min-height: clamp(140px, 18vw, 164px);
 
-    padding: 13px 12px;
+    padding: clamp(11px, 1.6vw, 15px) clamp(10px, 1.8vw, 17px);
+
+    gap: clamp(6px, 1vw, 10px);
   }
 
+  /* ----------------------------------------------------------
+     4. IDENTIDAD
+     ---------------------------------------------------------- */
+
   #battle-stage .battle-player-name {
-    font-size: 0.86rem;
+    font-size: clamp(0.82rem, 1.7vw, 1rem);
+
+    line-height: 1.08;
   }
 
   #battle-stage .battle-player-institution {
-    font-size: 0.62rem;
+    font-size: clamp(0.58rem, 1.15vw, 0.69rem);
+
+    line-height: 1.2;
   }
 
-  #battle-stage > .battle-stage-hud > .battle-center {
-    width: 90px;
+  /* ----------------------------------------------------------
+     5. VIDA
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-hud .health-info {
+    margin-top: clamp(8px, 1.5vw, 15px);
+
+    font-size: clamp(0.63rem, 1.2vw, 0.73rem);
   }
+
+  #battle-stage .battle-stage-hud .health-bar {
+    height: clamp(6px, 0.9vw, 8px);
+  }
+
+  /* ----------------------------------------------------------
+     6. PODER ESPECIAL
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-hud .power-status {
+    max-width: 100%;
+
+    margin-top: clamp(7px, 1.2vw, 10px);
+
+    padding: clamp(4px, 0.7vw, 6px) clamp(6px, 1vw, 10px);
+
+    font-size: clamp(0.52rem, 1vw, 0.6rem);
+
+    white-space: nowrap;
+  }
+
+  /* ----------------------------------------------------------
+     7. RONDA + TEMPORIZADOR
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 100%;
+
+    padding-top: clamp(10px, 1.7vw, 16px);
+  }
+
+  #battle-stage .battle-stage-hud .round-label {
+    font-size: clamp(0.48rem, 0.9vw, 0.58rem);
+  }
+
+  #battle-stage .battle-stage-hud #battle-round {
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  }
+
+  #battle-stage .battle-stage-hud .turn-timer {
+    max-width: 100%;
+
+    margin-top: clamp(8px, 1.5vw, 14px);
+  }
+
+  /* ----------------------------------------------------------
+     8. COMBATIENTES
+     Posición proporcional en lugar de posiciones rígidas.
+     ---------------------------------------------------------- */
 
   #battle-stage > #player-fighter,
   #battle-stage > #ai-fighter {
-    width: 190px;
+    width: clamp(190px, 24vw, 220px);
+
+    min-height: clamp(285px, 37vw, 320px);
+
+    bottom: clamp(10px, 1.5vw, 14px);
   }
 
   #battle-stage > #player-fighter {
-    left: calc(22% - 95px);
+    left: clamp(22px, 7vw, 72px);
+
+    right: auto;
   }
 
   #battle-stage > #ai-fighter {
-    right: calc(22% - 95px);
+    right: clamp(22px, 7vw, 72px);
+
+    left: auto;
+  }
+
+  /* ----------------------------------------------------------
+     9. VS CENTRAL
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-center {
+    bottom: clamp(108px, 14vw, 128px);
+
+    width: clamp(52px, 7vw, 66px);
+    height: clamp(52px, 7vw, 66px);
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: clamp(50px, 6.8vw, 64px);
+    height: clamp(50px, 6.8vw, 64px);
+
+    font-size: clamp(0.82rem, 1.5vw, 1.05rem);
+  }
+
+  /* ----------------------------------------------------------
+     10. EFECTO DE IMPACTO
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-impact-effect {
+    left: 50%;
+    top: 60%;
   }
 }
 
@@ -9352,9 +8197,12 @@ body {
   }
 }
 
-/* GANADOR ESTUDIANTE */
+/* ==========================================================
+   GANADOR FINAL — ESTUDIANTE
+   La pantalla final es hermana de .battle-section
+   ========================================================== */
 
-.battle-winner-player .battle-final-screen .battle-result {
+.battle-section.battle-winner-player + .battle-final-screen .battle-result {
   color: #67e8f9;
 
   text-shadow:
@@ -9363,15 +8211,18 @@ body {
     0 0 70px rgba(34, 211, 238, 0.18);
 }
 
-/* GANADOR IA */
+/* ==========================================================
+   GANADOR FINAL — HANDVERSE IA
+   Morado oficial de la IA
+   ========================================================== */
 
-.battle-winner-ai .battle-final-screen .battle-result {
+.battle-section.battle-winner-ai + .battle-final-screen .battle-result {
   color: #c084fc;
 
   text-shadow:
-    0 0 14px rgba(168, 85, 247, 0.55),
-    0 0 34px rgba(168, 85, 247, 0.32),
-    0 0 70px rgba(168, 85, 247, 0.18);
+    0 0 14px rgba(168, 85, 247, 0.62),
+    0 0 34px rgba(168, 85, 247, 0.38),
+    0 0 70px rgba(168, 85, 247, 0.22);
 }
 
 /* ---------------------------------------------------------
@@ -10015,5 +8866,5503 @@ html.low-power-device #battle-prediction-slot .prediction-panel::after {
   .train-button:hover:not(:disabled),
   .new-student-button:hover:not(:disabled) {
     transform: none;
+  }
+}
+
+/* =========================================================
+   GRÁFICA DE INTENSIDAD DE DIFICULTAD
+   ========================================================= */
+
+.difficulty-intensity {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 4px 0 2px;
+}
+
+.difficulty-intensity-label {
+  flex-shrink: 0;
+
+  font-size: 0.58rem;
+  font-weight: 900;
+  line-height: 1;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: rgba(226, 232, 240, 0.62);
+}
+
+.difficulty-intensity-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+
+  height: 18px;
+}
+
+.difficulty-intensity-bars i {
+  display: block;
+
+  width: 18px;
+  border-radius: 999px;
+
+  background: rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  box-shadow: inset 0 0 8px rgba(15, 23, 42, 0.35);
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.difficulty-intensity-bars i:nth-child(1) {
+  height: 6px;
+}
+
+.difficulty-intensity-bars i:nth-child(2) {
+  height: 11px;
+}
+
+.difficulty-intensity-bars i:nth-child(3) {
+  height: 16px;
+}
+
+@media (max-width: 520px) {
+  .difficulty-intensity {
+    gap: 7px;
+    margin-block: 3px;
+  }
+
+  .difficulty-intensity-label {
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+  }
+
+  .difficulty-intensity-bars {
+    gap: 3px;
+    height: 15px;
+  }
+
+  .difficulty-intensity-bars i {
+    width: 15px;
+  }
+
+  .difficulty-intensity-bars i:nth-child(1) {
+    height: 5px;
+  }
+
+  .difficulty-intensity-bars i:nth-child(2) {
+    height: 9px;
+  }
+
+  .difficulty-intensity-bars i:nth-child(3) {
+    height: 13px;
+  }
+}
+
+/* =========================================================
+   7.4C — NIVEL VISUAL DE DIFICULTAD
+   ========================================================= */
+
+/* FÁCIL — 1 nivel activo */
+.difficulty-input[value="easy"]
+  + .difficulty-card
+  .difficulty-intensity-bars
+  i:nth-child(1) {
+  background: rgba(52, 211, 153, 0.85);
+  border-color: rgba(110, 231, 183, 0.95);
+
+  box-shadow:
+    0 0 8px rgba(52, 211, 153, 0.45),
+    0 0 16px rgba(52, 211, 153, 0.2);
+}
+
+/* INTERMEDIO — 2 niveles activos */
+.difficulty-input[value="medium"]
+  + .difficulty-card
+  .difficulty-intensity-bars
+  i:nth-child(-n + 2) {
+  background: rgba(250, 204, 21, 0.85);
+  border-color: rgba(253, 224, 71, 0.95);
+
+  box-shadow:
+    0 0 8px rgba(250, 204, 21, 0.42),
+    0 0 16px rgba(250, 204, 21, 0.18);
+}
+
+/* DIFÍCIL — 3 niveles activos */
+.difficulty-input[value="hard"]
+  + .difficulty-card
+  .difficulty-intensity-bars
+  i:nth-child(-n + 3) {
+  background: rgba(244, 63, 94, 0.88);
+  border-color: rgba(251, 113, 133, 0.98);
+
+  box-shadow:
+    0 0 8px rgba(244, 63, 94, 0.48),
+    0 0 18px rgba(244, 63, 94, 0.2);
+}
+
+/* =========================================================
+   7.4D — ESTADO VISUAL DE DIFICULTAD SELECCIONADA
+   ========================================================= */
+
+#difficulty-selector .difficulty-input:checked + .difficulty-card {
+  transform: translateY(-3px) scale(1.015);
+
+  border-width: 1px;
+
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* FÁCIL seleccionado */
+#difficulty-selector
+  .difficulty-input[value="easy"]:checked
+  + .difficulty-card {
+  border-color: rgba(52, 211, 153, 0.82);
+
+  background: linear-gradient(
+    180deg,
+    rgba(52, 211, 153, 0.1),
+    rgba(5, 15, 35, 0.94)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, 0.12),
+    0 12px 32px rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(52, 211, 153, 0.12);
+}
+
+/* INTERMEDIO seleccionado */
+#difficulty-selector
+  .difficulty-input[value="medium"]:checked
+  + .difficulty-card {
+  border-color: rgba(250, 204, 21, 0.82);
+
+  background: linear-gradient(
+    180deg,
+    rgba(250, 204, 21, 0.09),
+    rgba(5, 15, 35, 0.94)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(250, 204, 21, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(250, 204, 21, 0.1);
+}
+
+/* DIFÍCIL seleccionado */
+#difficulty-selector
+  .difficulty-input[value="hard"]:checked
+  + .difficulty-card {
+  border-color: rgba(244, 63, 94, 0.85);
+
+  background: linear-gradient(
+    180deg,
+    rgba(244, 63, 94, 0.1),
+    rgba(5, 15, 35, 0.94)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(244, 63, 94, 0.12),
+    0 12px 32px rgba(0, 0, 0, 0.28),
+    0 0 28px rgba(244, 63, 94, 0.12);
+}
+
+/* Evita desplazamientos exagerados en pantallas pequeñas */
+@media (max-width: 520px) {
+  #difficulty-selector .difficulty-input:checked + .difficulty-card {
+    transform: translateY(-2px);
+  }
+}
+
+/* =========================================================
+   7.4E — JERARQUÍA INTERNA DE TARJETAS DE DIFICULTAD
+   ========================================================= */
+
+/* Nombre principal: FÁCIL / INTERMEDIO / DIFÍCIL */
+#difficulty-selector .difficulty-card > strong {
+  display: block;
+
+  margin: 0;
+
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  font-weight: 950;
+  line-height: 1.1;
+
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+
+  color: #f8fafc;
+
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+/* Descripción de cada dificultad */
+#difficulty-selector .difficulty-description {
+  display: block;
+
+  width: 100%;
+  max-width: 260px;
+
+  margin: 2px auto 0;
+
+  font-size: clamp(0.72rem, 1vw, 0.86rem);
+  font-weight: 600;
+  line-height: 1.45;
+
+  text-align: center;
+
+  color: rgba(226, 232, 240, 0.72);
+}
+
+/* Zona donde aparecen los daños */
+#difficulty-selector .difficulty-damage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  margin-top: 6px;
+  padding: 8px 10px;
+
+  gap: 4px;
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.55),
+    rgba(15, 23, 42, 0.25)
+  );
+
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  font-weight: 650;
+  line-height: 1.3;
+
+  text-align: center;
+
+  color: rgba(203, 213, 225, 0.86);
+}
+
+/* Números de daño */
+#difficulty-selector .difficulty-damage b {
+  font-weight: 950;
+
+  color: #f8fafc;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* FÁCIL */
+#difficulty-selector
+  .difficulty-input[value="easy"]:checked
+  + .difficulty-card
+  > strong {
+  color: #6ee7b7;
+
+  text-shadow: 0 0 16px rgba(52, 211, 153, 0.24);
+}
+
+/* INTERMEDIO */
+#difficulty-selector
+  .difficulty-input[value="medium"]:checked
+  + .difficulty-card
+  > strong {
+  color: #fde047;
+
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.22);
+}
+
+/* DIFÍCIL */
+#difficulty-selector
+  .difficulty-input[value="hard"]:checked
+  + .difficulty-card
+  > strong {
+  color: #fb7185;
+
+  text-shadow: 0 0 16px rgba(244, 63, 94, 0.24);
+}
+
+/* =========================================================
+   7.4E — AJUSTE MÓVIL
+   ========================================================= */
+
+@media (max-width: 520px) {
+  #difficulty-selector .difficulty-card > strong {
+    font-size: 1rem;
+  }
+
+  #difficulty-selector .difficulty-description {
+    max-width: 100%;
+
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  #difficulty-selector .difficulty-damage {
+    margin-top: 5px;
+    padding: 7px 8px;
+
+    font-size: 0.68rem;
+  }
+}
+
+/* =========================================================
+   7.4F — INDICADOR DE DIFICULTAD SELECCIONADA
+   ========================================================= */
+
+#difficulty-selector .difficulty-input:checked + .difficulty-card::after {
+  content: "✓";
+
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 28px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  font-size: 0.82rem;
+  font-weight: 1000;
+  line-height: 1;
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  background: linear-gradient(
+    145deg,
+    rgba(34, 211, 238, 0.95),
+    rgba(37, 99, 235, 0.92)
+  );
+
+  box-shadow:
+    0 0 0 4px rgba(34, 211, 238, 0.08),
+    0 0 18px rgba(34, 211, 238, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+
+  z-index: 4;
+
+  transform: scale(1);
+  opacity: 1;
+
+  animation: handverse-difficulty-check-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes handverse-difficulty-check-in {
+  from {
+    opacity: 0;
+    transform: scale(0.45) rotate(-18deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* =========================================================
+   7.4F.2 — COLOR DEL CHECK SEGÚN DIFICULTAD
+   ========================================================= */
+
+/* FÁCIL — VERDE */
+#difficulty-selector
+  .difficulty-input[value="easy"]:checked
+  + .difficulty-card::after {
+  background: linear-gradient(145deg, #34d399, #059669);
+
+  box-shadow:
+    0 0 0 4px rgba(52, 211, 153, 0.09),
+    0 0 18px rgba(52, 211, 153, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* INTERMEDIO — AMARILLO */
+#difficulty-selector
+  .difficulty-input[value="medium"]:checked
+  + .difficulty-card::after {
+  color: #111827;
+
+  background: linear-gradient(145deg, #fde047, #f59e0b);
+
+  box-shadow:
+    0 0 0 4px rgba(250, 204, 21, 0.09),
+    0 0 18px rgba(250, 204, 21, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* DIFÍCIL — ROJO */
+#difficulty-selector
+  .difficulty-input[value="hard"]:checked
+  + .difficulty-card::after {
+  background: linear-gradient(145deg, #fb7185, #e11d48);
+
+  box-shadow:
+    0 0 0 4px rgba(244, 63, 94, 0.09),
+    0 0 18px rgba(244, 63, 94, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* =========================================================
+   7.4F.3 — CHECK RESPONSIVE EN MÓVIL
+   ========================================================= */
+
+@media (max-width: 520px) {
+  #difficulty-selector .difficulty-input:checked + .difficulty-card::after {
+    top: 9px;
+    right: 9px;
+
+    width: 24px;
+    height: 24px;
+
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 390px) {
+  #difficulty-selector .difficulty-input:checked + .difficulty-card::after {
+    top: 8px;
+    right: 8px;
+
+    width: 22px;
+    height: 22px;
+
+    font-size: 0.66rem;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — PERFECCIONAMIENTO FINAL DEL SELECTOR DE DIFICULTAD
+   PASO 7.4H
+   Intensidad + comparativa visual de daño
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. CONTENEDOR DE INTENSIDAD
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-intensity {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 4px;
+  padding: 9px 11px;
+
+  background: rgba(15, 23, 42, 0.42);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------
+   2. TEXTO "INTENSIDAD"
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-intensity-label {
+  color: rgba(226, 232, 240, 0.72);
+
+  font-size: 0.58rem;
+  font-weight: 900;
+
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+   3. BARRAS DE INTENSIDAD
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-intensity-bars {
+  display: grid;
+  grid-template-columns: repeat(3, 20px);
+  align-items: end;
+  gap: 5px;
+
+  height: 20px;
+}
+
+/* Barra individual */
+
+#difficulty-selector .difficulty-intensity-bars i {
+  display: block;
+
+  width: 100%;
+
+  background: rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 999px;
+
+  opacity: 0.45;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Alturas progresivas */
+
+#difficulty-selector .difficulty-intensity-bars i:nth-child(1) {
+  height: 8px;
+}
+
+#difficulty-selector .difficulty-intensity-bars i:nth-child(2) {
+  height: 13px;
+}
+
+#difficulty-selector .difficulty-intensity-bars i:nth-child(3) {
+  height: 18px;
+}
+
+/* ------------------------------------------------------------
+   4. INTENSIDAD — FÁCIL
+   Una barra activa
+   ------------------------------------------------------------ */
+
+#difficulty-selector
+  .difficulty-option[data-difficulty="easy"]
+  .difficulty-intensity-bars
+  i:nth-child(1) {
+  background: linear-gradient(180deg, #6ee7b7, #34d399);
+
+  border-color: rgba(52, 211, 153, 0.7);
+
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.34);
+
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   5. INTENSIDAD — INTERMEDIO
+   Dos barras activas
+   ------------------------------------------------------------ */
+
+#difficulty-selector
+  .difficulty-option[data-difficulty="medium"]
+  .difficulty-intensity-bars
+  i:nth-child(-n + 2) {
+  background: linear-gradient(180deg, #fde68a, #f59e0b);
+
+  border-color: rgba(245, 158, 11, 0.72);
+
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.32);
+
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   6. INTENSIDAD — DIFÍCIL
+   Tres barras activas
+   ------------------------------------------------------------ */
+
+#difficulty-selector
+  .difficulty-option[data-difficulty="hard"]
+  .difficulty-intensity-bars
+  i {
+  background: linear-gradient(180deg, #fb7185, #f43f5e);
+
+  border-color: rgba(244, 63, 94, 0.72);
+
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.34);
+
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   7. CONTENEDOR DE COMPARATIVA DE DAÑO
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-visual {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  margin-top: 2px;
+  padding: 10px 11px;
+
+  background: rgba(2, 6, 23, 0.32);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------
+   8. FILA DE DAÑO
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-row {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 8px;
+
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------
+   9. ETIQUETAS TÚ / IA
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-label {
+  color: rgba(226, 232, 240, 0.68);
+
+  font-size: 0.54rem;
+  font-weight: 950;
+
+  line-height: 1;
+  letter-spacing: 0.05em;
+
+  text-align: left;
+}
+
+/* ------------------------------------------------------------
+   10. VALOR NUMÉRICO DEL DAÑO
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-row > strong {
+  color: #f8fafc;
+
+  font-size: 0.64rem;
+  font-weight: 950;
+
+  line-height: 1;
+
+  text-align: right;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------
+   11. PISTA DE LA BARRA DE DAÑO
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-track {
+  position: relative;
+
+  width: 100%;
+  height: 7px;
+
+  overflow: hidden;
+
+  background: rgba(148, 163, 184, 0.14);
+
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 999px;
+
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------
+   12. RELLENO DE LA BARRA
+   El tamaño utiliza --damage-level generado en main.js
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-fill {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  transform-origin: left center;
+  transform: scaleX(var(--damage-level, 0));
+
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.25s ease;
+}
+
+/* ------------------------------------------------------------
+   13. COLOR DEL DAÑO DEL JUGADOR
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-player .difficulty-damage-fill {
+  background: linear-gradient(90deg, #0891b2, #22d3ee, #67e8f9);
+
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.34);
+}
+
+/* ------------------------------------------------------------
+   14. COLOR DEL DAÑO DE LA IA
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-damage-ai .difficulty-damage-fill {
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #c084fc);
+
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.34);
+}
+
+/* ------------------------------------------------------------
+   15. EFECTO CUANDO UNA TARJETA ESTÁ SELECCIONADA
+   ------------------------------------------------------------ */
+
+#difficulty-selector
+  .difficulty-input:checked
+  + .difficulty-card
+  .difficulty-intensity-bars
+  i {
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------
+   16. RESPONSIVE — TABLETS
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  #difficulty-selector .difficulty-intensity {
+    padding: 8px 10px;
+  }
+
+  #difficulty-selector .difficulty-damage-visual {
+    padding: 9px 10px;
+  }
+}
+
+/* ------------------------------------------------------------
+   17. RESPONSIVE — MÓVILES
+   ------------------------------------------------------------ */
+
+@media (max-width: 650px) {
+  #difficulty-selector .difficulty-intensity {
+    gap: 8px;
+  }
+
+  #difficulty-selector .difficulty-intensity-bars {
+    grid-template-columns: repeat(3, 17px);
+    gap: 4px;
+  }
+
+  #difficulty-selector .difficulty-damage-row {
+    grid-template-columns: 22px minmax(0, 1fr) 22px;
+    gap: 6px;
+  }
+
+  #difficulty-selector .difficulty-damage-track {
+    height: 6px;
+  }
+}
+
+/* ------------------------------------------------------------
+   18. RESPONSIVE — MÓVILES PEQUEÑOS
+   ------------------------------------------------------------ */
+
+@media (max-width: 390px) {
+  #difficulty-selector .difficulty-intensity-label {
+    font-size: 0.52rem;
+  }
+
+  #difficulty-selector .difficulty-intensity-bars {
+    grid-template-columns: repeat(3, 15px);
+  }
+
+  #difficulty-selector .difficulty-damage-label {
+    font-size: 0.5rem;
+  }
+
+  #difficulty-selector .difficulty-damage-row > strong {
+    font-size: 0.58rem;
+  }
+
+  #difficulty-selector .difficulty-damage-visual {
+    padding: 8px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — SELECTOR DE DIFICULTAD
+   PASO 7.4I
+   Interacción final: hover, focus, active y accesibilidad
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. TARJETA INTERACTIVA
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-option {
+  position: relative;
+
+  display: block;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------------------------------------------
+   2. TRANSICIONES GENERALES
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-card {
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+/* ------------------------------------------------------------
+   3. HOVER
+   Solo se aplica en dispositivos que realmente tienen mouse.
+   Esto evita efectos pegados en teléfonos.
+   ------------------------------------------------------------ */
+
+@media (hover: hover) and (pointer: fine) {
+  #difficulty-selector .difficulty-option:hover .difficulty-card {
+    transform: translateY(-3px);
+
+    border-color: rgba(34, 211, 238, 0.32);
+
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.26),
+      0 0 20px rgba(34, 211, 238, 0.07);
+  }
+
+  /* FÁCIL */
+
+  #difficulty-selector
+    .difficulty-option[data-difficulty="easy"]:hover
+    .difficulty-card {
+    border-color: rgba(52, 211, 153, 0.42);
+
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.26),
+      0 0 22px rgba(52, 211, 153, 0.09);
+  }
+
+  /* INTERMEDIO */
+
+  #difficulty-selector
+    .difficulty-option[data-difficulty="medium"]:hover
+    .difficulty-card {
+    border-color: rgba(250, 204, 21, 0.42);
+
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.26),
+      0 0 22px rgba(250, 204, 21, 0.08);
+  }
+
+  /* DIFÍCIL */
+
+  #difficulty-selector
+    .difficulty-option[data-difficulty="hard"]:hover
+    .difficulty-card {
+    border-color: rgba(244, 63, 94, 0.44);
+
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.26),
+      0 0 22px rgba(244, 63, 94, 0.09);
+  }
+}
+
+/* ------------------------------------------------------------
+   4. ESTADO PRESIONADO
+   Mouse y pantalla táctil
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-option:active .difficulty-card {
+  transform: translateY(-1px) scale(0.985);
+
+  transition-duration: 0.08s;
+}
+
+/* ------------------------------------------------------------
+   5. ACCESIBILIDAD CON TECLADO
+   Cuando el radio recibe focus mediante Tab.
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-input:focus-visible + .difficulty-card {
+  outline: 2px solid rgba(34, 211, 238, 0.9);
+  outline-offset: 4px;
+
+  box-shadow:
+    0 0 0 4px rgba(34, 211, 238, 0.11),
+    0 12px 30px rgba(0, 0, 0, 0.26);
+}
+
+/* ------------------------------------------------------------
+   6. FOCUS SEGÚN DIFICULTAD
+   ------------------------------------------------------------ */
+
+/* FÁCIL */
+
+#difficulty-selector
+  .difficulty-input[value="easy"]:focus-visible
+  + .difficulty-card {
+  outline-color: rgba(52, 211, 153, 0.95);
+
+  box-shadow:
+    0 0 0 4px rgba(52, 211, 153, 0.11),
+    0 12px 30px rgba(0, 0, 0, 0.26);
+}
+
+/* INTERMEDIO */
+
+#difficulty-selector
+  .difficulty-input[value="medium"]:focus-visible
+  + .difficulty-card {
+  outline-color: rgba(250, 204, 21, 0.95);
+
+  box-shadow:
+    0 0 0 4px rgba(250, 204, 21, 0.1),
+    0 12px 30px rgba(0, 0, 0, 0.26);
+}
+
+/* DIFÍCIL */
+
+#difficulty-selector
+  .difficulty-input[value="hard"]:focus-visible
+  + .difficulty-card {
+  outline-color: rgba(244, 63, 94, 0.95);
+
+  box-shadow:
+    0 0 0 4px rgba(244, 63, 94, 0.11),
+    0 12px 30px rgba(0, 0, 0, 0.26);
+}
+
+/* ------------------------------------------------------------
+   7. TARJETA SELECCIONADA
+   Mantiene prioridad visual sobre el hover.
+   ------------------------------------------------------------ */
+
+#difficulty-selector .difficulty-input:checked + .difficulty-card {
+  cursor: default;
+}
+
+/* ------------------------------------------------------------
+   8. AJUSTE PARA DISPOSITIVOS TÁCTILES
+   ------------------------------------------------------------ */
+
+@media (hover: none) and (pointer: coarse) {
+  #difficulty-selector .difficulty-option {
+    touch-action: manipulation;
+  }
+
+  #difficulty-selector .difficulty-input:checked + .difficulty-card {
+    transform: translateY(-2px);
+  }
+}
+
+/* ------------------------------------------------------------
+   9. RESPETO A USUARIOS CON MOVIMIENTO REDUCIDO
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  #difficulty-selector .difficulty-card,
+  #difficulty-selector .difficulty-intensity-bars i,
+  #difficulty-selector .difficulty-damage-fill,
+  #difficulty-selector .difficulty-input:checked + .difficulty-card::after {
+    animation: none !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — SISTEMA GLOBAL DE BOTONES
+   PASO 7.5A
+   Base, interacción, accesibilidad y dispositivos táctiles
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. BASE GENERAL DE LOS BOTONES
+   ------------------------------------------------------------ */
+
+button {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 44px;
+
+  padding: 11px 18px;
+
+  border: 1px solid transparent;
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.1;
+
+  letter-spacing: 0.025em;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+
+  transition:
+    transform 0.18s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease,
+    filter 0.22s ease;
+}
+
+/* ------------------------------------------------------------
+   2. EVITA MOVIMIENTOS EXTRAÑOS EN TEXTO O ICONOS
+   ------------------------------------------------------------ */
+
+button > * {
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   3. ESTADO HOVER
+   Solo en dispositivos que realmente tienen mouse.
+   ------------------------------------------------------------ */
+
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.06);
+  }
+}
+
+/* ------------------------------------------------------------
+   4. ESTADO PRESIONADO
+   Mouse y dispositivos táctiles.
+   ------------------------------------------------------------ */
+
+button:not(:disabled):active {
+  transform: translateY(0) scale(0.975);
+
+  transition-duration: 0.07s;
+}
+
+/* ------------------------------------------------------------
+   5. ACCESIBILIDAD CON TECLADO
+   ------------------------------------------------------------ */
+
+button:focus {
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.92);
+  outline-offset: 3px;
+
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.1);
+}
+
+/* ------------------------------------------------------------
+   6. BOTÓN DESHABILITADO
+   ------------------------------------------------------------ */
+
+button:disabled,
+button[aria-disabled="true"] {
+  cursor: not-allowed;
+
+  opacity: 0.48;
+
+  filter: grayscale(0.18) saturate(0.7);
+
+  transform: none !important;
+
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------
+   7. EVITA HOVER EN BOTONES DESHABILITADOS
+   ------------------------------------------------------------ */
+
+@media (hover: hover) and (pointer: fine) {
+  button:disabled:hover,
+  button[aria-disabled="true"]:hover {
+    transform: none;
+
+    filter: grayscale(0.18) saturate(0.7);
+  }
+}
+
+/* ------------------------------------------------------------
+   8. DISPOSITIVOS TÁCTILES
+   ------------------------------------------------------------ */
+
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 46px;
+
+    touch-action: manipulation;
+  }
+
+  button:not(:disabled):active {
+    transform: scale(0.98);
+  }
+}
+
+/* ------------------------------------------------------------
+   9. MÓVILES
+   ------------------------------------------------------------ */
+
+@media (max-width: 520px) {
+  button {
+    min-height: 46px;
+
+    padding: 11px 15px;
+
+    font-size: 0.78rem;
+
+    border-radius: 11px;
+  }
+}
+
+/* ------------------------------------------------------------
+   10. MÓVILES PEQUEÑOS
+   ------------------------------------------------------------ */
+
+@media (max-width: 390px) {
+  button {
+    padding-inline: 13px;
+
+    font-size: 0.75rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   11. RESPETO A PREFERENCIA DE MOVIMIENTO REDUCIDO
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    animation: none !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — SISTEMA DE BOTONES
+   PASO 7.5B
+   Jerarquía visual: primario, secundario y especial
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. BOTÓN PRIMARIO
+   Acciones principales del flujo
+   ------------------------------------------------------------ */
+
+.hv-btn-primary {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #0891b2 0%, #2563eb 55%, #4f46e5 100%);
+
+  border-color: rgba(103, 232, 249, 0.32);
+
+  box-shadow:
+    0 8px 22px rgba(37, 99, 235, 0.2),
+    0 0 20px rgba(34, 211, 238, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Hover primario */
+
+@media (hover: hover) and (pointer: fine) {
+  .hv-btn-primary:not(:disabled):hover {
+    border-color: rgba(103, 232, 249, 0.55);
+
+    box-shadow:
+      0 12px 28px rgba(37, 99, 235, 0.27),
+      0 0 24px rgba(34, 211, 238, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+}
+
+/* ------------------------------------------------------------
+   2. BOTÓN SECUNDARIO
+   Acciones complementarias
+   ------------------------------------------------------------ */
+
+.hv-btn-secondary {
+  color: rgba(226, 232, 240, 0.92);
+
+  background: linear-gradient(
+    180deg,
+    rgba(30, 41, 59, 0.82),
+    rgba(15, 23, 42, 0.9)
+  );
+
+  border-color: rgba(148, 163, 184, 0.23);
+
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Hover secundario */
+
+@media (hover: hover) and (pointer: fine) {
+  .hv-btn-secondary:not(:disabled):hover {
+    color: #f8fafc;
+
+    border-color: rgba(34, 211, 238, 0.36);
+
+    background: linear-gradient(
+      180deg,
+      rgba(30, 41, 59, 0.96),
+      rgba(15, 23, 42, 0.96)
+    );
+
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.22),
+      0 0 18px rgba(34, 211, 238, 0.07);
+  }
+}
+
+/* ------------------------------------------------------------
+   3. BOTÓN ESPECIAL
+   IA, batalla, poder o acciones destacadas
+   ------------------------------------------------------------ */
+
+.hv-btn-special {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #6d28d9 0%, #9333ea 48%, #db2777 100%);
+
+  border-color: rgba(216, 180, 254, 0.35);
+
+  box-shadow:
+    0 8px 24px rgba(147, 51, 234, 0.2),
+    0 0 22px rgba(168, 85, 247, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Hover especial */
+
+@media (hover: hover) and (pointer: fine) {
+  .hv-btn-special:not(:disabled):hover {
+    border-color: rgba(216, 180, 254, 0.58);
+
+    box-shadow:
+      0 12px 30px rgba(147, 51, 234, 0.27),
+      0 0 28px rgba(168, 85, 247, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+}
+
+/* ------------------------------------------------------------
+   4. ESTADO ACTIVE
+   Mantiene identidad visual al presionar
+   ------------------------------------------------------------ */
+
+.hv-btn-primary:not(:disabled):active,
+.hv-btn-secondary:not(:disabled):active,
+.hv-btn-special:not(:disabled):active {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+/* ------------------------------------------------------------
+   5. ESTADO DISABLED
+   Mantiene el color base pero deja claro que no está disponible
+   ------------------------------------------------------------ */
+
+.hv-btn-primary:disabled,
+.hv-btn-secondary:disabled,
+.hv-btn-special:disabled,
+.hv-btn-primary[aria-disabled="true"],
+.hv-btn-secondary[aria-disabled="true"],
+.hv-btn-special[aria-disabled="true"] {
+  opacity: 0.46;
+
+  filter: grayscale(0.28) saturate(0.62) brightness(0.82);
+
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------
+   6. BOTONES DE ANCHO COMPLETO
+   Para formularios o pantallas móviles
+   ------------------------------------------------------------ */
+
+.hv-btn-block {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------
+   7. RESPONSIVE
+   ------------------------------------------------------------ */
+
+@media (max-width: 520px) {
+  .hv-btn-primary,
+  .hv-btn-secondary,
+  .hv-btn-special {
+    min-height: 47px;
+
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .hv-btn-primary,
+  .hv-btn-secondary,
+  .hv-btn-special {
+    min-height: 46px;
+
+    padding-inline: 13px;
+
+    font-size: 0.74rem;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — SISTEMA DE BOTONES
+   PASO 7.5D
+   Pulido final: tamaños, proporciones y responsive
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. BOTÓN DE REGISTRO
+   ------------------------------------------------------------ */
+
+.registration-submit-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: 4px;
+
+  padding: 13px 20px;
+
+  font-size: 0.84rem;
+  font-weight: 950;
+
+  letter-spacing: 0.07em;
+}
+
+/* ------------------------------------------------------------
+   2. BOTÓN ACTIVAR CÁMARA
+   ------------------------------------------------------------ */
+
+#start-camera {
+  width: min(100%, 260px);
+
+  min-height: 48px;
+
+  padding-inline: 22px;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+
+  letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------------------
+   3. BOTONES ENTRENAR / RECAPTURAR
+   ------------------------------------------------------------ */
+
+.train-button {
+  width: 100%;
+
+  min-height: 46px;
+
+  margin-top: auto;
+
+  padding: 11px 14px;
+
+  font-size: 0.75rem;
+  font-weight: 900;
+
+  letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------------------
+   4. BOTÓN ENTRENAR MODELO IA
+   ------------------------------------------------------------ */
+
+.train-model-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: 8px;
+
+  padding: 13px 18px;
+
+  font-size: 0.82rem;
+  font-weight: 950;
+
+  letter-spacing: 0.065em;
+}
+
+/* ------------------------------------------------------------
+   5. CONTENEDOR DE BOTONES DE PANTALLA FINAL
+   ------------------------------------------------------------ */
+
+.new-battle-container {
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+/* ------------------------------------------------------------
+   6. GENERAR OTRA PARTIDA
+   ------------------------------------------------------------ */
+
+.new-battle-button {
+  flex: 1 1 240px;
+
+  width: auto;
+  max-width: 320px;
+
+  min-height: 52px;
+
+  padding: 13px 20px;
+
+  font-size: 0.8rem;
+  font-weight: 950;
+
+  letter-spacing: 0.055em;
+}
+
+/* ------------------------------------------------------------
+   7. NUEVO ESTUDIANTE
+   ------------------------------------------------------------ */
+
+.new-student-button {
+  flex: 1 1 220px;
+
+  width: auto;
+  max-width: 300px;
+
+  min-height: 52px;
+
+  padding: 13px 20px;
+
+  font-size: 0.8rem;
+  font-weight: 900;
+
+  letter-spacing: 0.055em;
+}
+
+/* ------------------------------------------------------------
+   8. EVITAR SALTOS DE TEXTO INNECESARIOS
+   ------------------------------------------------------------ */
+
+.registration-submit-button,
+#start-camera,
+.train-button,
+.train-model-button,
+.new-battle-button,
+.new-student-button {
+  box-sizing: border-box;
+
+  white-space: normal;
+
+  text-wrap: balance;
+
+  line-height: 1.2;
+}
+
+/* ------------------------------------------------------------
+   9. TABLET
+   ------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  .registration-submit-button,
+  .train-model-button {
+    min-height: 50px;
+  }
+
+  #start-camera {
+    width: min(100%, 240px);
+  }
+
+  .new-battle-container {
+    gap: 10px;
+  }
+
+  .new-battle-button,
+  .new-student-button {
+    min-height: 50px;
+  }
+}
+
+/* ------------------------------------------------------------
+   10. MÓVIL
+   ------------------------------------------------------------ */
+
+@media (max-width: 520px) {
+  .registration-submit-button,
+  #start-camera,
+  .train-button,
+  .train-model-button,
+  .new-battle-button,
+  .new-student-button {
+    width: 100%;
+    max-width: none;
+
+    min-height: 48px;
+
+    padding: 12px 14px;
+
+    border-radius: 11px;
+  }
+
+  .registration-submit-button {
+    font-size: 0.8rem;
+  }
+
+  #start-camera {
+    font-size: 0.76rem;
+  }
+
+  .train-button {
+    font-size: 0.73rem;
+  }
+
+  .train-model-button {
+    font-size: 0.78rem;
+  }
+
+  /* ============================================================
+   PANTALLA FINAL — BOTONES RESPONSIVE EN MÓVIL
+   Evita que NUEVO ESTUDIANTE salte hacia una columna lateral
+   ============================================================ */
+
+  .battle-final-screen .new-battle-container {
+    width: min(100%, 320px);
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    /* IMPORTANTE:
+     evita que los botones formen otra columna a la derecha */
+    flex-wrap: nowrap;
+
+    align-items: stretch;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin: 18px auto 0;
+  }
+
+  .battle-final-screen .new-battle-button,
+  .battle-final-screen .new-student-button {
+    /* No usar flex-basis: 100% en una columna */
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: 0.76rem;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   PANTALLA FINAL — PROTECCIÓN RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 520px) {
+  .battle-final-screen {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 22px 14px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .battle-final-screen .battle-winner-identity {
+    width: 100%;
+    max-width: 100%;
+
+    padding-inline: 8px;
+  }
+
+  .battle-final-screen .battle-winner-name {
+    overflow-wrap: anywhere;
+    word-break: normal;
+
+    text-align: center;
+  }
+
+  .battle-final-screen .battle-winner-institution {
+    overflow-wrap: anywhere;
+
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   PANTALLA FINAL — MÓVIL HORIZONTAL / POCA ALTURA
+   ============================================================ */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .battle-final-screen {
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    padding: 18px 16px;
+
+    overflow-y: auto;
+  }
+
+  .battle-final-screen .battle-result {
+    font-size: clamp(2rem, 10vh, 3.2rem);
+  }
+
+  .battle-final-screen .battle-winner-name {
+    font-size: clamp(1.3rem, 6vh, 2rem);
+  }
+
+  .battle-final-screen .battle-winner-institution {
+    font-size: 0.7rem;
+  }
+
+  .battle-final-screen .new-battle-container {
+    margin-top: 10px;
+  }
+
+  .battle-final-screen .new-battle-button,
+  .battle-final-screen .new-student-button {
+    min-height: 44px;
+
+    padding-block: 9px;
+  }
+}
+
+/* ------------------------------------------------------------
+   11. MÓVILES PEQUEÑOS
+   ------------------------------------------------------------ */
+
+@media (max-width: 390px) {
+  .registration-submit-button,
+  #start-camera,
+  .train-button,
+  .train-model-button,
+  .new-battle-button,
+  .new-student-button {
+    min-height: 46px;
+
+    padding: 11px 12px;
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.04em;
+  }
+}
+
+/* ------------------------------------------------------------
+   12. PANTALLAS GRANDES
+   Evita botones exageradamente grandes.
+   ------------------------------------------------------------ */
+
+@media (min-width: 1200px) {
+  .registration-submit-button {
+    min-height: 54px;
+  }
+
+  #start-camera {
+    min-height: 50px;
+  }
+
+  .train-model-button {
+    min-height: 54px;
+  }
+
+  .new-battle-button,
+  .new-student-button {
+    min-height: 54px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE GLOBAL DEFINITIVO
+   PASO 7.6B.2
+   Base segura para teléfonos de 320px a 520px
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. PROTECCIÓN GENERAL
+     ---------------------------------------------------------- */
+
+  html,
+  body,
+  #app {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: hidden;
+  }
+
+  body {
+    min-width: 320px;
+  }
+
+  /* ----------------------------------------------------------
+     2. CONTENEDOR PRINCIPAL
+     ---------------------------------------------------------- */
+
+  .app-shell {
+    width: calc(100% - 16px);
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    padding-top: 14px;
+    padding-bottom: 36px;
+
+    gap: 18px;
+  }
+
+  /* ----------------------------------------------------------
+     3. PANELES PRINCIPALES
+     Todos deben respetar el ancho real del dispositivo.
+     ---------------------------------------------------------- */
+
+  .hero,
+  .camera-panel,
+  .difficulty-panel,
+  .training-panel,
+  #battle-section,
+  .battle-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     4. CONTENIDO INTERNO
+     Evita que grids/flex hijos obliguen al padre a crecer.
+     ---------------------------------------------------------- */
+
+  .gesture-legend,
+  .camera-stage,
+  .camera-controls,
+  .prediction-panel,
+  .difficulty-options,
+  .difficulty-option,
+  .difficulty-card,
+  .training-grid,
+  .gesture-training-card,
+  .dataset-ready,
+  .battle-stage-hud,
+  .battle-actions,
+  .battle-action-card,
+  .battle-prediction-slot {
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     5. TEXTOS LARGOS
+     Nombre, institución y mensajes no deben desbordarse.
+     ---------------------------------------------------------- */
+
+  .battle-player-name,
+  .battle-player-institution,
+  .battle-winner-name,
+  .battle-winner-institution,
+  #battle-message,
+  #prediction-name,
+  #prediction-action {
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  /* ----------------------------------------------------------
+     6. ELEMENTOS MULTIMEDIA
+     ---------------------------------------------------------- */
+
+  video,
+  canvas,
+  img {
+    max-width: 100%;
+  }
+
+  /* ----------------------------------------------------------
+     7. INPUTS Y BOTONES
+     ---------------------------------------------------------- */
+
+  input,
+  button {
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — TELÉFONOS PEQUEÑOS
+   320px a 390px
+   ============================================================ */
+
+@media (max-width: 390px) {
+  .app-shell {
+    width: calc(100% - 12px);
+
+    gap: 16px;
+  }
+
+  .hero,
+  .camera-panel,
+  .difficulty-panel,
+  .training-panel,
+  #battle-section {
+    border-radius: 14px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — ARENA RESPONSIVE DEFINITIVA
+   PASO 7.6B.3A
+   HUD SUPERIOR EN TELÉFONOS
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. HUD SUPERIOR
+     Jugador | Ronda/Tiempo | HANDVERSE IA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-stage-hud {
+    width: 100%;
+    max-width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      54px
+      minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 6px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. PANEL DEL JUGADOR Y PANEL DE LA IA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-player {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 8px 6px;
+
+    gap: 5px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     3. ICONO DEL JUGADOR / IA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-character {
+    flex: 0 0 auto;
+
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  /* ----------------------------------------------------------
+     4. CONTENIDO INTERNO DEL HUD
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-hud-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+  }
+
+  /* ----------------------------------------------------------
+     5. IDENTIDAD
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-player-identity {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #battle-section .battle-player-name {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    font-size: clamp(0.62rem, 2.8vw, 0.8rem);
+    line-height: 1.08;
+
+    letter-spacing: 0.015em;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  #battle-section .battle-player-institution {
+    display: -webkit-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    font-size: clamp(0.46rem, 1.9vw, 0.58rem);
+    line-height: 1.2;
+
+    letter-spacing: 0.02em;
+
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     6. VIDA
+     ---------------------------------------------------------- */
+
+  #battle-section .health-info {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 4px;
+
+    margin-top: 5px;
+
+    font-size: clamp(0.48rem, 2vw, 0.6rem);
+    line-height: 1;
+  }
+
+  #battle-section .health-bar {
+    width: 100%;
+    max-width: 100%;
+
+    height: 6px;
+
+    margin-top: 4px;
+  }
+
+  /* ----------------------------------------------------------
+     7. PODER ESPECIAL
+     ---------------------------------------------------------- */
+
+  #battle-section .power-status {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin-top: 5px;
+
+    padding: 4px 3px;
+
+    font-size: clamp(0.44rem, 1.75vw, 0.55rem);
+    line-height: 1;
+
+    letter-spacing: 0;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: clip;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     8. ZONA CENTRAL — RONDA Y TIEMPO
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-center {
+    width: 54px;
+    min-width: 0;
+    max-width: 54px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: visible;
+  }
+
+  #battle-section .round-label {
+    font-size: 0.46rem;
+
+    letter-spacing: 0.05em;
+  }
+
+  #battle-section #battle-round {
+    font-size: 0.92rem;
+    line-height: 1;
+  }
+
+  #battle-section .turn-timer {
+    width: 100%;
+    max-width: 54px;
+
+    margin-top: 5px;
+
+    transform: none;
+  }
+
+  #battle-section .turn-timer-label {
+    font-size: 0.43rem;
+
+    letter-spacing: 0.03em;
+  }
+
+  #battle-section .turn-timer-number-row {
+    gap: 1px;
+  }
+
+  #battle-section #turn-timer-value {
+    font-size: 0.82rem;
+  }
+
+  #battle-section .turn-timer-unit {
+    font-size: 0.48rem;
+  }
+
+  #battle-section .turn-timer-track {
+    width: 100%;
+
+    height: 4px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — ARENA RESPONSIVE DEFINITIVA
+   PASO 7.6B.3B
+   ROBOTS + VS + ESCENARIO EN TELÉFONOS
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. ESCENARIO
+     ---------------------------------------------------------- */
+
+  #battle-stage.battle-stage {
+    width: 100%;
+
+    height: 520px;
+    min-height: 520px;
+
+    margin-top: 20px;
+    margin-bottom: 22px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+  }
+
+  /* ----------------------------------------------------------
+     2. CONTENEDOR DE LOS DOS COMBATIENTES
+     No usamos transform aquí para no romper las animaciones.
+     ---------------------------------------------------------- */
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    top: auto;
+    bottom: 10px;
+
+    width: 150px;
+    min-width: 0;
+
+    min-height: 260px;
+
+    margin: 0;
+  }
+
+  /* ----------------------------------------------------------
+     3. POSICIÓN DEL ROBOT DEL ESTUDIANTE
+     ---------------------------------------------------------- */
+
+  #battle-stage > #player-fighter {
+    left: 0;
+    right: auto;
+  }
+
+  /* ----------------------------------------------------------
+     4. POSICIÓN DE HANDVERSE IA
+     ---------------------------------------------------------- */
+
+  #battle-stage > #ai-fighter {
+    right: 0;
+    left: auto;
+  }
+
+  /* ----------------------------------------------------------
+     5. TAMAÑO DEL PERSONAJE
+     El escalado está en el hijo para conservar las animaciones
+     de ataque, escudo, poder y daño del contenedor principal.
+     ---------------------------------------------------------- */
+
+  #battle-stage .fighter-character {
+    width: 130px;
+    height: 205px;
+
+    transform: scale(0.72);
+    transform-origin: bottom center;
+  }
+
+  /* ----------------------------------------------------------
+     6. ANILLO DE ENERGÍA
+     ---------------------------------------------------------- */
+
+  #battle-stage .fighter-energy-ring {
+    width: 128px;
+    height: 128px;
+  }
+
+  /* ----------------------------------------------------------
+     7. SOMBRA DEL COMBATIENTE
+     ---------------------------------------------------------- */
+
+  #battle-stage .fighter-shadow {
+    max-width: 105px;
+  }
+
+  /* ----------------------------------------------------------
+     8. VS CENTRAL
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-center {
+    bottom: 104px;
+
+    left: 50%;
+
+    width: 48px;
+    height: 48px;
+
+    transform: translateX(-50%);
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 46px;
+    height: 46px;
+
+    font-size: 0.78rem;
+
+    box-shadow: 0 0 18px rgba(99, 102, 241, 0.24);
+  }
+
+  /* ----------------------------------------------------------
+     9. EFECTO DE IMPACTO
+     Lo mantiene centrado entre ambos combatientes.
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-impact-effect {
+    left: 50%;
+    top: 63%;
+  }
+}
+
+/* ============================================================
+   ESCENARIO — TELÉFONOS ESTRECHOS
+   320px a 390px
+   ============================================================ */
+
+@media (max-width: 390px) {
+  #battle-stage.battle-stage {
+    height: 500px;
+    min-height: 500px;
+
+    border-radius: 16px;
+  }
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    width: 136px;
+
+    min-height: 245px;
+
+    bottom: 8px;
+  }
+
+  #battle-stage .fighter-character {
+    width: 120px;
+    height: 195px;
+
+    transform: scale(0.68);
+  }
+
+  #battle-stage .fighter-energy-ring {
+    width: 116px;
+    height: 116px;
+  }
+
+  #battle-stage > .battle-stage-center {
+    bottom: 96px;
+
+    width: 42px;
+    height: 42px;
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 40px;
+    height: 40px;
+
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — ARENA RESPONSIVE DEFINITIVA
+   PASO 7.6B.3C
+   MOVIMIENTOS + RECONOCIMIENTO IA EN MÓVIL
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. CONTENEDOR DE MOVIMIENTOS
+     TU MOVIMIENTO
+     VS
+     MOVIMIENTO IA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-actions {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+
+    gap: 10px !important;
+
+    margin-top: 14px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. TARJETAS DE MOVIMIENTO
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-action-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    min-height: 132px !important;
+
+    padding: 14px 12px !important;
+
+    display: grid !important;
+    grid-template-rows:
+      auto
+      minmax(48px, 1fr)
+      auto !important;
+
+    align-items: center !important;
+
+    gap: 5px !important;
+
+    border-radius: 14px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     3. TÍTULO DE CADA TARJETA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-action-card > span {
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    font-size: 0.58rem;
+    line-height: 1.15 !important;
+
+    letter-spacing: 0.08em;
+
+    text-align: center !important;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     4. EMOJI / GESTO PRINCIPAL
+     ---------------------------------------------------------- */
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    min-height: 48px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: clamp(2.8rem, 14vw, 3.8rem) !important;
+    line-height: 1 !important;
+
+    text-align: center;
+  }
+
+  /* ----------------------------------------------------------
+     5. TEXTO DEL MOVIMIENTO
+     ATAQUE / ESCUDO / PODER / ESPERANDO
+     ---------------------------------------------------------- */
+
+  #battle-section #player-battle-action,
+  #battle-section #ai-battle-action {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 0.66rem;
+    line-height: 1.2 !important;
+
+    letter-spacing: 0.04em;
+
+    text-align: center !important;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     6. VS ENTRE LAS DOS TARJETAS
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-action-versus {
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 22px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #battle-section .battle-action-versus span {
+    font-size: 0.66rem;
+
+    line-height: 1 !important;
+
+    opacity: 0.72;
+  }
+
+  /* ==========================================================
+     RECONOCIMIENTO IA
+     ========================================================== */
+
+  /* ----------------------------------------------------------
+     7. SLOT DEL PANEL
+     ---------------------------------------------------------- */
+
+  #battle-section #battle-prediction-slot {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-top: 12px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     8. PANEL DE RECONOCIMIENTO
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: 0;
+
+    padding: 11px 12px;
+
+    grid-template-columns:
+      42px
+      minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 9px;
+
+    border-radius: 13px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     9. ICONO DEL GESTO
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 1.4rem;
+  }
+
+  /* ----------------------------------------------------------
+     10. INFORMACIÓN DEL GESTO
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-information {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #battle-prediction-slot .prediction-eyebrow {
+    font-size: 0.48rem;
+
+    letter-spacing: 0.1em;
+  }
+
+  #battle-prediction-slot #prediction-name {
+    max-width: 100%;
+
+    font-size: 0.86rem;
+    line-height: 1.08;
+
+    overflow-wrap: anywhere;
+  }
+
+  #battle-prediction-slot #prediction-action {
+    max-width: 100%;
+
+    font-size: 0.63rem;
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     11. CONFIANZA
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-confidence {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 8px 0 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    border-left: 0;
+
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+
+    box-sizing: border-box;
+  }
+
+  #battle-prediction-slot .prediction-confidence > span {
+    font-size: 0.48rem;
+
+    letter-spacing: 0.08em;
+  }
+
+  #battle-prediction-slot #prediction-confidence {
+    font-size: 1rem;
+
+    line-height: 1;
+  }
+
+  /* ----------------------------------------------------------
+     12. ESTADO DEL GESTO
+     GESTO VÁLIDO / AJUSTA EL GESTO
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-confidence-status {
+    max-width: 48%;
+
+    margin: 0 0 0 auto;
+
+    font-size: 0.46rem;
+    line-height: 1.1;
+
+    letter-spacing: 0.04em;
+
+    text-align: right;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ============================================================
+   MOVIMIENTOS + RECONOCIMIENTO
+   TELÉFONOS ESTRECHOS
+   ============================================================ */
+
+@media (max-width: 390px) {
+  #battle-section .battle-actions {
+    gap: 8px !important;
+  }
+
+  #battle-section .battle-action-card {
+    min-height: 122px !important;
+
+    padding: 12px 10px !important;
+  }
+
+  #battle-section .battle-action-card > span {
+    font-size: 0.54rem;
+  }
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    min-height: 44px !important;
+
+    font-size: clamp(2.6rem, 13vw, 3.4rem) !important;
+  }
+
+  #battle-section #player-battle-action,
+  #battle-section #ai-battle-action {
+    font-size: 0.61rem;
+  }
+
+  #battle-prediction-slot .prediction-panel {
+    padding: 10px;
+
+    grid-template-columns:
+      38px
+      minmax(0, 1fr);
+
+    gap: 8px;
+  }
+
+  #battle-prediction-slot .prediction-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 1.25rem;
+  }
+
+  #battle-prediction-slot .prediction-eyebrow {
+    font-size: 0.45rem;
+  }
+
+  #battle-prediction-slot #prediction-name {
+    font-size: 0.8rem;
+  }
+
+  #battle-prediction-slot #prediction-action {
+    font-size: 0.6rem;
+  }
+
+  #battle-prediction-slot #prediction-confidence {
+    font-size: 0.94rem;
+  }
+
+  #battle-prediction-slot .prediction-confidence-status {
+    max-width: 52%;
+
+    font-size: 0.43rem;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE GLOBAL DEFINITIVO
+   PASO 7.6B.4A
+   REGISTRO EN DISPOSITIVOS MÓVILES
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. PANTALLA COMPLETA DE REGISTRO
+     ---------------------------------------------------------- */
+
+  .player-registration-screen {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    padding: max(16px, env(safe-area-inset-top)) 10px
+      max(16px, env(safe-area-inset-bottom));
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. TARJETA PRINCIPAL
+     ---------------------------------------------------------- */
+
+  .player-registration-card {
+    width: min(100%, 420px);
+    max-width: 100%;
+
+    margin: auto;
+
+    padding: 26px 18px;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     3. CABECERA / MARCA
+     ---------------------------------------------------------- */
+
+  .registration-brand {
+    width: 100%;
+    max-width: 100%;
+
+    text-align: center;
+  }
+
+  .registration-eyebrow {
+    display: block;
+
+    max-width: 100%;
+
+    font-size: 0.56rem;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.13em;
+
+    overflow-wrap: anywhere;
+  }
+
+  .registration-brand h1 {
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    font-size: clamp(1.8rem, 9.5vw, 2.5rem);
+
+    line-height: 0.98;
+
+    overflow-wrap: normal;
+  }
+
+  .registration-brand p {
+    max-width: 32rem;
+
+    margin-inline: auto;
+
+    font-size: 0.8rem;
+
+    line-height: 1.45;
+  }
+
+  /* ----------------------------------------------------------
+     4. FORMULARIO
+     ---------------------------------------------------------- */
+
+  .player-registration-form {
+    width: 100%;
+    max-width: 100%;
+
+    gap: 15px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     5. CAMPOS
+     ---------------------------------------------------------- */
+
+  .registration-field {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  .registration-field label {
+    display: block;
+
+    max-width: 100%;
+
+    font-size: 0.72rem;
+
+    line-height: 1.2;
+  }
+
+  .registration-field input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: 48px;
+
+    padding: 11px 12px;
+
+    font-size: 16px;
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     6. AYUDA DE LOS CAMPOS
+     ---------------------------------------------------------- */
+
+  .registration-field small {
+    display: block;
+
+    max-width: 100%;
+
+    font-size: 0.6rem;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     7. MENSAJE DE ERROR
+     ---------------------------------------------------------- */
+
+  .registration-error {
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: 0.64rem;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     8. BOTÓN PRINCIPAL
+     ---------------------------------------------------------- */
+
+  .registration-submit-button {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 49px;
+
+    margin-top: 2px;
+
+    padding: 12px 14px;
+
+    font-size: 0.75rem;
+
+    line-height: 1.2;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     9. PRIVACIDAD
+     ---------------------------------------------------------- */
+
+  .registration-privacy {
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    font-size: 0.58rem;
+
+    line-height: 1.4;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ============================================================
+   REGISTRO — TELÉFONOS ESTRECHOS
+   320px a 390px
+   ============================================================ */
+
+@media (max-width: 390px) {
+  .player-registration-screen {
+    padding-inline: 8px;
+  }
+
+  .player-registration-card {
+    padding: 22px 14px;
+
+    border-radius: 16px;
+  }
+
+  .registration-eyebrow {
+    font-size: 0.52rem;
+
+    letter-spacing: 0.1em;
+  }
+
+  .registration-brand h1 {
+    font-size: clamp(1.65rem, 9vw, 2.15rem);
+  }
+
+  .registration-brand p {
+    font-size: 0.76rem;
+  }
+
+  .player-registration-form {
+    gap: 13px;
+  }
+
+  .registration-field label {
+    font-size: 0.68rem;
+  }
+
+  .registration-field small {
+    font-size: 0.56rem;
+  }
+
+  .registration-submit-button {
+    min-height: 47px;
+
+    padding-inline: 10px;
+
+    font-size: 0.7rem;
+  }
+
+  .registration-privacy {
+    font-size: 0.54rem;
+  }
+}
+
+/* ============================================================
+   REGISTRO — POCA ALTURA / MÓVIL HORIZONTAL
+   ============================================================ */
+
+@media (max-height: 700px) and (max-width: 900px) {
+  .player-registration-screen {
+    align-items: flex-start;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    overflow-y: auto;
+  }
+
+  .player-registration-card {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE GLOBAL DEFINITIVO
+   PASO 7.6B.4B
+   CÁMARA + NEURAL VISION EN DISPOSITIVOS MÓVILES
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. PANEL GENERAL DE CÁMARA
+     ---------------------------------------------------------- */
+
+  .camera-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 12px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. VISOR DE LA CÁMARA
+     Mantiene una proporción estable en teléfonos.
+     ---------------------------------------------------------- */
+
+  .camera-panel .camera-stage {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    aspect-ratio: 4 / 3;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    border-radius: 13px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     3. VIDEO
+     ---------------------------------------------------------- */
+
+  .camera-panel #webcam {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: inherit;
+  }
+
+  /* ----------------------------------------------------------
+     4. CANVAS DE MEDIAPIPE / LANDMARKS
+     Siempre exactamente encima del video.
+     ---------------------------------------------------------- */
+
+  .camera-panel #overlay {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    pointer-events: none;
+
+    border-radius: inherit;
+  }
+
+  /* ----------------------------------------------------------
+     5. PLACEHOLDER ANTES DE ACTIVAR LA CÁMARA
+     ---------------------------------------------------------- */
+
+  .camera-panel #camera-placeholder {
+    width: 100%;
+    height: 100%;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+  }
+
+  .camera-panel #camera-placeholder span {
+    font-size: clamp(2.2rem, 12vw, 3rem);
+
+    line-height: 1;
+  }
+
+  .camera-panel #camera-placeholder p {
+    max-width: 100%;
+
+    margin-top: 8px;
+
+    font-size: 0.72rem;
+    line-height: 1.3;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     6. CONTROLES DE LA CÁMARA
+     En móvil estado arriba + botón debajo.
+     ---------------------------------------------------------- */
+
+  .camera-panel .camera-controls {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 12px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     7. ESTADO DE LA CÁMARA
+     ---------------------------------------------------------- */
+
+  .camera-panel #camera-status {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: 0.68rem;
+    line-height: 1.3;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     8. BOTÓN ACTIVAR CÁMARA
+     ---------------------------------------------------------- */
+
+  .camera-panel #start-camera {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 48px;
+
+    margin: 0;
+
+    padding: 11px 14px;
+
+    font-size: 0.72rem;
+    line-height: 1.2;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     RECONOCIMIENTO IA MIENTRAS SIGUE EN LA CÁMARA
+     ========================================================== */
+
+  /* ----------------------------------------------------------
+     9. PANEL
+     Solo se aplica mientras prediction-panel pertenece
+     a camera-panel. Cuando pasa a la batalla, sus reglas
+     específicas de battle-prediction-slot toman el control.
+     ---------------------------------------------------------- */
+
+  .camera-panel > .prediction-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: 0;
+
+    margin-top: 12px;
+
+    padding: 11px 12px;
+
+    display: grid;
+
+    grid-template-columns:
+      42px
+      minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 9px;
+
+    border-radius: 13px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     10. ICONO DEL RECONOCIMIENTO
+     ---------------------------------------------------------- */
+
+  .camera-panel > .prediction-panel .prediction-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 1.4rem;
+  }
+
+  /* ----------------------------------------------------------
+     11. INFORMACIÓN DEL GESTO
+     ---------------------------------------------------------- */
+
+  .camera-panel > .prediction-panel .prediction-information {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .camera-panel > .prediction-panel .prediction-eyebrow {
+    font-size: 0.48rem;
+
+    letter-spacing: 0.1em;
+  }
+
+  .camera-panel > .prediction-panel #prediction-name {
+    max-width: 100%;
+
+    font-size: 0.84rem;
+    line-height: 1.1;
+
+    overflow-wrap: anywhere;
+  }
+
+  .camera-panel > .prediction-panel #prediction-action {
+    max-width: 100%;
+
+    font-size: 0.62rem;
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     12. CONFIANZA
+     Pasa debajo para evitar compresión horizontal.
+     ---------------------------------------------------------- */
+
+  .camera-panel > .prediction-panel .prediction-confidence {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 8px 0 0;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    border-left: 0;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+
+    box-sizing: border-box;
+  }
+
+  .camera-panel > .prediction-panel .prediction-confidence > span {
+    font-size: 0.47rem;
+
+    letter-spacing: 0.08em;
+  }
+
+  .camera-panel > .prediction-panel #prediction-confidence {
+    font-size: 1rem;
+
+    line-height: 1;
+  }
+
+  .camera-panel > .prediction-panel .prediction-confidence-status {
+    max-width: 48%;
+
+    margin: 0 0 0 auto;
+
+    font-size: 0.45rem;
+    line-height: 1.1;
+
+    letter-spacing: 0.04em;
+
+    text-align: right;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ============================================================
+   CÁMARA — TELÉFONOS ESTRECHOS
+   320px a 390px
+   ============================================================ */
+
+@media (max-width: 390px) {
+  .camera-panel {
+    padding: 9px;
+
+    border-radius: 14px;
+  }
+
+  .camera-panel .camera-stage {
+    border-radius: 11px;
+  }
+
+  .camera-panel #camera-placeholder {
+    padding: 12px;
+  }
+
+  .camera-panel #camera-placeholder span {
+    font-size: 2.2rem;
+  }
+
+  .camera-panel #camera-placeholder p {
+    font-size: 0.66rem;
+  }
+
+  .camera-panel .camera-controls {
+    gap: 8px;
+
+    margin-top: 10px;
+  }
+
+  .camera-panel #camera-status {
+    font-size: 0.63rem;
+  }
+
+  .camera-panel #start-camera {
+    min-height: 46px;
+
+    padding-inline: 11px;
+
+    font-size: 0.69rem;
+  }
+
+  .camera-panel > .prediction-panel {
+    margin-top: 10px;
+
+    padding: 10px;
+
+    grid-template-columns:
+      38px
+      minmax(0, 1fr);
+
+    gap: 8px;
+  }
+
+  .camera-panel > .prediction-panel .prediction-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 1.25rem;
+  }
+
+  .camera-panel > .prediction-panel .prediction-eyebrow {
+    font-size: 0.44rem;
+  }
+
+  .camera-panel > .prediction-panel #prediction-name {
+    font-size: 0.78rem;
+  }
+
+  .camera-panel > .prediction-panel #prediction-action {
+    font-size: 0.58rem;
+  }
+
+  .camera-panel > .prediction-panel #prediction-confidence {
+    font-size: 0.94rem;
+  }
+
+  .camera-panel > .prediction-panel .prediction-confidence-status {
+    max-width: 52%;
+
+    font-size: 0.42rem;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE GLOBAL DEFINITIVO
+   PASO 7.6B.4C
+   ENTRENAMIENTO DE IA EN DISPOSITIVOS MÓVILES
+   ============================================================ */
+
+@media (max-width: 520px) {
+  /* ----------------------------------------------------------
+     1. PANEL PRINCIPAL
+     ---------------------------------------------------------- */
+
+  .training-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 16px 12px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     2. CABECERA
+     ---------------------------------------------------------- */
+
+  .training-header {
+    width: 100%;
+    max-width: 100%;
+
+    margin-bottom: 16px;
+
+    text-align: center;
+  }
+
+  .training-eyebrow {
+    max-width: 100%;
+
+    font-size: 0.52rem;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.12em;
+
+    overflow-wrap: anywhere;
+  }
+
+  .training-header h2 {
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    font-size: clamp(1.45rem, 8vw, 1.9rem);
+
+    line-height: 1;
+
+    overflow-wrap: anywhere;
+  }
+
+  .training-header > p:not(.training-eyebrow) {
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    font-size: 0.72rem;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     3. ESTADO GENERAL DEL ENTRENAMIENTO
+     ---------------------------------------------------------- */
+
+  .training-status-box {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: 58px;
+
+    padding: 11px 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 12px;
+
+    box-sizing: border-box;
+  }
+
+  .training-status-icon {
+    flex: 0 0 auto;
+
+    width: 36px;
+    height: 36px;
+
+    font-size: 1.3rem;
+  }
+
+  #training-status {
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: 0.68rem;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     4. GRID
+     Una tarjeta por fila en móvil.
+     ---------------------------------------------------------- */
+
+  .training-grid {
+    width: 100%;
+    max-width: 100%;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 12px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     5. TARJETAS DE LOS TRES GESTOS
+     ---------------------------------------------------------- */
+
+  .gesture-training-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 16px 13px;
+
+    border-radius: 14px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     6. ICONO
+     ---------------------------------------------------------- */
+
+  .gesture-training-icon {
+    width: 54px;
+    height: 54px;
+
+    margin-inline: auto;
+
+    font-size: 2rem;
+  }
+
+  /* ----------------------------------------------------------
+     7. NOMBRE DEL GESTO
+     ---------------------------------------------------------- */
+
+  .gesture-training-card h3 {
+    max-width: 100%;
+
+    margin-top: 10px;
+
+    font-size: 0.8rem;
+
+    line-height: 1.15;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     8. ACCIÓN
+     ESCUDO / ATAQUE / PODER
+     ---------------------------------------------------------- */
+
+  .gesture-training-card .gesture-action {
+    max-width: 100%;
+
+    font-size: 0.62rem;
+
+    line-height: 1.2;
+
+    text-align: center;
+
+    letter-spacing: 0.07em;
+  }
+
+  /* ----------------------------------------------------------
+     9. PROGRESO
+     ---------------------------------------------------------- */
+
+  .progress-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  .progress-info {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+  }
+
+  .progress-info span {
+    min-width: 0;
+
+    font-size: 0.61rem;
+
+    overflow-wrap: anywhere;
+  }
+
+  .progress-info .sample-count {
+    flex: 0 0 auto;
+
+    font-size: 0.66rem;
+
+    font-variant-numeric: tabular-nums;
+
+    white-space: nowrap;
+  }
+
+  .progress-track {
+    width: 100%;
+    max-width: 100%;
+
+    height: 7px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  .progress-fill {
+    max-width: 100%;
+  }
+
+  /* ----------------------------------------------------------
+     10. ENTRENAR / RECAPTURAR
+     ---------------------------------------------------------- */
+
+  .gesture-training-card .train-button {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 46px;
+
+    margin-top: 12px;
+
+    padding: 10px 12px;
+
+    font-size: 0.7rem;
+
+    line-height: 1.2;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     DATASET / MODELO IA
+     ========================================================== */
+
+  /* ----------------------------------------------------------
+     11. CONTENEDOR DEL DATASET
+     ---------------------------------------------------------- */
+
+  .dataset-ready {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 13px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    border-radius: 13px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     12. ICONO DEL DATASET
+     ---------------------------------------------------------- */
+
+  .dataset-ready > span {
+    flex: 0 0 auto;
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 1.35rem;
+  }
+
+  /* ----------------------------------------------------------
+     13. CONTENIDO DEL DATASET
+     ---------------------------------------------------------- */
+
+  .dataset-ready-content,
+  .dataset-ready > div {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  .dataset-ready strong {
+    display: block;
+
+    max-width: 100%;
+
+    font-size: 0.72rem;
+
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+  }
+
+  .dataset-ready p {
+    max-width: 100%;
+
+    font-size: 0.62rem;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     14. BOTÓN ENTRENAR MODELO IA
+     ---------------------------------------------------------- */
+
+  .dataset-ready .train-model-button {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 9px;
+
+    padding: 11px 12px;
+
+    font-size: 0.7rem;
+
+    line-height: 1.2;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     15. ESTADO DEL ENTRENAMIENTO DEL MODELO
+     ---------------------------------------------------------- */
+
+  .dataset-ready .model-training-status {
+    max-width: 100%;
+
+    margin-top: 8px !important;
+
+    font-size: 0.62rem !important;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ============================================================
+   ENTRENAMIENTO — TELÉFONOS ESTRECHOS
+   320px a 390px
+   ============================================================ */
+
+@media (max-width: 390px) {
+  .training-panel {
+    padding: 14px 10px;
+
+    border-radius: 14px;
+  }
+
+  .training-header {
+    margin-bottom: 14px;
+  }
+
+  .training-eyebrow {
+    font-size: 0.48rem;
+  }
+
+  .training-header h2 {
+    font-size: clamp(1.35rem, 7.5vw, 1.7rem);
+  }
+
+  .training-header > p:not(.training-eyebrow) {
+    font-size: 0.68rem;
+  }
+
+  .training-status-box {
+    min-height: 54px;
+
+    padding: 10px;
+
+    gap: 8px;
+  }
+
+  .training-status-icon {
+    width: 34px;
+    height: 34px;
+
+    font-size: 1.2rem;
+  }
+
+  #training-status {
+    font-size: 0.64rem;
+  }
+
+  .training-grid {
+    gap: 10px;
+  }
+
+  .gesture-training-card {
+    padding: 14px 11px;
+  }
+
+  .gesture-training-icon {
+    width: 50px;
+    height: 50px;
+
+    font-size: 1.85rem;
+  }
+
+  .gesture-training-card h3 {
+    font-size: 0.75rem;
+  }
+
+  .gesture-training-card .gesture-action {
+    font-size: 0.58rem;
+  }
+
+  .progress-info span {
+    font-size: 0.57rem;
+  }
+
+  .progress-info .sample-count {
+    font-size: 0.62rem;
+  }
+
+  .gesture-training-card .train-button {
+    min-height: 45px;
+
+    font-size: 0.67rem;
+  }
+
+  .dataset-ready {
+    padding: 11px;
+
+    gap: 8px;
+  }
+
+  .dataset-ready > span {
+    width: 34px;
+    height: 34px;
+
+    font-size: 1.2rem;
+  }
+
+  .dataset-ready strong {
+    font-size: 0.68rem;
+  }
+
+  .dataset-ready p {
+    font-size: 0.58rem;
+  }
+
+  .dataset-ready .train-model-button {
+    min-height: 46px;
+
+    font-size: 0.67rem;
+  }
+
+  .dataset-ready .model-training-status {
+    font-size: 0.58rem !important;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE DEFINITIVO
+   PASO 7.6D.4C
+   MONITOR GRANDE / TV FULL HD
+   1600px → 2199px
+   ============================================================ */
+
+@media (min-width: 1600px) and (max-width: 2199px) {
+  /* ----------------------------------------------------------
+     1. CONTENEDOR GENERAL
+     En pantallas grandes permitimos crecer, pero con límite.
+     ---------------------------------------------------------- */
+
+  .app-shell {
+    width: min(1480px, 88vw);
+    max-width: 1480px;
+
+    gap: 40px;
+
+    padding-top: 44px;
+    padding-bottom: 82px;
+  }
+
+  /* ----------------------------------------------------------
+     2. ARENA
+     ---------------------------------------------------------- */
+
+  #battle-section {
+    width: 100%;
+    max-width: 1480px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ----------------------------------------------------------
+     3. CABECERA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-header h2 {
+    font-size: clamp(3.2rem, 3.6vw, 4.4rem);
+  }
+
+  #battle-section .battle-header #battle-message,
+  #battle-section #battle-message {
+    font-size: clamp(1rem, 1.1vw, 1.25rem);
+  }
+
+  /* ----------------------------------------------------------
+     4. ESCENARIO
+     ---------------------------------------------------------- */
+
+  #battle-stage.battle-stage {
+    width: 100%;
+
+    height: 680px;
+    min-height: 680px;
+
+    margin-top: 34px;
+    margin-bottom: 36px;
+
+    border-radius: 30px;
+  }
+
+  /* ----------------------------------------------------------
+     5. HUD SUPERIOR
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud {
+    top: 24px;
+
+    left: 30px;
+    right: 30px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      130px
+      minmax(0, 1fr);
+
+    column-gap: 26px;
+  }
+
+  /* ----------------------------------------------------------
+     6. PANELES JUGADOR / IA
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud > .battle-player {
+    height: 188px;
+    min-height: 188px;
+
+    padding: 18px 21px 16px;
+
+    border-radius: 17px;
+  }
+
+  /* ----------------------------------------------------------
+     7. IDENTIDAD
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-player-name {
+    font-size: 1.15rem;
+  }
+
+  #battle-stage .battle-player-institution {
+    font-size: 0.78rem;
+  }
+
+  /* ----------------------------------------------------------
+     8. VIDA
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-hud .health-info {
+    font-size: 0.8rem;
+  }
+
+  #battle-stage .battle-stage-hud .health-bar {
+    height: 9px;
+  }
+
+  /* ----------------------------------------------------------
+     9. PODER
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-hud .power-status {
+    margin-top: 11px;
+
+    padding: 6px 12px;
+
+    font-size: 0.65rem;
+  }
+
+  /* ----------------------------------------------------------
+     10. RONDA + TIEMPO
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 130px;
+
+    padding-top: 18px;
+  }
+
+  #battle-stage .battle-stage-hud .round-label {
+    font-size: 0.64rem;
+  }
+
+  #battle-stage .battle-stage-hud #battle-round {
+    font-size: 1.7rem;
+  }
+
+  /* ----------------------------------------------------------
+     11. ROBOTS
+     ---------------------------------------------------------- */
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    width: 250px;
+
+    min-height: 360px;
+
+    bottom: 18px;
+  }
+
+  #battle-stage > #player-fighter {
+    left: calc(22% - 125px);
+  }
+
+  #battle-stage > #ai-fighter {
+    right: calc(22% - 125px);
+  }
+
+  /* ----------------------------------------------------------
+     12. VS
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-center {
+    bottom: 142px;
+
+    width: 74px;
+    height: 74px;
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 72px;
+    height: 72px;
+
+    font-size: 1.15rem;
+  }
+
+  /* ----------------------------------------------------------
+     13. TARJETAS DE MOVIMIENTO
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-action-card {
+    min-height: 210px !important;
+
+    padding: 24px 20px !important;
+  }
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    font-size: 4rem;
+  }
+
+  /* ----------------------------------------------------------
+     14. RECONOCIMIENTO IA
+     ---------------------------------------------------------- */
+
+  #battle-prediction-slot .prediction-panel {
+    min-height: 112px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE DEFINITIVO
+   PASO 7.6D.4D
+   TV 2K / 4K / PANTALLAS MUY GRANDES
+   ============================================================ */
+
+/* ============================================================
+   2K / QHD
+   2200px → 3199px
+   ============================================================ */
+
+@media (min-width: 2200px) and (max-width: 3199px) {
+  .app-shell {
+    width: min(1800px, 82vw);
+    max-width: 1800px;
+
+    gap: 46px;
+
+    padding-top: 54px;
+    padding-bottom: 96px;
+  }
+
+  #battle-section {
+    width: 100%;
+    max-width: 1800px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #battle-section .battle-header h2 {
+    font-size: clamp(4rem, 3.4vw, 5.2rem);
+  }
+
+  #battle-section #battle-message {
+    font-size: clamp(1.15rem, 1vw, 1.4rem);
+  }
+
+  #battle-stage.battle-stage {
+    height: 760px;
+    min-height: 760px;
+
+    margin-top: 38px;
+    margin-bottom: 42px;
+
+    border-radius: 34px;
+  }
+
+  #battle-stage > .battle-stage-hud {
+    top: 28px;
+
+    left: 36px;
+    right: 36px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      145px
+      minmax(0, 1fr);
+
+    column-gap: 30px;
+  }
+
+  #battle-stage > .battle-stage-hud > .battle-player {
+    height: 205px;
+    min-height: 205px;
+
+    padding: 20px 24px 18px;
+
+    border-radius: 19px;
+  }
+
+  #battle-stage .battle-player-name {
+    font-size: 1.28rem;
+  }
+
+  #battle-stage .battle-player-institution {
+    font-size: 0.86rem;
+  }
+
+  #battle-stage .battle-stage-hud .health-info {
+    font-size: 0.88rem;
+  }
+
+  #battle-stage .battle-stage-hud .health-bar {
+    height: 10px;
+  }
+
+  #battle-stage .battle-stage-hud .power-status {
+    margin-top: 12px;
+
+    padding: 7px 14px;
+
+    font-size: 0.72rem;
+  }
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 145px;
+
+    padding-top: 20px;
+  }
+
+  #battle-stage .battle-stage-hud .round-label {
+    font-size: 0.7rem;
+  }
+
+  #battle-stage .battle-stage-hud #battle-round {
+    font-size: 1.9rem;
+  }
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    width: 285px;
+
+    min-height: 400px;
+
+    bottom: 20px;
+  }
+
+  #battle-stage > #player-fighter {
+    left: calc(22% - 142px);
+  }
+
+  #battle-stage > #ai-fighter {
+    right: calc(22% - 142px);
+  }
+
+  #battle-stage > .battle-stage-center {
+    bottom: 158px;
+
+    width: 84px;
+    height: 84px;
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 82px;
+    height: 82px;
+
+    font-size: 1.3rem;
+  }
+
+  #battle-section .battle-action-card {
+    min-height: 230px !important;
+
+    padding: 28px 24px !important;
+  }
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    font-size: 4.6rem;
+  }
+
+  #battle-prediction-slot .prediction-panel {
+    min-height: 124px;
+  }
+}
+
+/* ============================================================
+   4K / TV GRANDE
+   3200px+
+   ============================================================ */
+
+@media (min-width: 3200px) {
+  .app-shell {
+    width: min(2100px, 76vw);
+    max-width: 2100px;
+
+    gap: 52px;
+
+    padding-top: 68px;
+    padding-bottom: 120px;
+  }
+
+  #battle-section {
+    width: 100%;
+    max-width: 2100px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #battle-section .battle-header h2 {
+    font-size: clamp(4.8rem, 3vw, 6rem);
+  }
+
+  #battle-section #battle-message {
+    font-size: 1.5rem;
+  }
+
+  #battle-stage.battle-stage {
+    height: 880px;
+    min-height: 880px;
+
+    margin-top: 44px;
+    margin-bottom: 48px;
+
+    border-radius: 38px;
+  }
+
+  #battle-stage > .battle-stage-hud {
+    top: 34px;
+
+    left: 44px;
+    right: 44px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      160px
+      minmax(0, 1fr);
+
+    column-gap: 36px;
+  }
+
+  #battle-stage > .battle-stage-hud > .battle-player {
+    height: 228px;
+    min-height: 228px;
+
+    padding: 24px 28px 20px;
+
+    border-radius: 21px;
+  }
+
+  #battle-stage .battle-player-name {
+    font-size: 1.42rem;
+  }
+
+  #battle-stage .battle-player-institution {
+    font-size: 0.94rem;
+  }
+
+  #battle-stage .battle-stage-hud .health-info {
+    font-size: 0.96rem;
+  }
+
+  #battle-stage .battle-stage-hud .health-bar {
+    height: 11px;
+  }
+
+  #battle-stage .battle-stage-hud .power-status {
+    margin-top: 14px;
+
+    padding: 8px 16px;
+
+    font-size: 0.8rem;
+  }
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 160px;
+
+    padding-top: 24px;
+  }
+
+  #battle-stage .battle-stage-hud .round-label {
+    font-size: 0.76rem;
+  }
+
+  #battle-stage .battle-stage-hud #battle-round {
+    font-size: 2.1rem;
+  }
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    width: 320px;
+
+    min-height: 450px;
+
+    bottom: 24px;
+  }
+
+  #battle-stage > #player-fighter {
+    left: calc(22% - 160px);
+  }
+
+  #battle-stage > #ai-fighter {
+    right: calc(22% - 160px);
+  }
+
+  #battle-stage > .battle-stage-center {
+    bottom: 178px;
+
+    width: 94px;
+    height: 94px;
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 92px;
+    height: 92px;
+
+    font-size: 1.45rem;
+  }
+
+  #battle-section .battle-action-card {
+    min-height: 255px !important;
+
+    padding: 32px 28px !important;
+  }
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    font-size: 5.2rem;
+  }
+
+  #battle-prediction-slot .prediction-panel {
+    min-height: 136px;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE DEFINITIVO
+   PASO 7.6D.4E
+   MÓVIL HORIZONTAL MODERNO
+
+   Objetivo:
+   844 × 390
+   915 × 412
+   932 × 430
+   ============================================================ */
+
+@media (orientation: landscape) and (min-width: 700px) and (max-width: 1024px) and (max-height: 520px) {
+  /* ==========================================================
+     1. CONTENEDOR GENERAL
+     ========================================================== */
+
+  .app-shell {
+    width: calc(100% - 20px);
+    max-width: 100%;
+
+    margin-inline: auto;
+
+    padding-top: 12px;
+    padding-bottom: 28px;
+
+    gap: 16px;
+  }
+
+  /* ==========================================================
+     2. SECCIÓN DE BATALLA
+     ========================================================== */
+
+  #battle-section {
+    width: 100%;
+    max-width: 980px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 16px 18px 20px;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     3. CABECERA
+     ========================================================== */
+
+  #battle-section .battle-header {
+    margin-bottom: 12px;
+
+    padding-inline: 8px;
+
+    text-align: center;
+  }
+
+  #battle-section .battle-header h2 {
+    margin-bottom: 7px;
+
+    font-size: clamp(1.8rem, 7vh, 2.7rem);
+
+    line-height: 0.95;
+  }
+
+  #battle-section #battle-message {
+    font-size: clamp(0.72rem, 2.4vh, 0.9rem);
+
+    line-height: 1.3;
+  }
+
+  /* ==========================================================
+     4. ESCENARIO
+     Se adapta principalmente a la ALTURA disponible.
+     ========================================================== */
+
+  #battle-stage.battle-stage {
+    width: 100%;
+
+    height: clamp(410px, 105vh, 460px);
+    min-height: clamp(410px, 105vh, 460px);
+
+    margin-top: 14px;
+    margin-bottom: 16px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+  }
+
+  /* ==========================================================
+     5. HUD SUPERIOR
+     JUGADOR | RONDA/TIEMPO | IA
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud {
+    top: 10px;
+
+    left: 12px;
+    right: 12px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      76px
+      minmax(0, 1fr);
+
+    column-gap: 8px;
+
+    align-items: start;
+  }
+
+  /* ==========================================================
+     6. PANELES DEL HUD
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player {
+    height: clamp(112px, 29vh, 126px);
+    min-height: clamp(112px, 29vh, 126px);
+
+    padding: 9px 11px;
+
+    gap: 4px;
+
+    border-radius: 13px;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     7. NOMBRE E INSTITUCIÓN
+     ========================================================== */
+
+  #battle-stage .battle-player-name {
+    font-size: clamp(0.72rem, 2.5vh, 0.86rem);
+
+    line-height: 1.05;
+  }
+
+  #battle-stage .battle-player-institution {
+    margin-top: 2px;
+
+    font-size: clamp(0.5rem, 1.8vh, 0.6rem);
+
+    line-height: 1.15;
+  }
+
+  /* ==========================================================
+     8. VIDA
+     ========================================================== */
+
+  #battle-stage .battle-stage-hud .health-info {
+    margin-top: 5px;
+
+    min-height: 0;
+
+    font-size: clamp(0.52rem, 1.9vh, 0.62rem);
+
+    line-height: 1;
+  }
+
+  #battle-stage .battle-stage-hud .health-bar {
+    height: 6px;
+
+    margin-top: 4px;
+  }
+
+  /* ==========================================================
+     9. PODER ESPECIAL
+     ========================================================== */
+
+  #battle-stage .battle-stage-hud .power-status {
+    min-height: 0;
+
+    margin-top: 5px;
+
+    padding: 4px 7px;
+
+    font-size: clamp(0.45rem, 1.55vh, 0.54rem);
+
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+  /* ==========================================================
+     10. CENTRO — RONDA / TIEMPO
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 76px;
+    max-width: 76px;
+
+    padding-top: 7px;
+  }
+
+  #battle-stage .round-label {
+    font-size: 0.47rem;
+
+    letter-spacing: 0.05em;
+  }
+
+  #battle-stage #battle-round {
+    font-size: 1rem;
+
+    line-height: 1;
+  }
+
+  #battle-stage .turn-timer {
+    width: 100%;
+    max-width: 68px;
+
+    margin-top: 6px;
+
+    padding: 6px 5px;
+
+    transform: none;
+  }
+
+  #battle-stage .turn-timer-label {
+    font-size: 0.43rem;
+  }
+
+  #battle-stage #turn-timer-value {
+    font-size: 0.95rem;
+  }
+
+  #battle-stage .turn-timer-unit {
+    font-size: 0.48rem;
+  }
+
+  #battle-stage .turn-timer-track {
+    height: 4px;
+  }
+
+  /* ==========================================================
+     11. COMBATIENTES
+     No aplicamos transform al .battle-fighter para no romper
+     las animaciones de ataque, daño, escudo o poder.
+     ========================================================== */
+
+  #battle-stage > #player-fighter,
+  #battle-stage > #ai-fighter {
+    top: auto;
+
+    bottom: 7px;
+
+    width: 180px;
+    min-width: 0;
+
+    min-height: 245px;
+
+    margin: 0;
+  }
+
+  #battle-stage > #player-fighter {
+    left: calc(20% - 90px);
+
+    right: auto;
+  }
+
+  #battle-stage > #ai-fighter {
+    right: calc(20% - 90px);
+
+    left: auto;
+  }
+
+  /* ==========================================================
+     12. ROBOTS
+     Escalamos el personaje interno.
+     ========================================================== */
+
+  #battle-stage .fighter-character {
+    width: 132px;
+    height: 210px;
+
+    transform: scale(0.82);
+
+    transform-origin: bottom center;
+  }
+
+  #battle-stage .fighter-energy-ring {
+    width: 138px;
+    height: 138px;
+  }
+
+  #battle-stage .fighter-shadow {
+    max-width: 110px;
+  }
+
+  /* ==========================================================
+     13. VS CENTRAL
+     ========================================================== */
+
+  #battle-stage > .battle-stage-center {
+    left: 50%;
+
+    bottom: 96px;
+
+    width: 48px;
+    height: 48px;
+
+    transform: translateX(-50%);
+  }
+
+  #battle-stage > .battle-stage-center > .battle-stage-vs {
+    width: 46px;
+    height: 46px;
+
+    font-size: 0.78rem;
+  }
+
+  /* ==========================================================
+     14. EFECTO DE IMPACTO
+     ========================================================== */
+
+  #battle-stage .battle-impact-effect {
+    left: 50%;
+    top: 61%;
+  }
+
+  /* ==========================================================
+     15. MOVIMIENTOS
+     Aprovechamos el ancho horizontal:
+     jugador | VS | IA
+     ========================================================== */
+
+  #battle-section .battle-actions {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      42px
+      minmax(0, 1fr) !important;
+
+    align-items: stretch !important;
+
+    column-gap: 9px !important;
+    row-gap: 0 !important;
+
+    margin-top: 10px !important;
+  }
+
+  #battle-section .battle-action-card {
+    width: 100% !important;
+
+    min-height: 125px !important;
+
+    padding: 12px 14px !important;
+
+    border-radius: 14px;
+
+    box-sizing: border-box;
+  }
+
+  #battle-section .battle-action-versus {
+    width: 42px !important;
+
+    min-height: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #battle-section .battle-action-versus span {
+    font-size: 0.64rem;
+  }
+
+  #battle-section #player-battle-emoji,
+  #battle-section #ai-battle-emoji {
+    min-height: 44px !important;
+
+    font-size: clamp(2.5rem, 10vh, 3.2rem) !important;
+
+    line-height: 1 !important;
+  }
+
+  #battle-section #player-battle-action,
+  #battle-section #ai-battle-action {
+    font-size: 0.62rem;
+
+    line-height: 1.15;
+  }
+
+  /* ==========================================================
+     16. RECONOCIMIENTO IA
+     ========================================================== */
+
+  #battle-section #battle-prediction-slot {
+    width: 100%;
+
+    margin-top: 10px;
+  }
+
+  #battle-prediction-slot .prediction-panel {
+    width: 100%;
+
+    min-height: 88px;
+
+    padding: 10px 12px;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — RESPONSIVE FINAL ESTABLE
+   PASO 7.6E.2
+
+   OBJETIVO:
+   - Cero desbordamiento horizontal
+   - Móvil moderno estable
+   - Zoom del navegador sin romper composición
+   - HUD siempre dentro de la arena
+   - Cámara, entrenamiento y batalla contenidos
+   ============================================================ */
+
+/* ============================================================
+   1. PROTECCIÓN GLOBAL
+   Ningún hijo puede obligar a la página a ser más ancha.
+   ============================================================ */
+
+html,
+body,
+#app {
+  width: 100%;
+  max-width: 100%;
+}
+
+#app {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.app-shell {
+  min-width: 0;
+}
+
+.hero,
+.camera-panel,
+.difficulty-panel,
+.training-panel,
+#battle-section,
+.battle-section,
+.training-grid,
+.difficulty-options,
+.battle-actions,
+.battle-prediction-slot {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ============================================================
+   2. TABLET Y MÓVIL
+   Todo debe permanecer dentro del viewport.
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .app-shell {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero,
+  .camera-panel,
+  .difficulty-panel,
+  .training-panel,
+  #battle-section {
+    max-width: 100%;
+    min-width: 0;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   3. MÓVIL VERTICAL
+   Samsung / iPhone modernos
+   ============================================================ */
+
+@media (max-width: 520px) and (orientation: portrait) {
+  /* ----------------------------------------------------------
+     CONTENEDOR GENERAL DE BATALLA
+     ---------------------------------------------------------- */
+
+  #battle-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    overflow: clip;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     CABECERA
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-header {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding-left: 6px;
+    padding-right: 6px;
+
+    box-sizing: border-box;
+  }
+
+  #battle-section .battle-header h2,
+  #battle-section #battle-message {
+    width: 100%;
+    max-width: 100%;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+
+    text-align: center;
+  }
+
+  /* ----------------------------------------------------------
+     ESCENARIO
+     ---------------------------------------------------------- */
+
+  #battle-stage.battle-stage {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    padding-left: 0;
+    padding-right: 0;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     CORRECCIÓN PRINCIPAL DEL BUG
+
+     La versión de escritorio usa:
+       left + right
+
+     En móvil NO podemos combinar eso con width: 100%,
+     porque puede producir un ancho mayor que el escenario.
+
+     Por eso usamos:
+       left + right + width:auto
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud {
+    left: 7px;
+    right: 7px;
+
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      42px
+      minmax(0, 1fr);
+
+    column-gap: 4px;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     TARJETAS JUGADOR / IA
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud > .battle-player {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 8px 5px;
+
+    gap: 4px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     ICONOS
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-hud .battle-character {
+    flex: 0 0 auto;
+
+    margin-top: 1px;
+
+    font-size: 0.66rem;
+
+    line-height: 1;
+  }
+
+  /* ----------------------------------------------------------
+     CONTENIDO INTERNO
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-hud-content,
+  #battle-stage .battle-player-identity {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+  }
+
+  /* ----------------------------------------------------------
+     NOMBRE DEL ESTUDIANTE
+     Máximo dos líneas.
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-player-panel .battle-player-name {
+    display: -webkit-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(0.54rem, 2.25vw, 0.67rem);
+    line-height: 1.07;
+
+    letter-spacing: 0;
+
+    white-space: normal;
+
+    overflow: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    line-clamp: 2;
+
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  /* ----------------------------------------------------------
+     HANDVERSE IA
+     También puede usar dos líneas si fuera necesario.
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-stage-ai-panel .battle-player-name {
+    display: -webkit-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(0.53rem, 2.15vw, 0.65rem);
+    line-height: 1.07;
+
+    letter-spacing: 0;
+
+    white-space: normal;
+
+    overflow: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    line-clamp: 2;
+
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  /* ----------------------------------------------------------
+     INSTITUCIÓN
+     ---------------------------------------------------------- */
+
+  #battle-stage .battle-player-institution {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 2px;
+
+    font-size: clamp(0.4rem, 1.55vw, 0.48rem);
+    line-height: 1.1;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ----------------------------------------------------------
+     VIDA
+     ---------------------------------------------------------- */
+
+  #battle-stage .health-info {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 3px;
+
+    margin-top: 5px;
+
+    font-size: clamp(0.44rem, 1.65vw, 0.54rem);
+
+    white-space: nowrap;
+  }
+
+  #battle-stage #player-health-text,
+  #battle-stage #ai-health-text {
+    flex: 0 0 auto;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ----------------------------------------------------------
+     BARRA DE VIDA
+     ---------------------------------------------------------- */
+
+  #battle-stage .health-bar {
+    width: 100%;
+    max-width: 100%;
+
+    height: 6px;
+
+    margin-top: 4px;
+  }
+
+  /* ----------------------------------------------------------
+     PODER
+     ---------------------------------------------------------- */
+
+  #battle-stage .power-status {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-top: 5px;
+
+    padding: 4px 1px;
+
+    font-size: clamp(0.36rem, 1.35vw, 0.45rem);
+    line-height: 1;
+
+    letter-spacing: 0;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------------
+     CENTRO — RONDA / TIEMPO
+     ---------------------------------------------------------- */
+
+  #battle-stage > .battle-stage-hud > .battle-center {
+    width: 42px;
+    max-width: 42px;
+    min-width: 0;
+
+    padding-left: 0;
+    padding-right: 0;
+
+    justify-self: center;
+  }
+
+  #battle-stage .round-label {
+    font-size: 0.4rem;
+  }
+
+  #battle-stage #battle-round {
+    font-size: 0.84rem;
+  }
+
+  #battle-stage .turn-timer {
+    width: 100%;
+    max-width: 42px;
+
+    padding-left: 2px;
+    padding-right: 2px;
+
+    transform: none;
+  }
+
+  #battle-stage .turn-timer-label {
+    font-size: 0.38rem;
+  }
+
+  #battle-stage #turn-timer-value {
+    font-size: 0.76rem;
+  }
+
+  /* ----------------------------------------------------------
+     MOVIMIENTOS Y RECONOCIMIENTO
+     ---------------------------------------------------------- */
+
+  #battle-section .battle-actions,
+  #battle-section .battle-action-card,
+  #battle-section #battle-prediction-slot,
+  #battle-prediction-slot .prediction-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   4. PROTECCIÓN ESPECIAL PARA TEXTOS LARGOS
+   ============================================================ */
+
+@media (max-width: 520px) {
+  .battle-player-name,
+  .battle-player-institution,
+  #battle-message,
+  #prediction-name,
+  #prediction-action {
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  video,
+  canvas,
+  img {
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   HANDVERSE — HUD MÓVIL FINAL ALINEADO
+   PASO 7.7D.1
+
+   Corrige exclusivamente:
+   - Nombre estudiante / HANDVERSE IA
+   - Institución
+   - VIDA
+   - Barra de vida
+   - Poder especial
+
+   Samsung / iPhone modernos
+   ============================================================ */
+
+@media (max-width: 520px) and (orientation: portrait) {
+  /* ==========================================================
+     1. LOS DOS PANELES DEBEN TENER EXACTAMENTE
+        LA MISMA DISTRIBUCIÓN VERTICAL
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player .battle-hud-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     2. RESERVAR LA MISMA ZONA PARA IDENTIDAD
+
+     Aunque HANDVERSE IA no tenga institución,
+     dejamos exactamente el mismo espacio vertical.
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player .battle-player-identity {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    min-height: 32px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    gap: 2px;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================================
+     3. NOMBRES
+     ========================================================== */
+
+  #battle-stage .battle-stage-player-panel .battle-player-name,
+  #battle-stage .battle-stage-ai-panel .battle-player-name {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(0.54rem, 2.2vw, 0.66rem);
+
+    line-height: 1.05;
+
+    letter-spacing: 0;
+
+    overflow: hidden;
+
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  /* ==========================================================
+     4. INSTITUCIÓN DEL ESTUDIANTE
+     ========================================================== */
+
+  #battle-stage .battle-stage-player-panel .battle-player-institution {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(0.4rem, 1.55vw, 0.48rem);
+
+    line-height: 1.05;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+  }
+
+  /* ==========================================================
+     5. HANDVERSE IA NECESITA EL MISMO ESPACIO
+        QUE OCUPA LA INSTITUCIÓN DEL ESTUDIANTE
+
+        Es invisible, pero mantiene VIDA perfectamente alineada.
+     ========================================================== */
+
+  #battle-stage .battle-stage-ai-panel .battle-player-identity::after {
+    content: "\00a0";
+
+    display: block;
+
+    width: 100%;
+
+    font-size: clamp(0.4rem, 1.55vw, 0.48rem);
+
+    line-height: 1.05;
+
+    visibility: hidden;
+  }
+
+  /* ==========================================================
+     6. VIDA — MISMA ALTURA EN AMBOS PANELES
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player .health-info {
+    width: 100%;
+
+    margin-top: 5px;
+    margin-bottom: 4px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 3px;
+
+    font-size: clamp(0.44rem, 1.65vw, 0.54rem);
+
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+  /* ==========================================================
+     7. VALORES 100 / 100
+     ========================================================== */
+
+  #battle-stage #player-health-text,
+  #battle-stage #ai-health-text {
+    flex: 0 0 auto;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ==========================================================
+     8. BARRAS DE VIDA IGUALES
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player .health-bar {
+    width: 100%;
+    max-width: 100%;
+
+    height: 6px;
+
+    margin: 0;
+
+    flex: 0 0 6px;
+  }
+
+  /* ==========================================================
+     9. PODER ESPECIAL
+     Empujamos ambos indicadores hacia la misma zona inferior.
+     ========================================================== */
+
+  #battle-stage > .battle-stage-hud > .battle-player .power-status {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: 20px;
+
+    margin-top: auto;
+    margin-bottom: 0;
+
+    padding: 3px 1px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(0.36rem, 1.32vw, 0.45rem);
+
+    line-height: 1;
+
+    letter-spacing: 0;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
   }
 }
