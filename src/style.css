@@ -14437,7 +14437,6 @@ body,
   }
 }
 
-
 /* ============================================================
    HANDVERSE — HUD SUPERIOR DE BATALLA
    ALINEACIÓN DEFINITIVA · PANTALLAS MEDIANAS / GRANDES
@@ -14446,16 +14445,12 @@ body,
    ============================================================ */
 
 @media (min-width: 901px) {
-
   /* =========================================================
      1. CONTENIDO INTERNO DE AMBAS TARJETAS
      JUGADOR + HANDVERSE IA
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .battle-hud-content {
+  #battle-stage > .battle-stage-hud > .battle-player .battle-hud-content {
     width: 100% !important;
     height: 100% !important;
     min-width: 0 !important;
@@ -14466,7 +14461,6 @@ body,
 
     box-sizing: border-box !important;
   }
-
 
   /* =========================================================
      2. ZONA DE IDENTIDAD
@@ -14481,10 +14475,7 @@ body,
      espacio reservado
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .battle-player-identity {
+  #battle-stage > .battle-stage-hud > .battle-player .battle-player-identity {
     width: 100% !important;
 
     flex: 0 0 72px !important;
@@ -14506,16 +14497,12 @@ body,
     box-sizing: border-box !important;
   }
 
-
   /* =========================================================
      3. NOMBRE
      Misma posición vertical en ambas tarjetas
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .battle-player-name {
+  #battle-stage > .battle-stage-hud > .battle-player .battle-player-name {
     width: 100% !important;
     max-width: 100% !important;
 
@@ -14529,7 +14516,6 @@ body,
     overflow-wrap: break-word !important;
     word-break: normal !important;
   }
-
 
   /* =========================================================
      4. INSTITUCIÓN DEL ESTUDIANTE
@@ -14551,7 +14537,6 @@ body,
 
     box-sizing: border-box !important;
   }
-
 
   /* =========================================================
      5. ESPACIO EQUIVALENTE EN HANDVERSE IA
@@ -14578,16 +14563,12 @@ body,
     visibility: hidden;
   }
 
-
   /* =========================================================
      6. TEXTO VIDA
      Exactamente misma posición para jugador e IA
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .health-info {
+  #battle-stage > .battle-stage-hud > .battle-player .health-info {
     width: 100% !important;
     min-height: 24px !important;
 
@@ -14606,15 +14587,11 @@ body,
     box-sizing: border-box !important;
   }
 
-
   /* =========================================================
      7. BARRA DE VIDA
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .health-bar {
+  #battle-stage > .battle-stage-hud > .battle-player .health-bar {
     width: 100% !important;
 
     margin: 0 !important;
@@ -14624,16 +14601,12 @@ body,
     box-sizing: border-box !important;
   }
 
-
   /* =========================================================
      8. PODER ESPECIAL
      Se mantiene cerca de la parte inferior de ambas tarjetas
      ========================================================= */
 
-  #battle-stage
-    > .battle-stage-hud
-    > .battle-player
-    .power-status {
+  #battle-stage > .battle-stage-hud > .battle-player .power-status {
     width: fit-content !important;
     max-width: 100% !important;
 
